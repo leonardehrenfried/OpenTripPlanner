@@ -50,6 +50,10 @@ public class ConstantsForTests {
 
     private static final String NETEX_FILENAME = "netex_minimal.zip";
 
+    public static final String HERRENBERG_OSM = "src/test/resources/herrenberg/herrenberg.osm.pbf";
+
+    public static final String HERRENBERG_HINDENBURG_STR_UNDER_CONSTRUCTION_OSM = "src/test/resources/herrenberg/herrenberg-hindenburgstr-under-construction.osm.pbf";
+
     private static final CompositeDataSource NETEX_MINIMAL_DATA_SOURCE = new ZipFileDataSource(
             new File(NETEX_DIR, NETEX_FILENAME),
             FileType.NETEX
@@ -72,13 +76,6 @@ public class ConstantsForTests {
             instance = new ConstantsForTests();
         }
         return instance;
-    }
-
-    public GtfsContext getPortlandContext() {
-        if (portlandGraph == null) {
-            setupPortland();
-        }
-        return portlandContext;
     }
 
     public Graph getPortlandGraph() {
@@ -168,26 +165,6 @@ public class ConstantsForTests {
             throw new RuntimeException(e);
         }
     }
-
-    public static Graph buildGraph(String path) {
-        Graph graph = new Graph();
-        GtfsContext context;
-        try {
-            context = contextBuilder(path).build();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        AddTransitModelEntitiesToGraph.addToGraph(context, graph);
-
-        GeometryAndBlockProcessor factory = new GeometryAndBlockProcessor(context);
-        factory.run(graph);
-        graph.putService(
-                CalendarServiceData.class, context.getCalendarServiceData()
-        );
-        return graph;
-    }
-
 
     private static BuildConfig createNetexBuilderParameters() {
         return new ConfigLoader(new File(ConstantsForTests.NETEX_DIR)).loadBuildConfig();

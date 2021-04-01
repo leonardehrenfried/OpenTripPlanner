@@ -4,7 +4,7 @@ import org.opentripplanner.datastore.DataSource;
 import org.opentripplanner.datastore.OtpDataStore;
 import org.opentripplanner.datastore.configure.DataStoreFactory;
 import org.opentripplanner.graph_builder.GraphBuilder;
-import org.opentripplanner.graph_builder.GraphBuilderDataSources;
+import org.opentripplanner.graph_builder.DefaultGraphBuilderDataSources;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.standalone.config.CommandLineParameters;
 import org.opentripplanner.standalone.server.GrizzlyServer;
@@ -42,7 +42,7 @@ public class OTPAppConstruction {
 
     private OtpDataStore store = null;
     private OTPServer server = null;
-    private GraphBuilderDataSources graphBuilderDataSources = null;
+    private DefaultGraphBuilderDataSources graphBuilderDataSources = null;
 
 
     /**
@@ -93,7 +93,7 @@ public class OTPAppConstruction {
      * The output data source to use for saving the serialized graph.
      * <p>
      * This method will return {@code null} if the graph should NOT be saved. The
-     * business logic to make that decision is in the {@link GraphBuilderDataSources}.
+     * business logic to make that decision is in the {@link DefaultGraphBuilderDataSources}.
      */
     @Nullable
     public DataSource graphOutputDataSource() {
@@ -128,9 +128,9 @@ public class OTPAppConstruction {
         projectInfo().routerConfigVersion = config.routerConfig().getConfigVersion();
     }
 
-    private GraphBuilderDataSources graphBuilderDataSources() {
+    private DefaultGraphBuilderDataSources graphBuilderDataSources() {
         if(graphBuilderDataSources == null) {
-            graphBuilderDataSources = GraphBuilderDataSources.create(
+            graphBuilderDataSources = DefaultGraphBuilderDataSources.create(
                     config.getCli(),
                     config.buildConfig(),
                     store()
