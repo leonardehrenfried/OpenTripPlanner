@@ -1,5 +1,6 @@
 package org.opentripplanner.graph_builder.linking;
 
+import java.util.Comparator;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -230,6 +231,11 @@ public class VertexLinker {
         .filter(e -> e.canTraverse(traverseModes) && edgeReachableFromGraph(e))
         .map(e -> new DistanceTo<>(e, distance(vertex, e, xscale)))
         .filter(ead -> ead.distanceDegreesLat < radiusDeg)
+        // areas with lots of visibility edges and bicycle parking facilities
+        // the number of candidates can exlode. therefore we set a hard upper limit
+        // https://github.com/opentripplanner/OpenTripPlanner/issues/3564
+        .sorted(Comparator.comparingDouble(DistanceTo::getDistanceDegreesLat))
+        .limit(500)
         .collect(Collectors.toList());
 
     if (candidateEdges.isEmpty()) { return Set.of(); }
@@ -470,6 +476,11 @@ public class VertexLinker {
   private static class DistanceTo<T> {
 
     T item;
+
+    public double getDistanceDegreesLat() {
+      return distanceDegreesLat;
+    }
+
     // Possible optimization: store squared lat to skip thousands of sqrt operations
     // However we're using JTS distance functions that probably won't allow us to skip the final sqrt call.
     double distanceDegreesLat;
