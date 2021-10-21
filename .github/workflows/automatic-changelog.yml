@@ -18,7 +18,7 @@ jobs:
         if: github.event.pull_request.merged
         run: |
           git config user.name "OTP Changelog Bot"
-          git config user.email "changelog-bot@opentripplanner.org"
+          git config user.email "<>"
 
           # add a line above the one which contains AUTOMATIC_CHANGELOG_PLACEHOLDER
           awk '/AUTOMATIC_CHANGELOG_PLACEHOLDER/ {
@@ -28,5 +28,5 @@ jobs:
           mv docs/Changelog.generated.md docs/Changelog.md
 
           git add docs/Changelog.md
-          git commit -m "Add changelog entry for ${{ github.event.pull_request.number }} [ci skip]"
+          git commit -m "Add changelog entry for #${{ github.event.pull_request.number }} [ci skip]"
           git push origin dev-2.x
