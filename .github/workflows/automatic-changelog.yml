@@ -1,20 +1,21 @@
-name: Automatic changelog
+name: Automatic changelog entry
 on:
-  push:
+  pull_request:
     branches:
       - dev-2.x
+  types: [closed]
 
 jobs:
-  date:
+  changelog-entry:
     runs-on: ubuntu-latest
     steps:
 
-      - name: checkout
-        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+      - name: Checkout
+        if: ${{ github.event.pull_request.merged }}
         uses: actions/checkout@v2
 
       - name: Generate changelog entry from PR information
-        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+        if: ${{ github.event.pull_request.merged }}
         run: |
           git config user.name "OTP Changelog Bot"
           git config user.email "<>"
