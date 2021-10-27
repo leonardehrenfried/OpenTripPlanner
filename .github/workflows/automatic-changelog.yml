@@ -38,5 +38,5 @@ jobs:
 
             git add docs/Changelog.md
             git commit -m "Add changelog entry for #${NUMBER} [ci skip]"
-            git push https://${{ secrects.PUSH_TOKEN }}@github.com/leonardehrenfried/OpenTripPlanner.git changelog-test
+            git push https://${{ secrets.PUSH_TOKEN }}@github.com/leonardehrenfried/OpenTripPlanner.git changelog-test
           fi
