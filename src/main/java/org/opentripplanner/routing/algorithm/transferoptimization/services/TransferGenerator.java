@@ -71,7 +71,9 @@ public class TransferGenerator<T extends RaptorTripSchedule> {
       result.add(transfers);
 
       // Setup next iteration
-      earliestDeparture = findMinimumToStopTime(transfers);
+      if(!transfers.isEmpty()) {
+        earliestDeparture = findMinimumToStopTime(transfers);
+      }
       fromLeg = toLeg;
     }
 
