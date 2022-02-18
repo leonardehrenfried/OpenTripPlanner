@@ -13,8 +13,6 @@ import com.esotericsoftware.kryo.serializers.JavaSerializer;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import de.javakaffee.kryoserializers.UnmodifiableCollectionsSerializer;
 import de.javakaffee.kryoserializers.guava.ArrayListMultimapSerializer;
 import de.javakaffee.kryoserializers.guava.HashMultimapSerializer;
@@ -29,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.List;
@@ -37,7 +34,6 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nullable;
 import org.objenesis.strategy.SerializingInstantiatorStrategy;
-import org.opentripplanner.common.TurnRestriction;
 import org.opentripplanner.datastore.DataSource;
 import org.opentripplanner.kryo.BuildConfigSerializer;
 import org.opentripplanner.kryo.HashBiMapSerializer;
@@ -170,6 +166,8 @@ public class SerializedGraphObject implements Serializable {
         kryo.register(Map.of(1, 1).getClass(), new JavaSerializer());
         kryo.register(Set.of().getClass(), new JavaSerializer());
         kryo.register(Set.of(1).getClass(), new JavaSerializer());
+        kryo.register(Set.of(1, 2).getClass(), new JavaSerializer());
+        kryo.register(Set.of(1, 2, 3).getClass(), new JavaSerializer());
 
         // Guava's ImmutableSet
         ImmutableSetSerializer.registerSerializers(kryo);
