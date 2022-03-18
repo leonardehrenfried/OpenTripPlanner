@@ -10,6 +10,18 @@ import graphql.relay.SimpleListConnection;
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.DataFetchingEnvironmentImpl;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.opentripplanner.api.parameter.QualifiedMode;
@@ -848,7 +860,7 @@ public class LegacyGraphQLQueryTypeImpl
           context.getRouter().graph.getTimeZone()
       );
 
-      callWith.argument("wheelchair", request::setWheelchairAccessible);
+      callWith.argument("wheelchair", request::setAccessibilityMode);
       callWith.argument("numItineraries", request::setNumItineraries);
       callWith.argument("searchWindow", (Long m) -> request.searchWindow = Duration.ofSeconds(m));
       callWith.argument("pageCursor", request::setPageCursor);

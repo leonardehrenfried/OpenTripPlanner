@@ -1,5 +1,7 @@
 package org.opentripplanner.routing.core;
 
+import java.util.Objects;
+import org.opentripplanner.routing.api.request.RoutingRequest.AccessibilityMode;
 import org.opentripplanner.routing.edgetype.StreetEdge;
 import org.opentripplanner.routing.api.request.RoutingRequest;
 
@@ -13,27 +15,19 @@ public class TraversalRequirements {
     /**
      * Modes allowed in graph traversal. Defaults to allowing all.
      */
-    public TraverseModeSet modes = TraverseModeSet.allModes();
+    public final TraverseModeSet modes;
 
     /**
      * If true, trip must be wheelchair accessible.
      */
-    private boolean wheelchairAccessible = false;
+    private final AccessibilityMode accessibilityMode;
 
     /**
      * The maximum slope of streets for wheelchair trips.
      * 
      * ADA max wheelchair ramp slope is a good default.
      */
-    private double maxWheelchairSlope = 0.0833333333333;
-
-    /**
-     * Default constructor.
-     * 
-     * By default, accepts all modes of travel and does not require wheelchair access.
-     */
-    public TraversalRequirements() {
-    }
+    private final double maxWheelchairSlope;
 
     /**
      * Construct from RoutingRequest.
@@ -41,31 +35,16 @@ public class TraversalRequirements {
      * @param options
      */
     public TraversalRequirements(RoutingRequest options) {
-        this();
-
-        if (options == null) {
-            return;
-        }
-
+        Objects.requireNonNull(options);
         // Initialize self.
-        initFromRoutingRequest(this, options);
-    }
-
-    /**
-     * Initialize TraversalRequirements from a RoutingRequest.
-     * 
-     * @param req
-     * @param options
-     */
-    private static void initFromRoutingRequest(TraversalRequirements req, RoutingRequest options) {
-        req.modes = options.streetSubRequestModes.clone();
-        req.wheelchairAccessible = options.wheelchairAccessible;
-        req.maxWheelchairSlope = options.maxWheelchairSlope;
+        modes = options.streetSubRequestModes.clone();
+        accessibilityMode = options.accessibilityMode;
+        maxWheelchairSlope = options.maxWheelchairSlope;
     }
 
     /** Returns true if this StreetEdge can be traversed. */
     private boolean canBeTraversedInternal(StreetEdge e) {
-        if (wheelchairAccessible) {
+        if (accessibilityMode.includesWheelchair()) {
             if (!e.isWheelchairAccessible()) {
                 return false;
             }
