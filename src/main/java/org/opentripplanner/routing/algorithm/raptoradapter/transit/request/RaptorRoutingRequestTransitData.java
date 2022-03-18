@@ -13,6 +13,7 @@ import org.opentripplanner.routing.algorithm.raptoradapter.transit.cost.DefaultC
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.mappers.DateMapper;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.mappers.McCostParamsMapper;
 import org.opentripplanner.routing.api.request.RoutingRequest;
+import org.opentripplanner.routing.api.request.RoutingRequest.AccessibilityMode;
 import org.opentripplanner.transit.raptor.api.transit.CostCalculator;
 import org.opentripplanner.transit.raptor.api.transit.IntIterator;
 import org.opentripplanner.transit.raptor.api.transit.RaptorConstrainedTransfer;
@@ -59,19 +60,22 @@ public class RaptorRoutingRequestTransitData implements RaptorTransitDataProvide
 
   private final int validTransitDataEndTime;
 
+  private final AccessibilityMode accessibilityMode;
+
   public RaptorRoutingRequestTransitData(
-      TransferService transferService,
-      TransitLayer transitLayer,
-      ZonedDateTime transitSearchTimeZero,
-      int additionalPastSearchDays,
-      int additionalFutureSearchDays,
-      TransitDataProviderFilter filter,
-      RoutingRequest routingRequest
+          TransferService transferService,
+          TransitLayer transitLayer,
+          ZonedDateTime transitSearchTimeZero,
+          int additionalPastSearchDays,
+          int additionalFutureSearchDays,
+          TransitDataProviderFilter filter,
+          RoutingRequest routingRequest
   ) {
 
     this.transferService = transferService;
     this.transitLayer = transitLayer;
     this.transitSearchTimeZero = transitSearchTimeZero;
+    this.accessibilityMode = routingRequest.accessibilityMode;
 
     // Delegate to the creator to construct the needed data structures. The code is messy so
     // it is nice to NOT have it in the class. It isolate this code to only be available at
