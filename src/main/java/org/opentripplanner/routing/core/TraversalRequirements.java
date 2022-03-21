@@ -44,7 +44,7 @@ public class TraversalRequirements {
 
     /** Returns true if this StreetEdge can be traversed. */
     private boolean canBeTraversedInternal(StreetEdge e) {
-        if (accessibilityMode.includesWheelchair()) {
+        if (accessibilityMode.requestsWheelchair()) {
             if (!e.isWheelchairAccessible()) {
                 return false;
             }
