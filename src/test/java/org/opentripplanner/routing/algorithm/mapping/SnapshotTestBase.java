@@ -245,7 +245,7 @@ public abstract class SnapshotTestBase {
                 dateTime.toLocalTime().format(apiTimeFormatter),
                 modes,
                 request.arriveBy,
-                request.accessibilityMode
+                request.accessibilityRequirements
         );
     }
 

@@ -33,7 +33,7 @@ import org.opentripplanner.routing.algorithm.raptoradapter.transit.request.Rapto
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.request.RoutingRequestTransitDataProviderFilter;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.request.TransitDataProviderFilter;
 import org.opentripplanner.routing.api.request.RoutingRequest;
-import org.opentripplanner.routing.api.request.RoutingRequest.AccessibilityMode;
+import org.opentripplanner.model.AccessibilityRequirements;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.routing.graph.SerializedGraphObject;
 import org.opentripplanner.routing.graph.Vertex;
@@ -453,7 +453,7 @@ public class SpeedTest {
     private RaptorTransitDataProvider<TripSchedule> transitData(SpeedTestRequest request) {
         TransitDataProviderFilter transitDataProviderFilter = new RoutingRequestTransitDataProviderFilter(
                 false,
-                AccessibilityMode.NOT_REQUIRED,
+                AccessibilityRequirements.NOT_REQUIRED,
                 false,
                 request.getTransitModes(),
                 Set.of(),

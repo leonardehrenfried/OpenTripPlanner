@@ -1,7 +1,7 @@
 package org.opentripplanner.routing.core;
 
 import java.util.Objects;
-import org.opentripplanner.routing.api.request.RoutingRequest.AccessibilityMode;
+import org.opentripplanner.model.AccessibilityRequirements;
 import org.opentripplanner.routing.edgetype.StreetEdge;
 import org.opentripplanner.routing.api.request.RoutingRequest;
 
@@ -20,7 +20,7 @@ public class TraversalRequirements {
     /**
      * If true, trip must be wheelchair accessible.
      */
-    private final AccessibilityMode accessibilityMode;
+    private final AccessibilityRequirements accessibilityRequirements;
 
     /**
      * The maximum slope of streets for wheelchair trips.
@@ -38,13 +38,13 @@ public class TraversalRequirements {
         Objects.requireNonNull(options);
         // Initialize self.
         modes = options.streetSubRequestModes.clone();
-        accessibilityMode = options.accessibilityMode;
+        accessibilityRequirements = options.accessibilityRequirements;
         maxWheelchairSlope = options.maxWheelchairSlope;
     }
 
     /** Returns true if this StreetEdge can be traversed. */
     private boolean canBeTraversedInternal(StreetEdge e) {
-        if (accessibilityMode.requestsWheelchair()) {
+        if (accessibilityRequirements.requestsWheelchair()) {
             if (!e.isWheelchairAccessible()) {
                 return false;
             }
