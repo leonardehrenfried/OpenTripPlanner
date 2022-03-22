@@ -3,12 +3,8 @@ package org.opentripplanner.routing.algorithm.mapping;
 import java.util.List;
 import org.opentripplanner.model.plan.Itinerary;
 import org.opentripplanner.routing.api.request.RoutingRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ItinerariesHelper {
-    private static final Logger LOG = LoggerFactory.getLogger(ItinerariesHelper.class);
-
     public static void decorateItinerariesWithRequestData(
             List<Itinerary> itineraries,
             RoutingRequest request

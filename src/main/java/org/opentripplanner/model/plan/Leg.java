@@ -316,6 +316,10 @@ public interface Leg {
         return null;
     }
 
+    default Float accessibilityScore() {
+        return null;
+    }
+
     default Boolean getRentedVehicle() {
         return null;
     }
