@@ -758,7 +758,7 @@ public abstract class RoutingResource {
         }
 
         if (wheelchair != null)
-            request.setAccessibilityMode(wheelchair);
+            request.setAccessibility(wheelchair);
 
         if (numItineraries != null)
             request.setNumItineraries(numItineraries);
