@@ -454,7 +454,7 @@ public class SpeedTest {
     private RaptorTransitDataProvider<TripSchedule> transitData(SpeedTestRequest request) {
         TransitDataProviderFilter transitDataProviderFilter = new RoutingRequestTransitDataProviderFilter(
                 false,
-                AccessibilityRequirements.makeDefault(EvaluationType.NOT_REQUIRED),
+                AccessibilityRequirements.EvaluationType.NOT_REQUIRED,
                 false,
                 request.getTransitModes(),
                 Set.of(),
