@@ -66,6 +66,8 @@ public class RoutingWorker {
     public RoutingWorker(Router router, RoutingRequest request, ZoneId zoneId) {
         request.applyPageCursor();
         this.request = request;
+        request.accessibilityRequirements = router.routerConfig.accessibilityConfig()
+                .toRequirements(request.accessibilityRequirements);
         this.router = router;
         this.transitSearchTimeZero = DateMapper.asStartOfService(request.getDateTime(), zoneId);
         this.pagingSearchWindowAdjuster = createPagingSearchWindowAdjuster(router.routerConfig);

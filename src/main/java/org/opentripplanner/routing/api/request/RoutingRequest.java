@@ -814,10 +814,6 @@ public class RoutingRequest implements AutoCloseable, Cloneable, Serializable {
 
     /* ACCESSOR/SETTER METHODS */
 
-    public boolean transitAllowed() {
-        return streetSubRequestModes.isTransit();
-    }
-
     public void setArriveBy(boolean arriveBy) {
         this.arriveBy = arriveBy;
     }
@@ -1237,6 +1233,9 @@ public class RoutingRequest implements AutoCloseable, Cloneable, Serializable {
             clone.bannedTrips = Set.copyOf(bannedTrips);
 
             clone.allowedRentalFormFactors = new HashSet<>(allowedRentalFormFactors);
+
+            // is immutable so can safely use the same reference
+            clone.accessibilityRequirements = accessibilityRequirements;
 
             return clone;
         } catch (CloneNotSupportedException e) {
