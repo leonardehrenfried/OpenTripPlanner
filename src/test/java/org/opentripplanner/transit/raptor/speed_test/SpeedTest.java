@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.opentripplanner.datastore.OtpDataStore;
-import org.opentripplanner.model.AccessibilityRequirements.Strictness;
+import org.opentripplanner.model.AccessibilityRequirements.EvaluationType;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.Transfer;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.TransitLayer;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.TripSchedule;
@@ -454,7 +454,7 @@ public class SpeedTest {
     private RaptorTransitDataProvider<TripSchedule> transitData(SpeedTestRequest request) {
         TransitDataProviderFilter transitDataProviderFilter = new RoutingRequestTransitDataProviderFilter(
                 false,
-                AccessibilityRequirements.makeDefault(Strictness.NOT_REQUIRED),
+                AccessibilityRequirements.makeDefault(EvaluationType.NOT_REQUIRED),
                 false,
                 request.getTransitModes(),
                 Set.of(),

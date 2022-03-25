@@ -1,7 +1,7 @@
 package org.opentripplanner.routing.api.request;
 
-import static org.opentripplanner.model.AccessibilityRequirements.Strictness.ALLOW_UNKNOWN_INFORMATION;
-import static org.opentripplanner.model.AccessibilityRequirements.Strictness.NOT_REQUIRED;
+import static org.opentripplanner.model.AccessibilityRequirements.EvaluationType.ALLOW_UNKNOWN_INFORMATION;
+import static org.opentripplanner.model.AccessibilityRequirements.EvaluationType.NOT_REQUIRED;
 import static org.opentripplanner.util.time.DurationUtils.durationInSeconds;
 
 import java.io.ByteArrayOutputStream;
@@ -26,13 +26,12 @@ import javax.annotation.Nonnull;
 import org.geotools.geojson.geom.GeometryJSON;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.opentripplanner.api.common.LocationStringParser;
 import org.opentripplanner.common.geometry.GeometryUtils;
 import org.opentripplanner.common.geometry.SphericalDistanceLibrary;
 import org.opentripplanner.ext.dataoverlay.api.DataOverlayParameters;
 import org.opentripplanner.model.AccessibilityRequirements;
-import org.opentripplanner.model.AccessibilityRequirements.Strictness;
+import org.opentripplanner.model.AccessibilityRequirements.EvaluationType;
 import org.opentripplanner.model.FeedScopedId;
 import org.opentripplanner.model.GenericLocation;
 import org.opentripplanner.model.Route;
@@ -63,28 +62,6 @@ import org.opentripplanner.routing.vehicle_rental.VehicleRentalStation;
 import org.opentripplanner.util.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TimeZone;
-
-import static org.opentripplanner.util.time.DurationUtils.durationInSeconds;
 
 /**
  * A trip planning request. Some parameters may not be honored by the trip planner for some or all
@@ -866,13 +843,13 @@ public class RoutingRequest implements AutoCloseable, Cloneable, Serializable {
     }
 
     public void setAccessibility(boolean wheelchair) {
-        Strictness strictness = NOT_REQUIRED;
+        EvaluationType evaluationType = NOT_REQUIRED;
 
         if (wheelchair) {
-            strictness = ALLOW_UNKNOWN_INFORMATION;
+            evaluationType = ALLOW_UNKNOWN_INFORMATION;
         }
 
-        this.accessibilityRequirements = AccessibilityRequirements.makeDefault(strictness);
+        this.accessibilityRequirements = AccessibilityRequirements.makeDefault(evaluationType);
     }
 
     public void setTransitReluctanceForMode(Map<TransitMode, Double> reluctanceForMode) {
