@@ -15,6 +15,7 @@ import graphql.relay.DefaultPageInfo;
 import graphql.relay.Relay;
 import graphql.relay.SimpleListConnection;
 import graphql.schema.GraphQLArgument;
+import graphql.schema.GraphQLDirective;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLInputObjectField;
 import graphql.schema.GraphQLInputObjectType;
@@ -1547,12 +1548,20 @@ public class TransmodelGraphQLSchema {
       .field(DatedServiceJourneyQuery.createQuery(datedServiceJourneyType, gqlUtil))
       .build();
 
-    Set<GraphQLType> dictionary = new HashSet<>();
-    dictionary.add(placeInterface);
-    dictionary.add(timetabledPassingTime);
-    dictionary.add(Relay.pageInfoType);
+    Set<GraphQLType> types = new HashSet<>();
+    types.add(placeInterface);
+    types.add(timetabledPassingTime);
+    types.add(Relay.pageInfoType);
 
-    return GraphQLSchema.newSchema().query(queryType).build(dictionary);
+    Set<GraphQLDirective> directives = new HashSet<>();
+    directives.add(gqlUtil.timingData);
+
+    return GraphQLSchema
+      .newSchema()
+      .query(queryType)
+      .additionalTypes(types)
+      .additionalDirectives(directives)
+      .build();
   }
 
   private List<FeedScopedId> toIdList(List<String> ids) {
