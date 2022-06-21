@@ -72,6 +72,7 @@ based on merged pull requests. Search GitHub issues and pull requests for smalle
 - Bump again! [#20](https://github.com/leonardehrenfried/OpenTripPlanner/pull/20)
 - Bump the third time  [#21](https://github.com/leonardehrenfried/OpenTripPlanner/pull/21)
 - Bump 5 [#23](https://github.com/leonardehrenfried/OpenTripPlanner/pull/23)
+- Bump 6 [#24](https://github.com/leonardehrenfried/OpenTripPlanner/pull/24)
   [](AUTOMATIC_CHANGELOG_PLACEHOLDER_DO_NOT_REMOVE)
 
 ## 2.1.0 (2022-03-17)
