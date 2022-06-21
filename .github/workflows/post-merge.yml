@@ -67,7 +67,7 @@ jobs:
  
           git add pom.xml
           git commit -m "Bumping serialization version id for #${NUMBER}"
-          git push origin HEAD:dev-2x
+          git push origin HEAD:dev-2.x
         env:
           # Use environment variables to prevent injection attack
           NUMBER: ${{ github.event.pull_request.number }}
