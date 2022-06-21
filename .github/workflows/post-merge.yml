@@ -13,8 +13,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.CHANGELOG_TOKEN }}
 
       - name: Configure git user
         run: |
@@ -36,7 +34,7 @@ jobs:
             mv $TEMP_FILE $FILE
             git add $FILE
             git commit -m "Add changelog entry for #${NUMBER} [ci skip]"
-            git push ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git HEAD:dev-2.x
+            git push HEAD:dev-2.x
           fi
         env:
           # Use environment variables to prevent injection attack
@@ -61,8 +59,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.CHANGELOG_TOKEN }}
 
       - name: Bump serialization version
         run: |
@@ -74,7 +70,7 @@ jobs:
           git commit -m "Bumping serialization version id for #${NUMBER}"
           # just for safety as the git repo can be eventually consistent and this push competes with the changelog entry
           git pull
-          git push ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git HEAD:dev-2.x
+          git push HEAD:dev-2.x
         env:
           # Use environment variables to prevent injection attack
           NUMBER: ${{ github.event.pull_request.number }}
