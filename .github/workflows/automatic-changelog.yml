@@ -7,23 +7,21 @@ on:
 
 jobs:
   changelog-entry:
+    if: github.event.pull_request.merged && github.repository_owner == 'opentripplanner'
     runs-on: ubuntu-latest
     steps:
 
       - name: Checkout
-        if: github.event.pull_request.merged && github.repository_owner == 'opentripplanner'
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.CHANGELOG_TOKEN }}
 
-      - name: Configure Git User
-        if: github.event.pull_request.merged && github.repository_owner == 'opentripplanner'
+      - name: Configure Git User for changelog
         run: |
           git config --global user.name 'OTP Changelog Bot'
           git config --global user.email 'changelog-bot@opentripplanner.org'
 
       - name: Generate changelog entry from PR information
-        if: github.event.pull_request.merged && github.repository_owner == 'opentripplanner'
         run: |
           # if the title contains "changelog skip" we don't generate an entry
           TITLE_LOWER_CASE=`echo $TITLE | awk '{print tolower($0)}'`
@@ -45,3 +43,23 @@ jobs:
           TITLE: ${{ github.event.pull_request.title }}
           NUMBER: ${{ github.event.pull_request.number }}
           URL: ${{ github.event.pull_request.html_url }}
+
+      - name: Configure Git User for serialization version
+        if: contains(github.event.pull_request.labels.*.name, 'bump serialization version')
+        run: |
+          git config --global user.name 'OTP Serialization Version Bot'
+          git config --global user.email 'serialization-version-bot@opentripplanner.org'
+
+      - name: Bump serialization version if PR has label
+        if: contains(github.event.pull_request.labels.*.name, 'bump serialization version')
+        run: |
+          version=`xmllint --xpath "//*[local-name()='otp.serialization.version.id']/text()" pom.xml`
+          bumped=$((version+1))
+          sed -Ei "s/<otp\.serialization\.version\.id>.*<\/otp\.serialization\.version\.id>/<otp\.serialization\.version\.id>${bumped}<\/otp\.serialization\.version\.id>/" pom.xml 
+ 
+          git add pom.xml
+          git commit -m "Bumping serialization version id for #${NUMBER}"
+          git push ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git HEAD:dev-2.x
+        env:
+          # Use environment variables to prevent injection attack
+          NUMBER: ${{ github.event.pull_request.number }}

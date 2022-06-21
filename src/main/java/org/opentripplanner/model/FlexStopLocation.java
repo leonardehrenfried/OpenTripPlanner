@@ -1,7 +1,13 @@
 package org.opentripplanner.model;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.Point;
+import org.opentripplanner.transit.model.basic.WgsCoordinate;
+import org.opentripplanner.transit.model.framework.FeedScopedId;
+import org.opentripplanner.transit.model.framework.TransitEntity;
+import org.opentripplanner.transit.model.site.StopLocation;
+import org.opentripplanner.util.I18NString;
 
 /**
  * Location corresponding to a location where riders may request pickup or drop off, defined in the
@@ -9,13 +15,18 @@ import org.locationtech.jts.geom.Point;
  */
 
 public class FlexStopLocation extends TransitEntity implements StopLocation {
-  private static final long serialVersionUID = 1L;
 
-  private String name;
+  private I18NString name;
+
+  private I18NString description;
 
   private Geometry geometry;
 
   private String zoneId;
+
+  private I18NString url;
+
+  private WgsCoordinate centroid;
 
   public FlexStopLocation(FeedScopedId id) {
     super(id);
@@ -26,37 +37,69 @@ public class FlexStopLocation extends TransitEntity implements StopLocation {
    * communication, eg. the name of the village where the service stops.
    */
   @Override
-  public String getName() {
+  @Nonnull
+  public I18NString getName() {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  @Override
+  public I18NString getDescription() {
+    return description;
   }
 
-  /**
-   * Returns the geometry of this location, can be any type of geometry.
-   */
-  public Geometry getGeometry() {
-    return geometry;
+  @Override
+  @Nullable
+  public I18NString getUrl() {
+    return url;
   }
 
-  public void setGeometry(Geometry geometry) {
-    this.geometry = geometry;
+  public void setUrl(I18NString url) {
+    this.url = url;
+  }
+
+  @Override
+  public String getFirstZoneAsString() {
+    return zoneId;
   }
 
   /**
    * Returns the centroid of this location.
    */
   @Override
+  @Nonnull
   public WgsCoordinate getCoordinate() {
-    Point centroid = geometry.getCentroid();
-    return new WgsCoordinate(centroid.getY(), centroid.getX());
+    return centroid;
+  }
+
+  /**
+   * Returns the geometry of this location, can be any type of geometry.
+   */
+  @Override
+  public Geometry getGeometry() {
+    return geometry;
+  }
+
+  public void setGeometry(Geometry geometry) {
+    this.geometry = geometry;
+    this.centroid = new WgsCoordinate(geometry.getCentroid().getY(), geometry.getCentroid().getX());
   }
 
   @Override
-  public String getFirstZoneAsString() {
-    return zoneId;
+  public boolean isPartOfStation() {
+    return false;
+  }
+
+  @Override
+  public boolean isPartOfSameStationAs(StopLocation alternativeStop) {
+    return false;
+  }
+
+  public void setDescription(I18NString description) {
+    this.description = description;
+  }
+
+  public void setName(I18NString name) {
+    this.name = name;
   }
 
   public void setZoneId(String zoneId) {
