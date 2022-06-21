@@ -70,7 +70,7 @@ jobs:
           git commit -m "Bumping serialization version id for #${NUMBER}"
           # just for safety as the git repo can be eventually consistent and this push competes with the changelog entry
           git pull
-          git push origin HEAD:dev-2x
+          git push HEAD:dev-2.x
         env:
           # Use environment variables to prevent injection attack
           NUMBER: ${{ github.event.pull_request.number }}
