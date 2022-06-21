@@ -34,7 +34,7 @@ jobs:
             mv $TEMP_FILE $FILE
             git add $FILE
             git commit -m "Add changelog entry for #${NUMBER} [ci skip]"
-            git push HEAD:dev-2.x
+            git push origin HEAD:dev-2.x
           fi
         env:
           # Use environment variables to prevent injection attack
@@ -67,7 +67,7 @@ jobs:
  
           git add pom.xml
           git commit -m "Bumping serialization version id for #${NUMBER}"
-          git push HEAD:dev-2.x
+          git push origin HEAD:dev-2x
         env:
           # Use environment variables to prevent injection attack
           NUMBER: ${{ github.event.pull_request.number }}
