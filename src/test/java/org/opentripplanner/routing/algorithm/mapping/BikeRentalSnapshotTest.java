@@ -1,5 +1,6 @@
 package org.opentripplanner.routing.algorithm.mapping;
 
+import au.com.origin.snapshots.annotations.UseSnapshotConfig;
 import au.com.origin.snapshots.junit5.SnapshotExtension;
 import java.util.Locale;
 import java.util.Set;
@@ -20,6 +21,7 @@ import org.opentripplanner.routing.error.RoutingValidationException;
 
 @ExtendWith(SnapshotExtension.class)
 @ResourceLock(Resources.LOCALE)
+@UseSnapshotConfig(LowercaseToStringSnapshotConfig.class)
 public class BikeRentalSnapshotTest extends SnapshotTestBase {
 
   private static final Locale DEFAULT_LOCALE = Locale.getDefault();
