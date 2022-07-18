@@ -91,7 +91,7 @@ public class RoutingRequestTransitDataProviderFilter implements TransitDataProvi
     var y = distance / 2;
     env.expandBy(Math.min(x, y));
 
-    var filtered = new HashSet<>(transitModelIndex.getRouteSpatialIndex().query(env));
+    var filtered = new HashSet<FeedScopedId>(transitModelIndex.getRouteSpatialIndex().query(env));
     // we need to actually have a sizable reduction in routes otherwise we just spend all of our
     // time figuring out if a route is inside the envelope or not
     if (LOG.isDebugEnabled()) {

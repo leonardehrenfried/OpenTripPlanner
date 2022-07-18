@@ -16,6 +16,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.index.SpatialIndex;
+import org.locationtech.jts.index.quadtree.Quadtree;
 import org.opentripplanner.common.geometry.GeometryUtils;
 import org.opentripplanner.common.geometry.HashGridSpatialIndex;
 import org.opentripplanner.ext.flex.FlexIndex;
@@ -61,7 +63,7 @@ public class TransitModelIndex {
   private final Map<TripIdAndServiceDate, TripOnServiceDate> tripOnServiceDateForTripAndDay = new HashMap<>();
 
   private final Multimap<GroupOfRoutes, Route> routesForGroupOfRoutes = ArrayListMultimap.create();
-  private final HashGridSpatialIndex<FeedScopedId> routeSpatialIndex = new HashGridSpatialIndex<>();
+  private final SpatialIndex routeSpatialIndex = new Quadtree();
   private final Map<FeedScopedId, GroupOfRoutes> groupOfRoutesForId = new HashMap<>();
   private FlexIndex flexIndex = null;
 
@@ -140,7 +142,7 @@ public class TransitModelIndex {
     LOG.info("Transit Model index init complete.");
   }
 
-  public HashGridSpatialIndex<FeedScopedId> getRouteSpatialIndex() {
+  public SpatialIndex getRouteSpatialIndex() {
     return routeSpatialIndex;
   }
 
