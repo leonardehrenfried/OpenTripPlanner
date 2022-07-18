@@ -14,6 +14,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Envelope;
+import org.opentripplanner.common.geometry.GeometryUtils;
+import org.opentripplanner.common.geometry.HashGridSpatialIndex;
 import org.opentripplanner.ext.flex.FlexIndex;
 import org.opentripplanner.ext.flex.trip.FlexTrip;
 import org.opentripplanner.model.TimetableSnapshot;
@@ -33,9 +37,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Indexed access to Transit entities.
- * For performance reasons these indexes are not part of the serialized state of the graph.
- * They are rebuilt at runtime after graph deserialization.
+ * Indexed access to Transit entities. For performance reasons these indexes are not part of the
+ * serialized state of the graph. They are rebuilt at runtime after graph deserialization.
  */
 public class TransitModelIndex {
 
@@ -58,7 +61,7 @@ public class TransitModelIndex {
   private final Map<TripIdAndServiceDate, TripOnServiceDate> tripOnServiceDateForTripAndDay = new HashMap<>();
 
   private final Multimap<GroupOfRoutes, Route> routesForGroupOfRoutes = ArrayListMultimap.create();
-
+  private final HashGridSpatialIndex<FeedScopedId> routeSpatialIndex = new HashGridSpatialIndex<>();
   private final Map<FeedScopedId, GroupOfRoutes> groupOfRoutesForId = new HashMap<>();
   private FlexIndex flexIndex = null;
 
@@ -76,6 +79,7 @@ public class TransitModelIndex {
     for (TripPattern pattern : transitModel.getAllTripPatterns()) {
       patternsForFeedId.put(pattern.getFeedId(), pattern);
       patternsForRoute.put(pattern.getRoute(), pattern);
+
       pattern
         .scheduledTripsAsStream()
         .forEach(trip -> {
@@ -91,6 +95,16 @@ public class TransitModelIndex {
       for (GroupOfRoutes groupOfRoutes : route.getGroupsOfRoutes()) {
         routesForGroupOfRoutes.put(groupOfRoutes, route);
       }
+
+      var env = new Envelope();
+      var routePatterns = patternsForRoute.get(route);
+      routePatterns
+        .stream()
+        .flatMap(t -> t.getStops().stream())
+        .map(s -> s.getCoordinate().asJtsCoordinate())
+        .forEach(env::expandToInclude);
+
+      routeSpatialIndex.insert(env, route.getId());
     }
     for (GroupOfRoutes groupOfRoutes : routesForGroupOfRoutes.keySet()) {
       groupOfRoutesForId.put(groupOfRoutes.getId(), groupOfRoutes);
@@ -124,6 +138,10 @@ public class TransitModelIndex {
     }
 
     LOG.info("Transit Model index init complete.");
+  }
+
+  public HashGridSpatialIndex<FeedScopedId> getRouteSpatialIndex() {
+    return routeSpatialIndex;
   }
 
   public Agency getAgencyForId(FeedScopedId id) {

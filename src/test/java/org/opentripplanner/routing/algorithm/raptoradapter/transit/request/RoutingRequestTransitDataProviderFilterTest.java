@@ -47,6 +47,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
   private static final WheelchairAccessibilityRequest DEFAULT_ACCESSIBILITY =
     WheelchairAccessibilityRequest.DEFAULT;
 
+  Set<FeedScopedId> routesInsideEnvelope = null;
+
   /**
    * Test filter for wheelchair access.
    *
@@ -83,7 +85,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       false,
       MainAndSubMode.all(),
       Set.of(),
-      Set.of()
+      Set.of(),
+      routesInsideEnvelope
     );
 
     var boardingPossible = new BitSet();
@@ -106,7 +109,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       false,
       List.of(new MainAndSubMode(TransitMode.BUS)),
       Set.of(),
-      Set.of()
+      Set.of(),
+      routesInsideEnvelope
     );
 
     boolean valid = filter.tripPatternPredicate(tripPatternForDate);
@@ -124,7 +128,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       false,
       List.of(new MainAndSubMode(TransitMode.BUS)),
       Set.of(ROUTE.getId()),
-      Set.of()
+      Set.of(),
+      routesInsideEnvelope
     );
 
     boolean valid = filter.tripPatternPredicate(tripPatternForDate);
@@ -150,7 +155,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       false,
       List.of(new MainAndSubMode(TransitMode.BUS)),
       Set.of(),
-      Set.of(TRIP_ID)
+      Set.of(TRIP_ID),
+      routesInsideEnvelope
     );
 
     boolean valid = filter.tripTimesPredicate(tripTimes);
@@ -202,7 +208,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       false,
       List.of(new MainAndSubMode(TransitMode.BUS)),
       Set.of(),
-      Set.of()
+      Set.of(),
+      routesInsideEnvelope
     );
 
     boolean valid = filter.tripTimesPredicate(tripTimes);
@@ -228,7 +235,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       false,
       MainAndSubMode.all(),
       Set.of(),
-      Set.of()
+      Set.of(),
+      null
     );
 
     boolean valid = filter.tripTimesPredicate(tripTimes);
@@ -254,7 +262,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       false,
       MainAndSubMode.all(),
       Set.of(),
-      Set.of()
+      Set.of(),
+      routesInsideEnvelope
     );
 
     boolean valid = filter.tripTimesPredicate(tripTimes);
@@ -280,7 +289,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       false,
       List.of(new MainAndSubMode(TransitMode.BUS)),
       Set.of(),
-      Set.of()
+      Set.of(),
+      routesInsideEnvelope
     );
 
     boolean valid = filter.tripTimesPredicate(wheelchairAccessibleTrip);
@@ -316,7 +326,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       true,
       List.of(new MainAndSubMode(TransitMode.BUS)),
       Set.of(),
-      Set.of()
+      Set.of(),
+      routesInsideEnvelope
     );
 
     // When
@@ -336,7 +347,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       false,
       MainAndSubMode.all(),
       Set.of(),
-      Set.of()
+      Set.of(),
+      routesInsideEnvelope
     );
 
     // When
@@ -449,7 +461,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       false,
       List.of(new MainAndSubMode(TransitMode.BUS)),
       Set.of(),
-      Set.of()
+      Set.of(),
+      routesInsideEnvelope
     );
 
     assertTrue(filter.tripTimesPredicate(matchingTripTimes));
@@ -471,7 +484,8 @@ public class RoutingRequestTransitDataProviderFilterTest {
       false,
       allowedModes,
       Set.of(),
-      Set.of()
+      Set.of(),
+      routesInsideEnvelope
     );
 
     return filter.tripTimesPredicate(tripTimes);
