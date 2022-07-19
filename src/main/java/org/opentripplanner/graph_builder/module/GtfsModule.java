@@ -145,7 +145,7 @@ public class GtfsModule implements GraphBuilderModule {
           gtfsBundle.getMaxStopToShapeSnapDistance(),
           issueStore
         )
-          .run(transitModel);
+          .run();
 
         new InterlineProcessor(
           transitModel.getTransferService(),

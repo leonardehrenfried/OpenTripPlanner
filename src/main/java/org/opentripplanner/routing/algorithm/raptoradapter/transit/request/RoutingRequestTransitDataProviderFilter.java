@@ -92,22 +92,26 @@ public class RoutingRequestTransitDataProviderFilter implements TransitDataProvi
     env.expandBy(Math.min(x, y));
 
     var filtered = new HashSet<FeedScopedId>(transitModelIndex.getRouteSpatialIndex().query(env));
+
     // we need to actually have a sizable reduction in routes otherwise we just spend all of our
-    // time figuring out if a route is inside the envelope or not
-    if (LOG.isDebugEnabled()) {
-      var topLeft = new Coordinate(env.getMaxX(), env.getMaxY());
-      var topRight = new Coordinate(env.getMinX(), env.getMaxY());
-      var bottomLeft = new Coordinate(env.getMinX(), env.getMinY());
-      var bottomRight = new Coordinate(env.getMaxX(), env.getMinY());
-      var p = GeometryUtils
-        .getGeometryFactory()
-        .createPolygon(new Coordinate[] { topLeft, topRight, bottomLeft, bottomRight, topLeft });
-      LOG.info(
-        "Limiting RAPTOR search to routes that intersect envelope {}",
-        GeojsonIoUrlGenerator.geometryUrl(p)
-      );
-    }
-    return filtered;
+    // time figuring out if a route is included or not
+
+    if (filtered.size() < transitModelIndex.getAllRoutes().size() * 0.8) {
+      if (LOG.isDebugEnabled()) {
+        var topLeft = new Coordinate(env.getMaxX(), env.getMaxY());
+        var topRight = new Coordinate(env.getMinX(), env.getMaxY());
+        var bottomLeft = new Coordinate(env.getMinX(), env.getMinY());
+        var bottomRight = new Coordinate(env.getMaxX(), env.getMinY());
+        var p = GeometryUtils
+          .getGeometryFactory()
+          .createPolygon(new Coordinate[] { topLeft, topRight, bottomLeft, bottomRight, topLeft });
+        LOG.info(
+          "Limiting RAPTOR search to routes that intersect envelope {}",
+          GeojsonIoUrlGenerator.geometryUrl(p)
+        );
+      }
+      return filtered;
+    } else return null;
   }
 
   public static BikeAccess bikeAccessForTrip(Trip trip) {

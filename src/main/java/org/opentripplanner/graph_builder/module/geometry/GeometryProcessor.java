@@ -11,8 +11,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.GeometryCollection;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.impl.PackedCoordinateSequence;
 import org.locationtech.jts.linearref.LinearLocation;
 import org.locationtech.jts.linearref.LocationIndexedLine;
@@ -86,7 +88,7 @@ public class GeometryProcessor {
    * the graph, the OtpTransitService and others are not.
    */
   @SuppressWarnings("Convert2MethodRef")
-  public void run(TransitModel transitModel) {
+  public void run() {
     LOG.info("Processing geometries and blocks on graph...");
 
     // Wwe have to build the hop geometries before we throw away the modified stopTimes, saving
