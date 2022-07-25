@@ -9,6 +9,21 @@ jobs:
   perf-test:
     if: github.repository_owner == 'opentripplanner'
     runs-on: performance-test
+    strategy:
+      matrix:
+        max-parallel: 1
+        include:
+
+          - location: norway
+            osm-url: https://download.geofabrik.de/europe/norway-210101.osm.pbf
+            transit-url: https://leonard.io/otp/rb_norway-aggregated-netex-2021-12-11.zip
+            transit-filename: rb_norway-aggregated-netex.zip
+
+          - location: baden-wuerttemberg # German state of Baden-Württemberg: https://en.wikipedia.org/wiki/Baden-W%C3%BCrttemberg
+            osm-url: https://download.geofabrik.de/europe/norway-210101.osm.pbf
+            transit-url: https://leonard.io/otp/baden-wuerttemberg-2022-07-25.gtfs.tidy.zip
+            transit-filename: baden-wuerttemberg.gtfs.zip
+
     steps:
       - uses: actions/checkout@v2.3.2
         with:
@@ -46,8 +61,8 @@ jobs:
       - name: Download OSM & Netex data
         run: |
           mkdir -p graph
-          wget https://download.geofabrik.de/europe/norway-210101.osm.pbf -O graph/norway.osm.pbf --no-clobber -q --show-progress --progress=bar:force || true
-          wget https://leonard.io/otp/rb_norway-aggregated-netex-2021-12-11.zip -O graph/rb_norway-aggregated-netex.zip --no-clobber -q --show-progress --progress=bar:force || true
+          wget ${{ matrix.osm-url }} -O graph/osm.pbf --no-clobber -q --show-progress --progress=bar:force || true
+          wget ${{ matrix.transit-url }} -O graph/${{ matrix.transit-filename }} --no-clobber -q --show-progress --progress=bar:force || true
 
       - name: Build Norway graph
         run: |
@@ -60,13 +75,13 @@ jobs:
           PERFORMANCE_INFLUX_DB_PASSWORD: ${{ secrets.PERFORMANCE_INFLUX_DB_PASSWORD }}
           MEASUREMENT_ENVIRONMENT: CI
         run: |
-          mv graph/graph.obj test/ci-performance-test/
-          mvn exec:java -Dexec.mainClass="org.opentripplanner.transit.raptor.speed_test.SpeedTest" -Dexec.classpathScope=test -Dexec.args="--dir=test/ci-performance-test/ -p md -n 4 -i 3 -0"
+          mv graph/graph.obj test/ci-performance-test/${{ matrix.location }}
+          mvn exec:java -Dexec.mainClass="org.opentripplanner.transit.raptor.speed_test.SpeedTest" -Dexec.classpathScope=test -Dexec.args="--dir=test/ci-performance-test/${{ matrix.location }} -p md -n 4 -i 3 -0"
 
       - name: Archive travel results file
         uses: actions/upload-artifact@v2
         with:
           name: travelSearch-results.csv
           path: |
-            test/ci-performance-test/travelSearch-results.csv
+            test/performance/${{ matrix.location }}/travelSearch-results.csv
 
