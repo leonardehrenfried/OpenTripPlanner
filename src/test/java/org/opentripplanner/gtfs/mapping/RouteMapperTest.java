@@ -53,7 +53,8 @@ public class RouteMapperTest {
   private static final Route ROUTE = new Route();
   private final RouteMapper subject = new RouteMapper(
     new AgencyMapper(TransitModelForTest.FEED_ID),
-    DataImportIssueStore.noopIssueStore()
+    DataImportIssueStore.noopIssueStore(),
+    new TranslationHelper()
   );
 
   static {
@@ -85,7 +86,7 @@ public class RouteMapperTest {
     assertEquals("A:1", result.getId().toString());
     assertNotNull(result.getAgency());
     assertEquals(SHORT_NAME, result.getShortName());
-    assertEquals(LONG_NAME, result.getLongName());
+    assertEquals(LONG_NAME, result.getLongName().toString());
     assertEquals(DESC, result.getDescription());
     assertEquals(ROUTE_TYPE, result.getGtfsType());
     assertEquals(TRANSIT_MODE, result.getMode());

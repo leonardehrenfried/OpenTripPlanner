@@ -90,6 +90,12 @@ based on merged pull requests. Search GitHub issues and pull requests for smalle
 - Add custom bike rental data updater (vilkku) as an extension [#4381](https://github.com/opentripplanner/OpenTripPlanner/pull/4381)
 - Cleanup dev-guide and add code conventions [#4375](https://github.com/opentripplanner/OpenTripPlanner/pull/4375)
 - Flex: when optimizing paths preserve egress transfers [#4378](https://github.com/opentripplanner/OpenTripPlanner/pull/4378)
+- Skip opening hours if no time-zone configured [#4372](https://github.com/opentripplanner/OpenTripPlanner/pull/4372)
+- Rename and clean up RepairStopTimesForEachTripOperation [#4388](https://github.com/opentripplanner/OpenTripPlanner/pull/4388)
+- Digitransit stop vector layer updates [#4404](https://github.com/opentripplanner/OpenTripPlanner/pull/4404)
+- Re-enable copying of submode to trip from route [#4407](https://github.com/opentripplanner/OpenTripPlanner/pull/4407)
+- Use pattern index instead of route id or agency id for unpreferred cost [#4390](https://github.com/opentripplanner/OpenTripPlanner/pull/4390)
+- Performance improvements for DefaultFareServiceImpl [#4402](https://github.com/opentripplanner/OpenTripPlanner/pull/4402)
   [](AUTOMATIC_CHANGELOG_PLACEHOLDER_DO_NOT_REMOVE)
 
 ## 2.1.0 (2022-03-17)

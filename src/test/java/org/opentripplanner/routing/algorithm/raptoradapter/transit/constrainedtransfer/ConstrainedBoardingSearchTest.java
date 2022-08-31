@@ -30,7 +30,7 @@ import org.opentripplanner.transit.model.basic.TransitMode;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.transit.model.network.RoutingTripPattern;
 import org.opentripplanner.transit.model.network.TripPattern;
-import org.opentripplanner.transit.model.site.Stop;
+import org.opentripplanner.transit.model.site.RegularStop;
 import org.opentripplanner.transit.raptor.api.transit.RaptorTripScheduleBoardOrAlightEvent;
 import org.opentripplanner.util.OTPFeature;
 
@@ -341,7 +341,7 @@ public class ConstrainedBoardingSearchTest {
   }
 
   void testTransferSearch(
-    Stop transferStop,
+    RegularStop transferStop,
     List<ConstrainedTransfer> constraints,
     int expTripIndexFwdSearch,
     int expTripIndexRevSearch,
@@ -352,16 +352,16 @@ public class ConstrainedBoardingSearchTest {
   }
 
   void testTransferSearchForward(
-    Stop transferStop,
+    RegularStop transferStop,
     List<ConstrainedTransfer> txList,
     int expectedTripIndex,
     TransferConstraint expectedConstraint
   ) {
     var constrainedTransfers = generateTransfersForPatterns(txList);
-    var subject = new ConstrainedBoardingSearch(
-      true,
-      constrainedTransfers.forward().get(routingPattern2.patternIndex())
-    );
+    TransferForPatternByStopPos transfers = constrainedTransfers
+      .forward()
+      .get(routingPattern2.patternIndex());
+    var subject = new ConstrainedBoardingSearch(true, transfers);
 
     int targetStopPos = route2.stopPosition(transferStop);
     int stopIndex = transferStop.getIndex();
@@ -369,6 +369,9 @@ public class ConstrainedBoardingSearchTest {
 
     // Check that transfer exist
     assertTrue(subject.transferExist(targetStopPos));
+
+    // Check that transfers are sorted
+    assertTransfersAreSorted(transfers, targetStopPos);
 
     var boarding = subject.find(
       route2.getTimetable(),
@@ -381,8 +384,17 @@ public class ConstrainedBoardingSearchTest {
     assertBoarding(stopIndex, targetStopPos, expectedTripIndex, expectedConstraint, boarding);
   }
 
+  private void assertTransfersAreSorted(
+    TransferForPatternByStopPos transferForPatternByStopPos,
+    int targetStopPos
+  ) {
+    var transfers = transferForPatternByStopPos.get(targetStopPos);
+    // Make sure the transfers are sorted on specificityRanking (TransferForPattern implements Comparable)
+    assertEquals(transfers.stream().sorted().toList(), transfers);
+  }
+
   void testTransferSearchReverse(
-    Stop transferStop,
+    RegularStop transferStop,
     List<ConstrainedTransfer> txList,
     int expectedTripIndex,
     TransferConstraint expectedConstraint

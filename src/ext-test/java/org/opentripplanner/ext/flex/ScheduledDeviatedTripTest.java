@@ -20,6 +20,7 @@ import org.opentripplanner.TestServerContext;
 import org.opentripplanner.ext.fares.FaresFilter;
 import org.opentripplanner.ext.flex.trip.FlexTrip;
 import org.opentripplanner.ext.flex.trip.ScheduledDeviatedTrip;
+import org.opentripplanner.graph_builder.module.ValidateAndInterpolateStopTimesForEachTrip;
 import org.opentripplanner.model.GenericLocation;
 import org.opentripplanner.model.StopTime;
 import org.opentripplanner.model.plan.Itinerary;
@@ -37,7 +38,7 @@ import org.opentripplanner.routing.graphfinder.NearbyStop;
 import org.opentripplanner.routing.location.StreetLocation;
 import org.opentripplanner.standalone.api.OtpServerRequestContext;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
-import org.opentripplanner.transit.model.site.FlexStopLocation;
+import org.opentripplanner.transit.model.site.AreaStop;
 import org.opentripplanner.transit.service.DefaultTransitService;
 import org.opentripplanner.transit.service.TransitModel;
 import org.opentripplanner.util.OTPFeature;
@@ -196,7 +197,7 @@ public class ScheduledDeviatedTripTest extends FlexTest {
    * Normally these trip times are interpolated/repaired during the graph build but for flex this is
    * exactly what we don't want. Here we check that the interpolation process is skipped.
    *
-   * @see org.opentripplanner.gtfs.RepairStopTimesForEachTripOperation#interpolateStopTimes(List)
+   * @see ValidateAndInterpolateStopTimesForEachTrip#interpolateStopTimes(List)
    */
   @Test
   void shouldNotInterpolateFlexTimes() {
@@ -262,7 +263,7 @@ public class ScheduledDeviatedTripTest extends FlexTest {
     var stopLocation = trip
       .getStops()
       .stream()
-      .filter(s -> s instanceof FlexStopLocation)
+      .filter(s -> s instanceof AreaStop)
       .findFirst()
       .orElseThrow();
     var r = new RoutingRequest();

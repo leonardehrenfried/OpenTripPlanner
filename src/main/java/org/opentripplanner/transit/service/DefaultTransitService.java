@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import javax.inject.Inject;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
@@ -21,7 +20,6 @@ import org.opentripplanner.model.PathTransfer;
 import org.opentripplanner.model.StopTimesInPattern;
 import org.opentripplanner.model.Timetable;
 import org.opentripplanner.model.TimetableSnapshot;
-import org.opentripplanner.model.TimetableSnapshotProvider;
 import org.opentripplanner.model.TripTimeOnDate;
 import org.opentripplanner.model.calendar.CalendarService;
 import org.opentripplanner.model.transfer.TransferService;
@@ -39,10 +37,10 @@ import org.opentripplanner.transit.model.network.Route;
 import org.opentripplanner.transit.model.network.TripPattern;
 import org.opentripplanner.transit.model.organization.Agency;
 import org.opentripplanner.transit.model.organization.Operator;
-import org.opentripplanner.transit.model.site.FlexStopLocation;
+import org.opentripplanner.transit.model.site.AreaStop;
 import org.opentripplanner.transit.model.site.MultiModalStation;
+import org.opentripplanner.transit.model.site.RegularStop;
 import org.opentripplanner.transit.model.site.Station;
-import org.opentripplanner.transit.model.site.Stop;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.transit.model.site.StopLocationsGroup;
 import org.opentripplanner.transit.model.timetable.Trip;
@@ -135,7 +133,7 @@ public class DefaultTransitService implements TransitEditorService {
 
   @Override
   public Collection<Station> getStations() {
-    return this.transitModel.getStopModel().getStations();
+    return this.transitModel.getStopModel().listStations();
   }
 
   @Override
@@ -151,8 +149,8 @@ public class DefaultTransitService implements TransitEditorService {
   }
 
   @Override
-  public FlexStopLocation getLocationById(FeedScopedId id) {
-    return this.transitModel.getStopModel().getFlexStopById(id);
+  public AreaStop getAreaStop(FeedScopedId id) {
+    return this.transitModel.getStopModel().getAreaStop(id);
   }
 
   @Override
@@ -161,7 +159,7 @@ public class DefaultTransitService implements TransitEditorService {
   }
 
   @Override
-  public StopLocation getRegularStop(FeedScopedId id) {
+  public RegularStop getRegularStop(FeedScopedId id) {
     return this.transitModel.getStopModel().getRegularStop(id);
   }
 
@@ -206,7 +204,7 @@ public class DefaultTransitService implements TransitEditorService {
   }
 
   @Override
-  public Collection<Stop> listRegularStops() {
+  public Collection<RegularStop> listRegularStops() {
     return transitModel.getStopModel().listRegularStops();
   }
 
@@ -474,13 +472,6 @@ public class DefaultTransitService implements TransitEditorService {
   }
 
   @Override
-  public <T extends TimetableSnapshotProvider> T getOrSetupTimetableSnapshotProvider(
-    Function<TransitModel, T> creator
-  ) {
-    return this.transitModel.getOrSetupTimetableSnapshotProvider(creator);
-  }
-
-  @Override
   public TransitLayer getTransitLayer() {
     return this.transitModel.getTransitLayer();
   }
@@ -526,7 +517,7 @@ public class DefaultTransitService implements TransitEditorService {
   }
 
   @Override
-  public Collection<Stop> queryStopSpatialIndex(Envelope envelope) {
+  public Collection<RegularStop> findRegularStop(Envelope envelope) {
     return transitModel.getStopModel().findRegularStops(envelope);
   }
 

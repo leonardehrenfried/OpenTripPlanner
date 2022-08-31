@@ -38,7 +38,6 @@ import org.opentripplanner.graph_builder.model.GtfsBundle;
 import org.opentripplanner.graph_builder.module.geometry.GeometryProcessor;
 import org.opentripplanner.graph_builder.module.interlining.InterlineProcessor;
 import org.opentripplanner.gtfs.GenerateTripPatternsOperation;
-import org.opentripplanner.gtfs.RepairStopTimesForEachTripOperation;
 import org.opentripplanner.gtfs.mapping.GTFSToOtpTransitServiceMapper;
 import org.opentripplanner.model.OtpTransitService;
 import org.opentripplanner.model.TripStopTimes;
@@ -153,7 +152,7 @@ public class GtfsModule implements GraphBuilderModule {
           builder.getFlexTripsById().addAll(FlexTripsMapper.createFlexTrips(builder, issueStore));
         }
 
-        repairStopTimesForEachTrip(builder.getStopTimesSortedByTrip(), issueStore);
+        validateAndInterpolateStopTimesForEachTrip(builder.getStopTimesSortedByTrip(), issueStore);
 
         GeometryProcessor geometryProcessor = new GeometryProcessor(
           builder,
@@ -216,11 +215,11 @@ public class GtfsModule implements GraphBuilderModule {
   /**
    * This method has side effects, the {@code stopTimesByTrip} is updated.
    */
-  private void repairStopTimesForEachTrip(
+  private void validateAndInterpolateStopTimesForEachTrip(
     TripStopTimes stopTimesByTrip,
     DataImportIssueStore issueStore
   ) {
-    new RepairStopTimesForEachTripOperation(stopTimesByTrip, issueStore).run();
+    new ValidateAndInterpolateStopTimesForEachTrip(stopTimesByTrip, true, issueStore).run();
   }
 
   /**

@@ -34,7 +34,7 @@ import org.opentripplanner.transit.model.basic.I18NString;
 import org.opentripplanner.transit.model.basic.LocalizedString;
 import org.opentripplanner.transit.model.basic.NonLocalizedString;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
-import org.opentripplanner.transit.model.site.Stop;
+import org.opentripplanner.transit.model.site.RegularStop;
 import org.opentripplanner.transit.service.StopModel;
 import org.opentripplanner.util.geometry.GeometryUtils;
 import org.opentripplanner.util.logging.ProgressTracker;
@@ -207,7 +207,7 @@ public class StreetVertexIndex {
       // Check if Stop/StopCollection is found by FeedScopeId
       if (location.stopId != null) {
         Set<Vertex> transitStopVertices = getStopVerticesById(location.stopId);
-        if (transitStopVertices != null) {
+        if (transitStopVertices != null && !transitStopVertices.isEmpty()) {
           return transitStopVertices;
         }
       }
@@ -259,10 +259,10 @@ public class StreetVertexIndex {
    */
   private Set<Vertex> getStopVerticesById(FeedScopedId id) {
     return stopModel
-      .getStopOrChildStops(id)
+      .findStopOrChildStops(id)
       .stream()
-      .filter(Stop.class::isInstance)
-      .map(Stop.class::cast)
+      .filter(RegularStop.class::isInstance)
+      .map(RegularStop.class::cast)
       .map(it -> transitStopVertices.get(it.getId()))
       .collect(Collectors.toSet());
   }

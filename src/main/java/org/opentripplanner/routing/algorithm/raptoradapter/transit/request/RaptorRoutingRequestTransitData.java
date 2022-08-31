@@ -1,6 +1,5 @@
 package org.opentripplanner.routing.algorithm.raptoradapter.transit.request;
 
-import gnu.trove.map.TIntObjectMap;
 import java.time.ZonedDateTime;
 import java.util.BitSet;
 import java.util.Iterator;
@@ -54,11 +53,11 @@ public class RaptorRoutingRequestTransitData implements RaptorTransitDataProvide
   /**
    * Transfers by stop index
    */
-  private final RaptorTransferIndex transfers;
+  private final RaptorTransferIndex transferIndex;
 
-  private final TIntObjectMap<TransferForPatternByStopPos> forwardConstrainedTransfers;
+  private final List<TransferForPatternByStopPos> forwardConstrainedTransfers;
 
-  private final TIntObjectMap<TransferForPatternByStopPos> reverseConstrainedTransfers;
+  private final List<TransferForPatternByStopPos> reverseConstrainedTransfers;
 
   private final ZonedDateTime transitSearchTimeZero;
 
@@ -69,7 +68,6 @@ public class RaptorRoutingRequestTransitData implements RaptorTransitDataProvide
   private final int validTransitDataEndTime;
 
   public RaptorRoutingRequestTransitData(
-    TransferService transferService,
     TransitLayer transitLayer,
     ZonedDateTime transitSearchTimeZero,
     int additionalPastSearchDays,
@@ -77,7 +75,7 @@ public class RaptorRoutingRequestTransitData implements RaptorTransitDataProvide
     TransitDataProviderFilter filter,
     RoutingContext routingContext
   ) {
-    this.transferService = transferService;
+    this.transferService = transitLayer.getTransferService();
     this.transitLayer = transitLayer;
     this.transitSearchTimeZero = transitSearchTimeZero;
 
@@ -95,12 +93,12 @@ public class RaptorRoutingRequestTransitData implements RaptorTransitDataProvide
     );
     this.patternIndex = transitDataCreator.createPatternIndex(tripPatterns);
     this.activeTripPatternsPerStop = transitDataCreator.createTripPatternsPerStop(tripPatterns);
-    this.transfers = transitLayer.getRaptorTransfersForRequest(routingContext);
+    this.transferIndex = transitLayer.getRaptorTransfersForRequest(routingContext);
 
     this.forwardConstrainedTransfers = transitLayer.getForwardConstrainedTransfers();
     this.reverseConstrainedTransfers = transitLayer.getReverseConstrainedTransfers();
 
-    var mcCostParams = McCostParamsMapper.map(routingContext.opt);
+    var mcCostParams = McCostParamsMapper.map(routingContext.opt, patternIndex);
 
     this.generalizedCostCalculator =
       CostCalculatorFactory.createCostCalculator(
@@ -123,12 +121,12 @@ public class RaptorRoutingRequestTransitData implements RaptorTransitDataProvide
 
   @Override
   public Iterator<RaptorTransfer> getTransfersFromStop(int stopIndex) {
-    return transfers.getForwardTransfers().get(stopIndex).iterator();
+    return transferIndex.getForwardTransfers(stopIndex).iterator();
   }
 
   @Override
   public Iterator<? extends RaptorTransfer> getTransfersToStop(int stopIndex) {
-    return transfers.getReversedTransfers().get(stopIndex).iterator();
+    return transferIndex.getReversedTransfers(stopIndex).iterator();
   }
 
   @Override
@@ -210,13 +208,21 @@ public class RaptorRoutingRequestTransitData implements RaptorTransitDataProvide
   public RaptorConstrainedTripScheduleBoardingSearch<TripSchedule> transferConstraintsForwardSearch(
     int routeIndex
   ) {
-    return new ConstrainedBoardingSearch(true, forwardConstrainedTransfers.get(routeIndex));
+    TransferForPatternByStopPos transfers = forwardConstrainedTransfers.get(routeIndex);
+    if (transfers == null) {
+      return ConstrainedBoardingSearch.NOOP_SEARCH;
+    }
+    return new ConstrainedBoardingSearch(true, transfers);
   }
 
   @Override
   public RaptorConstrainedTripScheduleBoardingSearch<TripSchedule> transferConstraintsReverseSearch(
     int routeIndex
   ) {
-    return new ConstrainedBoardingSearch(false, reverseConstrainedTransfers.get(routeIndex));
+    TransferForPatternByStopPos transfers = reverseConstrainedTransfers.get(routeIndex);
+    if (transfers == null) {
+      return ConstrainedBoardingSearch.NOOP_SEARCH;
+    }
+    return new ConstrainedBoardingSearch(false, transfers);
   }
 }

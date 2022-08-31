@@ -63,8 +63,8 @@ import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.transit.model.network.Route;
 import org.opentripplanner.transit.model.network.TripPattern;
 import org.opentripplanner.transit.model.organization.Agency;
+import org.opentripplanner.transit.model.site.RegularStop;
 import org.opentripplanner.transit.model.site.Station;
-import org.opentripplanner.transit.model.site.Stop;
 import org.opentripplanner.transit.model.timetable.Trip;
 import org.opentripplanner.transit.service.TransitService;
 import org.opentripplanner.updater.GtfsRealtimeFuzzyTripMatcher;
@@ -665,11 +665,11 @@ public class LegacyGraphQLQueryTypeImpl
       callWith.argument("preferred.agencies", request::setPreferredAgenciesFromString);
       callWith.argument("unpreferred.routes", request::setUnpreferredRoutesFromString);
       callWith.argument("unpreferred.agencies", request::setUnpreferredAgenciesFromString);
-      callWith.argument("unpreferred.unpreferredRouteCost", request::setUnpreferredRouteCost);
+      callWith.argument("unpreferred.unpreferredRouteCost", request::setUnpreferredCost);
       callWith.argument(
         "unpreferred.useUnpreferredRoutesPenalty",
         (Integer v) ->
-          request.setUnpreferredRouteCost(
+          request.setUnpreferredCost(
             RequestFunctions.serialize(RequestFunctions.createLinearFunction(v, 0.0))
           )
       );
@@ -910,14 +910,10 @@ public class LegacyGraphQLQueryTypeImpl
         String name = args.getLegacyGraphQLName().toLowerCase(environment.getLocale());
         routeStream =
           routeStream.filter(route ->
-            Stream
-              .of(route.getShortName(), route.getLongName())
-              .filter(Objects::nonNull)
-              .map(s -> s.toLowerCase(environment.getLocale()))
-              .anyMatch(s -> s.startsWith(name))
+            LegacyGraphQLUtils.startsWith(route.getShortName(), name, environment.getLocale()) ||
+            LegacyGraphQLUtils.startsWith(route.getLongName(), name, environment.getLocale())
           );
       }
-
       return routeStream.collect(Collectors.toList());
     };
   }
@@ -963,11 +959,7 @@ public class LegacyGraphQLQueryTypeImpl
         String name = args.getLegacyGraphQLName().toLowerCase(environment.getLocale());
         stationStream =
           stationStream.filter(station ->
-            station
-              .getName()
-              .toString(environment.getLocale())
-              .toLowerCase(environment.getLocale())
-              .startsWith(name)
+            LegacyGraphQLUtils.startsWith(station.getName(), name, environment.getLocale())
           );
       }
 
@@ -1008,11 +1000,7 @@ public class LegacyGraphQLQueryTypeImpl
         String name = args.getLegacyGraphQLName().toLowerCase(environment.getLocale());
         stopStream =
           stopStream.filter(stop ->
-            stop
-              .getName()
-              .toString(environment.getLocale())
-              .toLowerCase(environment.getLocale())
-              .startsWith(name)
+            LegacyGraphQLUtils.startsWith(stop.getName(), name, environment.getLocale())
           );
       }
 
@@ -1032,8 +1020,8 @@ public class LegacyGraphQLQueryTypeImpl
         new Coordinate(args.getLegacyGraphQLMaxLon(), args.getLegacyGraphQLMaxLat())
       );
 
-      Stream<Stop> stopStream = getTransitService(environment)
-        .queryStopSpatialIndex(envelope)
+      Stream<RegularStop> stopStream = getTransitService(environment)
+        .findRegularStop(envelope)
         .stream()
         .filter(stop -> envelope.contains(stop.getCoordinate().asJtsCoordinate()));
 

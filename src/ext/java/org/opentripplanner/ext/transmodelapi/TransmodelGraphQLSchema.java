@@ -669,7 +669,7 @@ public class TransmodelGraphQLSchema {
             );
             return GqlUtil
               .getTransitService(environment)
-              .queryStopSpatialIndex(envelope)
+              .findRegularStop(envelope)
               .stream()
               .filter(stop -> envelope.contains(stop.getCoordinate().asJtsCoordinate()))
               .filter(stop ->
@@ -1151,6 +1151,7 @@ public class TransmodelGraphQLSchema {
                   .filter(route ->
                     route
                       .getLongName()
+                      .toString()
                       .toLowerCase()
                       .startsWith(((String) environment.getArgument("name")).toLowerCase())
                   );
