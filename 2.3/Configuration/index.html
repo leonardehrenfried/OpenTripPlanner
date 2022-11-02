@@ -1,0 +1,1849 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.opentripplanner.org/2.3/Configuration/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.7">
+    
+    
+      
+        <title>Introduction - OpenTripPlanner 2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configuring-opentripplanner" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenTripPlanner 2" class="md-header__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTripPlanner 2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Introduction
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Governance/" class="md-tabs__link">
+        About
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Basic-Tutorial/" class="md-tabs__link md-tabs__link--active">
+        Usage
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Developers-Guide/" class="md-tabs__link">
+        Development
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../SandboxExtension/" class="md-tabs__link">
+        Sandbox
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenTripPlanner 2" class="md-nav__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    OpenTripPlanner 2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          About
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="About" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          About
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Governance/" class="md-nav__link">
+        Governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../History/" class="md-nav__link">
+        History
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deployments/" class="md-nav__link">
+        Deployments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Version-Comparison/" class="md-nav__link">
+        Comparing OTP2 to OTP1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OTP2-MigrationGuide/" class="md-nav__link">
+        OTP2 migration guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Visual-Identity/" class="md-nav__link">
+        Visual Identity
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Basic-Tutorial/" class="md-nav__link">
+        Basic Tutorial
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting-OTP/" class="md-nav__link">
+        Getting OTP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Container-Image/" class="md-nav__link">
+        Container image
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_4">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Introduction
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#base-directory" class="md-nav__link">
+    Base Directory
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-scopes-of-configuration" class="md-nav__link">
+    Three Scopes of Configuration
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-types" class="md-nav__link">
+    Configuration types
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-environment-and-project-information-substitution" class="md-nav__link">
+    System environment and project information substitution
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#config-version" class="md-nav__link">
+    Config version
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#otp-serialization-version-id-and-graphobj-file-header" class="md-nav__link">
+    OTP Serialization version id and Graph.obj file header
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#include-file-directive" class="md-nav__link">
+    Include file directive
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BuildConfiguration/" class="md-nav__link">
+        Build
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BoardingLocations/" class="md-nav__link">
+        Boarding locations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouterConfiguration/" class="md-nav__link">
+        Router
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Accessibility/" class="md-nav__link">
+        Accessibility
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouteRequest/" class="md-nav__link">
+        Route Request
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UpdaterConfig/" class="md-nav__link">
+        Realtime Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoutingModes/" class="md-nav__link">
+        Routing Modes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Preparing-OSM/" class="md-nav__link">
+        Preparing OSM Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Netex-Norway/" class="md-nav__link">
+        Netex and SIRI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Security/" class="md-nav__link">
+        Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting-Routing/" class="md-nav__link">
+        Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Development
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Development" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Development
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Developers-Guide/" class="md-nav__link">
+        Developers' Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Interfaces-Data-Sources/" class="md-nav__link">
+        Interfaces and Data Sources
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        Localization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Bibliography/" class="md-nav__link">
+        Bibliography
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Codestyle/" class="md-nav__link">
+        Codestyle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        Sandbox development
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Sandbox
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Sandbox" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Sandbox
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ActuatorAPI/" class="md-nav__link">
+        Actuator API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/transferanalyzer/" class="md-nav__link">
+        Direct transfer analyzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GoogleCloudStorage/" class="md-nav__link">
+        Google Cloud Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/LegacyGraphQLApi/" class="md-nav__link">
+        HSL Legacy GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TransmodelApi/" class="md-nav__link">
+        Transmodel(NeTEx) GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriUpdator/" class="md-nav__link">
+        SIRI Updater (Google Cloud)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriAzureUpdater/" class="md-nav__link">
+        SIRI Updater (Azure)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleRentalServiceDirectory/" class="md-nav__link">
+        Vehicle Rental Service Directory API support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SmooveBikeRental/" class="md-nav__link">
+        Smoove Bike Rental Updator Support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/MapboxVectorTilesApi/" class="md-nav__link">
+        Mapbox Vector Tiles API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Flex/" class="md-nav__link">
+        Flex Routing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ReportApi/" class="md-nav__link">
+        Report API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/InteractiveOtpMain/" class="md-nav__link">
+        Interactive OTP Launcher
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ParkAndRideApi/" class="md-nav__link">
+        Park and Ride API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/DataOverlay/" class="md-nav__link">
+        Data Overlay
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleParking/" class="md-nav__link">
+        Vehicle Parking Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleToStopHeuristics/" class="md-nav__link">
+        Vehicle-to-stop Heuristics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GeocoderAPI/" class="md-nav__link">
+        Geocoder API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TravelTime/" class="md-nav__link">
+        Travel time isochrones
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/IBIAccessibilityScore/" class="md-nav__link">
+        IBI accessibility score
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Fares/" class="md-nav__link">
+        Fares
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Configuration.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<!--
+  NOTE! Part of this document is generated. Make sure you edit the template, not the generated doc.
+
+   - Template directory is:  /doc-templates
+   - Generated directory is: /docs 
+-->
+
+<h1 id="configuring-opentripplanner">Configuring OpenTripPlanner</h1>
+<p><em>Note: if you are familiar with OTP1 configuration and are migrating to OTP2, please read the
+<a href="../OTP2-MigrationGuide/">OTP2 Migration Guide</a> to learn what has changed.</em></p>
+<h2 id="base-directory">Base Directory</h2>
+<p>On the OTP2 command line you must always specify a single directory after all the switches. This
+tells OTP2 where to look for any configuration files. By default OTP will also scan this directory
+for input files to build a graph (GTFS, OSM, elevation, and base street graphs) or the <code>graph.obj</code>
+file to load when starting a server.</p>
+<p>A typical OTP2 directory for a New York City graph might include the following:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>otp-config.json
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>build-config.json
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>router-config.json
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>new-york-city-no-buildings.osm.pbf
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>nyc-elevation.tiff
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>long-island-rail-road.gtfs.zip
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>mta-new-york-city-transit.gtfs.zip
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>port-authority-of-new-york-new-jersey.gtfs.zip
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>graph.obj
+</code></pre></div>
+<p>You could have more than one of these directories if you are building separate graphs for separate
+regions. Each one should contain one or more GTFS feeds, a PBF OpenStreetMap file, some JSON
+configuration files, and any output files such as <code>graph.obj</code>. For convenience, especially if you
+work with only one graph at a time, you may want to place your OTP2 JAR file in this same directory.
+Note that file types are detected through a case-insensitive combination of file extension and words
+within the file name. GTFS file names must end in <code>.zip</code> and contain the letters <code>gtfs</code>, and OSM
+files must end in <code>.pbf</code>.</p>
+<p>It is also possible to provide a list of input files in the configuration, which will override the
+default behavior of scanning the base directory for input files. Scanning is overridden
+independently for each file type, and can point to remote cloud storage with arbitrary URIs.
+See <a href="./#Storage">the storage section</a> for further details.</p>
+<h2 id="three-scopes-of-configuration">Three Scopes of Configuration</h2>
+<p>OTP is configured via three configuration JSON files which are read from the directory specified on
+its command line. We try to provide sensible defaults for every option, so all three of these files
+are optional, as are all the options within each file. Each configuration file corresponds to
+options that are relevant at a particular phase of OTP usage.</p>
+<p>Options and parameters that are taken into account during the graph building process will be "baked
+into" the graph, and cannot be changed later in a running server. These are specified
+in <code>build-config.json</code>. Other details of OTP operation can be modified without rebuilding the graph.
+These run-time configuration options are found in <code>router-config.json</code>. Finally, <code>otp-config.json</code>
+contains simple switches that enable or disable system-wide features.</p>
+<h2 id="configuration-types">Configuration types</h2>
+<p>The OTP configuration files use the JSON file format. OTP allows comments and unquoted field names
+in the JSON configuration files to be more human-friendly. OTP supports all the basic JSON types:
+nested objects <code>{...}</code>, arrays <code>[]</code>, numbers <code>789.0</code> and boolean <code>true</code> or <code>false</code>. In addition to
+these basic types some configuration parameters are parsed with some restrictions. In the
+documentation below we will refer to the following types:</p>
+<!-- CONFIGURATION-TYPES-TABLE BEGIN -->
+<!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
+
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>boolean</code></td>
+<td>This is the Boolean JSON type</td>
+<td><code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td><code>string</code></td>
+<td>This is the String JSON type.</td>
+<td><code>"This is a string!"</code></td>
+</tr>
+<tr>
+<td><code>double</code></td>
+<td>A decimal floating point <em>number</em>. 64 bit.</td>
+<td><code>3.15</code></td>
+</tr>
+<tr>
+<td><code>integer</code></td>
+<td>A decimal integer <em>number</em>. 32 bit.</td>
+<td><code>1</code>, <code>-7</code>, <code>2100</code></td>
+</tr>
+<tr>
+<td><code>long</code></td>
+<td>A decimal integer <em>number</em>. 64 bit.</td>
+<td><code>-1234567890</code></td>
+</tr>
+<tr>
+<td><code>enum</code></td>
+<td>A fixed set of string literals.</td>
+<td><code>"RAIL"</code>, <code>"BUS"</code></td>
+</tr>
+<tr>
+<td><code>enum-map</code></td>
+<td>List of key/value pairs, where the key is a enum and the value can be any given type.</td>
+<td><code>{ "RAIL: 1.2, "BUS": 2.3 }</code></td>
+</tr>
+<tr>
+<td><code>enum-set</code></td>
+<td>List of enum string values</td>
+<td><code>[ "RAIL", "TRAM" ]</code></td>
+</tr>
+<tr>
+<td><code>locale</code></td>
+<td><em><code>Language[\_country[\_variant]]</code></em>. A Locale object represents a specific geographical, political, or cultural region. For more information see the <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Locale.html">Java 11 Locale</a>.</td>
+<td><code>"en_US"</code>, <code>"nn_NO"</code></td>
+</tr>
+<tr>
+<td><code>date</code></td>
+<td>Local date. The format is <em>YYYY-MM-DD</em> (ISO-8601).</td>
+<td><code>"2020-09-21"</code></td>
+</tr>
+<tr>
+<td><code>date-or-period</code></td>
+<td>A <em>local date</em>, or a <em>period</em> relative to today. The local date has the format <code>YYYY-MM-DD</code> and the period has the format <code>PnYnMnD</code> or <code>-PnYnMnD</code> where <code>n</code> is a integer number.</td>
+<td><code>"P1Y"</code>, <code>"-P3M2D"</code>, <code>"P1D"</code></td>
+</tr>
+<tr>
+<td><code>duration</code></td>
+<td>A <em>duration</em> is a amount of time. The format is <code>PnDTnHnMnS</code> or <code>nDnHnMnS</code> where <code>n</code> is a  integer number. The <code>D</code>(days), <code>H</code>(hours), <code>M</code>(minutes) and <code>S</code>(seconds) are not case sensitive.</td>
+<td><code>"3h"</code>, <code>"2m"</code>, <code>"1d5h2m3s"</code>, <code>"-P2dT-1s"</code></td>
+</tr>
+<tr>
+<td><code>regexp</code></td>
+<td>A regular expression pattern used to match a sting.</td>
+<td><code>"$^"</code>, <code>"gtfs"</code>, <code>"\w{3})-.*\.xml"</code></td>
+</tr>
+<tr>
+<td><code>uri</code></td>
+<td>An URI path to a resource like a file or a URL. Relative URIs are resolved relative to the OTP base path.</td>
+<td><code>"http://foo.bar/"</code>, <code>"file:///Users/jon/local/file"</code>, <code>"graph.obj"</code></td>
+</tr>
+<tr>
+<td><code>time-zone</code></td>
+<td>Time-Zone ID</td>
+<td><code>"UTC"</code>, <code>"Europe/Paris"</code>, <code>"-05:00"</code></td>
+</tr>
+<tr>
+<td><code>feed-scoped-id</code></td>
+<td>FeedScopedId</td>
+<td><code>"NO:1001"</code>, <code>"1:101"</code></td>
+</tr>
+<tr>
+<td><code>linear-function</code></td>
+<td>A linear function with one input parameter(x) used to calculate a value. Usually used to calculate a limit or cost.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>map</code></td>
+<td>List of key/value pairs, where the key is a string and the value can be any given type.</td>
+<td><code>{ "one": 1.2, "two": 2.3 }</code></td>
+</tr>
+<tr>
+<td><code>object</code></td>
+<td>Config object containing nested elements</td>
+<td><code>"walk": { "speed": 1.3, "reluctance": 5 }</code></td>
+</tr>
+<tr>
+<td><code>array</code></td>
+<td>Config object containing an array/list of elements</td>
+<td><code>"array": [ 1, 2, 3 ]</code></td>
+</tr>
+</tbody>
+</table>
+<!-- CONFIGURATION-TYPES-TABLE END -->
+
+<h2 id="system-environment-and-project-information-substitution">System environment and project information substitution</h2>
+<p>OTP support injecting system environment variables and project information parameters into the
+configuration. A pattern like <code>${VAR_NAME}</code> in a configuration file is substituted with an
+environment variable with name <code>VAR_NAME</code>. The substitution is done BEFORE the JSON is parsed, so
+both json keys and values is subject to substitution. This is useful if you want OTPs version number
+to be part of the <em>graph-file-name</em>, or you want to inject credentials in a cloud based deployment.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="nt">&quot;gsCredentials&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${GCS_SERVICE_CREDENTIALS}&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;graph&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file:///var/otp/graph-${otp.serialization.version.id}.obj&quot;</span><span class="w"></span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>In the example above the environment variable <code>GCS_SERVICE_CREDENTIALS</code> on the local machine where
+OTP is deployed is injected into the config. Also, the OTP serialization version id is injected.</p>
+<p>The project information variables available are:</p>
+<ul>
+<li><code>maven.version</code></li>
+<li><code>maven.version.short</code></li>
+<li><code>maven.version.major</code></li>
+<li><code>maven.version.minor</code></li>
+<li><code>maven.version.patch</code></li>
+<li><code>maven.version.qualifier</code></li>
+<li><code>git.branch</code></li>
+<li><code>git.commit</code></li>
+<li><code>git.commit.timestamp</code></li>
+<li><code>graph.file.header</code></li>
+<li><code>otp.serialization.version.id</code></li>
+</ul>
+<h2 id="config-version">Config version</h2>
+<p>All three configuration files have an optional <code>configVersion</code> property. The property can be used to
+version the configuration in a deployment pipeline. The <code>configVersion</code> is not used by OTP in any
+way, but is logged at startup and is available as part of the <em>server-info</em> data in the REST API.
+The intended usage is to be able to check which version of the configuration the graph was build
+with and which version the router uses. In an deployment with many OTP instances it can be useful to
+ask an instance about the version, instead of tracking the deployment pipline backwards to find the
+version used. How you inject a version into the configuration file is up to you, but you can do it
+in your build-pipline, at deployment time or use system environment variable substituton.</p>
+<h2 id="otp-serialization-version-id-and-graphobj-file-header">OTP Serialization version id and <em>Graph.obj</em> file header</h2>
+<p>OTP has a <em>OTP Serialization Version Id</em> maintained in the pom.xml_ file. OTP store the id in the
+serialized <em>Graph.obj</em> file header, allowing OTP the check for compatibility issues when loading the
+graph. The header info is available to configuration substitution:</p>
+<ul>
+<li><code>${graph.file.header}</code> Will expand to: <code>OpenTripPlannerGraph;0000007;</code></li>
+<li><code>${otp.serialization.version.id}</code> Will expand to: <code>7</code></li>
+</ul>
+<p>The intended usage is to be able to have a graph build pipeline which "knows" which graph that
+matches OTP planner instances. For example, you may build new graphs for every OTP serialization
+version id in use by the planning OPT instances you have deploied and plan to deploy. This way you
+can roll forward and backward new OTP instances without worring about building new graphs.</p>
+<p>There are various ways to access this information. To get the <code>Graph.obj</code> serialization version id
+you can run the following bash command:</p>
+<ul>
+<li><code>head -c 29 Graph.obj ==&gt;  OpenTripPlannerGraph;0000007;</code> (file header)</li>
+<li><code>head -c 28 Graph.obj | tail -c 7 ==&gt;  0000007</code>  (version id)</li>
+</ul>
+<p>The Maven <em>pom.xml</em>, the <em>META-INF/MANIFEST.MF</em>, the OTP command line(<code>--serVerId</code>), log start-up
+messages and all OTP APIs can be used to get the OTP Serialization Version Id.</p>
+<h2 id="include-file-directive">Include file directive</h2>
+<p>It is possible to inject the contents of another file into a configuration file. This makes it
+possible to keep parts of the configuration in separate files. To include the contents of a file,
+use
+<code>${includeFile:FILE_NAME}</code>. The <code>FILE_NAME</code> must be the name of a file in the configuration
+directory. Relative paths are not supported.</p>
+<p>To allow both files (the configuration file and the injected file) to be valid JSON files, a special
+case is supported. If the include file directive is quoted, then the quotes are removed, if the 
+text inserted is valid JSON (starts with <code>{</code> and ends with <code>}</code>). </p>
+<p>Variable substitution is performed on configuration file after the include file directive; Hence
+variable substitution is also performed on the text in the injected file.</p>
+<p>Here is an example including variable substitution, assuming version 2.1.0 of OTP:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// build-config.json</span><span class="w"></span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">&quot;transitFeeds&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${includeFile:transit.json}&quot;</span><span class="w"></span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">}</span><span class="w"> </span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// transit.json</span><span class="w"></span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">[</span><span class="w"></span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;netex-v${FEED_VERSION}.obj&quot;</span><span class="w"></span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">]</span><span class="w"></span>
+</code></pre></div>
+<p>The result will look like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">      </span><span class="nt">&quot;transitFeeds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">        </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">          </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;netex-v2_0.obj&quot;</span><span class="w"></span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">        </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">      </span><span class="p">]</span><span class="w"></span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">}</span><span class="w"> </span>
+</code></pre></div>
+<h1 id="system-wide-configuration">System-wide Configuration</h1>
+<p>Using the file <code>otp-config.json</code> you can enable or disable different APIs and experimental
+<a href="../SandboxExtension/">Sandbox Extensions</a>. By default, all supported APIs are enabled and all
+sandbox features are disabled. So for most OTP2 use cases it is not necessary to create this file.
+Features that can be toggled in this file are generally only affect the routing phase of OTP2 usage,
+but for consistency all such "feature flags", even those that would affect graph building, are
+managed in this one file. See
+the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/dev-2.x/src/main/java/org/opentripplanner/util/OTPFeature.java">OTPFeature</a>
+Java class for an enumeration of all available features and their default settings. Here is an
+example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// otp-config.json</span><span class="w"></span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;otpFeatures&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">        </span><span class="nt">&quot;APIBikeRental&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">        </span><span class="nt">&quot;ActuatorAPI&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<h2 id="otp-features">OTP Features</h2>
+<p>Here is a list of all features which can be toggled on/off.</p>
+<!-- OTP-FEATURE-TABLE BEGIN -->
+<!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
+
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+<th align="center">Enabled by default</th>
+<th align="center">Sandbox</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>APIBikeRental</code></td>
+<td>Enable the bike rental endpoint.</td>
+<td align="center">✓️</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>APIServerInfo</code></td>
+<td>Enable the server info endpoint.</td>
+<td align="center">✓️</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>APIGraphInspectorTile</code></td>
+<td>Enable the inspector  endpoint for graph information for inspection/debugging purpose.</td>
+<td align="center">✓️</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>APIUpdaterStatus</code></td>
+<td>Enable endpoint for graph updaters status.</td>
+<td align="center">✓️</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>ConsiderPatternsForDirectTransfers</code></td>
+<td>Enable limiting transfers so that there is only a single transfer to each pattern.</td>
+<td align="center">✓️</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>DebugClient</code></td>
+<td>Enable the debug web client located at the root of the web server.</td>
+<td align="center">✓️</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>FloatingBike</code></td>
+<td>Enable floating bike routing.</td>
+<td align="center">✓️</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>MinimumTransferTimeIsDefinitive</code></td>
+<td>If the minimum transfer time is a lower bound (default) or the definitive time for the transfer. Set this to <code>true</code> if you want to set a transfer time lower than what OTP derives from OSM data.</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>OptimizeTransfers</code></td>
+<td>OTP will inspect all itineraries found and optimize where (which stops) the transfer will happen. Waiting time, priority and guaranteed transfers are taken into account.</td>
+<td align="center">✓️</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>ParallelRouting</code></td>
+<td>Enable performing parts of the trip planning in parallel.</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>TransferConstraints</code></td>
+<td>Enforce transfers to happen according to the <em>transfers.txt</em>(GTFS) and Interchanges(NeTEx). Turing this <em>off</em> will increase the routing performance a little.</td>
+<td align="center">✓️</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>ActuatorAPI</code></td>
+<td>Endpoint for actuators (service health status).</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>DataOverlay</code></td>
+<td>Enable usage of data overlay when calculating costs for the street network.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>FaresV2</code></td>
+<td>Enable import of GTFS-Fares v2 data.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>FlexRouting</code></td>
+<td>Enable FLEX routing.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>GoogleCloudStorage</code></td>
+<td>Enable Google Cloud Storage integration.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>ReportApi</code></td>
+<td>Enable the report API.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>SandboxAPIGeocoder</code></td>
+<td>Enable the Geocoder API.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>SandboxAPILegacyGraphQLApi</code></td>
+<td>Enable (GTFS) GraphQL API.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>SandboxAPIMapboxVectorTilesApi</code></td>
+<td>Enable Mapbox vector tiles API.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>SandboxAPIParkAndRideApi</code></td>
+<td>Enable park-and-ride endpoint.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>SandboxAPITransmodelApi</code></td>
+<td>Enable Entur Transmodel(NeTEx) GraphQL API.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>SandboxAPITravelTime</code></td>
+<td>Enable the isochrone/travel time surface API.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>TransferAnalyzer</code></td>
+<td>Analyze transfers during graph build.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+<tr>
+<td><code>VehicleToStopHeuristics</code></td>
+<td>Enable improved heuristic for park-and-ride queries.</td>
+<td align="center"></td>
+<td align="center">✓️</td>
+</tr>
+</tbody>
+</table>
+<!-- OTP-FEATURE-TABLE END -->
+
+<h1 id="jvm-configuration">JVM configuration</h1>
+<p>This section contains general recommendations for tuning the JVM in a production environment.<br />
+It focuses mainly on garbage collection configuration and memory settings.<br />
+See <a href="https://docs.oracle.com/en/java/javase/17/gctuning/introduction-garbage-collection-tuning.html">Garbage Collector Tuning</a> for general information on garbage collection.<br />
+See <a href="https://kstefanj.github.io/2021/05/19/large-pages-and-java.html">Large Pages in Java</a> and  <a href="https://shipilev.net/jvm/anatomy-quarks/2-transparent-huge-pages">Transparent Huge Pages</a> for general information on large memory pages.</p>
+<h2 id="otp-server">OTP server</h2>
+<p>The OTP server processes concurrent routing requests in real time.<br />
+The main optimization goal for the OTP server is minimizing response time.</p>
+<h3 id="garbage-collector">Garbage collector</h3>
+<ul>
+<li>The G1 garbage collector (default since Java 9) offers a good compromise between low latency (i.e. low GC pause time) and GC overhead.</li>
+<li>If latency spikes are an issue, the ZGC garbage collector is an alternative. It produces in general more overhead than G1.  </li>
+</ul>
+<h3 id="memory-settings">Memory settings</h3>
+<ul>
+<li>Using Large Memory Pages can reduce pressure on the TLB cache and increase performance.  </li>
+<li>It is in general not recommended to use large memory page in <em>Transparent Huge Page</em> mode (<code>-XX:+UseTransparentHugePages</code>) for latency-sensitive applications, since memory is allocated on-demand and this can induce latency spikes if the memory is fragmented.<br />
+  Thus <em>TLBFS</em> mode (<code>-XX:+UseHugeTLBFS</code>) should be the first choice.</li>
+<li>If <em>TLBFS</em> mode is not an option,  <em>Transparent Huge Page</em> mode (<code>-XX:+UseTransparentHugePages</code>) can be used instead, with additional provisions to mitigate the risk of latency spikes:<br />
+The physical memory can be committed upfront, at JVM startup time. This can be done by forcing a fixed heap size and pre-touching the memory.<br />
+Example: <code>-Xms18g -Xmx18g -XX:+UseTransparentHugePages -XX:+AlwaysPreTouch</code>  </li>
+</ul>
+<h2 id="graph-builder">Graph Builder</h2>
+<p>The Graph Builder is the non-interactive mode used to build street graphs and transit graphs.   <br />
+The main optimization goal for the Graph Builder is minimizing total build time.  </p>
+<h3 id="garbage-collector_1">Garbage collector</h3>
+<ul>
+<li>In theory, the Parallel garbage collector offers the best throughput.<br />
+In practice, it can be challenging to optimize the Parallel GC to build both a street graph and a transit graph, the memory usage patterns being different. </li>
+<li>The G1 garbage collector provides in general a good compromise.  </li>
+</ul>
+<h3 id="memory-settings_1">Memory settings</h3>
+<ul>
+<li>Using Large Memory Pages can reduce pressure on the TLB cache and increase performance.  </li>
+<li>Since latency is not an issue, Large Memory Pages can be used indifferently in <em>TLBFS</em> mode (<code>-XX:+UseHugeTLBFS</code>) or <em>Transparent Huge Page</em> mode (<code>-XX:+UseTransparentHugePages</code>)</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../Container-Image/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Container image" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Container image
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../BuildConfiguration/" class="md-footer__link md-footer__link--next" aria-label="Next: Build" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Build
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "toc.integrate"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      
+    
+  </body>
+</html>
