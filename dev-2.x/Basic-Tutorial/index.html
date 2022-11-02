@@ -1,0 +1,1561 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.opentripplanner.org/dev-2.x/Basic-Tutorial/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.7">
+    
+    
+      
+        <title>Basic Tutorial - OpenTripPlanner 2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#opentripplanner-basic-tutorial" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenTripPlanner 2" class="md-header__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTripPlanner 2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Basic Tutorial
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Governance/" class="md-tabs__link">
+        About
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
+        Usage
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Developers-Guide/" class="md-tabs__link">
+        Development
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../SandboxExtension/" class="md-tabs__link">
+        Sandbox
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenTripPlanner 2" class="md-nav__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    OpenTripPlanner 2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          About
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="About" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          About
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Governance/" class="md-nav__link">
+        Governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../History/" class="md-nav__link">
+        History
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deployments/" class="md-nav__link">
+        Deployments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Version-Comparison/" class="md-nav__link">
+        Comparing OTP2 to OTP1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OTP2-MigrationGuide/" class="md-nav__link">
+        OTP2 migration guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Visual-Identity/" class="md-nav__link">
+        Visual Identity
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Basic Tutorial
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Basic Tutorial
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#get-java" class="md-nav__link">
+    Get Java
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-otp" class="md-nav__link">
+    Get OTP
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-some-data" class="md-nav__link">
+    Get some data
+  </a>
+  
+    <nav class="md-nav" aria-label="Get some data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gtfs-for-transit-schedules-and-stops" class="md-nav__link">
+    GTFS for Transit Schedules and Stops
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#osm-for-streets" class="md-nav__link">
+    OSM for Streets
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#starting-otp" class="md-nav__link">
+    Starting OTP
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-graphs" class="md-nav__link">
+    Building Graphs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-one-step-server" class="md-nav__link">
+    Simple One-step Server
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#saving-a-graph" class="md-nav__link">
+    Saving a Graph
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#layering-gtfs-onto-osm" class="md-nav__link">
+    Layering GTFS onto OSM
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-switches" class="md-nav__link">
+    Command Line Switches
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting-OTP/" class="md-nav__link">
+        Getting OTP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Container-Image/" class="md-nav__link">
+        Container image
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_4">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Configuration/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BuildConfiguration/" class="md-nav__link">
+        Build
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BoardingLocations/" class="md-nav__link">
+        Boarding locations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouterConfiguration/" class="md-nav__link">
+        Router
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Accessibility/" class="md-nav__link">
+        Accessibility
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouteRequest/" class="md-nav__link">
+        Route Request
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UpdaterConfig/" class="md-nav__link">
+        Realtime Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoutingModes/" class="md-nav__link">
+        Routing Modes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Preparing-OSM/" class="md-nav__link">
+        Preparing OSM Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Netex-Norway/" class="md-nav__link">
+        Netex and SIRI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Security/" class="md-nav__link">
+        Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting-Routing/" class="md-nav__link">
+        Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Development
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Development" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Development
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Developers-Guide/" class="md-nav__link">
+        Developers' Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Interfaces-Data-Sources/" class="md-nav__link">
+        Interfaces and Data Sources
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        Localization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Bibliography/" class="md-nav__link">
+        Bibliography
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Codestyle/" class="md-nav__link">
+        Codestyle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        Sandbox development
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Sandbox
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Sandbox" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Sandbox
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ActuatorAPI/" class="md-nav__link">
+        Actuator API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/transferanalyzer/" class="md-nav__link">
+        Direct transfer analyzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GoogleCloudStorage/" class="md-nav__link">
+        Google Cloud Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/LegacyGraphQLApi/" class="md-nav__link">
+        HSL Legacy GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TransmodelApi/" class="md-nav__link">
+        Transmodel(NeTEx) GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriUpdator/" class="md-nav__link">
+        SIRI Updater (Google Cloud)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriAzureUpdater/" class="md-nav__link">
+        SIRI Updater (Azure)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleRentalServiceDirectory/" class="md-nav__link">
+        Vehicle Rental Service Directory API support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SmooveBikeRental/" class="md-nav__link">
+        Smoove Bike Rental Updator Support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/MapboxVectorTilesApi/" class="md-nav__link">
+        Mapbox Vector Tiles API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Flex/" class="md-nav__link">
+        Flex Routing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ReportApi/" class="md-nav__link">
+        Report API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/InteractiveOtpMain/" class="md-nav__link">
+        Interactive OTP Launcher
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ParkAndRideApi/" class="md-nav__link">
+        Park and Ride API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/DataOverlay/" class="md-nav__link">
+        Data Overlay
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleParking/" class="md-nav__link">
+        Vehicle Parking Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleToStopHeuristics/" class="md-nav__link">
+        Vehicle-to-stop Heuristics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GeocoderAPI/" class="md-nav__link">
+        Geocoder API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TravelTime/" class="md-nav__link">
+        Travel time isochrones
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/IBIAccessibilityScore/" class="md-nav__link">
+        IBI accessibility score
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Fares/" class="md-nav__link">
+        Fares
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Basic-Tutorial.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="opentripplanner-basic-tutorial">OpenTripPlanner Basic Tutorial</h1>
+<p>This page should allow you to set up and test your own OTP2 server. If all goes well it should only
+take a few minutes!</p>
+<h2 id="get-java">Get Java</h2>
+<p>As a Java program, OTP must be run within a Java virtual machine (JVM), which is provided as part of
+the Java runtime (JRE) or Java development kit (JDK). OTP2 is compatible with Java 17 or later. We
+recommend running on Java 17 rather than a later version, as it is a long-term support release.
+Run <code>java -version</code> to check that you have version 17 or newer of the JVM installed. If you do not,
+you will need to install a recent OpenJDK or Oracle Java package for your operating system.</p>
+<h2 id="get-otp">Get OTP</h2>
+<p>OpenTripPlanner is written in Java and distributed as a single runnable JAR file. This is a "shaded"
+JAR containing all other libraries needed for OTP to work, and is available from the Maven Central
+repository. You will be able to go
+to <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/">the OTP directory at Maven Central</a>,
+navigate to
+the <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/2.1.0/">directory for the 2.1 release</a>,
+and download
+the <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/2.1.0/otp-2.1.0-shaded.jar">file whose name ends with <code>shaded.jar</code></a>
+.</p>
+<p>You may also want to get your own copy of the OTP source code
+and <a href="../Getting-OTP/">build a bleeding edge development JAR from scratch</a>, especially if you plan to
+do some development yourself. In that case, check out the branch <code>dev-2.x</code>.</p>
+<h2 id="get-some-data">Get some data</h2>
+<h3 id="gtfs-for-transit-schedules-and-stops">GTFS for Transit Schedules and Stops</h3>
+<p>First you'll need GTFS data to build a transit network. There's an excellent description of the GTFS
+format <a href="http://gtfs.org/">here</a>. Transport agencies throughout the world provide GTFS schedules to
+the public. Transitland has a
+<a href="https://transit.land/feed-registry">registry of feeds</a> and <a href="http://transitfeeds.com/">TransitFeeds</a>
+also provides an extensive catalog. The best option is often to simply fetch the data directly from
+a transit operator or agency. If you know of a feed you want to work with, download it and put it in
+an empty directory you have created for your OTP instance such as <code>/home/username/otp</code> on
+Linux, <code>/Users/username/otp</code> on MacOS, or <code>C:\Users\username\otp</code> on Windows. For OTP2 to detect a
+GTFS file, <strong>its name must end in <code>.zip</code> and must contain the letters 'gtfs'</strong>. We often use the
+convention of saving GTFS files with names ending in <code>.gtfs.zip</code> which meets both these criteria,
+reflecting the fact that a GTFS feed is just a ZIP file containing a specific set of files. If you
+don't have a particular feed in mind, the one for Portland, Oregon's TriMet agency is a good option.
+It is available at <a href="http://developer.trimet.org/schedule/gtfs.zip">this URL</a>. This is a
+moderate-sized input of good quality (TriMet initiated OTP development and helped develop the GTFS
+format). On Linux, this could be done on the command line as follows:</p>
+<div class="highlight"><pre><span></span><code>$ cd /home/username
+$ mkdir otp
+$ cd otp
+$ wget &quot;http://developer.trimet.org/schedule/gtfs.zip&quot; -O trimet.gtfs.zip
+</code></pre></div>
+<h3 id="osm-for-streets">OSM for Streets</h3>
+<p>You'll also need OpenStreetMap data to build a road network for walking, cycling, and
+driving. <a href="https://www.openstreetmap.org/">OpenStreetMap</a> is a global collaborative map database that
+rivals or surpasses the quality of commercial maps in many locations. Several services extract
+smaller geographic regions from this database. Interline Technologies maintains a collection
+of <a href="https://www.interline.io/osm/extracts/">extracts updated daily for urban areas around the world</a>
+. <a href="http://download.geofabrik.de/">Geofabrik</a> provides extracts for larger areas like countries or
+states, from which you can prepare your own smaller bounding-box extracts
+using <a href="http://wiki.openstreetmap.org/wiki/Osmosis#Extracting_bounding_boxes">Osmosis</a>
+, <a href="http://wiki.openstreetmap.org/wiki/Osmconvert#Applying_Geographical_Borders">osmconvert</a>, or (our
+favorite) <a href="https://osmcode.org/osmium-tool/manual.html#creating-geographic-extracts">Osmium-Tool</a>.
+OSM data can be delivered as XML or in the more compact binary PBF format. OpenTripPlanner consumes
+only PBF because it's smaller and more efficient.</p>
+<p>Download OSM PBF data for the same geographic region as your GTFS feed, and place this PBF file in
+the same directory you created for the OSM data. If you are using the TriMet GTFS feed, you could
+download
+the <a href="http://download.geofabrik.de/north-america/us/oregon.html">Geofabrik extract for the US state of Oregon</a>
+, then further trim that to just
+the <a href="https://trimet.org/pdfs/taxinfo/trimetdistrictboundary.pdf">TriMet service area</a> using the
+bounding box switch of one of the above tools. On Linux or MacOS you could do that as follows:</p>
+<div class="highlight"><pre><span></span><code>$ cd /home/username
+$ wget http://download.geofabrik.de/north-america/us/oregon-latest.osm.pbf
+$ osmconvert oregon-latest.osm.pbf -b=-123.043,45.246,-122.276,45.652 --complete-ways -o=portland.pbf
+$ mv portland.pbf otp
+</code></pre></div>
+<p>We find <a href="https://boundingbox.klokantech.com/">this tool</a> useful for determining the geographic
+coordinates of bounding boxes. The CSV option in that tool produces exactly the format expected by
+the <code>osmconvert -b</code> switch. The <code>--complete-ways</code> switch is important to handle roads that cross
+outside your bounding box.</p>
+<p>If you have extracted a smaller PBF file from a larger region, be sure to put only your extract (not
+the original larger file) in the directory with your GTFS data. Otherwise OTP will try to load both
+the original file and the extract in a later step. See
+the <a href="../Preparing-OSM/">page on preparing OSM data</a> for additional information and example commands
+for cropping and filtering OSM data.</p>
+<h2 id="starting-otp">Starting OTP</h2>
+<p>A typical command to start OTP looks like <code>java -Xmx2G -jar otp.shaded.jar &lt;options&gt;</code>. The
+<code>-Xmx</code> parameter sets the limit on how much memory OTP is allowed to consume. GTFS and OSM data sets
+are often very large, and OTP is relatively memory-hungry. You will need at least 1GB of memory when
+working with the Portland TriMet data set, and several gigabytes for larger inputs. If you have
+sufficient memory in your computer, set this to a couple of gigabytes (e.g. <code>-Xmx2G</code>). Java uses
+a <a href="https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)">garbage collection</a> approach
+to memory management, which requires some "breathing room" to efficiently operate. Without
+sufficient free memory OTP can grind to a halt. <a href="https://visualvm.github.io">VisualVM</a> is a good way
+to inspect Java memory usage, especially with
+the <a href="https://visualvm.github.io/plugins.html">VisualGC plugin</a>.</p>
+<h2 id="building-graphs">Building Graphs</h2>
+<p>There are two main phases to preparing and deploying an OTP server. The first is to analyze the
+GTFS, OSM and any other inputs (such as elevation data) and build a representation of the
+transportation network. Following mathematical terminology we call this
+a <a href="http://en.wikipedia.org/wiki/Graph_%28mathematics%29">'graph'</a>, and refer to this phase as "graph
+building". The second phase is to start a server that provides trip planning and other API services
+for this graph.</p>
+<p>It is possible to save the graph to a file on disk after the first phase, then load the graph from
+the file in the second phase. This allows restarting the server or starting multiple instances of
+the server without repeating the often time-consuming process of building the graph. It is also
+possible to split the graph building process into separate OSM and GTFS stages for similar reasons:
+to allow reusing results from slow processes, such as applying elevation data to streets. These
+different options are controlled with command line switches, and will be described in more detail
+below and in other tutorials.</p>
+<h2 id="simple-one-step-server">Simple One-step Server</h2>
+<p>The simplest way to use OTP is to build a graph in a single step and start a server immediately,
+without saving it to disk. The command to do so is:</p>
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --build --serve /home/username/otp
+</code></pre></div>
+<p>where <code>/home/username/otp</code> should be the directory where you put your configuration and input files.</p>
+<p>If you're using the Portland input data, the graph build operation should take about one minute to
+complete, and then you'll see a <code>Grizzly server running</code> message. At this point you have an
+OpenTripPlanner server running locally and can open <a href="http://localhost:8080/">http://localhost:8080/</a>
+in a web browser. You should be presented with a Javascript client application that will interact
+with your local OpenTripPlanner instance.</p>
+<p>This map-based user interface is in fact sending HTTP GET requests to the OTP server running on your
+local machine. It can be informative to watch the HTTP requests and responses being generated using
+the developer tools in your web browser. OTP's built-in web server will run by default on ports 8080
+and 8081 for HTTP and HTTPS respectively. If by any chance some other software is already using one
+or both of those port numbers, you can specify different port numbers with switches
+like <code>--port 8801 --securePort 8802</code>.</p>
+<h2 id="saving-a-graph">Saving a Graph</h2>
+<p>If you want speed up the process of repeatedly starting up a server with the same graph, you can
+build a graph from street and transit data then save it to a file using the <code>--build</code> and <code>--save</code>
+command line parameters together. If for example your current working directory (<code>.</code>) contains the
+input files and the OTP JAR file, you can use this command:</p>
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --build --save .
+</code></pre></div>
+<p>This will produce a file called <code>graph.obj</code> in the same directory as the inputs. The server can then
+be started later using the <code>--load</code> parameter, and will read this file instead of building the graph
+from scratch:</p>
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --load .
+</code></pre></div>
+<p>Another reason to perform these two phases separately is that the building process loads the entire
+GTFS and OSM data sets into memory, so can require significantly more memory than just running a
+server. Accordingly, you may want to perform the build on one machine (e.g. a throw-away cloud
+instance with more memory or compute capacity), then copy the resulting graph file to one or more
+smaller machines to serve the API.</p>
+<h2 id="layering-gtfs-onto-osm">Layering GTFS onto OSM</h2>
+<p>Building the street graph (especially with elevation data) can take a long time. It is common for
+transit data to change more frequently than street data, so it can be convenient to build the street
+graph once, and then layer transit data on top of the streets to make the final graph.</p>
+<p>Again assuming the input files and OTP JAR file are in the current working directory, you can build
+a street graph with OSM and elevation data only (ignoring transit input files) with this command:</p>
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --buildStreet .
+</code></pre></div>
+<p>Then, to build a graph layering transit data on top of the saved street graph (built using the
+previous command):</p>
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --loadStreet --save .
+</code></pre></div>
+<p>Finally, the server can be started using the <code>--load</code> parameter:</p>
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --load .
+</code></pre></div>
+<h2 id="command-line-switches">Command Line Switches</h2>
+<p>The flow diagram below summarizes all the command line switches used in the above examples, and how
+they control which actions are taken when OTP starts up.</p>
+<p><img alt="Command-Line-Parameter-Flow" src="../images/cli-flow.svg" /></p>
+<p>You must use at least one of the required parameters: <code>--load</code>, <code>--loadStreet</code>, <code>--build</code>
+, <code>--buildStreet</code>. A <em>required</em> parameter may imply other parameters when the flow allows for no
+other choice. For example, <code>--load</code> implies <code>--serve</code>, so <code>--serve</code> is not necessary and has no
+additional effect when used together with <code>--load</code>.</p>
+<p>You can run the OTP .jar file with the <code>--help</code> option for a full list of command line parameters.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../Visual-Identity/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Visual Identity" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Visual Identity
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Getting-OTP/" class="md-footer__link md-footer__link--next" aria-label="Next: Getting OTP" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Getting OTP
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "toc.integrate"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      
+    
+  </body>
+</html>

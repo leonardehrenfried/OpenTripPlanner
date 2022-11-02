@@ -1,0 +1,2128 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.opentripplanner.org/dev-2.x/UpdaterConfig/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.7">
+    
+    
+      
+        <title>Realtime Updaters - OpenTripPlanner 2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#updater-configuration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenTripPlanner 2" class="md-header__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTripPlanner 2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Realtime Updaters
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Governance/" class="md-tabs__link">
+        About
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Basic-Tutorial/" class="md-tabs__link md-tabs__link--active">
+        Usage
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Developers-Guide/" class="md-tabs__link">
+        Development
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../SandboxExtension/" class="md-tabs__link">
+        Sandbox
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenTripPlanner 2" class="md-nav__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    OpenTripPlanner 2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          About
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="About" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          About
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Governance/" class="md-nav__link">
+        Governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../History/" class="md-nav__link">
+        History
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deployments/" class="md-nav__link">
+        Deployments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Version-Comparison/" class="md-nav__link">
+        Comparing OTP2 to OTP1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OTP2-MigrationGuide/" class="md-nav__link">
+        OTP2 migration guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Visual-Identity/" class="md-nav__link">
+        Visual Identity
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Basic-Tutorial/" class="md-nav__link">
+        Basic Tutorial
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting-OTP/" class="md-nav__link">
+        Getting OTP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Container-Image/" class="md-nav__link">
+        Container image
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_4">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Configuration/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BuildConfiguration/" class="md-nav__link">
+        Build
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BoardingLocations/" class="md-nav__link">
+        Boarding locations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouterConfiguration/" class="md-nav__link">
+        Router
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Accessibility/" class="md-nav__link">
+        Accessibility
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouteRequest/" class="md-nav__link">
+        Route Request
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Realtime Updaters
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Realtime Updaters
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#real-time-data" class="md-nav__link">
+    Real-time data
+  </a>
+  
+    <nav class="md-nav" aria-label="Real-time data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gtfs-realtime" class="md-nav__link">
+    GTFS-Realtime
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-real-time-updaters" class="md-nav__link">
+    Configuring real-time updaters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#realtime-alerts" class="md-nav__link">
+    Realtime Alerts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tripupdates" class="md-nav__link">
+    TripUpdates
+  </a>
+  
+    <nav class="md-nav" aria-label="TripUpdates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#details" class="md-nav__link">
+    Details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tripupdates-websocket-gtfs-rt" class="md-nav__link">
+    TripUpdates Websocket GTFS RT
+  </a>
+  
+    <nav class="md-nav" aria-label="TripUpdates Websocket GTFS RT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#details_1" class="md-nav__link">
+    Details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vehicle-positions" class="md-nav__link">
+    Vehicle Positions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vehicle-rental-systems-using-gbfs" class="md-nav__link">
+    Vehicle rental systems using GBFS
+  </a>
+  
+    <nav class="md-nav" aria-label="Vehicle rental systems using GBFS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#arriving-with-rental-bikes-at-the-destination" class="md-nav__link">
+    Arriving with rental bikes at the destination
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#header-settings" class="md-nav__link">
+    Header Settings
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#details_2" class="md-nav__link">
+    Details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vehicle-parking-sandbox-feature" class="md-nav__link">
+    Vehicle parking (sandbox feature)
+  </a>
+  
+    <nav class="md-nav" aria-label="Vehicle parking (sandbox feature)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#details_3" class="md-nav__link">
+    Details
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#siri-sx-updater-for-azure-service-bus-sandbox-feature" class="md-nav__link">
+    SIRI SX updater for Azure Service Bus (sandbox feature)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vehicle-rental-service-directory-configuration-sandbox-feature" class="md-nav__link">
+    Vehicle Rental Service Directory configuration (sandbox feature)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoutingModes/" class="md-nav__link">
+        Routing Modes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Preparing-OSM/" class="md-nav__link">
+        Preparing OSM Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Netex-Norway/" class="md-nav__link">
+        Netex and SIRI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Security/" class="md-nav__link">
+        Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting-Routing/" class="md-nav__link">
+        Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Development
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Development" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Development
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Developers-Guide/" class="md-nav__link">
+        Developers' Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Interfaces-Data-Sources/" class="md-nav__link">
+        Interfaces and Data Sources
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        Localization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Bibliography/" class="md-nav__link">
+        Bibliography
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Codestyle/" class="md-nav__link">
+        Codestyle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        Sandbox development
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Sandbox
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Sandbox" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Sandbox
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ActuatorAPI/" class="md-nav__link">
+        Actuator API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/transferanalyzer/" class="md-nav__link">
+        Direct transfer analyzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GoogleCloudStorage/" class="md-nav__link">
+        Google Cloud Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/LegacyGraphQLApi/" class="md-nav__link">
+        HSL Legacy GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TransmodelApi/" class="md-nav__link">
+        Transmodel(NeTEx) GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriUpdator/" class="md-nav__link">
+        SIRI Updater (Google Cloud)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriAzureUpdater/" class="md-nav__link">
+        SIRI Updater (Azure)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleRentalServiceDirectory/" class="md-nav__link">
+        Vehicle Rental Service Directory API support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SmooveBikeRental/" class="md-nav__link">
+        Smoove Bike Rental Updator Support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/MapboxVectorTilesApi/" class="md-nav__link">
+        Mapbox Vector Tiles API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Flex/" class="md-nav__link">
+        Flex Routing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ReportApi/" class="md-nav__link">
+        Report API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/InteractiveOtpMain/" class="md-nav__link">
+        Interactive OTP Launcher
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ParkAndRideApi/" class="md-nav__link">
+        Park and Ride API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/DataOverlay/" class="md-nav__link">
+        Data Overlay
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleParking/" class="md-nav__link">
+        Vehicle Parking Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleToStopHeuristics/" class="md-nav__link">
+        Vehicle-to-stop Heuristics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GeocoderAPI/" class="md-nav__link">
+        Geocoder API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TravelTime/" class="md-nav__link">
+        Travel time isochrones
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/IBIAccessibilityScore/" class="md-nav__link">
+        IBI accessibility score
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Fares/" class="md-nav__link">
+        Fares
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/UpdaterConfig.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<!--
+  NOTE! Part of this document is generated. Make sure you edit the template, not the generated doc.
+
+   - Template directory is:  /doc-templates
+   - Generated directory is: /docs 
+-->
+
+<h1 id="updater-configuration">Updater configuration</h1>
+<p>This section covers all options that can be set in the <em>router-config.json</em> in the 
+<a href="../RouterConfiguration/">updaters</a> section.</p>
+<h2 id="real-time-data">Real-time data</h2>
+<p>GTFS feeds contain <em>schedule</em> data that is published by an agency or operator in advance. The
+feed does not account for unexpected service changes or traffic disruptions that occur from day to
+day. Thus, this kind of data is also referred to as 'static' data or 'theoretical' arrival and
+departure times.</p>
+<p>Real-time data sources are configured in the <code>updaters</code> section is an array of JSON objects, each
+of which has a <code>type</code> field and other configuration fields specific to that type. Common to all
+updater entries that connect to a network resource is the <code>url</code> field.</p>
+<h3 id="gtfs-realtime">GTFS-Realtime</h3>
+<p>The <a href="https://developers.google.com/transit/gtfs-realtime/">GTFS-RT spec</a> complements GTFS with three
+additional kinds of feeds. In contrast to the base GTFS schedule feed, they provide <em>real-time</em>
+updates (<em>'dynamic'</em> data) and are updated from minute to minute.</p>
+<h3 id="configuring-real-time-updaters">Configuring real-time updaters</h3>
+<p>Real-time data can be provided using either a pull or push system. In a pull configuration, the
+GTFS-RT consumer polls the real-time provider over HTTP. That is to say, OTP fetches a file from a
+web server every few minutes. In the push configuration, the consumer opens a persistent connection
+to the GTFS-RT provider, which then sends incremental updates immediately as they become available.
+OTP can use both approaches.
+The <a href="https://github.com/OneBusAway/onebusaway-gtfs-realtime-exporter">OneBusAway GTFS-realtime exporter project</a>
+provides this kind of streaming, incremental updates over a websocket rather than a single large
+file.</p>
+<h3 id="realtime-alerts">Realtime Alerts</h3>
+<p>Alerts are text messages attached to GTFS objects, informing riders of disruptions and changes.</p>
+<!-- real-time-alerts BEGIN -->
+<!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
+
+<table>
+<thead>
+<tr>
+<th>Config Parameter</th>
+<th align="center">Type</th>
+<th>Summary</th>
+<th align="center">Req./Opt.</th>
+<th>Default Value</th>
+<th align="center">Since</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type = "REAL_TIME_ALERTS"</td>
+<td align="center"><code>enum</code></td>
+<td>The type of the updater.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>earlyStartSec</td>
+<td align="center"><code>integer</code></td>
+<td>TODO</td>
+<td align="center"><em>Optional</em></td>
+<td><code>0</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>feedId</td>
+<td align="center"><code>string</code></td>
+<td>TODO</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>frequencySec</td>
+<td align="center"><code>integer</code></td>
+<td>TODO</td>
+<td align="center"><em>Optional</em></td>
+<td><code>60</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>fuzzyTripMatching</td>
+<td align="center"><code>boolean</code></td>
+<td>TODO</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>url</td>
+<td align="center"><code>string</code></td>
+<td>TODO</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// router-config.json</span><span class="w"></span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&quot;updaters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;real-time-alerts&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="nt">&quot;frequencySec&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://developer.trimet.org/ws/V1/FeedSpecAlerts/appID/0123456789ABCDEF&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">      </span><span class="nt">&quot;feedId&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TriMet&quot;</span><span class="w"></span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="p">]</span><span class="w"></span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<!-- real-time-alerts END -->
+
+<h3 id="tripupdates">TripUpdates</h3>
+<p>TripUpdates report on the status of scheduled trips as they happen, providing observed and 
+predicted arrival and departure times for the remainder of the trip.</p>
+<!-- stop-time-updater BEGIN -->
+<!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
+
+<table>
+<thead>
+<tr>
+<th>Config Parameter</th>
+<th align="center">Type</th>
+<th>Summary</th>
+<th align="center">Req./Opt.</th>
+<th>Default Value</th>
+<th align="center">Since</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type = "STOP_TIME_UPDATER"</td>
+<td align="center"><code>enum</code></td>
+<td>The type of the updater.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td><a href="#u__3__backwardsDelayPropagationType">backwardsDelayPropagationType</a></td>
+<td align="center"><code>enum</code></td>
+<td>How backwards propagation should be handled.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"required-no-data"</code></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>feedId</td>
+<td align="center"><code>string</code></td>
+<td>Which feed the updates apply to.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>frequencySec</td>
+<td align="center"><code>integer</code></td>
+<td>How often the data should be downloaded in seconds.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>60</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>fuzzyTripMatching</td>
+<td align="center"><code>boolean</code></td>
+<td>If the trips should be matched fuzzily.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>maxSnapshotFrequencyMs</td>
+<td align="center"><code>integer</code></td>
+<td>TODO</td>
+<td align="center"><em>Optional</em></td>
+<td><code>-1</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>purgeExpiredData</td>
+<td align="center"><code>boolean</code></td>
+<td>Should expired data removed from the snapshot.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>url</td>
+<td align="center"><code>string</code></td>
+<td>The URL of the GTFS-RT resource.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+</tbody>
+</table>
+<h4 id="details">Details</h4>
+<h4 id="u__3__backwardsDelayPropagationType">backwardsDelayPropagationType</h4>
+
+<p><strong>Since version:</strong> <code>2.2</code> ∙ <strong>Type:</strong> <code>enum</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"required-no-data"</code>  \
+<strong>Path:</strong> /updaters/[3]  \
+<strong>Enum values:</strong> <code>required-no-data</code> | <code>required</code> | <code>always</code></p>
+<p>How backwards propagation should be handled.</p>
+<p>REQUIRED_NO_DATA:
+  Default value. Only propagates delays backwards when it is required to ensure that the times
+  are increasing, and it sets the NO_DATA flag on the stops so these automatically updated times
+  are not exposed through APIs.</p>
+<p>REQUIRED:
+  Only propagates delays backwards when it is required to ensure that the times are increasing.
+  The updated times are exposed through APIs.</p>
+<p>ALWAYS
+  Propagates delays backwards on stops with no estimates regardless if it's required or not.
+  The updated times are exposed through APIs.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// router-config.json</span><span class="w"></span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">&quot;updaters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;stop-time-updater&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">      </span><span class="nt">&quot;frequencySec&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">      </span><span class="nt">&quot;backwardsDelayPropagationType&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REQUIRED_NO_DATA&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://developer.trimet.org/ws/V1/TripUpdate/appID/0123456789ABCDEF&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">      </span><span class="nt">&quot;feedId&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;TriMet&quot;</span><span class="w"></span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="p">]</span><span class="w"></span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<!-- stop-time-updater END -->
+
+<h3 id="tripupdates-websocket-gtfs-rt">TripUpdates Websocket GTFS RT</h3>
+<!-- websocket-gtfs-rt-updater BEGIN -->
+<!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
+
+<table>
+<thead>
+<tr>
+<th>Config Parameter</th>
+<th align="center">Type</th>
+<th>Summary</th>
+<th align="center">Req./Opt.</th>
+<th>Default Value</th>
+<th align="center">Since</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type = "WEBSOCKET_GTFS_RT_UPDATER"</td>
+<td align="center"><code>enum</code></td>
+<td>The type of the updater.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td><a href="#u__5__backwardsDelayPropagationType">backwardsDelayPropagationType</a></td>
+<td align="center"><code>enum</code></td>
+<td>TODO</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"required-no-data"</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>feedId</td>
+<td align="center"><code>string</code></td>
+<td>TODO</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>reconnectPeriodSec</td>
+<td align="center"><code>integer</code></td>
+<td>TODO</td>
+<td align="center"><em>Optional</em></td>
+<td><code>60</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>url</td>
+<td align="center"><code>string</code></td>
+<td>TODO</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+</tbody>
+</table>
+<h4 id="details_1">Details</h4>
+<h4 id="u__5__backwardsDelayPropagationType">backwardsDelayPropagationType</h4>
+
+<p><strong>Since version:</strong> <code>na</code> ∙ <strong>Type:</strong> <code>enum</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"required-no-data"</code>  \
+<strong>Path:</strong> /updaters/[5]  \
+<strong>Enum values:</strong> <code>required-no-data</code> | <code>required</code> | <code>always</code></p>
+<p>TODO</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// router-config.json</span><span class="w"></span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&quot;updaters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;websocket-gtfs-rt-updater&quot;</span><span class="w"></span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="p">]</span><span class="w"></span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<!-- websocket-gtfs-rt-updater END -->
+
+<h3 id="vehicle-positions">Vehicle Positions</h3>
+<p>VehiclePositions give the location of some or all vehicles currently in service, in terms of 
+geographic coordinates or position relative to their scheduled stops.</p>
+<!-- vehicle-positions BEGIN -->
+<!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
+
+<table>
+<thead>
+<tr>
+<th>Config Parameter</th>
+<th align="center">Type</th>
+<th>Summary</th>
+<th align="center">Req./Opt.</th>
+<th>Default Value</th>
+<th align="center">Since</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type = "VEHICLE_POSITIONS"</td>
+<td align="center"><code>enum</code></td>
+<td>The type of the updater.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>feedId</td>
+<td align="center"><code>string</code></td>
+<td>Feed ID to which the update should be applied.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>frequencySec</td>
+<td align="center"><code>integer</code></td>
+<td>How often the positions should be updated.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>60</code></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>url</td>
+<td align="center"><code>uri</code></td>
+<td>The URL of GTFS-RT protobuf HTTP resource to download the positions from.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// router-config.json</span><span class="w"></span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">&quot;updaters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vehicle-positions&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://s3.amazonaws.com/kcm-alerts-realtime-prod/vehiclepositions.pb&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">      </span><span class="nt">&quot;feedId&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="nt">&quot;frequencySec&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="w"></span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="p">]</span><span class="w"></span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<!-- vehicle-positions END -->
+
+<h3 id="vehicle-rental-systems-using-gbfs">Vehicle rental systems using GBFS</h3>
+<p>Besides GTFS-RT transit data, OTP can also fetch real-time data about vehicle rental networks
+including the number of bikes and free parking spaces at each station. We support vehicle rental
+systems from using GBFS feed format.</p>
+<p><a href="https://github.com/NABSA/gbfs">GBFS</a> is used for a variety of shared mobility services, with
+partial support for both v1 and v2.2 (<a href="https://github.com/NABSA/gbfs/blob/master/systems.csv">list of known GBFS feeds</a>).</p>
+<h4 id="arriving-with-rental-bikes-at-the-destination">Arriving with rental bikes at the destination</h4>
+<p>In some cases it may be useful to not drop off the rented bicycle before arriving at the
+destination. This is useful if bicycles may only be rented for round trips, or the destination is an
+intermediate place.</p>
+<p>For this to be possible three things need to be configured:</p>
+<ol>
+<li>
+<p>In the updater configuration <code>allowKeepingRentedBicycleAtDestination</code> should be set to <code>true</code>.</p>
+</li>
+<li>
+<p><code>allowKeepingRentedBicycleAtDestination</code> should also be set for each request, either using
+   <a href="#routing-defaults">routing defaults</a>, or per-request.</p>
+</li>
+<li>
+<p>If keeping the bicycle at the destination should be discouraged, then
+   <code>keepingRentedBicycleAtDestinationCost</code> (default: <code>0</code>) may also be set in the
+   <a href="#routing-defaults">routing defaults</a>.</p>
+</li>
+</ol>
+<h4 id="header-settings">Header Settings</h4>
+<p>Sometimes GBFS Feeds might need some headers e.g. for authentication. For those use cases headers
+can be configured as a json. Any header key, value can be inserted.</p>
+<!-- vehicle-rental BEGIN -->
+<!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
+
+<table>
+<thead>
+<tr>
+<th>Config Parameter</th>
+<th align="center">Type</th>
+<th>Summary</th>
+<th align="center">Req./Opt.</th>
+<th>Default Value</th>
+<th align="center">Since</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type = "VEHICLE_RENTAL"</td>
+<td align="center"><code>enum</code></td>
+<td>The type of the updater.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td><a href="#u_1_allowKeepingRentedBicycleAtDestination">allowKeepingRentedBicycleAtDestination</a></td>
+<td align="center"><code>boolean</code></td>
+<td>If a vehicle should be allowed to be kept at the end of a station-based rental.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>frequencySec</td>
+<td align="center"><code>integer</code></td>
+<td>How often the data should be updated in seconds.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>60</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>language</td>
+<td align="center"><code>string</code></td>
+<td>TODO</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td><a href="#u_1_network">network</a></td>
+<td align="center"><code>string</code></td>
+<td>The name of the network to override the one derived from the source data.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td><a href="#u_1_sourceType">sourceType</a></td>
+<td align="center"><code>enum</code></td>
+<td>What source of vehicle rental updater to use.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>url</td>
+<td align="center"><code>string</code></td>
+<td>The URL to download the data from.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td><a href="#u_1_headers">headers</a></td>
+<td align="center"><code>map of string</code></td>
+<td>HTTP headers to add to the request. Any header key, value can be inserted.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+</tbody>
+</table>
+<h4 id="details_2">Details</h4>
+<h4 id="u_1_allowKeepingRentedBicycleAtDestination">allowKeepingRentedBicycleAtDestination</h4>
+
+<p><strong>Since version:</strong> <code>na</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code>  \
+<strong>Path:</strong> /updaters/[1] </p>
+<p>If a vehicle should be allowed to be kept at the end of a station-based rental.</p>
+<p>This behaviour is useful in towns that have only a single rental station. Without it you would need see any results as you would have to always bring it back to the station.</p>
+<h4 id="u_1_network">network</h4>
+
+<p><strong>Since version:</strong> <code>na</code> ∙ <strong>Type:</strong> <code>string</code> ∙ <strong>Cardinality:</strong> <code>Optional</code>  \
+<strong>Path:</strong> /updaters/[1] </p>
+<p>The name of the network to override the one derived from the source data.</p>
+<p>GBFS feeds must include a system_id which will be used as the default <code>network</code>. These ids are sometimes not helpful so setting this property will override it.</p>
+<h4 id="u_1_sourceType">sourceType</h4>
+
+<p><strong>Since version:</strong> <code>na</code> ∙ <strong>Type:</strong> <code>enum</code> ∙ <strong>Cardinality:</strong> <code>Required</code>  \
+<strong>Path:</strong> /updaters/[1]  \
+<strong>Enum values:</strong> <code>gbfs</code> | <code>smoove</code> | <code>vilkku</code> | <code>kml</code> | <code>park-api</code> | <code>bicycle-park-api</code> | <code>hsl-park</code></p>
+<p>What source of vehicle rental updater to use.</p>
+<h4 id="u_1_headers">headers</h4>
+
+<p><strong>Since version:</strong> <code>na</code> ∙ <strong>Type:</strong> <code>map of string</code> ∙ <strong>Cardinality:</strong> <code>Optional</code>  \
+<strong>Path:</strong> /updaters/[1] </p>
+<p>HTTP headers to add to the request. Any header key, value can be inserted.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// router-config.json</span><span class="w"></span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">&quot;updaters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vehicle-rental&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">      </span><span class="nt">&quot;network&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;socialbicycles_coast&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">      </span><span class="nt">&quot;sourceType&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gbfs&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">      </span><span class="nt">&quot;language&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;en&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">      </span><span class="nt">&quot;frequencySec&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">      </span><span class="nt">&quot;allowKeepingRentedBicycleAtDestination&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://coast.socialbicycles.com/opendata/gbfs.json&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">      </span><span class="nt">&quot;headers&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">        </span><span class="nt">&quot;Auth&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;any-token&gt;&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">        </span><span class="nt">&quot;&lt;key&gt;&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;value&gt;&quot;</span><span class="w"></span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">      </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">  </span><span class="p">]</span><span class="w"></span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<!-- vehicle-rental END -->
+
+<h3 id="vehicle-parking-sandbox-feature">Vehicle parking (sandbox feature)</h3>
+<p>Vehicle parking options and configuration is documented in
+its <a href="../sandbox/VehicleParking/">sandbox documentation</a>.</p>
+<!-- vehicle-parking BEGIN -->
+<!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
+
+<table>
+<thead>
+<tr>
+<th>Config Parameter</th>
+<th align="center">Type</th>
+<th>Summary</th>
+<th align="center">Req./Opt.</th>
+<th>Default Value</th>
+<th align="center">Since</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type = "VEHICLE_PARKING"</td>
+<td align="center"><code>enum</code></td>
+<td>The type of the updater.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>facilitiesFrequencySec</td>
+<td align="center"><code>integer</code></td>
+<td>How often the facilities should be updated.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>3600</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>facilitiesUrl</td>
+<td align="center"><code>string</code></td>
+<td>URL of the facilities.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td><a href="#u__2__feedId">feedId</a></td>
+<td align="center"><code>string</code></td>
+<td>The name of the data source.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>hubsUrl</td>
+<td align="center"><code>string</code></td>
+<td>Hubs URL</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td><a href="#u__2__sourceType">sourceType</a></td>
+<td align="center"><code>enum</code></td>
+<td>The source of the vehicle updates.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td><a href="#u__2__timeZone">timeZone</a></td>
+<td align="center"><code>time-zone</code></td>
+<td>The time zone of the feed.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>utilizationsFrequencySec</td>
+<td align="center"><code>integer</code></td>
+<td>How often the utilization should be updated.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>600</code></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td>utilizationsUrl</td>
+<td align="center"><code>string</code></td>
+<td>URL of the utilization data.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+</tbody>
+</table>
+<h4 id="details_3">Details</h4>
+<h4 id="u__2__feedId">feedId</h4>
+
+<p><strong>Since version:</strong> <code>na</code> ∙ <strong>Type:</strong> <code>string</code> ∙ <strong>Cardinality:</strong> <code>Optional</code>  \
+<strong>Path:</strong> /updaters/[2] </p>
+<p>The name of the data source.</p>
+<p>This will end up in the API responses as the feed id of of the parking lot.</p>
+<h4 id="u__2__sourceType">sourceType</h4>
+
+<p><strong>Since version:</strong> <code>na</code> ∙ <strong>Type:</strong> <code>enum</code> ∙ <strong>Cardinality:</strong> <code>Required</code>  \
+<strong>Path:</strong> /updaters/[2]  \
+<strong>Enum values:</strong> <code>gbfs</code> | <code>smoove</code> | <code>vilkku</code> | <code>kml</code> | <code>park-api</code> | <code>bicycle-park-api</code> | <code>hsl-park</code></p>
+<p>The source of the vehicle updates.</p>
+<h4 id="u__2__timeZone">timeZone</h4>
+
+<p><strong>Since version:</strong> <code>na</code> ∙ <strong>Type:</strong> <code>time-zone</code> ∙ <strong>Cardinality:</strong> <code>Optional</code>  \
+<strong>Path:</strong> /updaters/[2] </p>
+<p>The time zone of the feed.</p>
+<p>Used for converting abstract opening hours into concrete points in time.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// router-config.json</span><span class="w"></span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;updaters&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vehicle-parking&quot;</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">      </span><span class="nt">&quot;sourceType&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hsl-park&quot;</span><span class="w"></span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="p">]</span><span class="w"></span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<!-- vehicle-parking END -->
+
+<h3 id="siri-sx-updater-for-azure-service-bus-sandbox-feature">SIRI SX updater for Azure Service Bus (sandbox feature)</h3>
+<p>This is a Sandbox updater se <a href="../sandbox/SiriAzureUpdater/">sandbox documentation</a>.</p>
+<!-- INSERT: siri-azure-sx-updater -->
+
+<h3 id="vehicle-rental-service-directory-configuration-sandbox-feature">Vehicle Rental Service Directory configuration (sandbox feature)</h3>
+<p>To configure and url for
+the <a href="../sandbox/VehicleRentalServiceDirectory/">VehicleRentalServiceDirectory</a>.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../RouteRequest/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Route Request" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Route Request
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../RoutingModes/" class="md-footer__link md-footer__link--next" aria-label="Next: Routing Modes" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Routing Modes
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "toc.integrate"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      
+    
+  </body>
+</html>
