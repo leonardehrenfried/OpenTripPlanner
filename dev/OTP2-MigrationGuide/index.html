@@ -1,0 +1,1786 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.opentripplanner.org/dev/OTP2-MigrationGuide/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.7">
+    
+    
+      
+        <title>OTP2 migration guide - OpenTripPlanner 2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-to-migrate-from-otp1-to-otp2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenTripPlanner 2" class="md-header__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTripPlanner 2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              OTP2 migration guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Governance/" class="md-tabs__link md-tabs__link--active">
+        About
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Basic-Tutorial/" class="md-tabs__link">
+        Usage
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Developers-Guide/" class="md-tabs__link">
+        Development
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../SandboxExtension/" class="md-tabs__link">
+        Sandbox
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenTripPlanner 2" class="md-nav__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    OpenTripPlanner 2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          About
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="About" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          About
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Governance/" class="md-nav__link">
+        Governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../History/" class="md-nav__link">
+        History
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deployments/" class="md-nav__link">
+        Deployments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Version-Comparison/" class="md-nav__link">
+        Comparing OTP2 to OTP1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          OTP2 migration guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        OTP2 migration guide
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#command-line" class="md-nav__link">
+    Command Line
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-loading" class="md-nav__link">
+    File Loading
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-config" class="md-nav__link">
+    Build Config
+  </a>
+  
+    <nav class="md-nav" aria-label="Build Config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-parameters" class="md-nav__link">
+    New parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters-whose-names-were-changed" class="md-nav__link">
+    Parameters whose names were changed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#these-parameters-are-no-longer-supported" class="md-nav__link">
+    These parameters are no longer supported
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#router-config" class="md-nav__link">
+    Router Config
+  </a>
+  
+    <nav class="md-nav" aria-label="Router Config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#new-parameters_1" class="md-nav__link">
+    New parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#these-parameters-are-no-longer-supported_1" class="md-nav__link">
+    These parameters are no longer supported
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rest-api" class="md-nav__link">
+    REST API
+  </a>
+  
+    <nav class="md-nav" aria-label="REST API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trip-planning" class="md-nav__link">
+    Trip Planning
+  </a>
+  
+    <nav class="md-nav" aria-label="Trip Planning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#query-parameter-changes" class="md-nav__link">
+    Query parameter changes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters-missing-in-otp2-but-intended-to-be-reintroduced" class="md-nav__link">
+    Parameters missing in OTP2 but intended to be reintroduced
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameters-that-have-changed" class="md-nav__link">
+    Parameters that have changed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-parameters-in-otp2" class="md-nav__link">
+    New parameters in OTP2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#these-parameters-are-no-longer-supported_2" class="md-nav__link">
+    These parameters are no longer supported
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paging" class="md-nav__link">
+    Paging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-changes" class="md-nav__link">
+    Response changes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes-to-the-index-api" class="md-nav__link">
+    Changes to the Index API
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serverinfo" class="md-nav__link">
+    ServerInfo
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alertpatcher" class="md-nav__link">
+    AlertPatcher
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analyst" class="md-nav__link">
+    Analyst
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scripting" class="md-nav__link">
+    Scripting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updaters" class="md-nav__link">
+    Updaters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Visual-Identity/" class="md-nav__link">
+        Visual Identity
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Basic-Tutorial/" class="md-nav__link">
+        Basic Tutorial
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting-OTP/" class="md-nav__link">
+        Getting OTP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Container-Image/" class="md-nav__link">
+        Container image
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4" type="checkbox" id="__nav_3_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_4">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Configuration" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Configuration/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BuildConfiguration/" class="md-nav__link">
+        Build
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BoardingLocations/" class="md-nav__link">
+        Boarding locations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouterConfiguration/" class="md-nav__link">
+        Router
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Accessibility/" class="md-nav__link">
+        Accessibility
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouteRequest/" class="md-nav__link">
+        Route Request
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UpdaterConfig/" class="md-nav__link">
+        Realtime Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoutingModes/" class="md-nav__link">
+        Routing Modes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Preparing-OSM/" class="md-nav__link">
+        Preparing OSM Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Netex-Norway/" class="md-nav__link">
+        Netex and SIRI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Security/" class="md-nav__link">
+        Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting-Routing/" class="md-nav__link">
+        Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Development
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Development" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Development
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Developers-Guide/" class="md-nav__link">
+        Developers' Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Interfaces-Data-Sources/" class="md-nav__link">
+        Interfaces and Data Sources
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        Localization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Bibliography/" class="md-nav__link">
+        Bibliography
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Codestyle/" class="md-nav__link">
+        Codestyle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        Sandbox development
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          Sandbox
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Sandbox" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Sandbox
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ActuatorAPI/" class="md-nav__link">
+        Actuator API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/transferanalyzer/" class="md-nav__link">
+        Direct transfer analyzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GoogleCloudStorage/" class="md-nav__link">
+        Google Cloud Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/LegacyGraphQLApi/" class="md-nav__link">
+        HSL Legacy GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TransmodelApi/" class="md-nav__link">
+        Transmodel(NeTEx) GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriUpdator/" class="md-nav__link">
+        SIRI Updater (Google Cloud)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriAzureUpdater/" class="md-nav__link">
+        SIRI Updater (Azure)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleRentalServiceDirectory/" class="md-nav__link">
+        Vehicle Rental Service Directory API support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SmooveBikeRental/" class="md-nav__link">
+        Smoove Bike Rental Updator Support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/MapboxVectorTilesApi/" class="md-nav__link">
+        Mapbox Vector Tiles API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Flex/" class="md-nav__link">
+        Flex Routing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ReportApi/" class="md-nav__link">
+        Report API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/InteractiveOtpMain/" class="md-nav__link">
+        Interactive OTP Launcher
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ParkAndRideApi/" class="md-nav__link">
+        Park and Ride API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/DataOverlay/" class="md-nav__link">
+        Data Overlay
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleParking/" class="md-nav__link">
+        Vehicle Parking Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleToStopHeuristics/" class="md-nav__link">
+        Vehicle-to-stop Heuristics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GeocoderAPI/" class="md-nav__link">
+        Geocoder API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TravelTime/" class="md-nav__link">
+        Travel time isochrones
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/IBIAccessibilityScore/" class="md-nav__link">
+        IBI accessibility score
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Fares/" class="md-nav__link">
+        Fares
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/OTP2-MigrationGuide.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="how-to-migrate-from-otp1-to-otp2">How to migrate from OTP1 to OTP2</h1>
+<h2 id="command-line">Command Line</h2>
+<p>The OTP2 command line parameters are different than in OTP1. Use the <code>--help</code> option to get the
+current documentation, and look at <a href="../Basic-Tutorial/#starting-otp">Basic Tutorial - Starting OTP</a>
+for examples. The possibility to build the graph in 2 steps (streets then transit) is new in OTP2.
+OTP2 does not support routing on more than one separate transportation network with a single
+server (referred to as multiple "routers" in OTP1).</p>
+<h2 id="file-loading">File Loading</h2>
+<p>OTP1 reads and writes all files on the local filesystem, and no other <em>data-source</em> is supported. In
+OTP2 we support accessing cloud storage. So far support for Google Cloud Storage has been added and
+we plan to add support for AWS S3 as well. Config files (<em>otp-config.json, build-config.json,
+router-config.json</em>) must be read from the local file system, while other files can be read/written
+from either the local filesystem or cloud storage. OTP2 supports mixing any supported data sources.</p>
+<p>OTP1 loads input data files (<em>DEM, OSM, GTFS, NeTEx</em>) based on the suffix (file extension). But for
+GTFS files OTP1 also opens the zip-file and looks for <em>stops.txt</em>. OTP2 identifies GTFS files by the
+name only: it will detect any zip-file or directory that contains "gtfs" as part of the name. All
+file types in OTP2 are resolved by matching the name with a regexp pattern. You can configure the
+patterns in the <em>build-config.json</em> if the defaults do not suit you.</p>
+<p>OTP2 does not support multiple routers (separate named networks to route on), but you can load as
+many GTFS and/or NeTEx feeds as you want into a single routable network in a single instance of
+OTP2.</p>
+<h2 id="build-config">Build Config</h2>
+<p>OTP will log all unrecognized parameters when starting up. Make sure to investigate all log events
+of this type:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>16:18:46.911 WARN (NodeAdapter.java:413) Unexpected config parameter: &#39;fetchElevationUS:false&#39; in &#39;build-config.json&#39;. Is the spelling correct?
+</code></pre></div>
+<h4 id="new-parameters">New parameters</h4>
+<ul>
+<li><code>configVersion</code> Optional parameter which can be used to version the build config file. Since v2.1</li>
+<li><code>dataOverlay</code> Config for the DataOverlay Sandbox module. Since v2.1</li>
+<li><code>maxAreaNodes</code> Visibility calculations will not be done for areas with more nodes than this limit.
+  Since v2.1</li>
+<li><code>maxJourneyDuration</code> This limits the patterns we consider in the transit search.
+  See <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/dev-2.1/src/main/java/org/opentripplanner/routing/api/request/RoutingRequest.java">RoutingRequest</a>
+  . Since v2.1</li>
+<li><code>maxStopToShapeSnapDistance</code> Used for mapping route geometry shapes. Since v2.1</li>
+<li><code>transferRequests</code> Pre-calculate transfers. Since v2.1</li>
+<li><code>transitServiceStart</code> Limit the import of transit services to the given <em>start</em> date.
+  Default: <code>-P1Y</code>. Since v2.0</li>
+<li><code>transitServiceEnd</code> Limit the import of transit services to the given <em>end</em> date. <em>Inclusive</em>.
+  Default: <code>P3Y</code>. Since v2.0</li>
+<li>Since v2.2, data feeds can be configured individually by using the <code>transitFeeds</code>, <code>osm</code> and <code>dem</code> 
+  nodes.</li>
+</ul>
+<h4 id="parameters-whose-names-were-changed">Parameters whose names were changed</h4>
+<ul>
+<li><code>alightTimes</code> to <code>routingDefaults.alightSlackForMode</code>. Since v2.0</li>
+<li><code>boardTimes</code> to <code>routingDefaults.boardSlackForMode</code>. Since v2.0</li>
+<li><code>htmlAnnotations</code> to <code>dataImportReport</code>. Since v2.0</li>
+<li><code>maxHtmlAnnotationsPerFile</code> to <code>maxDataImportIssuesPerFile</code>. Since v2.0</li>
+<li><code>maxTransferDistance</code> to <code>maxTransferDurationSeconds</code>. Since v2.1</li>
+</ul>
+<h4 id="these-parameters-are-no-longer-supported">These parameters are no longer supported</h4>
+<ul>
+<li><code>fetchElevationUS</code>. Since v2.1</li>
+<li><code>parentStopLinking</code>. Since v2.0</li>
+<li><code>staticBikeRental</code>. Since v2.1</li>
+<li><code>stationTransfers</code>. Since v2.0</li>
+<li><code>stopClusterMode</code>. Since v2.0</li>
+<li><code>useTransfersTxt</code>. Since v2.1</li>
+</ul>
+<p>Since v2.2, <code>osmWayPropertySet</code> was renamed <code>osmTagMapping</code> and is part of the individual osm 
+source. The driving direction and intersection cost model were decoupled for the tag mapping and can
+be configured using <code>drivingDirection</code> and <code>intersectionTraversalModel</code> inside <code>routingDefaults</code>.</p>
+<p>OTP2 records the "parentStation" relationship between stops and stations in its internal transit
+model, based on the GTFS and/or NeTEx input. This enables OTP to search from all stop in a station
+<em>without</em> walking/waiting when the request from/to input field is a station id. There is no way to
+automatically infer this parent station relationship based on geographic proximity in OTP2.</p>
+<p>Transfers in OTP2 are generated based on the stop location and the OSM data or GTFS Pathways. In
+future versions of OTP2 we also want to support generating simple transfers based on
+"line-of-sight" if no pathways or OSM data exist. See issue
+<a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3204">#3204</a>.</p>
+<p>Cleaning and patching input data is NOT a core feature of OTP, but anyone is welcome to implement a
+sandbox plugin to patch data. So, if any of the features above are needed they can be ported from
+OTP1 into an OTP2 sandbox feature.</p>
+<h2 id="router-config">Router Config</h2>
+<p>See the <a href="RouterConfiguration">Router Configuration</a> for a description of the new and existing
+routing parameters.</p>
+<h4 id="new-parameters_1">New parameters</h4>
+<ul>
+<li><code>flex</code> Add configuration for flex services (sandbox feature). Since v2.1</li>
+<li><code>configVersion</code> Optional parameter which can be used to version the build config file. Since v2.1</li>
+<li><code>streetRoutingTimeout</code> Maximum time limit for street route queries. Replace the old <code>timeout</code>.
+  Since v2.0</li>
+<li><code>transit</code> A set of parameters to tune the Raptor transit router. Since v2.0, changed in v2.1</li>
+<li><code>itineraryFilters</code> Configure itinerary filters that may modify itineraries, sort them, and filter
+  away less preferable results. Since v2.0, changed in v2.1</li>
+<li><code>transferOptimization</code> Configure the new transfer optimization feature. Since 2.1</li>
+</ul>
+<h4 id="these-parameters-are-no-longer-supported_1">These parameters are no longer supported</h4>
+<ul>
+<li><code>timeout</code> Replaced by <code>streetRoutingTimeout</code>. Since v2.0</li>
+<li><code>timeouts</code> OTP1 searches the graph many times. OTP2 finds multiple results in a single search so
+  there is no longer a need for this parameter. Since v2.0</li>
+<li><code>boardTimes</code> is replaced by <code>request</code> parameter <code>boardSlack</code> and <code>boardSlackForMode</code>. Since v2.0</li>
+<li><code>alightTimes</code> is replaced by <code>request</code> parameter <code>alightSlack</code> and <code>alightSlackForMode</code>. Since
+  v2.0</li>
+<li><code>disableAlertFiltering</code> Not implemented in OTP2. Since v2.0</li>
+</ul>
+<h2 id="rest-api">REST API</h2>
+<h3 id="trip-planning">Trip Planning</h3>
+<p>Support for XML as a request/response format is removed. The only supported format is JSON. Some of
+these parameters may only be available as <code>defaultRequest</code> configuration parameters.</p>
+<h4 id="query-parameter-changes">Query parameter changes</h4>
+<p>A lot of the query parameters in the REST API are ignored/deprecated, see
+the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/dev-2.1/src/main/java/org/opentripplanner/routing/api/request/RouteRequest.java">RoutingRequest</a>
+and
+the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/dev-2.1/src/main/java/org/opentripplanner/api/common/RouteResource.java">RoutingResource</a>
+class for the documentation on what is now supported in OTP2.</p>
+<h4 id="parameters-missing-in-otp2-but-intended-to-be-reintroduced">Parameters missing in OTP2 but intended to be reintroduced</h4>
+<ul>
+<li><code>startingTransitTripId</code> - ability to plan a trip from on board a vehicle</li>
+<li><code>intermediatePlaces</code> - ability to specify intermediate destinations along the route. It is not
+  certain when this will be implemented.</li>
+<li><code>nonpreferredTransferCost</code>, <code>(un)preferredRoutes</code>, <code>(un)preferredAgencies</code> - these help diversify
+  or customize the trips and operators visible in results. Due to the new transit routing algorithm,
+  Entur plans to completely rewrite these features, accounting for market-neutrality requirements
+  and showing relevant trips and operators in local vs. intercity trips.</li>
+</ul>
+<p>Some features in OTP1 will not be present upon launch in OTP2, and they are proposed to be removed
+permanently from OTP2, but may require some development to support valid important cases:</p>
+<ul>
+<li><code>maxWalkDistance</code>, <code>maxTransferWalkDistance</code>, &amp; <code>maxWait</code> - these parameters impose hard limits
+  and are no longer the preferred way to reduce the amount of walking or waiting in returned
+  itineraries. In OTP2 the goal is to control this with <code>walkReluctance</code> and <code>waitReluctance</code>.
+  Internally some limits on walking and waiting do still exist, but they are set quite high so trips
+  with long walking or waiting times are still considered. Note that unlike in OTP1, if you do set
+  your own max walk or wait time on an API request, it will apply to both transit searches and
+  non-transit searches.</li>
+<li><code>maxHours</code> &amp; <code>useRequestedDateTimeInMaxHours</code> - This is replaced by <code>searchWindow</code>, which limits
+  the arrival or departure window of the trip</li>
+<li><code>worstTime</code> - This factor returns the “worst” trip in a depart after/arrive by search, i.e. the
+  latest or earliest trip available. It is not a priority for current OTP2 users but could be added
+  as a filter.</li>
+<li><code>waitAtBeginningFactor</code> - No longer necessary to weight the initial wait differently based on the
+  the Range Raptor search algorithm, which no longer prefers a departure at one valid time over
+  another. Filtering could be implemented on top of Raptor to show certain departure times before
+  others. Removed in v2.2.</li>
+<li><code>pathComparator</code> - The ability to set a sort order based on departure or arrival should be the
+  domain of the API rather than the search.</li>
+<li><code>startingTransitStopId</code> - this is redundant, as the same thing can be achieved with fromPlace</li>
+<li><code>onlyTransitTrips</code> - it is now possible to specify access, egress, transit and direct modes
+  separately, making this parameter unnecessary.</li>
+</ul>
+<h4 id="parameters-that-have-changed">Parameters that have changed</h4>
+<ul>
+<li><code>numItineraries</code> The parameter is no longer used to terminate the request when the numItineraries
+  is found, instead the new <code>searchWindow</code> parameter should be used to limit the search. In OTP2 it
+  crops the list of itineraries AFTER the search is complete. This parameter is a post search filter
+  function. The best option is to configure this on the server side and not use it as a client side
+  input parameter. A side effect from reducing the result is that OTP2 cannot guarantee to find all
+  pareto-optimal itineraries when paging. Also, a large search-window and a small <code>numItineraries</code>
+  waste computer CPU calculation time. Consider tuning the <code>searchWindow</code> instead of setting this to
+  a small value. Since 2.0</li>
+<li><code>modes</code> The REST API is unchanged, but is mapped into a new structure in the RouteRequest. This
+  means not all combinations of non-transit modes that was available in OTP1 is available in OTP2.
+  Since 2.0</li>
+<li><code>preferredAgencies</code>, <code>unpreferredAgencies</code>, <code>bannedAgencies</code> and <code>whiteListedAgencies</code> use
+  feed-scoped ids. If you are using the ids directly from the Index API, no changes are needed.
+  Since 2.0</li>
+<li><code>maxTransferDistance</code>, replaced by <code>maxTransferDurationSeconds</code> Since 2.1</li>
+<li><code>bannedTrips</code> no longer allows specifying stop indices, but only allows banning complete trips.
+  Since 2.2</li>
+</ul>
+<h4 id="new-parameters-in-otp2">New parameters in OTP2</h4>
+<ul>
+<li><code>alightSlackForMode</code> How much time alighting a vehicle takes for each given mode. Since 2.0</li>
+<li><code>allowedVehicleRentalNetworks</code> and <code>bannedVehicleRentalNetworks</code>. Since 2.1</li>
+<li><code>bikeReluctance</code>, <code>bikeWalkingReluctance</code>, <code>bikeWalkingSpeed</code>, <code>carReluctance</code>, and <code>walkingBike</code>
+  Add explicit bike / bike-walking / car / walk reluctance. Since 2.1</li>
+<li><code>boardSlackForMode</code> How much time ride a vehicle takes for each given mode. Since 2.0</li>
+<li><code>carPickupCost</code> and <code>carPickupTime</code>. Add a cost/time for CarPickup changes when a pickup or drop
+  off takes place. Since 2.1</li>
+<li><code>maxAccessEgressDurationForMode</code> Limit access/egress per street mode. Since 2.2</li>
+<li>This was called <code>maxAccessEgressDurationSecondsForMode</code> between 2.0 and 2.2</li>
+<li><code>maxDirectStreetDurationForMode</code> Limit direct route duration per street mode. Since 2.2</li>
+<li><code>parkAndRideDurationRatio</code> Filter for park and ride with long walk. Since 2.1</li>
+<li><code>requiredVehicleParkingTags</code> and <code>bannedVehicleParkingTags</code>. Since 2.1</li>
+<li><code>searchWindow</code> Limit the departure window or arrival window for the routing search. Since 2.0</li>
+<li><code>stairsTimeFactor</code> Add a penalty to the time it takes to walk up and down stairs. Since 2.1</li>
+</ul>
+<h4 id="these-parameters-are-no-longer-supported_2">These parameters are no longer supported</h4>
+<ul>
+<li><code>maxHours</code> Since 2.1</li>
+<li><code>maxPreTransitTime</code> Since 2.1</li>
+<li><code>maxWeight</code> Since 2.1</li>
+<li><code>driveOnRight</code> You can specify the driving direction in your way property set. Since 2.1</li>
+<li><code>bannedTrips</code> Not supported in 2.0 and 2.1</li>
+<li><code>waitAtBeginningFactor</code> Since 2.2 </li>
+</ul>
+<h4 id="paging">Paging</h4>
+<p>In OTP1 most clients provided a way to break results into pages by looking at the trips returned and
+issuing another request, supplying something like the <code>last-depature-time</code> + 1 minute to the next
+request. This yields another batch of trips to show to the user. In OTP2 the recommended way to do
+this is to use the new <code>TripPlan metadata</code> returned by the router call.</p>
+<p>In OTP 2.0 the server returned a set of parameters(<code>searchWindowUsed</code>, <code>nextDateTime</code>,
+and <code>prevDateTime</code>), but in OTP 2.1 we have switched to a token-based approach to paging. In the
+response there is a next/previous cursor. Duplicate the request and set the new <code>pageCursor</code> to go
+the next/previous page.</p>
+<h4 id="response-changes">Response changes</h4>
+<ul>
+<li><code>agencyId</code> in the <code>leg</code> is now feed-scoped and similarly to other ids, is prefixed
+  with <code>&lt;FEED_ID&gt;:</code></li>
+<li><code>debugOutput</code> in <code>TripPlan</code> has changed due to the different algorithms used in OTP version 1.x
+  and 2.x.</li>
+<li>The <code>totalTime</code> is left as is, <code>directStreetRouterTime</code>, <code>transitRouterTime</code>, <code>filteringTime</code>
+  and <code>renderingTime</code> are new fields.</li>
+<li><code>effectiveEndDate</code> is added to the <code>Alert</code>s</li>
+</ul>
+<h3 id="changes-to-the-index-api">Changes to the Index API</h3>
+<ul>
+<li>Error handling is improved, this is now consistently applied and uses build in framework support.</li>
+<li>The HTTP 400 and 404 response now contains a detailed error message in plain text targeted
+  developers to help understanding why the 400 or 404 was returned.</li>
+<li><code>Route</code></li>
+<li>Deprecated 'routeBikesAllowed' field removed.</li>
+<li><code>sortOrder</code> will be empty (missing) when empty, NOT -999 as before.</li>
+<li>To access or references <code>TripPattern</code> use <code>tripPatternId</code>, not <code>code</code>. In OTP1 the
+  <code>code</code> was used. The code was the same as the id without the feedId prefix. The <code>code</code>
+  is removed from OTP2. Clients may not be affected by this change, unless they toke advantage of
+  the semantics in the old <code>code</code>.</li>
+<li>The <code>mode</code> field is added to <code>Route</code>, it should probebly replace the <code>type</code>(unchanged). The
+  <code>RouteShort</code> is not chencged - it has the <code>mode</code> field.</li>
+<li><code>Pattern</code> (or <code>TripPattern</code>)<ul>
+<li>The semantics of the <code>id</code> should NOT be used to access other related entities like <code>Route</code>,
+  the <code>routeId</code> is added to <code>TripPatternShort</code> to allow navigation to Route.</li>
+</ul>
+</li>
+<li><code>Trip</code><ul>
+<li>The deprecated <code>tripBikesAllowed</code> is removed.</li>
+<li>The <code>routeId</code> replace <code>route</code>. The route is no longer part of the trip. To obtain the Route
+  object call the Index API with the routeId.</li>
+</ul>
+</li>
+<li><code>Stop</code><ul>
+<li>The new <code>stationId</code> is a feed-scoped-id to the parent station. It should be used instead of
+  the deprecated ~~parentStation~~.</li>
+</ul>
+</li>
+<li><code>StopShort</code><ul>
+<li>The new <code>stationId</code> is a feed-scoped-id to the parent station. It should be used instead of
+  the deprecated ~~cluster~~.</li>
+</ul>
+</li>
+<li><code>Agency</code><ul>
+<li>The <code>id</code> is now feed-scoped and similarly to other ids, is prefixed with <code>&lt;FEED_ID&gt;:</code></li>
+</ul>
+</li>
+<li><code>Alert</code><ul>
+<li><code>effectiveEndDate</code> is added to show the end time of the alert validity.</li>
+</ul>
+</li>
+</ul>
+<h3 id="serverinfo">ServerInfo</h3>
+<p>The returned data structure is changed and more info is available.</p>
+<h3 id="alertpatcher">AlertPatcher</h3>
+<p>The AlertPatcher, which was under the <code>/patch</code> path, is removed. In order to update alerts, please
+use a GTFS-RT Service Alert updater instead. An example of a simple service for producing static
+GTFS-RT Service Alert feed from JSON is <a href="https://github.com/pailakka/manual-gtfsrt">manual-gtfsrt</a>.</p>
+<p>Querying for alerts has been moved under the index API, where <code>/alerts</code> can be appended to stop,
+route, trip and pattern.</p>
+<h3 id="analyst">Analyst</h3>
+<p>The analyst API endpoints have been removed.</p>
+<h3 id="scripting">Scripting</h3>
+<p>The scripting API endpoint has been removed.</p>
+<h3 id="updaters">Updaters</h3>
+<ul>
+<li>Floating bikes have been disabled by default in the GbfsBikeRentalDataSource unless explicitly
+  turned on via OTPFeature.</li>
+<li>Allow http headers to be configured for bike rental updaters</li>
+<li>The following bike updaters have been removed: <em>b-cycle</em>, <em>bicimad</em>, <em>bixi</em>, <em>city-bikes</em>, and *
+  citi-bike-nyc<em>, </em>jcdecaux<em>, </em>keolis-rennes<em>, </em>kml<em>, </em>next-bike<em>, </em>ov-fiets<em>, </em>sf-bay-area<em>, *
+  share-bike</em>, <em>smoove</em>, <em>uip-bike</em>, and <em>vcub</em>. Use the standard <em>gtfs</em> updater instead, or
+  reintroduce your custom updater as a Sandbox module.</li>
+<li>The <code>logFrequency</code>, <code>maxSnapshotFrequency</code>, <code>purgeExpiredData</code> updater parameters are moved from 
+  the individual updaters to <code>timetableUpdates</code>(root level in the router config).  </li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../Version-Comparison/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Comparing OTP2 to OTP1" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Comparing OTP2 to OTP1
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Visual-Identity/" class="md-footer__link md-footer__link--next" aria-label="Next: Visual Identity" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Visual Identity
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "toc.integrate"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      
+    
+  </body>
+</html>
