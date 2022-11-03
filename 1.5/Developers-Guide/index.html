@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/1.5/Developers-Guide/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Developers' Guide - OpenTripPlanner</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Intermediate-Tutorial/" class="dropdown-item">Intermediate Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../External-Tutorials/" class="dropdown-item">External Tutorials</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Analyst/" class="dropdown-item">Analyst</a>
+</li>
+                                    
+<li>
+    <a href="../Scripting/" class="dropdown-item">Scripting</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                    
+<li>
+    <a href="../Flex/" class="dropdown-item">GTFS-Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="../Surface/" class="dropdown-item">One-to-many Travel Times</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Surface/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Architecture/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Developers-Guide.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#developers-guide" class="nav-link">Developers Guide</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#working-on-otp-in-an-ide" class="nav-link">Working on OTP in an IDE</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#contributing-to-the-project" class="nav-link">Contributing to the project</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#code-style" class="nav-link">Code style</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#continuous-integration" class="nav-link">Continuous Integration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#release-process" class="nav-link">Release Process</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#additional-information-on-releases" class="nav-link">Additional Information on Releases</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="developers-guide">Developers Guide</h1>
+<h2 id="working-on-otp-in-an-ide">Working on OTP in an IDE</h2>
+<p>Most people writing or modifying OTP code use an Integrated Development Environment (IDE). Some of the most popular IDEs for
+Java development are <a href="http://eclipse.org">Eclipse</a>, <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a>, and
+<a href="https://netbeans.org">NetBeans</a>. All three of these environments are good for working on OTP,
+and any IDE with Maven build support should also work (ensure that you have the Maven plugins installed and enabled).
+Git integration is a plus since OTP is under Git version control.</p>
+<p>Many of the Core OTP developers use IntelliJ IDEA. It is an excellent IDE, and in my experience is quicker 
+and more stable than the competition. IntelliJ IDEA is a commercial product, but there is an open source "community edition"
+that is completely sufficient for working on OTP.</p>
+<p>Rather than using the version control support in my IDE, I usually find it more straightforward to clone the OTP GitHub
+repository manually (on the command line or using some other Git interface tool), then import the resulting local OTP
+repository into my IDE as a Maven project. The IDE should then take care of fetching all the libraries OTP depends on,
+based on the Maven project description (POM file) in the base of the OTP repository. This step can take a long time because
+it involves downloading a lot of JAR files.</p>
+<p>When running your local copy of the OTP source within an IDE, all command line switches and configuration options will
+be identical to the ones used when running the OTP JAR from the command line (as described in the
+<a href="Basic-Usage">basic introduction</a> and <a href="Configuration">configuration reference</a>). The only difference is that you need to
+manually specify the main class. When you run a JAR from the command line, the JVM automatically knows which class
+contains the entry point into the program (the <code>main</code> function), but in IDEs you must create a "run configuration".</p>
+<p>Both IntelliJ and Eclipse have "run" menus, from which you can select an option to edit the run configurations.
+You want to create a configuration for a Java Application, specifying the main class
+<code>org.opentripplanner.standalone.OTPMain</code>. Unlike on the command line, the arguments to the JVM and to the main class
+you are running are specified separately. In the field for the VM options you'll want to put your maximum memory
+parameter (<code>-Xmx2G</code>, or whatever limit you want to place on JVM memory usage). The rest of the parameters to OTP itself
+will go in a different field with a name like "program arguments".</p>
+<h2 id="contributing-to-the-project">Contributing to the project</h2>
+<p>OpenTripPlanner is a community based open source project, and we welcome all who wish to contribute.
+There are several ways to get involved:</p>
+<ul>
+<li>
+<p>Join the <a href="http://groups.google.com/group/opentripplanner-dev">developer mailing list</a></p>
+</li>
+<li>
+<p>Fix typos and improve the documentation on the wiki or within the <code>/docs</code> directory of the project (details below).</p>
+</li>
+<li>
+<p><a href="http://github.com/openplans/OpenTripPlanner/issues/new">File a bug or new feature request</a>.</p>
+</li>
+<li>
+<p>Submit patches. If you're not yet a committer, please provide patches as pull requests citing the relevant issue.
+   Even when you do have push access to the repository, pull requests are a good way to get feedback on changes.</p>
+</li>
+</ul>
+<h3 id="branches-and-branch-protection">Branches and Branch Protection</h3>
+<p>As of January 2019, we have begun work on OTP 2.x and are using a Git branching model derived from <a href="https://nvie.com/posts/a-successful-git-branching-model/">Gitflow</a>. All development will occur on the <code>dev-1.x</code> and <code>dev-2.x</code> branches. Only release commits setting the Maven artifact version to a non-snapshot number should be pushed to the <code>master</code> branch of OTP. All other changes to master should result from fast-forward merges of a Github pull request from the <code>dev-1.x</code> branch. In turn, all changes to <code>dev-1.x</code> should result from a fast-forward merge of a Github pull request for a single feature, fix, or other change. These pull requests are subject to code review. We require two pull request approvals from OTP leadership committee members or designated code reviewers from two different organizations. We also have validation rules ensuring that the code compiles and all tests pass before pull requests can be merged.</p>
+<p>The <code>dev-2.x</code> branch is managed similarly to <code>dev-1.x</code> but because it's rapidly changing experimental code worked on by relatively few people, we require only one pull request approval from a different organization than the author. Merges will not occur into <code>master</code> from <code>dev-2.x</code> until that branch is sufficiently advanced and receives approval from the OTP project leadership committee.</p>
+<h3 id="issues-and-commits">Issues and commits</h3>
+<p>All commits should reference a specific issue number (this was formally decided in issue #175).
+For example, <code>Simplify module X configuration #9999</code>.
+If no ticket exists for the feature or bug your code implements or fixes,
+you should <a href="http://github.com/openplans/OpenTripPlanner/issues/new">create a new ticket</a> prior to checking in, or
+ideally even prior to your development work since this provides a place to carry out implementation discussions (in the comments).</p>
+<p>GitHub will automatically update issues when commits are merged in: if your commit message includes the text
+<code>fixes #123</code>, it will automatically append your message as a comment on the isse and close it.
+If you simply mention <code>#123</code> in your message, your message will be appended to the issue but it will remain open.
+Many other expressions exist to close issues via commit messages. See <a href="https://help.github.com/articles/closing-issues-via-commit-messages/">the GitHub help page on this topic</a>.</p>
+<h3 id="code-comments">Code Comments</h3>
+<p>As a matter of <a href="http://github.com/opentripplanner/OpenTripPlanner/issues/93">policy</a>, all new methods, classes, and 
+fields should include comments explaining what they are for and any other pertinent information. For Java code, 
+the comments should use the <a href="http://java.sun.com/j2se/javadoc/writingdoccomments">JavaDoc conventions</a>.
+It is best to provide comments that
+not only explain <em>what</em> you did but also <em>why you did it</em> while providing some context. Please avoid including trivial
+Javadoc or the empty Javadoc stubs added by IDEs, such as <code>@param</code> annotations with no description.</p>
+<h3 id="documentation">Documentation</h3>
+<p>Most documentation should be included directly in the OpenTripPlanner repository rather than the GitHub wiki.
+This allows version control to be applied to documentation as well as program source code.
+All pull requests that change how OTP is used or configured should include changes to the documentation alongside code
+modifications. Pages that help organize development teams or serve as scratchpads can still go
+<a href="https://github.com/opentripplanner/OpenTripPlanner/wiki">on the wiki</a>, but all documentation that would be of interest
+to people configuring or using OTP belong <a href="https://github.com/opentripplanner/OpenTripPlanner/tree/master/docs">in the repo</a>.</p>
+<p>The documentation files are in Markdown format and are in the <code>/docs</code> directory under the root of the project. On every
+push to the master branch the documentation will be rebuilt and deployed as static pages to our subdomain of
+<a href="http://opentripplanner.readthedocs.org/">ReadTheDocs</a>. MkDocs is a Python program and should run on any major platform.
+See http://www.mkdocs.org/ for information on how to install it and how to generate a live local preview of the
+documentation while you're working on writing it.</p>
+<p>In short:</p>
+<pre><code>$ pip install mkdocs
+$ mkdocs serve
+</code></pre>
+<h3 id="debug-layers">Debug layers</h3>
+<p>Adding new renderer is very easy. You just need to create new class (preferably in
+<code>org.opentripplanner.inspector</code> package) which implements EdgeVertexRenderer. It is best if class
+name ends with Rendered. To implement this interface you need to write three functions <code>renderEdge</code>,
+<code>renderVertex</code> and <code>getName</code>. Both render functions accepts <code>EdgeVisualAttributes</code> object in which
+label of edge/vertex and color can be set. And both return <code>true</code> if edge/vertex should be rendered
+and <code>false</code> otherwise. <code>getName</code> function should return short descriptive name of the class and will
+be shown in layer chooser.</p>
+<p>For examples how to write renderers you can look into example renderers which are all in <code>org.opentripplanner.inspector</code> package.</p>
+<p>After your class is written you only need to add it to TileRenderManager:</p>
+<pre><code class="language-java">//This is how Wheelchair renderer is added
+renderers.put(&quot;wheelchair&quot;, new EdgeVertexTileRenderer(new WheelchairEdgeRenderer()));
+</code></pre>
+<p><code>wheelchair</code> is internal layer key and should consist of a-zA-Z and -.</p>
+<p>By default all the tiles have cache headers to cache them for one hour. This can become problematic
+ if you are changing renderers a lot. To disable this change <code>GraphInspectorTileResource</code>:</p>
+<pre><code class="language-java">//This lines
+CacheControl cc = new CacheControl();
+cc.setMaxAge(3600);
+cc.setNoCache(false);
+
+//to this:
+CacheControl cc = new CacheControl();
+cc.setNoCache(true);
+</code></pre>
+<h3 id="date-format">Date format</h3>
+<p>Please use only ISO 8601 date format (YYYY-MM-DD) in documentation, comments, and throughout the project.
+This avoids the ambiguity that can result from differing local interpretations of date formats like 02/01/12.</p>
+<h3 id="project-proposals-and-decision-making">Project proposals and decision making</h3>
+<p>Decisions are made by the OpenTripPlanner community through a proposal and informal voting process on the 
+<a href="http://groups.google.com/group/opentripplanner-dev">project mailing list</a>.</p>
+<p>While we do vote on proposals, we don't vote in a strict democratic sense, but rather as a way to easily register 
+opinions, foster discussion, and move toward consensus. When responding to a proposal, we use the following system:</p>
+<ul>
+<li>
+<p>+1 - <em>I support this</em></p>
+</li>
+<li>
+<p>+0 - <em>I don't have a strong opinion, but I'm not opposed</em></p>
+</li>
+<li>
+<p>-0 - <em>I'm against this, but I don't have a good alternative / I'm not willing to do the work on the alternative / I won't block</em></p>
+</li>
+<li>
+<p>-1 - <em>Blocking no</em> (note: in general and when appropriate, this requires the blocker to propose something else that he/she would help put the time into doing)</p>
+</li>
+</ul>
+<p>A proposal does <em>not</em> need to be a formal or lengthy document; it can and should be a straightforward recommendation of 
+what you want to do, ideally with a brief explanation for why it's a good idea. </p>
+<p>Proposals are just messages sent to the list and can be as simple as <em>"I think we should do X because of Y and Z. 
+Deadline for response is 2015-10-29. Assuming I've heard no blocking votes by then, I'll go ahead."</em>
+Note that you should make sure to include a <strong>deadline</strong> by which you will go ahead and do what you're proposing 
+if you don't hear any blocking responses. In general, you should leave at least 72 hours for people to respond. 
+This is not a hard-and-fast rule and you should use your best judgement in determining how far in the future the 
+deadline should be depending on the magnitude of the proposal and how much it will affect the overall project and the 
+rest of the community.</p>
+<p>Of course you may always fork the <a href="https://github.com/opentripplanner/OpenTripPlanner/">OTP repo on GitHub</a> 
+and submit your changes as a pull request, or develop and share whatever features you like on your fork even if they
+are not included in mainline OTP.</p>
+<h2 id="code-style">Code style</h2>
+<h3 id="java">Java</h3>
+<p>OpenTripPlanner uses the same code formatting and style as the <a href="http://www.geotools.org/">GeoTools</a> and 
+<a href="http://geoserver.org">GeoServer</a> projects. It's a minor variant of the
+<a href="https://www.oracle.com/technetwork/java/codeconventions-150003.pdf">Sun coding convention</a>. Notably, <strong>we do not use tabs</strong> 
+for indentation and we allow for lines up to 100 characters wide.</p>
+<p>The Eclipse formatter configuration supplied by the GeoTools project allows comments up to 150 characters wide.
+A modified version included in the OpenTripPlanner repository will wrap comments to the same width as lines of code, 
+which makes for easier reading in narrow windows (e.g. when several documents are open side-by-side on a wide display).</p>
+<p>If you use Eclipse, you should do the following to make sure your code is automatically formatted correctly:</p>
+<ol>
+<li>
+<p>Open the project <code>Properties</code> (right-click on the project directory in Eclipse and select <code>Properties</code> or choose <code>Project</code> -&gt; <code>Properties</code>).</p>
+</li>
+<li>
+<p>Select <code>Java</code>, then <code>Code Style</code>, and finally <code>Formatter</code>.  </p>
+</li>
+<li>
+<p>Check the <code>Enable project specific settings</code> checkbox.</p>
+</li>
+<li>
+<p>Click <code>Import...</code>, select the <code>formatter.xml</code> file in the root of the OpenTripPlanner git repository, and click <code>Open</code>.</p>
+</li>
+<li>
+<p>Click <code>OK</code> to close the <code>Properties</code> window.</p>
+</li>
+</ol>
+<h3 id="javascript">JavaScript</h3>
+<p>As of #206, we follow <a href="http://javascript.crockford.com/code.html">Crockford's JavaScript code conventions</a>. Further guidelines include:</p>
+<ul>
+<li>
+<p>All .js source files should contain one class only</p>
+</li>
+<li>
+<p>Capitalize the class name, as well as the source file name (a la Java)</p>
+</li>
+<li>
+<p>Include the GNU LGPL header at top of file, i.e., <code>/* This program is free software:...*/</code></p>
+</li>
+<li>
+<p>Include the namespace definition in each and every file: <code>otp.namespace("otp.configure");</code></p>
+</li>
+<li>
+<p>Include a class comment. For example,                                                                                                      </p>
+</li>
+</ul>
+<pre><code class="language-java">    /**
+     * Configure Class
+     *
+     * Purpose is to allow a generic configuration object to be read via AJAX/JSON, and inserted into an Ext Store
+     * The implementation is TriMet route map specific...but replacing ConfigureStore object (or member variables) with
+     * another implementation, will give this widget flexibility for other uses beyond the iMap.
+     *
+     * @class
+     */
+</code></pre>
+<p><em>Note: There is still a lot of code following other style conventions, but please adhere to consistent style when you
+ write new code, and help clean up and reformat code as you refactor.</em></p>
+<h2 id="continuous-integration">Continuous Integration</h2>
+<p>The OpenTripPlanner project uses the <a href="https://travis-ci.org/opentripplanner/OpenTripPlanner">Travis CI continuous integration system</a>. Any time a change
+is pushed to the main OpenTripPlanner repository on GitHub, this server will compile and test the new code, providing feedback on the stability of the build.</p>
+<h2 id="release-process">Release Process</h2>
+<p>This section serves as a checklist for the person performing releases. Note that much of this mimics 
+the actions taken by the Maven release plugin. Based on past experience, the Maven release plugin can 
+fail at various points in the process leaving the repo in a confusing state. Taking each action 
+manually is more tedious, but keeps eyes on each step and is less prone to failure. Releases are 
+performed off the master branch, and are tagged with git annotated tags.</p>
+<ul>
+<li>Check that your local copy of the dev branch is up to date with no uncommitted changes<ul>
+<li><code>git status</code></li>
+<li><code>git checkout dev-1.x</code></li>
+<li><code>git clean -df</code></li>
+<li><code>git pull</code></li>
+</ul>
+</li>
+<li>Verify that all dependencies in the POM are non-SNAPSHOT versions<ul>
+<li>Currently we do have one SNAPSHOT dependency on <code>crosby.binary.osmpbf</code> which we are working to eliminate</li>
+</ul>
+</li>
+<li>Update <code>docs/Changelog.md</code><ul>
+<li>Lines should have been added or updated as each pull request was merged</li>
+<li>If you suspect any changes are not reflected in the Changelog, review the commit log and add any missing items</li>
+<li>Update the header at the top of the list from <code>x.y.z-SNAPSHOT</code> to just <code>x.y.z (current date)</code></li>
+<li>Check in any changes, and push to Github</li>
+</ul>
+</li>
+<li>Check on Travis that the build is currently passing<ul>
+<li><a href="https://travis-ci.org/opentripplanner/OpenTripPlanner/builds">Link to OTP builds on Travis CI</a></li>
+</ul>
+</li>
+<li>Switch to the HEAD of master branch, and ensure it's up to date with no uncommitted changes<ul>
+<li><code>git checkout master</code></li>
+<li><code>git status</code></li>
+<li><code>git clean -df</code></li>
+<li><code>git pull</code></li>
+</ul>
+</li>
+<li>Merge the dev branch into master<ul>
+<li><code>git merge dev-1.x</code> </li>
+</ul>
+</li>
+<li>Bump the SNAPSHOT version in the POM to the release version<ul>
+<li>Edit version in POM, removing SNAPSHOT and increasing version numbers as needed (following semantic versioning)</li>
+<li><code>git add pom.xml</code></li>
+<li><code>git commit -m "prepare release x.y.z"</code></li>
+</ul>
+</li>
+<li>Run a test build of the release locally, without deploying it<ul>
+<li><code>mvn clean install site</code></li>
+<li>The <code>install</code> goal will sign the Maven artifacts so you need the GPG signing certificate set up</li>
+<li>You can also use the <code>package</code> goal instead of the <code>install</code> goal to avoid signing if you don't have the GPG certificate installed.</li>
+<li>All tests should pass</li>
+<li>This build will also create Enunciate API docs and Javadoc with the correct non-snapshot version number</li>
+</ul>
+</li>
+<li>Deploy the documentation to AWS S3<ul>
+<li>You have to do this right after the test release build to ensure the right version number in the docs</li>
+<li>You will need AWSCLI tools (<code>sudo pip install -U awscli</code>)</li>
+<li>You will need AWS credentials with write access to the bucket <code>s3://dev.opentripplanner.org</code></li>
+<li><code>aws s3 cp --recursive target/site/apidocs s3://dev.opentripplanner.org/javadoc/x.y.z --acl public-read</code></li>
+<li><code>aws s3 cp --recursive target/site/enunciate/apidocs s3://dev.opentripplanner.org/apidoc/x.y.z --acl public-read</code></li>
+<li>Check that docs are readable and show the correct version via the <a href="http://dev.opentripplanner.org">development documentation landing page</a>.</li>
+</ul>
+</li>
+<li>Finally, if everything looks good, tag and push this release to make it official and trigger deployment<ul>
+<li><code>git tag -a vX.Y.Z -m "release X.Y.Z"</code></li>
+<li><code>git push origin vX.Y.Z</code></li>
+<li>Pushing the tag will trigger a Travis CI build and deployment of release Maven artifacts</li>
+<li>Note that <strong>only one</strong> commit may have a particular non-snapshot version in the POM (this is the commit that 
+  should be tagged as the release)</li>
+</ul>
+</li>
+<li>Set up next development iteration<ul>
+<li>Add a new section header to <code>docs/Changelog.md</code> like <code>x.y+1.0-SNAPSHOT (in progress)</code></li>
+<li>Edit minor version in <code>pom.xml</code> to <code>x.y+1.0-SNAPSHOT</code></li>
+<li><code>git add pom.xml docs/Changelog.md</code></li>
+<li><code>git commit -m "Prepare next development iteration x.y+1.0-SNAPSHOT"</code></li>
+<li><code>git push</code></li>
+</ul>
+</li>
+<li>Check that Travis CI build of the release tag succeeded<ul>
+<li><a href="https://travis-ci.org/opentripplanner/OpenTripPlanner/builds">Link to OTP builds on Travis CI</a></li>
+<li>Check the end of the build log to make sure the Maven artifacts were staged for release</li>
+</ul>
+</li>
+<li>Check that Maven artifact appears on Maven Central (deployment succeeded)<ul>
+<li><a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/">Directory listing of OTP releases on Maven Central</a></li>
+<li>It may take a while (half an hour) for releases to show up in the central repo after Travis uploads the artifacts</li>
+</ul>
+</li>
+<li>Merge master back into dev (to sync up the Maven artifact version from the POM)<ul>
+<li><code>git checkout dev-1.x</code></li>
+<li><code>git merge master</code></li>
+<li><code>git push</code></li>
+</ul>
+</li>
+<li>Make sure the main documentation is built<ul>
+<li>For some reason it doesn't always build automatically</li>
+<li>Go to <a href="http://readthedocs.org/projects/opentripplanner/builds/">builds of docs.opentripplanner.org</a></li>
+<li>Click "build version: latest"</li>
+</ul>
+</li>
+<li>Email the OTP dev and users mailing lists<ul>
+<li>Mention the new version number.</li>
+<li>Provide links to the new developer documentation.</li>
+<li>Provide links to the artifacts directory on Maven Central.</li>
+<li>Trigger build of latest OTP documentation on Readthedocs.</li>
+</ul>
+</li>
+</ul>
+<h2 id="additional-information-on-releases">Additional Information on Releases</h2>
+<p>OpenTripPlanner is released as Maven artifacts to Maven Central. These include compiled and source code JARs as well as 
+a "shaded" JAR containing all dependencies, allowing stand-alone usage. This release process is handled by the 
+Sonatype Nexus Staging plugin, configured in the OpenTripPlanner POM. Typically this final Maven deployment action is 
+performed automatically when the Travis CI build succeeds in building a non-SNAPSHOT version. </p>
+<h3 id="artifact-signing">Artifact Signing</h3>
+<p>Maven release artifacts must be digitally signed to prove their origin. This is a safeguard against compromised code 
+from a malicious third party being disguised as a trusted library.</p>
+<p>The OTP artifact signing key was created by Conveyal. We export only that signing subkey, with our company's main key 
+blanked out. Therefore, even if someone managed to acquire the decrypted key file and the associated GPG passphrase, 
+they would not have the main key. We could deactivate the signing key and create a new one, without the main key being 
+compromised.</p>
+<p>The exported signing key is present in the root of the git repo as the encrypted file <code>maven-artifact-signing-key.asc.enc</code>.
+When building a tagged release, Travis CI will decrypt this file and import it into GPG on the build machine. The signing
+key ID and GPG passphrase are also present as encrypted environment variables in the Travis configuration YAML. This only
+happens on code from non-fork, non-pull-request commits, ensuring that no unreviewed third-party code has access to 
+these files or variables.</p>
+<p>OpenTripPlanner's POM is set up to sign artifacts in the verify phase, which means signing will happen for the <code>install</code> 
+and <code>deploy</code> targets, but not the <code>package</code> target.
+When performing a local test build, if you do <code>mvn clean install site</code> it will test the signing process. 
+If you do not have the certificate installed, you can instead to <code>mvn clean package site</code> to bypass signing, but this 
+provides less certainty that everything is set up correctly for the CI-driven final release.</p>
+<h3 id="documentation-build-and-hosting">Documentation Build and Hosting</h3>
+<p>Three kinds of documentation are built for OTP, all based on information present in the OTP repo itself.</p>
+<p>The REST API docs are built by Enunciate from the OTP REST interface. My sense is that this auto-generated
+documentation has become harder to read and less useful over time, perhaps because of incorrect handling of REST 
+parameters inherited from superclasses. </p>
+<p>The Javadoc is built from Javadoc comments in the source code itself.</p>
+<p>The main OTP user documentation is built from Markdown files in the <code>/docs</code> directory of the repo. </p>
+<p>The REST API docs and Javadoc are built by Maven, then uploaded manually to AWS S3, from which they are served as a web
+page at dev.opentripplanner.org. The main OTP user documentation is built by Readthedocs and served at docs.opentripplanner.org.</p>
+<p>Upload to the S3 bucket <code>dev.opentripplanner.org</code> requires AWS IAM credentials that can be created by Conveyal (which 
+owns the <code>dev.opentripplanner.org</code> bucket).</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/1.5/Basic-Tutorial/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Basic Tutorial - OpenTripPlanner</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Intermediate-Tutorial/" class="dropdown-item">Intermediate Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../External-Tutorials/" class="dropdown-item">External Tutorials</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Analyst/" class="dropdown-item">Analyst</a>
+</li>
+                                    
+<li>
+    <a href="../Scripting/" class="dropdown-item">Scripting</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                    
+<li>
+    <a href="../Flex/" class="dropdown-item">GTFS-Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="../Surface/" class="dropdown-item">One-to-many Travel Times</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Visual-Identity/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Intermediate-Tutorial/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Basic-Tutorial.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#opentripplanner-basic-tutorial" class="nav-link">OpenTripPlanner Basic Tutorial</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#get-otp" class="nav-link">Get OTP</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#get-some-data" class="nav-link">Get some data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#start-up-otp" class="nav-link">Start up OTP</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#other-simple-requests" class="nav-link">Other simple requests</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="opentripplanner-basic-tutorial">OpenTripPlanner Basic Tutorial</h1>
+<p>This page will get you up and running with your own OTP server. If all goes well it should only take a few minutes!</p>
+<h2 id="get-otp">Get OTP</h2>
+<p>OpenTripPlanner is written in Java and distributed as a single runnable JAR file. These JARs are deployed to the Maven Central repository. Go to <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/">the OTP directory at Maven Central</a>, navigate to the directory for the highest version number, and download the file whose name ends with <code>.shaded.jar</code>.
+You may also want to get your own copy of the OTP source code and <a href="Getting-OTP">build a bleeding edge development JAR from scratch</a>, especially if you plan to do some development yourself.</p>
+<h2 id="get-some-data">Get some data</h2>
+<h3 id="gtfs-for-transit-schedules-and-stops">GTFS for Transit Schedules and Stops</h3>
+<p>First you'll need GTFS data to build a transit network. There's an excellent description of the GTFS format <a href="http://gtfs.org/">here</a>. Transport agencies throughout the world provide GTFS schedules to the public. Transitland has a
+<a href="https://transit.land/feed-registry">registry of feeds</a> and <a href="http://transitfeeds.com/">TransitFeeds</a> also provides an extensive catalog. The best option is often to simply fetch the data directly from a transit operator or agency. If you know of a feed you want to work with, download it and put it in an empty directory you have created for your OTP instance such as <code>/home/username/otp</code> on Linux, <code>/Users/username/otp</code> on OSX, or <code>C:\Users\username\otp</code> on Windows. The GTFS file's name must end in <code>.zip</code> for OTP to detect it. We often use the convention of ending GTFS file names with <code>.gtfs.zip</code> since technically a GTFS feed is just a ZIP file containing a specific set of files. If you don't have a particular feed in mind, the one for Portland, Oregon's TriMet agency is a good option. It is available at <a href="http://developer.trimet.org/schedule/gtfs.zip">this URL</a>. This is a moderate-sized input of good quality (TriMet initiated OTP development and helped develop the GTFS format). On Linux, this could be done on the command line as follows:</p>
+<pre><code>$ cd /home/username
+$ mkdir otp
+$ cd otp
+$ wget "http://developer.trimet.org/schedule/gtfs.zip" -O trimet.gtfs.zip
+</code></pre>
+<h3 id="osm-for-streets">OSM for Streets</h3>
+<p>You'll also need OpenStreetMap data to build a road network for walking, cycling, and driving. <a href="https://www.openstreetmap.org/">OpenStreetMap</a> is a global collaborative map database that rivals or surpasses the quality of commercial maps in many locations. Several services extract smaller geographic regions from this database. Interline Technologies maintains a collection of <a href="https://www.interline.io/osm/extracts/">extracts updated daily for urban areas around the world</a>. <a href="http://download.geofabrik.de/">Geofabrik</a> provides extracts for larger areas like countries or states, from which you can prepare your own smaller bounding-box extracts using <a href="http://wiki.openstreetmap.org/wiki/Osmosis#Extracting_bounding_boxes">Osmosis</a> or <a href="http://wiki.openstreetmap.org/wiki/Osmconvert#Applying_Geographical_Borders">osmconvert</a>. OSM data can be delivered as XML or in the more compact binary PBF format. OpenTripPlanner can consume both, but we always work with PBF since it's smaller and faster.</p>
+<p>Download OSM PBF data for the same geographic region as your GTFS feed, and place this PBF file in the same directory you created for the OSM data. If you are using the TriMet GTFS feed, you could download the <a href="http://download.geofabrik.de/north-america/us/oregon.html">Geofabrik extract for the US state of Oregon</a>, then further trim that to just the <a href="https://trimet.org/pdfs/taxinfo/trimetdistrictboundary.pdf">TriMet service area</a>. On Linux or MacOS you could do that as follows:</p>
+<pre><code>$ cd /home/username
+$ wget http://download.geofabrik.de/north-america/us/oregon-latest.osm.pbf
+$ osmconvert oregon-latest.osm.pbf -b=-123.043,45.246,-122.276,45.652 --complete-ways -o=portland.pbf
+$ mv portland.pbf otp
+</code></pre>
+<p>I find <a href="https://boundingbox.klokantech.com/">this tool</a> useful for determining the geographic coordinates of bounding boxes. The CSV option in that tool produces exactly the format expected by the <code>osmconvert -b</code> switch. The <code>--complete-ways</code> switch is important to handle roads that cross outside your bounding box.</p>
+<p>If you have extracted a smaller PBF file from a larger region, be sure to put only your extract (not the original larger file) in the directory with your GTFS data. Otherwise OTP will try to load both the original file and the extract in a later step.</p>
+<h2 id="start-up-otp">Start up OTP</h2>
+<p>As a Java program, OTP must be run within a Java virtual machine (JVM), which is provided as part of the Java runtime
+(JRE) or Java development kit (JDK). Run <code>java -version</code> to check that you have version 1.8 or newer of the JVM installed.
+If you do not you will need to install a recent OpenJDK or Oracle Java package for your operating system.</p>
+<p>GTFS and OSM data sets are often very large, and OTP is relatively memory-hungry. You will need at least 1GB of memory
+when working with the Portland TriMet data set, and several gigabytes for larger inputs. A typical command to start OTP
+looks like <code>java -Xmx1G -jar otp-0.19.0-shaded.jar &lt;options&gt;</code>. The <code>-Xmx</code> parameter sets
+the limit on how much memory OTP is allowed to consume. If you have sufficient memory in your computer,
+set this to a couple of gigabytes (e.g. <code>-Xmx2G</code>); when OTP doesn't have enough memory "breathing room" it can grind to a halt.</p>
+<p>It's possible to analyze the GTFS, OSM and any other input data and save the resulting representation of the transit
+network (what we call a <a href="http://en.wikipedia.org/wiki/Graph_%28mathematics%29">'graph'</a>) to disk. Then when the OTP server is restarted it can reload this pre-built graph, which is significantly faster than building it from scratch.
+For simplicity, in this introductory tutorial we'll skip saving the graph file. After the graph is built we'll immediately pass it to an OTP server in memory. The command to do so is:</p>
+<pre><code>$ java -Xmx2G -jar otp-0.19.0-shaded.jar --build /home/username/otp --inMemory
+</code></pre>
+<p>where <code>/home/username/otp</code> should be the directory where you put your input files.</p>
+<p>The graph build operation should take about one minute to complete, and then you'll see a <code>Grizzly server running</code> message. At this point you have an OpenTripPlanner server running locally and can open <a href="http://localhost:8080/">http://localhost:8080/</a> in a web browser. You should be presented with a web client that will
+interact with your local OpenTripPlanner instance.</p>
+<p>This map-based user interface is in fact sending HTTP GET requests to the OTP server running on your local machine. It can be informative to watch the HTTP requests and responses being generated using the developer tools in your web browser.</p>
+<p>OTP's built-in web server will run by default on ports 8080 and 8081. If by any chance some other software is already using those port numbers, you can specify different port numbers with switches like <code>--port 8801 --securePort 8802</code>.</p>
+<h2 id="other-simple-requests">Other simple requests</h2>
+<p>There are a number of different resources available through the HTTP API. Besides trip planning, OTP can also look up information about transit routes and stops from the GTFS you loaded and return this information as JSON. For example:</p>
+<ul>
+<li>
+<p>Get a list of all available routers: <a href="http://localhost:8080/otp/routers/default/">http://localhost:8080/otp/routers/default/</a></p>
+</li>
+<li>
+<p>Get a list all GTFS routes on the default router: <a href="http://localhost:8080/otp/routers/default/index/routes">http://localhost:8080/otp/routers/default/index/routes</a></p>
+</li>
+<li>
+<p>Find all stops on TriMet route 52: <a href="http://localhost:8080/otp/routers/default/index/routes/TriMet:52/stops">http://localhost:8080/otp/routers/default/index/routes/TriMet:52/stops</a></p>
+</li>
+<li>
+<p>Find all routes passing though TriMet stop ID 7003: <a href="http://localhost:8080/otp/routers/default/index/stops/TriMet:7003/routes">http://localhost:8080/otp/routers/default/index/stops/TriMet:7003/routes</a></p>
+</li>
+<li>
+<p>Return all unique sequences of stops on the TriMet Green rail line: <a href="http://localhost:8080/otp/routers/default/index/routes/TriMet:4/patterns">http://localhost:8080/otp/routers/default/index/routes/TriMet:4/patterns</a></p>
+</li>
+</ul>
+<p>We refer to this as the Index API. It is also documented <a href="http://dev.opentripplanner.org/apidoc/1.4.0/resource_IndexAPI.html">in the OTP HTTP API docs</a>.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

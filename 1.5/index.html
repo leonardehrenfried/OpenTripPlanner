@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/1.5/">
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>OpenTripPlanner</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="css/version-select.css" rel="stylesheet">
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body class="homepage">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href=".">OpenTripPlanner</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem active">
+                                <a href="." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="Intermediate-Tutorial/" class="dropdown-item">Intermediate Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="External-Tutorials/" class="dropdown-item">External Tutorials</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="Analyst/" class="dropdown-item">Analyst</a>
+</li>
+                                    
+<li>
+    <a href="Scripting/" class="dropdown-item">Scripting</a>
+</li>
+                                    
+<li>
+    <a href="Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                    
+<li>
+    <a href="Flex/" class="dropdown-item">GTFS-Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="Surface/" class="dropdown-item">One-to-many Travel Times</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="Architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" class="nav-link disabled">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="Governance/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/index.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#opentripplanner" class="nav-link">OpenTripPlanner</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#versions-of-this-documentation" class="nav-link">Versions of this documentation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#external-technical-documentation" class="nav-link">External Technical Documentation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#contact-info" class="nav-link">Contact Info</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#financial-support" class="nav-link">Financial Support</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p><img alt="OTP Logo" src="otp-logo.svg" /></p>
+<h1 id="opentripplanner">OpenTripPlanner</h1>
+<p><em>This documentation is targeted primarily at the OTP development community and more technical users. For high-level information about the project, please visit <a href="http://www.opentripplanner.org"><strong>www.opentripplanner.org</strong></a></em></p>
+<p><strong>OpenTripPlanner</strong> (OTP) is an open source multi-modal trip planner, which runs on Linux, Mac, Windows, or potentially any platform with a Java virtual machine. OTP is released under the <a href="https://opensource.org/licenses/LGPL-3.0">LGPL license</a>. The code is under active development with a variety of <a href="Deployments">deployments</a> around the world.</p>
+<p>If you want to get started right away running your own OTP instance, the best place to start is the <a href="Basic-Tutorial">Basic Tutorial</a> page.</p>
+<h2 id="versions-of-this-documentation">Versions of this documentation</h2>
+<ul>
+<li><a href="http://docs.opentripplanner.org/en/latest">OTP Master</a> - Latest release</li>
+<li><a href="http://docs.opentripplanner.org/en/dev-1.x">OTP dev-1.x</a> - OTP 1 development branch </li>
+<li><a href="http://docs.opentripplanner.org/en/dev-2.x">OTP dev-2.x</a> - OTP 2 development branch</li>
+</ul>
+<h2 id="external-technical-documentation">External Technical Documentation</h2>
+<p>Some technical documentation is generated automatically from the OTP source code and available from other locations.
+The Javadoc describes OTP's Java classes and their methods for software developers who call or change this code directly.
+The Web Service API documents describe the endpoints OTP exposes via its HTTP interface.
+It is generated automatically by <a href="http://enunciate.codehaus.org/">Enunciate</a> from comments in the source code,
+so may be incomplete or overly verbose in places.
+These documents are organized into folders for different release versions of OTP.</p>
+<ul>
+<li><a href="http://dev.opentripplanner.org/javadoc/">OTP Javadoc</a></li>
+<li><a href="http://dev.opentripplanner.org/apidoc/">OTP web service API documentation</a></li>
+</ul>
+<h2 id="contact-info">Contact Info</h2>
+<p>Send questions and comments to the <a href="http://groups.google.com/group/opentripplanner-users">user mailing list</a>.
+Discuss internal development details on the <a href="http://groups.google.com/group/opentripplanner-dev">dev mailing list</a>.
+File bug reports via the Github <a href="https://github.com/openplans/OpenTripPlanner/issues">issue tracker</a>. Note that the issue tracker is not intended for support questions or discussions. Please post them to one of the mailing lists instead.</p>
+<h2 id="financial-support">Financial Support</h2>
+<p>OpenTripPlanner is a member project of Software Freedom Conservancy, a 501(c)(3) organization incorporated in New York, and donations made to it are fully tax-deductible to the extent permitted by law. Donations can be made by credit card, wire transfer or paper check. Please contact <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#115;&#102;&#99;&#111;&#110;&#115;&#101;&#114;&#118;&#97;&#110;&#99;&#121;&#46;&#111;&#114;&#103;">&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#115;&#102;&#99;&#111;&#110;&#115;&#101;&#114;&#118;&#97;&#110;&#99;&#121;&#46;&#111;&#114;&#103;</a> for instructions. Be sure to note in the email what country the wire transfer will initiate from and what currency it will be in.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.4.1
+Build Date UTC : 2022-11-03 09:12:07.797209+00:00
+-->

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/1.5/Security/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Security - OpenTripPlanner</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Intermediate-Tutorial/" class="dropdown-item">Intermediate Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../External-Tutorials/" class="dropdown-item">External Tutorials</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Analyst/" class="dropdown-item">Analyst</a>
+</li>
+                                    
+<li>
+    <a href="../Scripting/" class="dropdown-item">Scripting</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                    
+<li>
+    <a href="../Flex/" class="dropdown-item">GTFS-Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="../Surface/" class="dropdown-item">One-to-many Travel Times</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Scripting/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Troubleshooting-Routing/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Security.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#security" class="nav-link">Security</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#creating-a-keystore" class="nav-link">Creating a keystore</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#testing" class="nav-link">Testing</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#turning-off-security" class="nav-link">Turning off security</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#cors" class="nav-link">CORS</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="security">Security</h1>
+<p>OpenTripPlanner has some web API methods that are potentially dangerous. For example, it is possible to instruct the OTP server to reload all graphs, or even to load data off the wire as a graph. Access to these methods should clearly be restricted.</p>
+<p>Out of the box, OTP is configured to only allow access to these sensitive API methods when the caller has authenticated with a username and password via HTTP Basic authentication, and to only allow Basic authentication over a secure connection. While basic authentication sends the credentials as clear text and is therefore completely insecure when used alone, it is quite safe when used over a secure channel like <a href="http://en.wikipedia.org/wiki/Transport_Layer_Security">SSL/TLS</a> that encrypts all communication.</p>
+<p>Therefore, if you wish to access these sensitive methods OTP must be running on a server that supports HTTPS, or authentication must be disabled entirely. OTP's built-in Grizzly server is configured to accept HTTPS connections on port 8081 by default, but the HTTPS listener needs an encryption key to establish a connection. The key is placed in a "keystore", a format specific to Java server environments. </p>
+<h2 id="creating-a-keystore">Creating a keystore</h2>
+<p>By default, OTP will look for the keystore at <code>/var/otp/keystore</code>. To generate a self-signed key for testing, use the command:</p>
+<pre><code>keytool -genkey -keystore /var/otp/keystore -alias OTPServerKey
+</code></pre>
+<p>The alias of the key is arbitrary, but it's best to supply one that indicates the purpose of the key to override the default. <code>keytool</code> will ask you a series of questions about you and your organization; again, any values will do when creating this self-signed test key. <code>keytool</code> will also ask you for a password to protect your keystore and key. This password will eventually be configurable, but for now it is hard-coded into the OTP server, so you must set the keystore and key passwords both to <code>opentrip</code>.</p>
+<p>Of course with a self-signed key, most clients will (rightfully) refuse to connect without special permission from the user. You'll need to add a security exception to most web browsers, or add the <code>--insecure</code> switch when using CURL. You could theoretically buy and install a "real" trusted SSL/TLS certificate it in the keystore using <code>keytool -gencert</code>, but since none of the functionality protected by this encryption is public-facing a self-signed key should be sufficient for most use cases. All connections to these API methods should be from trusted parties who can verify the validity of the key with you directly as needed.</p>
+<h2 id="testing">Testing</h2>
+<p>Once you have created a key, start up the OTP server and test that HTTPS access and authentication are possible. The following command should trigger a reload of all graphs:</p>
+<pre><code>curl -v --insecure -X PUT --user ROUTERS:ultra_secret -H "accept: application/json" "https://localhost:8081/otp/routers"
+</code></pre>
+<p>The username and password (<code>ROUTERS:ultra_secret</code>) are placeholders hard-coded into OTP. They will be configurable in version 1.0.</p>
+<p>You should also be able to fetch any other OTP resources over HTTPS. For example, you could open a raw TLS connection using <code>openssl s_client -connect localhost:8081</code>, then issue the request <code>GET index.html HTTP/1.1</code>.</p>
+<h2 id="turning-off-security">Turning off security</h2>
+<p>The other alternative is to place OTP behind a firewall, reverse proxy, etc. which will prevent access to dangerous API methods from untrusted networks, then turn off authentication entirely. This will allow you to sidestep the need for SSL/TLS certificates and authentication, but should be done with caution and careful planning. If you are sure you want to disable authentication, simply add the <code>--insecure</code> switch when starting up OTP the Grizzly server.</p>
+<h2 id="cors">CORS</h2>
+<p>TODO explain this</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/1.5/Configuration/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Configuration - OpenTripPlanner</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Intermediate-Tutorial/" class="dropdown-item">Intermediate Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../External-Tutorials/" class="dropdown-item">External Tutorials</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Analyst/" class="dropdown-item">Analyst</a>
+</li>
+                                    
+<li>
+    <a href="../Scripting/" class="dropdown-item">Scripting</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                    
+<li>
+    <a href="../Flex/" class="dropdown-item">GTFS-Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="../Surface/" class="dropdown-item">One-to-many Travel Times</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Getting-OTP/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Analyst/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Configuration.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#configuring-opentripplanner" class="nav-link">Configuring OpenTripPlanner</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#base-directory" class="nav-link">Base directory</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#routers" class="nav-link">Routers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#system-wide-vs-graph-build-vs-router-configuration" class="nav-link">System-wide vs. graph build vs. router configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#graph-build-configuration" class="nav-link">Graph build configuration</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#reaching-a-subway-platform" class="nav-link">Reaching a subway platform</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#transferring-within-stations" class="nav-link">Transferring within stations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#elevation-data" class="nav-link">Elevation data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#fares-configuration" class="nav-link">Fares configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#osm-openstreetmap-configuration" class="nav-link">OSM / OpenStreetMap configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#runtime-router-configuration" class="nav-link">Runtime router configuration</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#routing-defaults" class="nav-link">Routing defaults</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#routing-modes" class="nav-link">Routing modes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#boarding-and-alighting-times" class="nav-link">Boarding and alighting times</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#timeouts" class="nav-link">Timeouts</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#logging-incoming-requests" class="nav-link">Logging incoming requests</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#real-time-data" class="nav-link">Real-time data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#configure-using-command-line-arguments" class="nav-link">Configure using command-line arguments</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="configuring-opentripplanner">Configuring OpenTripPlanner</h1>
+<h2 id="base-directory">Base directory</h2>
+<p>The OTP <em>base directory</em> defaults to <code>/var/otp</code>. Unless you tell OTP otherwise, all other configuration,
+input files and storage directories
+will be sought immediately beneath this one. This prefix follows UNIX conventions so it should work in Linux and Mac OSX
+environments, but it is inappropriate in Windows and where the user running OTP either cannot obtain permissions to
+<code>/var</code> or simply wishes to experiment within his or her home directory rather than deploy a system-wide server.
+In these cases one should use the basePath switch when starting up OTP to override the default. For example:
+<code>--basePath /home/username/otp</code> on a Linux system, <code>--basePath /Users/username/otp</code> in Mac OSX, or
+<code>--basePath C:\Users\username\otp</code> in Windows.</p>
+<h2 id="routers">Routers</h2>
+<p>A single OTP instance can handle several regions independently. Each of these separate (but potentially geographically overlapping)
+services is called a <em>router</em> and is referred to by a short unique ID such as 'newyork' or 'paris'. Each router has its
+own subdirectory in a directory called 'graphs' directly under the OTP base directory, and each router's directory is
+always named after its router ID. Thus, by default the files for the router 'tokyo' will
+be located at <code>/var/otp/graphs/tokyo</code>. Here is an example directory layout for an OTP instance with two routers, one for
+New York City and one for Portland, Oregon:</p>
+<pre><code>/var/otp
+├── cache
+│   └── ned
+└── graphs
+    ├── nyc
+    │   ├── build-config.json
+    │   ├── Graph.obj
+    │   ├── long-island-rail-road_20140216_0114.zip
+    │   ├── mta-new-york-city-transit_20130212_0419.zip
+    │   ├── new-york-city.osm.pbf
+    │   └── port-authority-of-new-york-new-jersey_20150217_0111.zip
+    └── pdx
+        ├── build-config.json
+        ├── Graph.obj
+        ├── gtfs.zip
+        ├── portland_oregon.osm.pbf
+        └── router-config.json
+</code></pre>
+<p>You can see that each of these subdirectories contains one or more GTFS feeds (which are just zip files full of
+comma-separated tables), a PBF street map file, some JSON configuration files, and another file called <code>Graph.obj</code>.
+On startup, OTP scans router directories for input and configuration files,
+and can optionally store the resulting combined representation of the transportation network as Graph.obj in the
+same directory to avoid re-processing the data the next time it starts up. The <code>cache</code> directory is where OTP will
+store its local copies of resources fetched from the internet, such as US elevation tiles.</p>
+<h2 id="system-wide-vs-graph-build-vs-router-configuration">System-wide vs. graph build vs. router configuration</h2>
+<p>OTP is configured via JSON files. The file <code>otp-config.json</code> is placed in the OTP base directory and contains settings
+that affect the entire OTP instance. Each router within that instance is configured using two other JSON files placed
+alongside the input files (OSM, GTFS, elevation data etc.) in the router's directory. These router-level config files
+are named <code>build-config.json</code> and <code>router-config.json</code>. Each configuration option within each of these files is optional,
+as are all three of the files themselves. If any option or an entire file is missing, reasonable defaults will be applied.</p>
+<p>Some parts of the process that loads the street and transit network description are time consuming and memory-hungry.
+To avoid repeating these slow steps every time OTP starts up, we can trigger them manually whenever the input files change,
+saving the resulting transportation network description to disk. We call this prepared product a <em>graph</em> (following
+<a href="https://en.wikipedia.org/wiki/Graph_%28mathematics%29">mathematical terminology</a>), and refer to these "heavier" steps as
+<em>graph building</em>. They are controlled by <code>build-config.json</code>. There are many other details of OTP operation that can be
+modified without requiring the potentially long operation of rebuilding the graph. These run-time configuration options
+are found in <code>router-config.json</code>.</p>
+<h1 id="graph-build-configuration">Graph build configuration</h1>
+<p>This table lists the possible settings that can be defined in a <code>build-config.json</code> file. Sections follow that describe particular settings in more depth.</p>
+<table>
+<thead>
+<tr>
+<th>config key</th>
+<th>description</th>
+<th>value type</th>
+<th>value default</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>htmlAnnotations</code></td>
+<td>Generate nice HTML report of Graph errors/warnings (annotations)</td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>transit</code></td>
+<td>Include all transit input files (GTFS) from scanned directory</td>
+<td>boolean</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td><code>useTransfersTxt</code></td>
+<td>Create direct transfer edges from transfers.txt in GTFS, instead of based on distance</td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>parentStopLinking</code></td>
+<td>Link GTFS stops to their parent stops</td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>stationTransfers</code></td>
+<td>Create direct transfers between the constituent stops of each parent station</td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>stopClusterMode</code></td>
+<td>Stop clusters can be built in one of two ways, either by geographical proximity and name, or according to a parent/child station topology, if it exists</td>
+<td>enum</td>
+<td><code>proximity</code></td>
+<td>options: <code>proximity</code>, <code>parentStation</code></td>
+</tr>
+<tr>
+<td><code>subwayAccessTime</code></td>
+<td>Minutes necessary to reach stops served by trips on routes of <code>route_type=1</code> (subway) from the street</td>
+<td>double</td>
+<td>2.0</td>
+<td>units: minutes</td>
+</tr>
+<tr>
+<td><code>streets</code></td>
+<td>Include street input files (OSM/PBF)</td>
+<td>boolean</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td><code>embedRouterConfig</code></td>
+<td>Embed the Router config in the graph, which allows it to be sent to a server fully configured over the wire</td>
+<td>boolean</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td><code>areaVisibility</code></td>
+<td>Perform visibility calculations. If this is <code>true</code> OTP attempts to calculate a path straight through an OSM area using the shortest way rather than around the edge of it. (These calculations can be time consuming).</td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>platformEntriesLinking</code></td>
+<td>Link unconnected entries to public transport platforms</td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>matchBusRoutesToStreets</code></td>
+<td>Based on GTFS shape data, guess which OSM streets each bus runs on to improve stop linking</td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fetchElevationUS</code></td>
+<td>Download US NED elevation data and apply it to the graph</td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>elevationBucket</code></td>
+<td>If specified, download NED elevation tiles from the given AWS S3 bucket</td>
+<td>object</td>
+<td>null</td>
+<td>provide an object with <code>accessKey</code>, <code>secretKey</code>, and <code>bucketName</code> for AWS S3</td>
+</tr>
+<tr>
+<td><code>elevationUnitMultiplier</code></td>
+<td>Specify a multiplier to convert elevation units from source to meters</td>
+<td>double</td>
+<td>1.0</td>
+<td>see <a href="#elevation-unit-conversion">Elevation unit conversion</a></td>
+</tr>
+<tr>
+<td><code>readCachedElevations</code></td>
+<td>If true, reads in pre-calculated elevation data.</td>
+<td>boolean</td>
+<td>true</td>
+<td>see <a href="#elevation-data-calculation-optimizations">Elevation Data Calculation Optimizations</a></td>
+</tr>
+<tr>
+<td><code>writeCachedElevations</code></td>
+<td>If true, writes the calculated elevation data.</td>
+<td>boolean</td>
+<td>false</td>
+<td>see <a href="#elevation-data-calculation-optimizations">Elevation Data Calculation Optimizations</a></td>
+</tr>
+<tr>
+<td><code>multiThreadElevationCalculations</code></td>
+<td>If true, the elevation module will use multi-threading during elevation calculations.</td>
+<td>boolean</td>
+<td>false</td>
+<td>see <a href="#elevation-data-calculation-optimizations">Elevation Data Calculation Optimizations</a></td>
+</tr>
+<tr>
+<td><code>fares</code></td>
+<td>A specific fares service to use</td>
+<td>object</td>
+<td>null</td>
+<td>see <a href="#fares-configuration">fares configuration</a></td>
+</tr>
+<tr>
+<td><code>osmNaming</code></td>
+<td>A custom OSM namer to use</td>
+<td>object</td>
+<td>null</td>
+<td>see <a href="#custom-naming">custom naming</a></td>
+</tr>
+<tr>
+<td><code>osmWayPropertySet</code></td>
+<td>Custom OSM way properties</td>
+<td>string</td>
+<td><code>default</code></td>
+<td>options: <code>default</code>, <code>norway</code>, <code>uk</code></td>
+</tr>
+<tr>
+<td><code>staticBikeRental</code></td>
+<td>Whether bike rental stations should be loaded from OSM, rather than periodically dynamically pulled from APIs</td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>staticParkAndRide</code></td>
+<td>Whether we should create car P+R stations from OSM data</td>
+<td>boolean</td>
+<td>true</td>
+<td></td>
+</tr>
+<tr>
+<td><code>staticBikeParkAndRide</code></td>
+<td>Whether we should create bike P+R stations from OSM data</td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>maxHtmlAnnotationsPerFile</code></td>
+<td>If number of annotations is larger then specified number annotations will be split in multiple files</td>
+<td>int</td>
+<td>1,000</td>
+<td></td>
+</tr>
+<tr>
+<td><code>maxInterlineDistance</code></td>
+<td>Maximal distance between stops in meters that will connect consecutive trips that are made with same vehicle</td>
+<td>int</td>
+<td>200</td>
+<td>units: meters</td>
+</tr>
+<tr>
+<td><code>islandWithoutStopsMaxSize</code></td>
+<td>Pruning threshold for islands without stops. Any such island under this size will be pruned</td>
+<td>int</td>
+<td>40</td>
+<td></td>
+</tr>
+<tr>
+<td><code>islandWithStopsMaxSize</code></td>
+<td>Pruning threshold for islands with stops. Any such island under this size will be pruned</td>
+<td>int</td>
+<td>5</td>
+<td></td>
+</tr>
+<tr>
+<td><code>banDiscouragedWalking</code></td>
+<td>should walking should be allowed on OSM ways tagged with <code>foot=discouraged"</code></td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>banDiscouragedBiking</code></td>
+<td>should walking should be allowed on OSM ways tagged with <code>bicycle=discouraged"</code></td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+<tr>
+<td><code>maxTransferDistance</code></td>
+<td>Transfers up to this length in meters will be pre-calculated and included in the Graph</td>
+<td>double</td>
+<td>2,000</td>
+<td>units: meters</td>
+</tr>
+<tr>
+<td><code>extraEdgesStopPlatformLink</code></td>
+<td>add extra edges when linking a stop to a platform, to prevent detours along the platform edge</td>
+<td>boolean</td>
+<td>false</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>This list of parameters in defined in the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/master/src/main/java/org/opentripplanner/standalone/GraphBuilderParameters.java#L186-L215">code</a> for <code>GraphBuilderParameters</code>.</p>
+<h2 id="reaching-a-subway-platform">Reaching a subway platform</h2>
+<p>The boarding locations for some modes of transport such as subways and airplanes can be slow to reach from the street.
+When planning a trip, we need to allow additional time to reach these locations to properly inform the passenger. For
+example, this helps avoid suggesting short bus rides between two subway rides as a way to improve travel time. You can
+specify how long it takes to reach a subway platform</p>
+<pre><code class="language-JSON">// build-config.json
+{
+  &quot;subwayAccessTime&quot;: 2.5
+}
+</code></pre>
+<p>Stops in GTFS do not necessarily serve a single transit mode, but in practice this is usually the case. This additional
+access time will be added to any stop that is visited by trips on subway routes (GTFS route_type = 1).</p>
+<p>This setting does not generalize well to airplanes because you often need much longer to check in to a flight (2-3 hours
+for international flights) than to alight and exit the airport (perhaps 1 hour). Therefore there is currently no
+per-mode access time, it is subway-specific.</p>
+<h2 id="transferring-within-stations">Transferring within stations</h2>
+<p>Subway systems tend to exist in their own layer of the city separate from the surface, though there are exceptions where
+tracks lie right below the street and transfers happen via the surface. In systems where the subway is quite deep
+and transfers happen via tunnels, the time required for an in-station transfer is often less than that for a
+surface transfer. A proposal was made to provide detailed station pathways in GTFS but it is not in common use.</p>
+<p>One way to resolve this problem is by ensuring that the GTFS feed codes each platform as a separate stop, then
+micro-mapping stations in OSM. When OSM data contains a detailed description of walkways, stairs, and platforms within
+a station, GTFS stops can be linked to the nearest platform and transfers will happen via the OSM ways, which should
+yield very realistic transfer time expectations. This works particularly well in above-ground train stations where
+the layering of non-intersecting ways is less prevalent. Here's an example in the Netherlands:</p>
+<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.openstreetmap.org/export/embed.html?bbox=4.70502644777298%2C52.01675028000761%2C4.7070810198783875%2C52.01813190694357&amp;layer=mapnik" style="border: 1px solid black"></iframe>
+<p><small><a href="http://www.openstreetmap.org/#map=19/52.01744/4.70605">View Larger Map</a></small>
+When such micro-mapping data is not available, we need to rely on information from GTFS including how stops are grouped
+into stations and a table of transfer timings where available. During the graph build, OTP can create preferential
+connections between each pair of stops in the same station to favor in-station transfers:</p>
+<pre><code class="language-JSON">// build-config.json
+{
+  &quot;stationTransfers&quot;: true
+}
+</code></pre>
+<p>Note that this method is at odds with micro-mapping and might make some transfers artificially short.</p>
+<h2 id="elevation-data">Elevation data</h2>
+<p>OpenTripPlanner can "drape" the OSM street network over a digital elevation model (DEM).
+This allows OTP to draw an elevation profile for the on-street portion of itineraries, and helps provide better
+routing for bicyclists. It even helps avoid hills for walking itineraries. DEMs are usually supplied as rasters
+(regular grids of numbers) stored in image formats such as GeoTIFF.</p>
+<h3 id="us-national-elevation-dataset">U.S. National Elevation Dataset</h3>
+<p>In the United States, a high resolution <a href="http://ned.usgs.gov/">National Elevation Dataset</a> is available for the entire
+territory. The US Geological Survey (USGS) delivers this dataset in tiles via a somewhat awkward heavyweight web-based GIS
+which generates and emails you download links. OpenTripPlanner contains a module which will automatically contact this
+service and download the proper tiles to completely cover your transit and street network area. This process is rather
+slow (download is around 1.5 hours, then setting elevation for streets takes about 5 minutes for the Portland, Oregon region),
+but once the tiles are downloaded OTP will keep them in local cache for the next graph build operation.</p>
+<p>To auto-download NED tiles when building your graph, add the following line to <code>build-config.json</code> in your router
+directory:</p>
+<pre><code class="language-JSON">// build-config.json
+{
+  &quot;fetchElevationUS&quot;: true
+}
+</code></pre>
+<p>You may also want to add the <code>--cache &lt;directory&gt;</code> command line parameter to specify a custom NED tile cache location.</p>
+<p>NED downloads take quite a long time and slow down the graph building process. The USGS will also deliver the
+whole dataset in bulk if you <a href="http://ned.usgs.gov/faq.html#DATA">send them a hard drive</a>. OpenTripPlanner contains
+another module that will then automatically fetch data in this format from an Amazon S3 copy of your bulk data.
+You can configure it as follows in <code>build-config.json</code>:</p>
+<pre><code class="language-JSON">{
+    &quot;elevationBucket&quot; : {
+        &quot;accessKey&quot; : &quot;your-aws-access-key&quot;,
+        &quot;secretKey&quot; : &quot;corresponding-aws-secret-key&quot;,
+        &quot;bucketName&quot; : &quot;ned13&quot;
+    }
+}
+</code></pre>
+<h3 id="geoid-difference">Geoid Difference</h3>
+<p>With some elevation data, the elevation values are specified as relative to the a geoid (irregular estimate of mean sea level). See <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2301">issue #2301</a> for detailed discussion of this. In these cases, it is necessary to also add this geoid value onto the elevation value to get the correct result. OTP can automatically calculate these values in one of two ways. </p>
+<p>The first way is to use the geoid difference value that is calculated once at the center of the graph. This value is returned in each trip plan response in the <a href="http://dev.opentripplanner.org/apidoc/1.4.0/json_ElevationMetadata.html">ElevationMetadata</a> field. Using a single value can be sufficient for smaller OTP deployments, but might result in incorrect values at the edges of larger OTP deployments. If your OTP instance uses this, it is recommended to set a default request value in the <code>router-config.json</code> file as follows:</p>
+<pre><code class="language-JSON">// router-config.json
+{
+    &quot;routingDefaults&quot;: {
+        &quot;geoidElevation &quot;: true   
+    }
+}
+</code></pre>
+<p>The second way is to precompute these geoid difference values at a more granular level and include them when calculating elevations for each sampled point along each street edge. In order to speed up calculations, the geoid difference values are calculated and cached using only 2 significant digits of GPS coordinates. This is more than enough detail for most regions of the world and should result in less than one meter of difference in areas that have large changes in geoid difference values. To enable this, include the following in the <code>build-config.json</code> file: </p>
+<pre><code class="language-JSON">// build-config.json
+{
+  &quot;includeEllipsoidToGeoidDifference&quot;: true
+}
+</code></pre>
+<p>If the geoid difference values are precomputed, be careful to not set the routing resource value of <code>geoidElevation</code> to true in order to avoid having the graph-wide geoid added again to all elevation values in the relevant street edges in responses.</p>
+<h3 id="other-raster-elevation-data">Other raster elevation data</h3>
+<p>For other parts of the world you will need a GeoTIFF file containing the elevation data. These are often available from
+national geographic surveys, or you can always fall back on the worldwide
+<a href="http://www2.jpl.nasa.gov/srtm/">Space Shuttle Radar Topography Mission</a> (SRTM) data. This not particularly high resolution
+(roughly 30 meters horizontally) but it can give acceptable results.</p>
+<p>Simply place the elevation data file in the directory with the other graph builder inputs, alongside the GTFS and OSM data.
+Make sure the file has a <code>.tiff</code> or <code>.tif</code> extension, and the graph builder should detect its presence and apply
+the elevation data to the streets.</p>
+<p>OTP should automatically handle DEM GeoTIFFs in most common projections. You may want to check for elevation-related
+error messages during the graph build process to make sure OTP has properly discovered the projection. If you are using
+a DEM in unprojected coordinates make sure that the axis order is (longitude, latitude) rather than
+(latitude, longitude). Unfortunately there is no reliable standard for WGS84 axis order, so OTP uses the same axis
+order as the above-mentioned SRTM data, which is also the default for the popular Proj4 library.</p>
+<p>DEM files(USGS DEM) is not supported by OTP, but can be converted to GeoTIFF with tools like <a href="http://www.gdal.org/">GDAL</a>. 
+Use <code>gdal_merge.py -o merged.tiff *.dem</code> to merge a set of <code>dem</code> files into one <code>tif</code> file.</p>
+<p>See Interline <a href="https://github.com/interline-io/planetutils">PlanetUtils</a> for a set of scripts to download, merge, and resample <a href="https://registry.opendata.aws/terrain-tiles/">Mapzen/Amazon Terrain Tiles</a>.</p>
+<h3 id="elevation-unit-conversion">Elevation unit conversion</h3>
+<p>By default, OTP expects the elevation data to use metres. However, by setting <code>elevationUnitMultiplier</code> in <code>build-config.json</code>,
+it is possible to define a multiplier that converts the elevation values from some other unit to metres.</p>
+<pre><code class="language-JSON">// build-config.json
+{
+  // Correct conversation multiplier when source data uses decimetres instead of metres
+  &quot;elevationUnitMultiplier&quot;: 0.1
+}
+</code></pre>
+<h3 id="elevation-data-calculation-optimizations">Elevation Data Calculation Optimizations</h3>
+<p>Calculating elevations on all StreetEdges can take a dramatically long time. In a very large graph build for multiple Northeast US states, the time it took to download the elevation data and calculate all of the elevations took 5,509 seconds (roughly 1.5 hours).</p>
+<p>If you are using cloud computing for your OTP instances, it is recommended to create prebuilt images that contain the elevation data you need. This will save time because all of the data won't need to be downloaded.</p>
+<p>However, the bulk of the time will still be spent calculating elevations for all of the street edges. Therefore, a further optimization can be done to calculate and save the elevation data during a graph build and then save it for future use.</p>
+<h4 id="reusing-elevation-data-from-previous-builds">Reusing elevation data from previous builds</h4>
+<p>In order to write out the precalculated elevation data, add this to your <code>build-config.json</code> file:</p>
+<pre><code class="language-JSON">// build-config.json
+{  
+  &quot;writeCachedElevations&quot;: true
+}
+</code></pre>
+<p>After building the graph, a file called <code>cached_elevations.obj</code> will be written to the cache directory. By default, this file is not written during graph builds. There is also a graph build parameter called <code>readCachedElevations</code> which is set to <code>true</code> by default.</p>
+<p>In graph builds, the elevation module will attempt to read the <code>cached_elevations.obj</code> file from the cache directory. The cache directory defaults to <code>/var/otp/cache</code>, but this can be overriden via the CLI argument <code>--cache &lt;directory&gt;</code>. For the same graph build for multiple Northeast US states, the time it took with using this predownloaded and precalculated data became 543.7 seconds (roughly 9 minutes).</p>
+<p>The cached data is a lookup table where the coordinate sequences of respective street edges are used as keys for calculated data. It is assumed that all of the other input data except for the OpenStreetMap data remains the same between graph builds. Therefore, if the underlying elevation data is changed, or different configuration values for <code>elevationUnitMultiplier</code> or <code>includeEllipsoidToGeoidDifference</code> are used, then this data becomes invalid and all elevation data should be recalculated. Over time, various edits to OpenStreetMap will cause this cached data to become stale and not include new OSM ways. Therefore, periodic update of this cached data is recommended.</p>
+<h4 id="configuring-multi-threading-during-elevation-calculations">Configuring multi-threading during elevation calculations</h4>
+<p>For unknown reasons that seem to depend on data and machine settings, it might be faster to use a single processor. For this reason, multi-threading of elevation calculations is only done if <code>multiThreadElevationCalculations</code> is set to true. To enable multi-threading in the elevation module, add the following to the <code>build-config.json</code> file:</p>
+<pre><code class="language-JSON">// build-config.json
+{  
+  &quot;multiThreadElevationCalculations&quot;: true
+}
+</code></pre>
+<h2 id="fares-configuration">Fares configuration</h2>
+<p>By default OTP will compute fares according to the GTFS specification if fare data is provided in your GTFS input.
+For more complex scenarios or to handle bike rental fares, it is necessary to manually configure fares using the
+<code>fares</code> section in <code>build-config.json</code>. You can combine different fares (for example transit and bike-rental)
+by defining a <code>combinationStrategy</code> parameter, and a list of sub-fares to combine (all fields starting with <code>fare</code>
+are considered to be sub-fares).</p>
+<pre><code class="language-JSON">// build-config.json
+{
+  // Select the custom fare &quot;seattle&quot;
+  &quot;fares&quot;: &quot;seattle&quot;,
+  // OR this alternative form that could allow additional configuration
+  &quot;fares&quot;: {
+    &quot;type&quot;: &quot;seattle&quot;
+  }
+}
+</code></pre>
+<pre><code class="language-JSON">// build-config.json
+{
+  &quot;fares&quot;: {
+    // Combine two fares by simply adding them
+    &quot;combinationStrategy&quot;: &quot;additive&quot;,
+    // First fare to combine
+    &quot;fare0&quot;: &quot;new-york&quot;,
+    // Second fare to combine
+    &quot;fare1&quot;: {
+      &quot;type&quot;: &quot;bike-rental-time-based&quot;,
+      &quot;currency&quot;: &quot;USD&quot;,
+      &quot;prices&quot;: {
+          // For trip shorter than 30', $4 fare
+          &quot;30&quot;:   4.00,
+          // For trip shorter than 1h, $6 fare
+          &quot;1:00&quot;: 6.00
+      }
+    }
+    // We could also add fareFoo, fareBar...
+  }
+}
+</code></pre>
+<p>The current list of custom fare type is:</p>
+<ul>
+<li><code>bike-rental-time-based</code> - accepting the following parameters:<ul>
+<li><code>currency</code> - the ISO 4217 currency code to use, such as <code>"EUR"</code> or <code>"USD"</code>,</li>
+<li><code>prices</code> - a list of {time, price}. The resulting cost is the smallest cost where the elapsed time of bike rental is lower than the defined time.</li>
+</ul>
+</li>
+<li><code>san-francisco</code> (no parameters)</li>
+<li><code>new-york</code> (no parameters)</li>
+<li><code>seattle</code> (no parameters)</li>
+</ul>
+<p>The current list of <code>combinationStrategy</code> is:</p>
+<ul>
+<li><code>additive</code> - simply adds all sub-fares.</li>
+</ul>
+<h2 id="osm-openstreetmap-configuration">OSM / OpenStreetMap configuration</h2>
+<p>It is possible to adjust how OSM data is interpreted by OpenTripPlanner when building the road part of the routing graph.</p>
+<h3 id="way-property-sets">Way property sets</h3>
+<p>OSM tags have different meanings in different countries, and how the roads in a particular country or region are tagged affects routing. As an example are roads tagged with `highway=trunk (mainly) walkable in Norway, but forbidden in some other countries. This might lead to OTP being unable to snap stops to these roads, or by giving you poor routing results for walking and biking.
+You can adjust which road types that are accessible by foot, car &amp; bicycle as well as speed limits, suitability for biking and walking.</p>
+<p>There are currently 3 wayPropertySets defined;</p>
+<ul>
+<li><code>default</code> which is based on California/US mapping standard</li>
+<li><code>norway</code> which is adjusted to rules and speeds in Norway</li>
+<li><code>uk</code> which is adjusted to rules and speed in the UK</li>
+</ul>
+<p>To add your own custom property set have a look at <code>org.opentripplanner.graph_builder.module.osm.NorwayWayPropertySet</code> and <code>org.opentripplanner.graph_builder.module.osm.DefaultWayPropertySet</code>. If you choose to mainly rely on the default rules, make sure you add your own rules first before applying the default ones. The mechanism is that for any two identical tags, OTP will use the first one.</p>
+<pre><code class="language-JSON">// build-config.json
+{
+  osmWayPropertySet: &quot;norway&quot;
+}
+</code></pre>
+<h3 id="custom-naming">Custom naming</h3>
+<p>You can define a custom naming scheme for elements drawn from OSM by defining an <code>osmNaming</code> field in <code>build-config.json</code>,
+such as:</p>
+<pre><code class="language-JSON">// build-config.json
+{
+  &quot;osmNaming&quot;: &quot;portland&quot;
+}
+</code></pre>
+<p>There is currently only one custom naming module called <code>portland</code> (which has no parameters).</p>
+<h1 id="runtime-router-configuration">Runtime router configuration</h1>
+<p>This section covers all options that can be set for each router using the <code>router-config.json</code> file.
+These options can be applied by the OTP server without rebuilding the graph.</p>
+<table>
+<thead>
+<tr>
+<th>config key</th>
+<th>description</th>
+<th>value type</th>
+<th>value default</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>routingDefaults</code></td>
+<td>Default routing parameters, which will be applied to every request</td>
+<td>object</td>
+<td></td>
+<td>see <a href="#routing-defaults">routing defaults</a></td>
+</tr>
+<tr>
+<td><code>timeout</code></td>
+<td>maximum time limit for route queries</td>
+<td>double</td>
+<td>null</td>
+<td>units: seconds; see <a href="#timeouts">timeouts</a></td>
+</tr>
+<tr>
+<td><code>timeouts</code></td>
+<td>when returning multiple itineraries, set different maximum time limits for the 1st, 2nd, etc. itinerary</td>
+<td>array of doubles</td>
+<td><code>[5, 4, 2]</code></td>
+<td>units: seconds; see <a href="#timeouts">timeouts</a></td>
+</tr>
+<tr>
+<td><code>requestLogFile</code></td>
+<td>Path to a plain-text file where requests will be logged</td>
+<td>string</td>
+<td>null</td>
+<td>see <a href="#logging-incoming-requests">logging incoming requests</a></td>
+</tr>
+<tr>
+<td><code>boardTimes</code></td>
+<td>change boarding times by mode</td>
+<td>object</td>
+<td>null</td>
+<td>see <a href="#boarding-and-alighting-times">boarding and alighting times</a></td>
+</tr>
+<tr>
+<td><code>alightTimes</code></td>
+<td>change alighting times by mode</td>
+<td>object</td>
+<td>null</td>
+<td>see <a href="#boarding-and-alighting-times">boarding and alighting times</a></td>
+</tr>
+<tr>
+<td><code>updaters</code></td>
+<td>configure real-time updaters, such as GTFS-realtime feeds</td>
+<td>object</td>
+<td>null</td>
+<td>see <a href="#configuring-real-time-updaters">configuring real-time updaters</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="routing-defaults">Routing defaults</h2>
+<p>There are many trip planning options used in the OTP web API, and more exist
+internally that are not exposed via the API. You may want to change the default value for some of these parameters,
+i.e. the value which will be applied unless it is overridden in a web API request.</p>
+<p>A full list of them can be found in the RoutingRequest class
+<a href="http://dev.opentripplanner.org/javadoc/1.4.0/org/opentripplanner/routing/core/RoutingRequest.html">in the Javadoc</a>.
+Any public field or setter method in this class can be given a default value using the routingDefaults section of
+<code>router-config.json</code> as follows:</p>
+<pre><code class="language-JSON">{
+    &quot;routingDefaults&quot;: {
+        &quot;walkSpeed&quot;: 2.0,
+        &quot;stairsReluctance&quot;: 4.0,
+        &quot;carDropoffTime&quot;: 240
+    }
+}
+</code></pre>
+<h2 id="routing-modes">Routing modes</h2>
+<p>The routing request parameter <code>mode</code> determines which transport modalities should be considered when calculating the list
+of routes.</p>
+<p>Some modes (mostly bicycle and car) also have optional qualifiers <code>RENT</code> and <code>PARK</code> to specify if vehicles are to be parked at a station or rented. In theory
+this can also apply to other modes but makes sense only in select cases which are listed below.</p>
+<p>Whether a transport mode is available highly depends on the input feeds (GTFS, OSM, bike sharing feeds) and the graph building options supplied to OTP.</p>
+<p>The complete list of modes are:</p>
+<ul>
+<li>
+<p><code>WALK</code>: Walking some or all of the route.</p>
+</li>
+<li>
+<p><code>TRANSIT</code>: General catch-all for all public transport modes.</p>
+</li>
+<li>
+<p><code>BICYCLE</code>: Cycling for the entirety of the route or taking a bicycle onto the public transport and cycling from the arrival station to the destination.</p>
+</li>
+<li>
+<p><code>BICYCLE_RENT</code>: Taking a rented, shared-mobility bike for part or the entirety of the route.  </p>
+<p><em>Prerequisite:</em> Vehicle positions need to be added to OTP either as static stations or dynamic data feeds. </p>
+<p>For dynamic bike positions configure an input feed. See <a href="./#configuring-real-time-updaters">Configuring real-time updaters</a>.</p>
+<p>For static stations check the graph building documentation for the property <code>staticBikeRental</code>.</p>
+</li>
+<li>
+<p><code>BICYCLE_PARK</code>: Leaving the bicycle at the departure station and walking from the arrival station to the destination.</p>
+<p>This mode needs to be combined with at least one transit mode (or <code>TRANSIT</code>) otherwise it behaves like an ordinary bicycle journey.</p>
+<p><em>Prerequisite:</em> Bicycle parking stations present in the OSM file and visible to OTP by enabling the property <code>staticBikeParkAndRide</code> during graph build.</p>
+</li>
+<li>
+<p><code>CAR</code>: Driving your own car the entirety of the route. </p>
+<p>If this is combined with <code>TRANSIT</code> it will return routes with a 
+<a href="https://en.wikipedia.org/wiki/Park_and_ride#Kiss_and_ride_/_kiss_and_fly">Kiss &amp; Ride</a> component. This means that the car is not parked in a permanent
+parking area but rather the passenger is dropped off (for example, at an airport) and the driver continues driving the car away from the drop off
+location.</p>
+</li>
+<li>
+<p><code>CAR_PARK</code>: Driving a car to the park-and-ride facilities near a station and taking public transport.</p>
+<p>This mode needs to be combined with at least one transit mode (or <code>TRANSIT</code>) otherwise it behaves like an ordinary car journey.</p>
+<p><em>Prerequisite:</em> Park-and-ride areas near the station need to be present in the OSM input file.</p>
+</li>
+</ul>
+<p>The following modes are 1-to-1 mappings from the <a href="https://developers.google.com/transit/gtfs/reference/#routestxt">GTFS <code>route_type</code></a>:</p>
+<ul>
+<li>
+<p><code>TRAM</code>: Tram, streetcar, or light rail. Used for any light rail or street-level system within a metropolitan area.</p>
+</li>
+<li>
+<p><code>SUBWAY</code>: Subway or metro. Used for any underground rail system within a metropolitan area.</p>
+</li>
+<li>
+<p><code>RAIL</code>: Used for intercity or long-distance travel.</p>
+</li>
+<li>
+<p><code>BUS</code>: Used for short- and long-distance bus routes.</p>
+</li>
+<li>
+<p><code>FERRY</code>: Ferry. Used for short- and long-distance boat service.</p>
+</li>
+<li>
+<p><code>CABLE_CAR</code>: Cable car. Used for street-level cable cars where the cable runs beneath the car.</p>
+</li>
+<li>
+<p><code>GONDOLA</code>: Gondola or suspended cable car. Typically used for aerial cable cars where the car is suspended from the cable.</p>
+</li>
+<li>
+<p><code>FUNICULAR</code>: Funicular. Used for any rail system that moves on steep inclines with a cable traction system.</p>
+</li>
+</ul>
+<p>Lastly, this mode is part of the <a href="https://developers.google.com/transit/gtfs/reference/extended-route-types">Extended GTFS route types</a>:</p>
+<ul>
+<li><code>AIRPLANE</code>: Taking an airplane.</li>
+</ul>
+<p>Note that there are conceptual overlaps between <code>TRAM</code>, <code>SUBWAY</code> and <code>RAIL</code> and some transport providers categorize their routes differently to others.
+In other words, what is considered a <code>SUBWAY</code> in one city might be of type <code>RAIL</code> in another. Study your input GTFS feed carefully to 
+find out the appropriate mapping in your region.</p>
+<h3 id="drive-to-transit-routing-defaults">Drive-to-transit routing defaults</h3>
+<p>When using the "park and ride" or "kiss and ride" modes (drive to transit), the initial driving time to reach a transit
+stop or park and ride facility is constrained. You can set a drive time limit in seconds by adding a line like
+<code>maxPreTransitTime = 1200</code> to the routingDefaults section. If the limit is too high on a very large street graph, routing
+performance may suffer.</p>
+<h2 id="boarding-and-alighting-times">Boarding and alighting times</h2>
+<p>Sometimes there is a need to configure a longer boarding or alighting times for specific modes, such as airplanes or ferries,
+where the check-in process needs to be done in good time before boarding. The boarding time is added to the time when going
+from the stop (offboard) vertex to the onboard vertex, and the alight time is added vice versa. The times are configured as
+seconds needed for the boarding and alighting processes in <code>router-config.json</code> as follows:</p>
+<pre><code class="language-JSON">{
+  &quot;boardTimes&quot;: {
+    &quot;AIRPLANE&quot;: 2700
+  },
+  &quot;alightTimes&quot;: {
+    &quot;AIRPLANE&quot;: 1200
+  }
+}
+</code></pre>
+<h2 id="timeouts">Timeouts</h2>
+<p>Path searches can sometimes take a long time to complete, especially certain problematic cases that have yet to be optimized.
+Often a first itinerary is found quickly, but it is time-consuming or impossible to find subsequent alternative itineraries
+and this delays the response. You can set timeouts to avoid tying up server resources on pointless searches and ensure that
+your users receive a timely response. When a search times out, a WARN level log entry is made with information that can
+help identify problematic searches and improve our routing methods. The simplest timeout option is:</p>
+<pre><code class="language-JSON">// router-config.json
+{
+  &quot;timeout&quot;: 5.5
+}
+</code></pre>
+<p>This specifies a single timeout in (optionally fractional) seconds. Searching is aborted after this many seconds and any
+paths already found are returned to the client. This is equivalent to specifying a <code>timeouts</code> array with a single element.
+The alternative is:</p>
+<pre><code class="language-JSON">// router-config.json
+{
+  &quot;timeouts&quot;: [5, 4, 3, 1]
+}
+</code></pre>
+<p>Here, the configuration key is <code>timeouts</code> (plural) and we specify an array of times in floating-point seconds. The Nth
+element in the array applies to the Nth itinerary search, and importantly all values are relative to the beginning of the
+search for the <em>first</em> itinerary. If OTP is configured to find more itineraries than there are elements in the timeouts
+array, the final element in the timeouts array will apply to all remaining unmatched searches.</p>
+<p>This allows you to keep overall response time down while ensuring that the end user will get at least one
+response, providing more only when it won't hurt response time. The timeout values will typically be decreasing to
+reflect the decreasing marginal value of alternative itineraries: everyone wants at least one response, it's nice to
+have two for comparison, but we only care about having three, four, or more options if completing those extra searches
+doesn't cause annoyingly long response times.</p>
+<h2 id="logging-incoming-requests">Logging incoming requests</h2>
+<p>You can log some characteristics of trip planning requests in a file for later analysis. Some transit agencies and
+operators find this information useful for identifying existing or unmet transportation demand. Logging will be
+performed only if you specify a log file name in the router config:</p>
+<pre><code class="language-JSON">// router-config.json
+{
+  &quot;requestLogFile&quot;: &quot;/var/otp/request.log&quot;
+}
+</code></pre>
+<p>Each line in the resulting log file will look like this:</p>
+<p><code>2016-04-19T18:23:13.486 0:0:0:0:0:0:0:1 ARRIVE 2016-04-07T00:17 WALK,BUS,CABLE_CAR,TRANSIT,BUSISH 45.559737193889966 -122.64999389648438 45.525592487765635 -122.39044189453124 6095 3 5864 3 6215 3</code></p>
+<p>The fields are separated by whitespace and are (in order):</p>
+<ol>
+<li>Date and time the request was received</li>
+<li>IP address of the user</li>
+<li>Arrive or depart search</li>
+<li>The arrival or departure time</li>
+<li>A comma-separated list of all transport modes selected</li>
+<li>Origin latitude and longitude</li>
+<li>Destination latitude and longitude</li>
+</ol>
+<p>Finally, for each itinerary returned to the user, there is a travel duration in seconds and the number of transit vehicles used in that itinerary.</p>
+<h2 id="real-time-data">Real-time data</h2>
+<p>GTFS feeds contain <em>schedule</em> data that is is published by an agency or operator in advance. The feed does not account
+ for unexpected service changes or traffic disruptions that occur from day to day. Thus, this kind of data is also
+ referred to as 'static' data or 'theoretical' arrival and departure times.</p>
+<h3 id="gtfs-realtime">GTFS-Realtime</h3>
+<p>The <a href="https://developers.google.com/transit/gtfs-realtime/">GTFS-RT spec</a> complements GTFS with three additional kinds of
+feeds. In contrast to the base GTFS schedule feed, they provide <em>real-time</em> updates (<em>'dynamic'</em> data) and are are
+updated from minute to minute.</p>
+<ul>
+<li>
+<p><strong>Alerts</strong> are text messages attached to GTFS objects, informing riders of disruptions and changes.</p>
+</li>
+<li>
+<p><strong>TripUpdates</strong> report on the status of scheduled trips as they happen, providing observed and predicted arrival and
+departure times for the remainder of the trip.</p>
+</li>
+<li>
+<p><strong>VehiclePositions</strong> give the location of some or all vehicles currently in service, in terms of geographic coordinates
+or position relative to their scheduled stops.</p>
+</li>
+</ul>
+<h3 id="bicycle-rental-systems">Bicycle rental systems</h3>
+<p>Besides GTFS-RT transit data, OTP can also fetch real-time data about bicycle rental networks including the number
+of bikes and free parking spaces at each station. We support bike rental systems from JCDecaux, BCycle, VCub, Keolis,
+Bixi, the Dutch OVFiets system, ShareBike, GBFS and a generic KML format.
+It is straightforward to extend OTP to support any bike rental system that
+exposes a JSON API or provides KML place markers, though it requires writing a little code.</p>
+<p>The generic KML needs to be in format like</p>
+<pre><code class="language-XML">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;kml xmlns=&quot;http://www.opengis.net/kml/2.2&quot;&gt;
+&lt;Document id=&quot;root_doc&quot;&gt;
+&lt;Schema name=&quot;citybikes&quot; id=&quot;citybikes&quot;&gt;
+    &lt;SimpleField name=&quot;ID&quot; type=&quot;int&quot;&gt;&lt;/SimpleField&gt;
+&lt;/Schema&gt;
+  &lt;Placemark&gt;
+    &lt;name&gt;A Bike Station&lt;/name&gt;
+    &lt;ExtendedData&gt;&lt;SchemaData schemaUrl=&quot;#citybikes&quot;&gt;
+        &lt;SimpleData name=&quot;ID&quot;&gt;0&lt;/SimpleData&gt;
+    &lt;/SchemaData&gt;&lt;/ExtendedData&gt;
+      &lt;Point&gt;&lt;coordinates&gt;24.950682884886643,60.155923430488102&lt;/coordinates&gt;&lt;/Point&gt;
+  &lt;/Placemark&gt;
+&lt;/Document&gt;&lt;/kml&gt;
+</code></pre>
+<h3 id="configuring-real-time-updaters">Configuring real-time updaters</h3>
+<p>Real-time data can be provided using either a pull or push system. In a pull configuration, the GTFS-RT consumer polls the
+real-time provider over HTTP. That is to say, OTP fetches a file from a web server every few minutes. In the push
+configuration, the consumer opens a persistent connection to the GTFS-RT provider, which then sends incremental updates
+immediately as they become available. OTP can use both approaches. The <a href="https://github.com/OneBusAway/onebusaway-gtfs-realtime-exporter">OneBusAway GTFS-realtime exporter project</a> provides this kind of streaming, incremental updates over a websocket rather than a single large file.</p>
+<p>Real-time data sources are configured in <code>router-config.json</code>. The <code>updaters</code> section is an array of JSON objects, each
+of which has a <code>type</code> field and other configuration fields specific to that type. Common to all updater entries that
+connect to a network resource is the <code>url</code> field.</p>
+<pre><code class="language-JSON">// router-config.json
+{
+    // Routing defaults are any public field or setter in the Java class
+    // org.opentripplanner.routing.core.RoutingRequest
+    &quot;routingDefaults&quot;: {
+        &quot;numItineraries&quot;: 6,
+        &quot;walkSpeed&quot;: 2.0,
+        &quot;stairsReluctance&quot;: 4.0,
+        &quot;carDropoffTime&quot;: 240
+    },
+
+    &quot;updaters&quot;: [
+
+        // GTFS-RT service alerts (frequent polling)
+        {
+            &quot;type&quot;: &quot;real-time-alerts&quot;,
+            &quot;frequencySec&quot;: 30,
+            &quot;url&quot;: &quot;http://developer.trimet.org/ws/V1/FeedSpecAlerts/appID/0123456789ABCDEF&quot;,
+            &quot;feedId&quot;: &quot;TriMet&quot;
+        },
+
+        // Polling bike rental updater.
+        // sourceType can be: jcdecaux, b-cycle, bixi, keolis-rennes, ov-fiets,
+        // city-bikes, citi-bike-nyc, next-bike, vcub, kml
+        {
+            &quot;type&quot;: &quot;bike-rental&quot;,
+            &quot;frequencySec&quot;: 300,
+            &quot;sourceType&quot;: &quot;city-bikes&quot;,
+            &quot;url&quot;: &quot;http://host.domain.tld&quot;
+        },
+
+        //&lt;!--- San Francisco Bay Area bike share --&gt;
+        {
+          &quot;type&quot;: &quot;bike-rental&quot;,
+          &quot;frequencySec&quot;: 300,
+          &quot;sourceType&quot;: &quot;sf-bay-area&quot;,
+          &quot;url&quot;: &quot;http://www.bayareabikeshare.com/stations/json&quot;
+        },
+
+        //&lt;!--- Tampa Area bike share --&gt;
+        {
+          &quot;type&quot;: &quot;bike-rental&quot;,
+          &quot;frequencySec&quot;: 300,
+          &quot;sourceType&quot;: &quot;gbfs&quot;,
+          &quot;url&quot;: &quot;http://coast.socialbicycles.com/opendata/&quot;
+        },
+
+
+        // Polling bike rental updater for DC bikeshare (a Bixi system)
+        // Negative update frequency means to run once and then stop updating (essentially static data)
+        {
+            &quot;type&quot;: &quot;bike-rental&quot;,
+            &quot;sourceType&quot;: &quot;bixi&quot;,
+            &quot;url&quot;: &quot;https://www.capitalbikeshare.com/data/stations/bikeStations.xml&quot;,
+            &quot;frequencySec&quot;: -1
+        },
+
+        // Bike parking availability
+        {
+            &quot;type&quot;: &quot;bike-park&quot;
+        },
+
+        // Polling for GTFS-RT TripUpdates)
+        {
+            &quot;type&quot;: &quot;stop-time-updater&quot;,
+            &quot;frequencySec&quot;: 60,
+            // this is either http or file... shouldn't it default to http or guess from the presence of a URL?
+            &quot;sourceType&quot;: &quot;gtfs-http&quot;,
+            &quot;url&quot;: &quot;http://developer.trimet.org/ws/V1/TripUpdate/appID/0123456789ABCDEF&quot;,
+            &quot;feedId&quot;: &quot;TriMet&quot;
+        },
+
+        // Streaming differential GTFS-RT TripUpdates over websockets
+        {
+            &quot;type&quot;: &quot;websocket-gtfs-rt-updater&quot;
+        }
+    ]
+}
+</code></pre>
+<h4 id="gbfs-configuration">GBFS Configuration</h4>
+<p>Steps to add a GBFS feed to a router:</p>
+<ul>
+<li>Add one entry in the <code>updater</code> field of <code>router-config.json</code> in the format</li>
+</ul>
+<pre><code class="language-JSON">{
+     &quot;type&quot;: &quot;bike-rental&quot;,
+     &quot;frequencySec&quot;: 60,
+     &quot;sourceType&quot;: &quot;gbfs&quot;,
+     &quot;url&quot;: &quot;http://coast.socialbicycles.com/opendata/&quot;
+}
+</code></pre>
+<ul>
+<li>Follow these instructions to fill these fields:</li>
+</ul>
+<pre><code>type: &quot;bike-rental&quot;
+frequencySec: frequency in seconds in which the GBFS service will be polled
+sourceType: &quot;gbfs&quot;
+url: the URL of the GBFS feed (do not include the gbfs.json at the end) *
+</code></pre>
+<p>* For a list of known GBFS feeds see the <a href="https://github.com/NABSA/gbfs/blob/master/systems.csv">list of known GBFS feeds</a></p>
+<h1 id="configure-using-command-line-arguments">Configure using command-line arguments</h1>
+<p>Certain settings can be provided on the command line, when starting OpenTripPlanner. See the <code>CommandLineParameters</code> class for <a href="http://dev.opentripplanner.org/javadoc/1.4.0/org/opentripplanner/standalone/CommandLineParameters.html">a full list of arguments</a>.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

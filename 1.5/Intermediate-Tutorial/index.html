@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/1.5/Intermediate-Tutorial/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Intermediate Tutorial - OpenTripPlanner</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Intermediate Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../External-Tutorials/" class="dropdown-item">External Tutorials</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Analyst/" class="dropdown-item">Analyst</a>
+</li>
+                                    
+<li>
+    <a href="../Scripting/" class="dropdown-item">Scripting</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                    
+<li>
+    <a href="../Flex/" class="dropdown-item">GTFS-Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="../Surface/" class="dropdown-item">One-to-many Travel Times</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Basic-Tutorial/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../External-Tutorials/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Intermediate-Tutorial.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#intermediate-usage-of-opentripplanner" class="nav-link">Intermediate Usage of OpenTripPlanner</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#using-the-web-api-to-plan-a-transit-trip" class="nav-link">Using the web API to plan a transit trip</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#calculating-travel-time-isochrones" class="nav-link">Calculating travel time isochrones</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#additional-resources-and-documentation" class="nav-link">Additional resources and documentation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="intermediate-usage-of-opentripplanner">Intermediate Usage of OpenTripPlanner</h1>
+<p>This page follows up on <a href="Basic-Usage.md">basic usage</a> with more detailed examples of OpenTripPlanner functionality. It is not an exhaustive list but should serve to demonstrate some useful applications. </p>
+<h2 id="using-the-web-api-to-plan-a-transit-trip">Using the web API to plan a transit trip</h2>
+<p>One of the most important ways that OpenTripPlanner is used is, of course, the planning of trips. You can use the API to request an itinerary from one place to another at a particular time:</p>
+<p><a href="http://localhost:8080/otp/routers/default/plan?fromPlace=43.637,-79.434&amp;toPlace=43.646,-79.388&amp;time=1:02pm&amp;date=11-14-2017&amp;mode=TRANSIT,WALK&amp;maxWalkDistance=500&amp;arriveBy=false"><code>http://localhost:8080/otp/routers/default/plan?fromPlace=43.637,-79.434&amp;toPlace=43.646,-79.388&amp;time=1:02pm&amp;date=11-14-2017&amp;mode=TRANSIT,WALK&amp;maxWalkDistance=500&amp;arriveBy=false</code></a></p>
+<p>The above query makes a request to the locally running server <code>http://localhost:8080/</code>, requesting the <a href="http://dev.opentripplanner.org/apidoc/1.4.0/resource_PlannerResource.html">planner resource</a> <code>...otp/routers/default/plan</code>, and passes the following parameters:</p>
+<ul>
+<li><strong>fromPlace=43.637,-79.434</strong>, the origin of the trip, in latitude, longitude</li>
+<li><strong>toPlace=43.646,-79.388</strong>, the destination of the trip</li>
+<li><strong>time=1:02pm</strong>, the desired departure time</li>
+<li><strong>date=</strong>, the desired departure date</li>
+<li><strong>arriveBy=false</strong>, specifies that the given time is when we plan to depart rather than when we want to arrive</li>
+<li><strong>mode=TRANSIT,WALK</strong>, transport modes to consider, in this case a combination of walking and transit</li>
+<li><strong>maxWalkDistance=500</strong>, the maximum distance in meters that you are willing to walk</li>
+</ul>
+<p>If you run this query as is you will very likely get a response saying that a trip has not been found. Try changing the fromPlace, toPlace, time and date parameters to match the location and time period of the data you loaded when you initially built the graph. More (optional) parameters for the planner resource are documented <a href="http://dev.opentripplanner.org/apidoc/1.4.0/resource_PlannerResource.html">here</a>. </p>
+<h2 id="calculating-travel-time-isochrones">Calculating travel time isochrones</h2>
+<p>OpenTripPlanner can also be used to calculate the area which is accessible from a point within a given travel time, also known as a travel time isochrone. </p>
+<p><img alt="example of a set of travel time isochrones" src="../example-isochrone.png" title="" /></p>
+<p>(<em>Image courtesy of <a href="https://github.com/marcusyoung">marcusyoung</a></em>)</p>
+<p>Here we'll use of the <a href="http://dev.opentripplanner.org/apidoc/1.4.0/resource_LIsochrone.html">LIsochrone resource</a> in the following query:</p>
+<p><a href="http://localhost:8080/otp/routers/ttc/isochrone?fromPlace=43.637,-79.434&amp;mode=WALK,TRANSIT&amp;date=11-14-2017&amp;time=8:00am&amp;maxWalkDistance=500&amp;cutoffSec=1800&amp;cutoffSec=3600"><code>http://localhost:8080/otp/routers/ttc/isochrone?fromPlace=43.637,-79.434&amp;mode=WALK,TRANSIT&amp;date=11-14-2017&amp;time=8:00am&amp;maxWalkDistance=500&amp;cutoffSec=1800&amp;cutoffSec=3600</code></a></p>
+<p>Many of the parameters in this GET request should be familiar from the last example, though a few new ones have been added.</p>
+<ul>
+<li><strong>fromPlace=43.637,-79.434</strong> is our origin location in latitude,longitude</li>
+<li><strong>cutoffSec=1800</strong> tells the router that we want an isochrone ending at a half hour (1800 seconds) travel from the origin</li>
+<li><strong>cutoffSec=3600</strong> the second (optional) specification of this parameter means that we'll get a second result, this time one hour (3600 seconds) from the origin</li>
+<li><strong>cutoffSec=...</strong> this argument can be passed any number of times with diferent values. </li>
+</ul>
+<p>The result of the above query, if all goes well, is a geoJSON file with two multipolygons showing the area accessible within both one and one-half hour. Take a look at the <a href="http://dev.opentripplanner.org/apidoc/1.4.0/resource_LIsochrone.html">LIsochrone resource</a> page for additional options. </p>
+<h2 id="additional-resources-and-documentation">Additional resources and documentation</h2>
+<p>See the <a href="../Configuration/">configuration</a> page for configuration settings which effect either the router instance or the graph building process (e.g. fare settings, elevation models, request logging, transfer settings, etc.). </p>
+<p>It may also be helpful to try running the OTP .jar file with the <code>--help</code> option for a full list of command line parameters. </p>
+<p>Full documentation for the API is available <a href="http://dev.opentripplanner.org/apidoc/1.4.0/index.html#resources">here</a>.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

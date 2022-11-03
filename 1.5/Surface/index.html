@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/1.5/Surface/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>One-to-many Travel Times - OpenTripPlanner</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Intermediate-Tutorial/" class="dropdown-item">Intermediate Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../External-Tutorials/" class="dropdown-item">External Tutorials</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Analyst/" class="dropdown-item">Analyst</a>
+</li>
+                                    
+<li>
+    <a href="../Scripting/" class="dropdown-item">Scripting</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                    
+<li>
+    <a href="../Flex/" class="dropdown-item">GTFS-Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">One-to-many Travel Times</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Architecture/" class="dropdown-item">Architecture</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Flex/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Developers-Guide/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Surface.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#one-to-many-travel-time-analysis" class="nav-link">One-to-many Travel Time Analysis</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#rationale" class="nav-link">Rationale</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#travel-time-surface-pointset-apis" class="nav-link">Travel Time Surface / PointSet APIs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#example" class="nav-link">Example</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#client-code" class="nav-link">Client Code</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#relevant-java-classes" class="nav-link">Relevant Java Classes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="one-to-many-travel-time-analysis">One-to-many Travel Time Analysis</h1>
+<p>This page covers one way to use OTP for one-to-many travel time analysis. Note that this page describes APIs that have been mostly undocumented, unsupported, and unmaintained for several years. They were created as a minimum viable prototype framework for cumulative opportunities accessibility calculations, which informed subsequent work on the R5 and Conveyal Analysis projects. As niche tools the latter do not have the same level of community activity as OTP, but represent a much more specialized descendant of the analysis functionality described here. Unlike OTP, they handle variability in travel time across a window of departure times, uncertainty in travel time for routes in scenarios defined in terms of headways, lightweight on-the-fly application of scenarios modifying the transit network, and a novel percentile-based definition of accessibility that is robust against outliers and partially unreachable destinations.</p>
+<p>That said, a lot of people like to use OTP for more straightforward travel time and accessibility analysis, and this page is provided to serve as a starting point.</p>
+<h2 id="rationale">Rationale</h2>
+<p>If you're calculating travel times from one or more origin points to a large set of destination points, you probably don't want to use OTP's default routing API for passenger-facing journey planning.</p>
+<p>There are two main reasons for this. First, by default OTP does not optimize on travel time, it optimizes "generalized cost" including a lot of factors that have been introduced over time to reflect rider preferences. If changes to transportation services happen to open up new possibilities that are easier or more pleasant for the rider but slower, those slower travel times will be reported. This is then perceived as a confusing "decrease" in service quality due to added service. Second, finding paths between each origin/destination pair separately is extremely inefficient. If you need paths to more than one destination from each origin, it is generally preferable to find all those paths with a single search. It is possible to find paths from one origin to thousands or even millions of destinations in about the same amount of time it takes to find paths from one origin to one destination. Exploiting this one fact can easily reduce total computation time by orders of magnitude.</p>
+<p>Note that the features described below are present in OTP 1.x, but have been removed from OTP 2.x. There are currently no plans to support analysis use cases in OTP 2, but OTP1 should remain usable for this purpose for people who wish to do so.</p>
+<h2 id="travel-time-surface-pointset-apis">Travel Time Surface / PointSet APIs</h2>
+<p>Definitions: </p>
+<p>A <strong>PointSet</strong> is a set of geographic locations that could serve as the origins or destinations of a batch of trip planning operations. They may have quantities of "opportunities" attached to them (such as jobs, square meters of retail space, hospital beds, etc.) which can be summed to yield cumulative opportunities accessibility metrics. </p>
+<p>The term <strong>Surface</strong> is used here in the sense of a function from a 2D location to a quantity. For any origin point we can produce a travel time surface, i.e. a travel time to every geographic coordinate that can be reached from that origin. </p>
+<p>Once created, such a surface may be evaluated at every destination in a PointSet at once, incurring minimal additional computational cost.</p>
+<p>Because these APIs are not actively maintained and have the potential to cache large amounts of data in memory, they are disabled by default. You have to enable them with additional command line options when starting OTP. They are not intended for use in production on public servers. They were created for local research use, as a minimum viable prototype of this conceptual framework.</p>
+<p>Although the PointSet class could certainly be initialized and used differently within Java code, for the purposes of these HTTP APIs they are always loaded from CSV or GeoJSON files in a directory specified on the command line. </p>
+<h2 id="example">Example</h2>
+<p>PointSets can be loaded from CSV files, with one point defined on each row. The file should be in UTF-8 encoding and have a header row giving the column names. At least one column should be called "lat" (or "latitude") and at least one should be called "lon" (or "longitude"). These specify a location for each point as floating point numbers in the WGS84 coordinate system. The other columns define the magnitude of opportunities reachable at each point (e.g. jobs or square meters of retail space).  These should always be integers. You can always set the magnitude to 1 if you're only interested in the travel time or quantity of points reached. Colons can be used in the magnitude column names to group them into categories. Here is a short example defining two points (perhaps representing buildings or small census units) with associated numbers of jobs in two categories:</p>
+<pre><code>lat,lon,jobs:total,jobs:retail,jobs:manufacturing,population:total
+45.0,33.3,100,40,60,30
+45.1,33.0, 20,15,5,40
+</code></pre>
+<p>As mentioned above it is also possible to load PointSets from GeoJSON. Examples of the CSV, GeoJSON, and Shapefile formats for PointSets can be found at https://github.com/opentripplanner/OpenTripPlanner/tree/master/src/test/resources/pointset</p>
+<p>If you want to try out the synthetic data in that directory for Austin, Texas, you can find OSM data at https://www.nextzen.org/metro-extracts/index.html#austin_texas  and GTFS data at https://transit.land/feed-registry/operators/o-9v6-capitalmetro</p>
+<p>If you had a directory tree rooted at <code>~/otp</code> with subdirectory <code>~/otp/graphs/austin</code> containing an OSM PBF file for the streets and a GTFS ZIP file with transit data, and another subdirectory <code>~/otp/pointsets</code> containing a PointSet CSV file named <code>destinations.csv</code>, you could perform accessibility calculations as follows:</p>
+<p>First, build an OpenTripPlanner graph from the OSM and GTFS inputs:
+<code>java -Xmx4G -jar otp-1.4.0-shaded.jar --build ~/otp/graphs/austin</code></p>
+<p>Then start the OpenTripPlanner server:
+<code>java -Xmx4G -jar otp-1.4.0-shaded.jar --graphs ~/otp/graphs --router austin --server --analyst --pointSets ~/otp/pointsets</code></p>
+<p>The OpenTripPlanner server should then be available at http://localhost:8080/index.html. The <code>--analyst</code> switch enables the HTTP endpoints that calculate travel time surfaces, and the <code>--pointSet</code> parameter tells OTP where to look to load any pointsets referenced in those API requests.</p>
+<p>The contents of the PointSets should then be visible at:
+<code>http://localhost:8080/otp/pointsets/destinations</code></p>
+<p>You can then create a travel time surface by hitting <code>/otp/surfaces</code> with a POST request, using query parameters similar to those in a normal OTP trip planning API request:</p>
+<p>`curl -X POST "http://localhost:8080/otp/surfaces?batch=true&amp;fromPlace=30.285159872426014%2C-97.7467346191406&amp;time=5%3A46pm&amp;date=07-31-2020&amp;mode=TRANSIT%2CWALK&amp;maxWalkDistance=800&amp;arriveBy=false"</p>
+<p>Note the <code>batch=true</code> parameter. This is important to tell OTP not to validate the toPlace parameter, which we're leaving out to build paths to all destinations from one origin. </p>
+<p>If the request is successful, the server should respond with a JSON representation of a single travel time surface record, something like:
+<code>{"id":0,"params":{"date":"07-31-2020","mode":"TRANSIT,WALK","arriveBy":"false","fromPlace":"30.285159872426014,-97.7467346191406","batch":"true","time":"5:46pm","maxWalkDistance":"800"}}</code></p>
+<p>This same record can now be seen at http://localhost:8080/otp/surfaces
+which lists all recently created travel time surfaces.</p>
+<p>Now that we have a surface and know its ID from the JSON (in this case 0), we can evaluate that surface at a set of points, like so:
+<code>http://localhost:8080/otp/surfaces/0/indicator?targets=destinations</code></p>
+<p>That loads the pointset from <code>destinations.csv</code> and finds the travel time to each point in it, then aggregates the results into an accessibility indicator (hence the endpoint name "indicator"). The "data" property of the JSON response contains, for each column present in the pointset, an array of "sums" and "counts". The counts array represents the number of points reached at each minute of travel time from the origin. The "sums" array sums up the magnitudes of the points reached within each minute. Summing the values in the array from 0 to N then gives a cumulative opportunities accessibility indicator for N minutes of travel.</p>
+<p>If you add the query parameter <code>detail=true</code>, the response will also contain individual travel times to every destinations point in the PointSet.</p>
+<p>These indicator calls could in principle be combined with the one creating the travel time surface, eliminating the need to retain the surface on the server and make a seconds call. But retaining the surface is particularly useful for interactively generating multiple isochrones or rendering tiles, where someone might want to scroll around and zoom in generating thousands of images from the same surface. There are other endpoints for those purposes.</p>
+<h2 id="client-code">Client Code</h2>
+<p>The API endpoints described above are used when you switch to "Analyst" mode in the default OTP1 client at localhost:8080. You can use your browser's dev tools to observe the requests it sends, which render map tiles from the surface. Note that the tile requests are currently a bit strange: the UI is redundantly sending the full routing query string with every request, a vestige of the older system that did not assign IDs to cached travel time surfaces and instead looked them up based on the request parameters.</p>
+<h2 id="relevant-java-classes">Relevant Java Classes</h2>
+<p>Though it is perhaps not ideal, the best way to understand this aspect of OTP is probably to dig through source code. Throughout its history OTP has been heavily used by people who worked directly with the source code, and documentation has not always kept pace with more experimental parts of the system, though there is a decent amount of commentary inline in the source code. Here are some classes that may serve as good starting points:</p>
+<ul>
+<li>
+<p>org.opentripplanner.analyst.PointSet</p>
+</li>
+<li>
+<p>org.opentripplanner.analyst.SurfaceCache The cache of travel time surfaces is defined at org.opentripplanner.analyst.SurfaceCache and is currently hard-wired to hold on to the last 100 surfaces generated. Please don't read too much into these "design decisions" resulting in a stateful API susceptible to memory exhaustion. Again, this was created as a minimum viable prototype for use in local analysis work, and is not really suitable for a public-facing system.</p>
+</li>
+<li>
+<p>org.opentripplanner.api.resource.SurfaceResource Defines the HTTP API endpoints for working with PointSets and travel time surfaces. Whether or not you actually use this HTTP API, this class is important as the only example in the OTP codebase of how to construct a minimum-travel-time surface and bulk-evaluate it at a large number of destinations. These patterns of Java code could be adapted in your own methods, or perhaps integrated with the scripting API. Once a surface exists, you can also make isochrones and web Mercator map tiles of the travel time surface for display.</p>
+</li>
+<li>
+<p>org.opentripplanner.analyst.DiskBackedPointSetCache This loads the PointSets from disk and holds them in memory for use as destinations via the API. A request for the PointSet named "schools" will try to load it from the first file in the directory whose name begins with "schools" and ends with ".csv" or ".json". This defers to org.opentripplanner.analyst.PointSet#fromCsv and org.opentripplanner.analyst.PointSet#fromGeoJson to load files depending on the extension. (Note that there is also a PointSet#fromShapefile for Esri Shapefiles which is currently unused). </p>
+</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
