@@ -8,10 +8,10 @@
       
       
       
-        <link rel="canonical" href="https://docs.opentripplanner.org/2.3/Configuration/">
+        <link rel="canonical" href="https://docs.opentripplanner.org/2.2/Configuration/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.7">
+      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.7">
     
     
       
@@ -1392,7 +1392,7 @@ documentation below we will refer to the following types:</p>
 </tr>
 <tr>
 <td><code>locale</code></td>
-<td><em><code>Language[\_country[\_variant]]</code></em>. A Locale object represents a specific geographical, political, or cultural region. For more information see the <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Locale.html">Java 11 Locale</a>.</td>
+<td><em><code>Language[\_country[\_variant]]</code></em>. A Locale object represents a specific geographical, political, or cultural region. For more information see the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Locale.html">Java Locale</a>.</td>
 <td><code>"en_US"</code>, <code>"nn_NO"</code></td>
 </tr>
 <tr>
@@ -1549,20 +1549,9 @@ variable substitution is also performed on the text in the injected file.</p>
 sandbox features are disabled. So for most OTP2 use cases it is not necessary to create this file.
 Features that can be toggled in this file are generally only affect the routing phase of OTP2 usage,
 but for consistency all such "feature flags", even those that would affect graph building, are
-managed in this one file. See
-the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/dev-2.x/src/main/java/org/opentripplanner/util/OTPFeature.java">OTPFeature</a>
-Java class for an enumeration of all available features and their default settings. Here is an
-example:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// otp-config.json</span><span class="w"></span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">{</span><span class="w"></span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;otpFeatures&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">        </span><span class="nt">&quot;APIBikeRental&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">        </span><span class="nt">&quot;ActuatorAPI&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">}</span><span class="w"></span>
-</code></pre></div>
+managed in this one file. </p>
 <h2 id="otp-features">OTP Features</h2>
-<p>Here is a list of all features which can be toggled on/off.</p>
+<p>Here is a list of all features which can be toggled on/off and their default values.</p>
 <!-- OTP-FEATURE-TABLE BEGIN -->
 <!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
 
@@ -1730,6 +1719,15 @@ example:</p>
 </table>
 <!-- OTP-FEATURE-TABLE END -->
 
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// otp-config.json</span><span class="w"></span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;otpFeatures&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">        </span><span class="nt">&quot;APIBikeRental&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"></span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">        </span><span class="nt">&quot;ActuatorAPI&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"></span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">}</span><span class="w"></span>
+</code></pre></div>
 <h1 id="jvm-configuration">JVM configuration</h1>
 <p>This section contains general recommendations for tuning the JVM in a production environment.<br />
 It focuses mainly on garbage collection configuration and memory settings.<br />
@@ -1740,11 +1738,13 @@ See <a href="https://kstefanj.github.io/2021/05/19/large-pages-and-java.html">La
 The main optimization goal for the OTP server is minimizing response time.</p>
 <h3 id="garbage-collector">Garbage collector</h3>
 <ul>
+<li></li>
 <li>The G1 garbage collector (default since Java 9) offers a good compromise between low latency (i.e. low GC pause time) and GC overhead.</li>
 <li>If latency spikes are an issue, the ZGC garbage collector is an alternative. It produces in general more overhead than G1.  </li>
 </ul>
 <h3 id="memory-settings">Memory settings</h3>
 <ul>
+<li></li>
 <li>Using Large Memory Pages can reduce pressure on the TLB cache and increase performance.  </li>
 <li>It is in general not recommended to use large memory page in <em>Transparent Huge Page</em> mode (<code>-XX:+UseTransparentHugePages</code>) for latency-sensitive applications, since memory is allocated on-demand and this can induce latency spikes if the memory is fragmented.<br />
   Thus <em>TLBFS</em> mode (<code>-XX:+UseHugeTLBFS</code>) should be the first choice.</li>
@@ -1757,12 +1757,14 @@ Example: <code>-Xms18g -Xmx18g -XX:+UseTransparentHugePages -XX:+AlwaysPreTouch<
 The main optimization goal for the Graph Builder is minimizing total build time.  </p>
 <h3 id="garbage-collector_1">Garbage collector</h3>
 <ul>
+<li></li>
 <li>In theory, the Parallel garbage collector offers the best throughput.<br />
 In practice, it can be challenging to optimize the Parallel GC to build both a street graph and a transit graph, the memory usage patterns being different. </li>
 <li>The G1 garbage collector provides in general a good compromise.  </li>
 </ul>
 <h3 id="memory-settings_1">Memory settings</h3>
 <ul>
+<li></li>
 <li>Using Large Memory Pages can reduce pressure on the TLB cache and increase performance.  </li>
 <li>Since latency is not an issue, Large Memory Pages can be used indifferently in <em>TLBFS</em> mode (<code>-XX:+UseHugeTLBFS</code>) or <em>Transparent Huge Page</em> mode (<code>-XX:+UseTransparentHugePages</code>)</li>
 </ul>
