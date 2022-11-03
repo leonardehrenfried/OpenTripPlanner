@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.0/Bibliography/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Bibliography - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Choosing OTP2 or OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../sandbox/HealthAPI/" class="dropdown-item">Health API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GrpahQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/BikeRentalServiceDirectory/" class="dropdown-item">Bike Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Localization/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Codestyle/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Bibliography.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#routing-bibliography" class="nav-link">Routing Bibliography</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#algorithms-used-in-otp2-but-not-otp1" class="nav-link">Algorithms used in OTP2 but not OTP1</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#techniques-used-in-or-influencing-otp1-and-otp2" class="nav-link">Techniques used in or influencing OTP1 and OTP2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="routing-bibliography">Routing Bibliography</h1>
+<p>This is a list of articles, dissertations, and books that have inspired and informed both the existing OTP routing engine and some ongoing experiments.</p>
+<p>OTP1 uses a single time-dependent (as opposed to time-expanded) graph that contains both street and transit networks. Walk-only and bicycle-only trips are generally planned using the A-star algorithm with a Euclidean heuristic. Walk+Transit or Bike+Transit trips are planned using A-star with the Tung-Chew heuristic (i.e. a graph grown backward from the destination providing a lower bound on aggregate weight) for queue ordering. For speed reasons we are performing single-variable generalized cost optimization, which is not ideal. We should be performing Pareto optimization on at least two variables (generalized cost and time).</p>
+<p>OTP2 splits the search into three segments: access from the origin to transit stops, egress from transit stops to the destination, and transit service connecting the two. For the transit segment, OTP2 uses the Multi-criteria Range Raptor algorithm. For the access and egress searches it uses the same approach as OTP1. Both splitting the search into three parts and use of a table-scanning algorithm like Raptor improve OTP2's performance significantly while increasing result quality by producing true Pareto-optimal sets of results.</p>
+<h2 id="algorithms-used-in-otp2-but-not-otp1">Algorithms used in OTP2 but not OTP1</h2>
+<ul>
+<li>
+<p>Delling, Pajor, Werneck. Round-Based Public Transit Routing (2012)
+<BR>This is a tabular approach to routing in public transit networks that does not use an (explicit) graph. It is simpler and can outperform classic graph algorithms.
+<BR>http://research.microsoft.com/pubs/156567/raptor_alenex.pdf</p>
+</li>
+<li>
+<p>Delling, Dibbelt, and Pajor. Fast and Exact Public Transit Routing with Restricted Pareto Sets (2019)
+<BR>Describes the heuristic used in OTP2 to eliminate options early when they are known to become non-optimal before they reach the destination.
+<BR>https://epubs.siam.org/doi/pdf/10.1137/1.9781611975499.5</p>
+</li>
+</ul>
+<h2 id="techniques-used-in-or-influencing-otp1-and-otp2">Techniques used in or influencing OTP1 and OTP2</h2>
+<h3 id="general-background">General Background</h3>
+<ul>
+<li>
+<p>Bast, Hannah. Car or public transport -- two worlds. (2009)<br>
+Explains how car routing is different from schedule-based public transport routing.<br>
+http://www.mpi-inf.mpg.de/~bast/papers/car_or_public_transport.pdf</p>
+</li>
+<li>
+<p>Delling, Daniel. Engineering and augmenting route planning algorithms. (2009, dissertation)
+<BR>Overview, including time-dependent and Pareto shortest paths.
+<BR>http://i11www.ira.uka.de/extra/publications/d-earpa-09.pdf</p>
+</li>
+<li>
+<p>Delling, Sanders, Schultes, and Wagner. Engineering Route-Planning Algorithms. (2009)
+<BR>Overview.
+<BR>http://i11www.ira.uka.de/extra/publications/dssw-erpa-09.pdf</p>
+</li>
+</ul>
+<h3 id="path-search-speedup-techniques">Path Search Speedup Techniques</h3>
+<ul>
+<li>
+<p>Delling and Wagner. Time-Dependent Route Planning. (2009)
+<BR>Overview.
+<BR>http://i11www.iti.uni-karlsruhe.de/extra/publications/dw-tdrp-09.pdf</p>
+</li>
+<li>
+<p>Delling and Wagner. Landmark-Based Routing in Dynamic Graphs. (2008)
+<BR>http://i11www.ira.uka.de/extra/publications/dw-lbrdg-07.pdf</p>
+</li>
+<li>
+<p>Bauer, Delling, Sanders, Schultes, and Wagner. Combining Hierarchical and Goal-Directed
+Speed-Up Techniques for Dijkstra’s Algorithm. (2008)
+<BR>http://algo2.iti.kit.edu/download/bdsssw-chgds-10.pdf</p>
+</li>
+<li>
+<p>Bauer and Delling. SHARC: Fast and Robust Unidirectional Routing. (2009)
+<BR><strong>SH</strong> ortcuts + <strong>ARC</strong> flags. Can be combined with ALT.
+<BR>http://www.siam.org/proceedings/alenex/2008/alx08_02bauerr.pdf</p>
+</li>
+<li>
+<p>Delling, Daniel. Time-Dependent SHARC-Routing. (2008)
+<BR>http://i11www.iti.uni-karlsruhe.de/extra/publications/d-tdsr-09.pdf</p>
+</li>
+<li>
+<p>Goldberg, Kaplan, and Werneck. Reach for A∗: Efficient Point-to-Point Shortest Path Algorithms. (2005)
+<BR>http://avglab.com/andrew/pub/msr-tr-2005-132.pdf</p>
+</li>
+</ul>
+<h3 id="multi-objective-pareto-shortest-paths">Multi-objective Pareto Shortest Paths</h3>
+<ul>
+<li>
+<p>Das and Dennis. Drawbacks of minimizing weighted sums of objectives for Pareto set generation in multicriteria optimization problems. (1997)</p>
+</li>
+<li>
+<p>Müller-Hannemann and Schnee. Finding All Attractive Train Connections by Multi-criteria Pareto Search. (2007)
+<BR>Deutsche Bahn information system. Does not account for on-street travel.</p>
+</li>
+<li>
+<p>Mandow &amp; Pérez de la Cruz. A New Approach to Multiobjective A<em> Search. (2005)
+<BR>NAMOA</em>
+<BR>http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.97.8780&amp;rep=rep1&amp;type=pdf</p>
+</li>
+<li>
+<p>Mandow &amp; Pérez de la Cruz. Multiobjective A<em> search with consistent heuristics. (2008)
+<BR>NAMOA</em></p>
+</li>
+<li>
+<p>Machuca, Mandow and Pérez de la Cruz. Evaluation of Heuristic Functions for Bicriterion Shortest Path Problems. (2009)
+<BR>Evaluates heuristics from Tung &amp; Chew (1992) versus lexicographical ordering of priority queue.
+<BR>http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.160.4715&amp;rep=rep1&amp;type=pdf</p>
+</li>
+<li>
+<p>Perny and Spanjaard. Near Admissible Algorithms for Multiobjective Search. (2009)
+<BR>Discusses relaxed Pareto dominance (Epsilon-dominance) and its use in Multi-objective A*. This a scheme for approximating the entire pareto-optimal solution set that allows time and space complexity polynomial in the number of nodes.
+<BR>http://www-desir.lip6.fr/publications/pub_1052_1_ECAI08.pdf</p>
+</li>
+<li>
+<p>Tung and Chew. A multicriteria Pareto-optimal path algorithm. (1992)</p>
+</li>
+<li>
+<p>Delling and Wagner. Pareto Paths with SHARC. (2009)
+<BR>http://i11www.iti.uni-karlsruhe.de/extra/publications/dw-pps-09.pdf</p>
+</li>
+</ul>
+<h3 id="resource-constrained-routing">Resource-constrained Routing</h3>
+<ul>
+<li>
+<p>Dumitrescu &amp; Boland. Improved Preprocessing, Labeling and Scaling Algorithms for the Weight-Constrained Shortest Path Problem. (2003)
+<BR>Comparison of scaling and label-setting methods.</p>
+</li>
+<li>
+<p>Ziegelmann, Mark. Constrained Shortest Paths and Related Problems. (2001, dissertation)
+<BR>http://scidok.sulb.uni-saarland.de/volltexte/2004/251/pdf/MarkZiegelmann_ProfDrKurtMehlhorn.pdf</p>
+</li>
+</ul>
+<h3 id="contraction-and-transfer-patterns">Contraction and Transfer Patterns</h3>
+<ul>
+<li>
+<p>Geisberger, Robert. Contraction Hierarchies: Faster and Simpler Hierarchical Routing in Road Networks. (2008, dissertation)
+<BR>http://algo2.iti.kit.edu/documents/routeplanning/geisberger_dipl.pdf</p>
+</li>
+<li>
+<p>Geisberger, Robert. Contraction of Timetable Networks with Realistic Tranfers (2010)
+<BR>Introduces the "Station Model Graph".
+<BR>http://algo2.iti.kit.edu/download/time_table_ch.pdf</p>
+</li>
+<li>
+<p>Bast, Carlsson, Eigenwillig, Geisberger Harrelson, Raychev, and Viger. Fast Routing in Very Large Public Transportation Networks Using Transfer Patterns. (2010)
+<BR>http://ad.informatik.uni-freiburg.de/files/transferpatterns.pdf/at_download/file</p>
+</li>
+</ul>
+<h3 id="timetable-based-routing">Timetable-based routing</h3>
+<ul>
+<li>Schulz, Frank. Timetable Information and Shortest Paths. (2005, dissertation)
+<BR>Excellent reference.
+<BR>http://d-nb.info/1001586921/34</li>
+</ul>
+<h3 id="alt-and-metric-embeddings">ALT and Metric Embeddings</h3>
+<ul>
+<li>
+<p>Goldberg and Werneck. Computing Point-to-Point Shortest Paths from External Memory. (2005)
+<BR>Introduced the ALT algorithm.
+<BR>http://www.cs.princeton.edu/courses/archive/spring06/cos423/Handouts/GW05.pdf</p>
+</li>
+<li>
+<p>Linial, London, and Rabinovich. The Geometry of Graphs and Some of its Algorithmic Applications. (1995)
+<BR>http://pdf.aminer.org/000/798/423/the_geometry_of_graphs_and_some_of_its_algorithmic_applications.pdf</p>
+</li>
+<li>
+<p>Hjaltason and Samet. Contractive Embedding Methods for Similarity Searching in Metric Spaces. (2000)
+<BR>http://www.cs.umd.edu/~hjs/pubs/metricpruning.pdf</p>
+</li>
+<li>
+<p>Potamias, Bonchi, Castillo, and Gionis. Fast Shortest Path Distance Estimation in Large Networks. (2009)
+<BR>Briefly discusses the connection between landmark routing and more general research on metric embeddings.
+<BR>http://dcommon.bu.edu/xmlui/bitstream/handle/2144/1727/2009-004-shortest-distance-estimation.pdf</p>
+</li>
+</ul>
+<h3 id="calibration-and-implementation-details">Calibration and Implementation Details</h3>
+<ul>
+<li>
+<p>Wardman, Mark. Public Transport Values of Time. (2004)
+<BR>http://eprints.whiterose.ac.uk/2062/1/ITS37_WP564_uploadable.pdf</p>
+</li>
+<li>
+<p>A.M. El-Geneidy, K.J. Krizek, M.J. Iacono. Predicting bicycle travel speeds along different facilities using GPS data: a proof of concept model. (2007)<BR>Proceedings of the 86th Annual Meeting of the Transportation Research Board, Compendium of Papers, TRB, Washington, D.C., USA (CD-ROM)</p>
+</li>
+<li>
+<p>Chen, Chowdhury, Roche, Ramachandran, Tong. Priority Queues and Dijkstra’s Algorithm.
+<BR>Summary: Despite better theoretical complexity for Fibonacci heaps, it is often as good or better to use a binary heap as a priority queue when doing path searches.
+<BR>http://www.cs.utexas.edu/users/shaikat/papers/TR-07-54.pdf</p>
+</li>
+</ul>
+<h3 id="post-dijkstra-public-transit-routing">Post-Dijkstra Public Transit Routing</h3>
+<ul>
+<li>
+<p>Dibbelt, Pajor, Strasser, Wagner. Intriguingly Simple and Fast Transit Routing (2013).
+<BR>Introduces the Connection Scan Algorithm (CSA).
+<BR>http://www.ecompass-project.eu/sites/default/files/ECOMPASS-TR-021.pdf</p>
+</li>
+<li>
+<p>Delling, Katz, and Pajor. Parallel computation of best connections in public transportation networks (2012).
+<BR>"In this work, we present a novel algorithm for the one-to-all profile-search problem in public transportation networks. It answers the question for all fastest connections between a given station S and any other station at any time of the day in a single query... two interesting questions arise for time-dependent route planning: compute the best connection for a given departure time and the computation of all best connections during a given time interval (e. g., a whole day). The former is called a time-query, while the latter is called a proﬁle-query."
+<BR>http://www.ecompass-project.eu/sites/default/files/ECOMPASS-TR-021.pdf</p>
+</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

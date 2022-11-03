@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.0/Troubleshooting-Routing/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Troubleshooting - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Choosing OTP2 or OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../sandbox/HealthAPI/" class="dropdown-item">Health API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GrpahQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/BikeRentalServiceDirectory/" class="dropdown-item">Bike Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Security/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Developers-Guide/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Troubleshooting-Routing.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#troubleshooting-routing" class="nav-link">Troubleshooting Routing</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#graph-builder-data-import-issues" class="nav-link">Graph Builder Data Import Issues</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#debug-layers" class="nav-link">Debug layers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#openstreetmap-data" class="nav-link">OpenStreetMap Data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="troubleshooting-routing">Troubleshooting Routing</h1>
+<h2 id="graph-builder-data-import-issues">Graph Builder Data Import Issues</h2>
+<p>When you build a graph, OTP may encounter clearly incorrect or ambiguous data, or may detect less 
+severe, but potentially problematic situations in the input data. Such problems should result in a 
+"Data Import Issue" being generated. These issues are logged the the <code>DATA_IMPORT_ISSUES</code> console 
+logger, depending on your need you might turn this logger on/off. At the end of the graph build 
+process, OTP prints a summary of all the issues, like the following:</p>
+<p><code>11:35:57.515 INFO (Graph.java:970) Summary (number of each type of issues):
+ 11:35:57.518 INFO (Graph.java:976)     TurnRestrictionBad - 560
+ 11:35:57.518 INFO (Graph.java:976)     TurnRestrictionException - 15
+ 11:35:57.518 INFO (Graph.java:976)     StopLinkedTooFar - 22
+ 11:35:57.518 INFO (Graph.java:976)     HopSpeedSlow - 22
+ 11:35:57.518 INFO (Graph.java:976)     Graphwide - 1
+ 11:35:57.518 INFO (Graph.java:976)     GraphConnectivity - 407
+ 11:35:57.519 INFO (Graph.java:976)     ParkAndRideUnlinked - 1
+ 11:35:57.519 INFO (Graph.java:976)     StopNotLinkedForTransfers - 31
+ 11:35:57.519 INFO (Graph.java:976)     NoFutureDates - 1</code></p>
+<p>The full set of issues can be written out to an HTML report for closer inspection. To enable the 
+creation of these (potentially voluminous) HTML reports, add <code>"dataImportReport" : true</code> to your 
+graph builder JSON configuration.</p>
+<p>If the graph is saved to a file, these issues are saved with it and can be examined later. 
+Currently the only tool for doing this is the "Graph Visualizer", which is not particularly well 
+maintained and is intended for use by software developers familiar with OTP who can patch up the 
+code as needed.</p>
+<h2 id="debug-layers">Debug layers</h2>
+<p>OpenTripplanner has option to ease debugging problems with graph. Older option is graph visualizer.
+Which you can enable with <code>--visualize</code> parameter instead of <code>--server</code> when starting OTP.
+There you can see whole graph. You can click on edges and vertices and see the metadata. It is
+ useful to see if street has expected options. And if connections are where they are expected.</p>
+<p>It can be hard to use on large graphs since, whole graph is displayed at once. And it can be hard
+ to search for specific streets since only street graph is shown without the rest of information.</p>
+<p>Another option is to use debug layers, which shows extra layers on top of normal map.
+ To enable them you need to add <code>?debug_layers=true</code> to URL. For example 
+ <a href="http://localhost:8080/?debug_layers=true">http://localhost:8080/?debug_layers=true</a>.
+  This adds debug layers to layer choosing dialog. Currently you can choose between:</p>
+<ul>
+<li>Wheelchair access (which colors street edges red if they don't allow wheelchair or green otherwise)</li>
+<li>Bike Safety (colors street edges based on how good are for cycling [smaller is better])</li>
+<li>Traversal permissions (colors street edges based on what types of transit modes are allowed to
+ travel on them (Pedestrian, cycling, car are currently supported)) Traversal permissions layer also
+ draws links from transit stops/bike rentals and P+R to graph. And also draws transit stops, bike rentals
+  and P+R vertices with different color.</li>
+</ul>
+<h3 id="interpretation-traversal-permissions-layer">Interpretation Traversal permissions layer</h3>
+<p>A sample traversal permissions layer looks like the following 
+<img alt="screen shot 2015-06-26 at 11 45 22" src="https://cloud.githubusercontent.com/assets/4493762/8374829/df05c438-1bf8-11e5-8ead-c1dea41af122.png" />
+* Yellow lines is the link between a stop and the street graph.
+* Grey lines are streets one can travel with the mode walk, bike, or car
+* Green lines are paths one can travel with the mode walk only
+* Red lines are streets one can travel with the mode car only
+* Grey dots vertices where edges are connected. If two edges are crossing w/o a vertice at the intersection point, users will not be able to go from one street to the other. But this can be valid in case of over/under pass for 
+example. If it's an error, it's usually caused by improperly connected OSM data (a shared OSM node is required). </p>
+<h2 id="openstreetmap-data">OpenStreetMap Data</h2>
+<h3 id="tags-affecting-permissions">Tags Affecting Permissions</h3>
+<p>Access tags (such as bicycle/foot = yes/no/designated) can be used to override default graph-building parameters. </p>
+<p>As a default, foot and bicycle traffic is ''not'' allowed on <code>highway=trunk</code>, <code>highway=trunk_link</code>, <code>highway=motorway</code>, <code>highway=motorway_link</code>, or <code>highway=construction</code>. </p>
+<p>Both <em>are</em> allowed on <code>highway=pedestrian</code>, <code>highway=cycleway</code>, and <code>highway=footway</code>. </p>
+<p>Finally, bicycles are <em>not</em>allowed on <em>highway=footway</em> when any of the following tags appear on a footway: <code>footway=sidewalk</code>, <code>public_transport=platform</code>, or <code>railway=platform</code>.</p>
+<p>Other access tags (such as <code>access=no</code> and <code>access=private</code> affect routing as well, and can be overridden similarly. While <code>access=no</code> prohibits all traffic, <code>access=private</code> disallows through traffic.</p>
+<p>See <a href="../Configuration/#Way-property-sets">osmWayPropertySet config attribute</a></p>
+<h3 id="railway-platforms">Railway Platforms</h3>
+<p>OTP users in Helsinki have documented their best practices for coding railway platforms in OpenStreetMap. These guidelines are available <a href="https://wiki.openstreetmap.org/wiki/Digitransit#Editing_railway_platforms">in the OSM Wiki.</a></p>
+<h3 id="further-information">Further information</h3>
+<ul>
+<li><a href="https://github.com/opentripplanner/OpenTripPlanner/wiki/GraphBuilder#graph-concepts">General information</a></li>
+<li><a href="http://wiki.openstreetmap.org/wiki/OpenTripPlanner#Bicycle_routing">Bicycle routing</a></li>
+<li><a href="https://github.com/opentripplanner/OpenTripPlanner/wiki/Indoor-mapping">Indoor mapping</a></li>
+<li><a href="http://wiki.openstreetmap.org/wiki/OpenTripPlanner#Elevators">Elevators</a></li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

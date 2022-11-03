@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.0/Preparing-OSM/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Preparing OSM Data - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Choosing OTP2 or OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../sandbox/HealthAPI/" class="dropdown-item">Health API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GrpahQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/BikeRentalServiceDirectory/" class="dropdown-item">Bike Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Configuration/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Netex-Norway/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Preparing-OSM.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h3 id="cropping-osm-data">Cropping OSM data</h3>
+<p>Services producing automated extracts of OSM data like <a href="http://download.geofabrik.de">Geofabrik</a> or <a href="https://www.interline.io/osm/extracts/">Interline Extracts</a> are limited to predefined areas. You'll often need to download an extract for a country or region larger than your true analysis area, then cut it down to size. </p>
+<p>Excessively large OSM data can lead to significant increases in computation time and complexity, both while building the graph and handling trip planning requests. You may want to crop the OSM data if they cover an area significantly larger than your transit network. Several command line tools are able to perform these cropping operations: <a href="https://wiki.openstreetmap.org/wiki/Osmosis">Osmosis</a> is a multi-platform Java tool that works on Windows, Linux, and MacOS but is relatively slow, <a href="https://wiki.openstreetmap.org/wiki/Osmconvert">OSMConvert</a> is a fast tool pre-built for Windows and Linux and available on MacOS and Linux distributions as part of <code>osmctools</code> package. <a href="https://wiki.openstreetmap.org/wiki/Osmium">Osmium-Tool</a> is a personal favorite that is extremely fast but only straightforward to install on Linux and MacOS platforms. Below are some example crop commands for these different tools:</p>
+<p><strong>Osmosis:</strong> <code>osmosis --rb input.osm.pbf --bounding-box left=4.34 right=5.84 bottom=43.10 top=43.97 --wb cropped.osm.pbf</code></p>
+<p><strong>OsmConvert:</strong> <code>osmconvert input.osm.pbf -b=-77.255859375,38.77764022307335,-76.81365966796875,39.02345139405933 --complete-ways -o=cropped.osm.pbf</code></p>
+<p><strong>Osmium:</strong> <code>osmium extract --strategy complete_ways --bbox 2.25,48.81,2.42,48.91 input.osm.pbf -o cropped.osm.pbf</code></p>
+<p>The latter two commands expect bounding boxes to be specified in the format <code>min_lon,min_lat,max_lon,max_lat</code>. We frequently find bounding boxes using the convenient <a href="https://boundingbox.klokantech.com/">Klokantech bounding box tool</a>. Selecting the "CSV" format in the lower left will give exactly the format expected by these tools.</p>
+<h3 id="filtering-osm-data">Filtering OSM data</h3>
+<p>The OSM database contains a lot of other data besides the roads, paths, and public transportation platform data we need for accessibility analysis. As of this writing, according to <a href="https://taginfo.openstreetmap.org/">TagInfo</a> 59% of the ways in OSM are buildings, and only 23% are roads or paths. Buildings frequently have more complex shapes than roads, and objects like waterways or political boundaries can be very large in size. It has been jokingly said that OSM should be renamed "OpenBuildingMap" rather than "OpenStreetMap".</p>
+<p>Removing unneeded data will reduce file sizes, facilitating copying or moving files around and reducing the size of project backups and archives. It may also speed up the processing stage where the OSM data is converted into a routable street network. Several command line tools exist to filter OSM data. Command line tools for this purpose include <a href="https://wiki.openstreetmap.org/wiki/Osmosis">Osmosis</a> and <a href="https://osmcode.org/osmium-tool/">Osmium-Tool</a>. Osmium-Tool is extremely fast but is only straightforward to install on Linux and MacOS platforms. Osmosis is often slower at filtering but will also work on Windows as it's a multi-platform Java application. OSMFilter cannot work with PBF format files so we rarely use it. Below are some example commands for retaining only OSM data useful for accessibility analysis. Here are some example commands:</p>
+<p><strong>Osmosis:</strong> <code>osmosis --rb input.osm.pbf --tf reject-ways building=* --tf reject-ways waterway=* --tf reject-ways landuse=* --tf reject-ways natural=* --used-node --wb filtered.osm.pbf</code></p>
+<p><strong>Osmium-Tool:</strong> <code>osmium tags-filter input.osm.pbf w/highway w/public_transport=platform w/railway=platform w/park_ride=yes r/type=restriction -o filtered.osm.pbf -f pbf,add_metadata=false</code></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

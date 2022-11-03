@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.0/Version-Comparison/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Choosing OTP2 or OTP1 - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Choosing OTP2 or OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../sandbox/HealthAPI/" class="dropdown-item">Health API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GrpahQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/BikeRentalServiceDirectory/" class="dropdown-item">Bike Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Changelog/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../OTP2-MigrationGuide/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Version-Comparison.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#comparing-otp2-and-otp1" class="nav-link">Comparing OTP2 and OTP1</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#summary" class="nav-link">Summary</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#otp2-use-cases" class="nav-link">OTP2 Use Cases</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#choosing-between-otp1-and-otp2" class="nav-link">Choosing between OTP1 and OTP2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#high-level-feature-comparison" class="nav-link">High-level feature comparison</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#commentary-on-otp1-features-removed-from-otp2" class="nav-link">Commentary on OTP1 features removed from OTP2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#otp-trip-planning-and-transit-index-apis" class="nav-link">OTP Trip planning and Transit index APIs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#additional-characteristics-added-in-otp2" class="nav-link">Additional characteristics added in OTP2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#other-features-removed-from-otp2" class="nav-link">Other features removed from OTP2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="comparing-otp2-and-otp1">Comparing OTP2 and OTP1</h1>
+<h2 id="summary">Summary</h2>
+<p>OpenTripPlanner has been under development since 2009, leading up to a 1.0 release in 2016. Research and development on higher performance routing has been ongoing since 2013-2014, and work on the second major release referred to as OTP2 officially began in 2018. As of Q3 2020, a release candidate of OTP2 is available and in limited production use. This page explains key differences between the two versions (referred to as OTP1 and OTP2) to help you decide which one to use.</p>
+<p>OTP1 has existed for over a decade and is in widespread use. It aims to do many things for many people: it provides passenger-facing itinerary services over APIs, but also serves as a network analysis toolkit for urban planning and research. Though OTP1 is widely used and gets the job done, its transit routing approach is obsolete. We have long recognized that more resource-efficient approaches were possible. Reasonable response times and scaling to larger data sets have been achieved through a series of complex incremental interventions that became difficult to maintain. OTP1 has also accumulated large amounts of experimental code and specialized tools, which can be useful in a research or consulting setting but complicate long-term maintenance.</p>
+<p>OTP2 is brand new and still in testing, though based on code and ideas in heavy use for over five years. It offers much better performance in larger transportation networks and geographic areas, and a wider variety of alternative itineraries. OTP2's public transit routing component has been completely rewritten, and is now distinct from bike, walk, and motor vehicle routing. Non-transit routing remains identical to OTP1, benefiting from years of adaptations to nuances of OpenStreetMap data and end-user walking and biking preferences. Unlike OTP1, OTP2 is completely focused on passenger-facing itinerary services. The innovations in OTP2 have already been applied to planning, research, and analysis work for several years through Conveyal's R5 project, which informed and inspired the OTP2 transit routing system. </p>
+<p>OTP2 will not supersede OTP1 immediately for all use cases. In some situations there are legitimate reasons to continue using OTP1, or even for new OpenTripPlanner users to adopt OTP1 instead of OTP2. As development work continues over 2021 and additional 2.x releases are made, we expect this gap to close and OTP2 (in combination with other projects) may eventually fully replace OTP1, but this process is expected to take a few years.</p>
+<h2 id="otp2-use-cases">OTP2 Use Cases</h2>
+<p>The benefits of OTP2 will be most evident in large or dense networks spanning multiple cities: entire countries (Netherlands, Switzerland, Norway), US states, metropolitan regions and cross-border conurbations (e.g. NYC metro area). Although the scale of trip planners is sometimes limited by the geographic extent of administrative structures (national rail or bus operators or ticketing agencies), OTP2 should be capable of handling even larger networks, and we do for example regularly test on a unified Nordic trip planner in hopes that such systems will materialize over time as more territories adopt OTP.</p>
+<p>OTP2 development has been driven by adoption of open source routing software in Northern Europe. Importantly for deployments in Europe, OTP2 introduces support for EU-standard Netex and SIRI data sources in addition to GTFS. The Nordic profile of Netex understood by OTP2 uses the same schema as the EU profile, and generalization to the EU profile should be feasible once it is standardized. </p>
+<h2 id="choosing-between-otp1-and-otp2">Choosing between OTP1 and OTP2</h2>
+<p>Much development effort has gone into OTP2, and most OTP development effort will continue to focus on OTP2 after its release. OTP2 is much more efficient than OTP1 for certain common use cases, providing faster responses for a larger number of simultaneous users over larger geographic areas and more complex transportation networks.</p>
+<p>However, this does not mean that all users of OpenTripPlanner should switch to OTP2, or that all new users will want to start with OTP2. As of fall 2020, OTP1 remains much more widely used than OTP2, and most importantly OTP2 has a smaller feature set than OTP1. That is to say, OTP2 can do less things than OTP1, but it does them much more efficiently and tries to cover the most common use cases for large-scale OTP deployments. </p>
+<p>When in doubt, new users are advised to try out OTP2 and switch to OTP1 if they need features that are not available in OTP2. If some feature you need is missing from OTP2, you can also create a new issue or comment on an existing one on GitHub, letting us know why it is important to you. New features can be added to the OTP2 if there is sufficient demand and development resources to maintain them.</p>
+<h2 id="high-level-feature-comparison">High-level feature comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>OTP1</th>
+<th>OTP2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OSM street data</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>GTFS transit data</td>
+<td>yes</td>
+<td>yes (<a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3243"><em>frequency.txt</em> not jet supported</a>)</td>
+</tr>
+<tr>
+<td>Netex transit data</td>
+<td>no</td>
+<td>yes<br>(Nordic profile)</td>
+</tr>
+<tr>
+<td>GTFS-Realtime</td>
+<td>yes<br>(streaming, polling, incremental)</td>
+<td>yes<br>(streaming, polling, incremental)</td>
+</tr>
+<tr>
+<td>SIRI Realtime</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Elevation data</td>
+<td>TIFF and NED</td>
+<td>TIFF and NED</td>
+</tr>
+<tr>
+<td>One-to-many routing,<br> isochrones and scripting</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Java version</td>
+<td>8+</td>
+<td>11+</td>
+</tr>
+<tr>
+<td>Multiple regions per server</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Hot reloading of graphs</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Street (OSM) routing algorithm</td>
+<td>Generalized cost A*</td>
+<td>Generalized cost A*</td>
+</tr>
+<tr>
+<td>Transit routing algorithm</td>
+<td>Generalized cost A*</td>
+<td>Multi-criteria range-RAPTOR</td>
+</tr>
+<tr>
+<td>Search segmentation</td>
+<td>Single search through access, transit, egress</td>
+<td>Access/egress separate from transit search</td>
+</tr>
+<tr>
+<td>Goal direction</td>
+<td>Upper bound search backward from destination,<br> over streets and transit, interleaved with forward search</td>
+<td>Upper bound search backward from destination <br> on transit only, before forward search begins</td>
+</tr>
+<tr>
+<td>Alternative itineraries</td>
+<td>"Trip banning",<br> N lowest generalized costs</td>
+<td>True Pareto-optimal results</td>
+</tr>
+<tr>
+<td>Departure/arrival time</td>
+<td>Single departure or arrival time only</td>
+<td>Every minute in a window up to several days long</td>
+</tr>
+<tr>
+<td>API Paging</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Timetable View</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Plugin Sandbox Extensions</td>
+<td>no</td>
+<td>yes (<a href="../SandboxExtension/">See extensions</a>)</td>
+</tr>
+<tr>
+<td>Data storage</td>
+<td>local, S3 (elevation only)</td>
+<td>extensible with local, ZIP,<br>and Google Cloud plugins, S3 available</td>
+</tr>
+<tr>
+<td>Transfer Priority</td>
+<td>yes (route, trip, stop level)</td>
+<td>no (planned)</td>
+</tr>
+<tr>
+<td>/ REST API format</td>
+<td>XML, JSON</td>
+<td>JSON only</td>
+</tr>
+</tbody>
+</table>
+<h2 id="commentary-on-otp1-features-removed-from-otp2">Commentary on OTP1 features removed from OTP2</h2>
+<p>OTP2 brings significant improvements in speed and scalability, but does not retain all features of OTP1. We have chosen to prioritize long-term maintainability, so only those features that are "owned" by a team of professional developers will be carried over to OTP2. </p>
+<p>Features that have been removed to simplify the code base and improve maintainability may be removed permanently. Other missing features are still priorities for the organization leading OTP2 development (Entur) but have not yet been adapted to the new transit routing system, and will be added in upcoming releases. Some features have been removed to reflect separation of concerns: following principles of modular design they should be handled outside OTP, or are already covered by other projects where they are more actively developed.</p>
+<h3 id="analysis">Analysis</h3>
+<p>Many OpenTripPlanner contributors have been primarily interested in transportation and urban planning use cases. We consider these use cases quite important. This has been a major area of application for OpenTripPlanner and has helped popularize cumulative opportunities accessibility metrics. For example, the University of Minnesota Accessibility Observatory used OpenTripPlanner for <a href="http://access.umn.edu/research/america/">Access Across America</a>. Nonetheless, the analysis code in OTP1 is essentially an unmaintained and unsupported early prototype for later projects, specifically Conveyal's R5 (and the Conveyal Analysis system built upon it). OTP1 seems to have gained popularity for analysis uses due to the existence of documentation and an active user community, but has significant technical shortcomings. One of these is simply speed: OTP1 can be orders of magnitude slower (and more memory-intensive) than the approaches exemplified in R5. The other is the requirement to search at a single specific time. Travel times and especially wait times on scheduled transit vary greatly depending on when you depart. Accounting for variation over a time window requires repeated independent searches at each possible departure time, which is very inefficient. R5 is highly optimized to capture variations in travel time across time windows and account for uncertainty in waiting times on frequency-based routes. </p>
+<p>Due to its similarity to the R5 approach, OTP2's transit router would not have these same problems. Nonetheless, we have decided not to port the 
+OTP1 analysis features over to OTP2 since it would broaden the focus away from passenger information and draw finite attention away from existing projects like R5 and Conveyal Analysis. </p>
+<p>Accordingly, we have made an effort to clean up and augment OTP1 analysis documentation for researchers who will continue to need it. 
+It should remain possible for people to continue using OTP1 if they prefer.
+If you would instead like to apply the innovations present in OTP2, we recommend looking into R5 or Conveyal Analysis.</p>
+<h3 id="routers-api-and-hot-reloading">Routers API and Hot Reloading</h3>
+<p>Via it's Routers API, OTP1 allows loading data and serving APIs for multiple separate geographic areas. This is functionally equivalent to running more than one OTP server with separate data sets. This system also allows reloading transportation network data when it changes, or even pushing new data over a network connection.</p>
+<p>These were all adaptations to the very different IT environment that existed earlier in OTP history. These days, containerization and on-demand cloud servers have become ubiquitous, and most users solve these problems in totally different ways - by provisioning and starting up entirely new virtual servers, then switching a load balancer over to those new servers. Because the Routers API is complex and exposes potentially damaging functionality over the network, it has been removed from OTP2 to simplify the code base and make it easier to reason about security.</p>
+<h3 id="routing-request-parameters">Routing request parameters</h3>
+<p>Less parameters are available on the OTP2 REST API than in OTP1. Often there is no practical loss of functionality, just a different way of expressing things due to the new routing algorithms. A summary of parameters that have been removed and their replacements can be found in the migration guide <a href="../OTP2-MigrationGuide/">OTP2-MigrationGuide</a>.</p>
+<h2 id="otp-trip-planning-and-transit-index-apis">OTP Trip planning and Transit index APIs</h2>
+<p>OTP1 have two APIs for trip planning, the REST API and an obsolete GraphQL API(early version of 
+the Digitransit GraphQL API). OTP2 still support the REST API and it is very similar in functionality
+compared with the OTP1 version. In the future we would like to create a new official OTP API using 
+GraphQL replacing the REST API. We will probably support the REST API for a long time to allow 
+everyone to migrate to the new GraphQL API. Today, OTP2 comes with two Sandbox extension APIs:</p>
+<ul>
+<li><a href="../sandbox/LegacyGraphQLApi/">HSL Legacy GraphQL API</a> - HSL's GraphQL API used by the Digitransit project.</li>
+<li><a href="../sandbox/TransmodelApi/">Transmodel API</a> - Entur´s Transmodel API</li>
+</ul>
+<p>The plan is to merge the two APIs above, clean it up and make it the new official API. The HSL API
+uses GTFS terminology, while the Entur API is Transmodel(NeTEx) based. Both APIs are similar in 
+semantics/structure and provide the same functionality. The plan is to merge these to APIs into one
+new official OTP2 API. We will then deprecate the REST API, Transmodel API and the HSL API. The new
+API will be available in a GTFS and a Transmodel "translated" version.  </p>
+<h2 id="additional-characteristics-added-in-otp2">Additional characteristics added in OTP2</h2>
+<p><strong>Sandbox Extensions</strong> OTP2's Sandbox system allows for plugins, proprietary extensions, and experimental feature development with less overhead. It forces OTP2 to become more extensible, while reducing process overhead when developing non-core features.</p>
+<p><strong>Cloud support</strong> In OTP1 all data access (config, input data, and graph output) is by direct access to the local filesystem. The only exception is elevation data, which can be loaded from AWS S3 as well. In OTP2, all data access is through an abstraction layer. This can be configured to support individual local files, zip files, and Google Cloud Storage. The new data access treats directories and zip files as “equal”, and this functionality is used to read the contents of GTFS and NeTEx archives. Other data sources can be supported by writing plugins. Entur has written a plugin for AWS S3 which has not been merged. If requested they can provide this code for AWS S3.</p>
+<p><strong>Library upgrades</strong> We have adapted OTP2 to run on Java 11+ and moved to newer versions of some dependencies such as GraphQL and One Bus Away.</p>
+<p><strong>Bugfixes</strong> At least bug issues have been resolved in OTP2. Critical fixes have been backported to OTP1. See https://github.com/issues?q=is%3Aclosed+is%3Aissue+label%3AOTP2+label%3Abug</p>
+<h2 id="other-features-removed-from-otp2">Other features removed from OTP2</h2>
+<p><strong>AlertPatch</strong> GTFS-RT Service Alerts will no longer affect routing (e.g. cancel trips). A GTFS-RT Trip Updates feed should be used for this purpose.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

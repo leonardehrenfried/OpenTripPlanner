@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.0/OTP2-MigrationGuide/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>OTP2 migration guide - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Choosing OTP2 or OTP1</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../sandbox/HealthAPI/" class="dropdown-item">Health API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GrpahQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/BikeRentalServiceDirectory/" class="dropdown-item">Bike Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Version-Comparison/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Visual-Identity/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/OTP2-MigrationGuide.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#how-to-migrate-from-otp1-to-otp2" class="nav-link">How to migrate from OTP1 to OTP2</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#command-line" class="nav-link">Command Line</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#file-loading" class="nav-link">File Loading</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#build-config" class="nav-link">Build Config</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#router-config" class="nav-link">Router Config</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#rest-api" class="nav-link">REST API</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="how-to-migrate-from-otp1-to-otp2">How to migrate from OTP1 to OTP2</h1>
+<h2 id="command-line">Command Line</h2>
+<p>The OTP2 command line parameters are different than in OTP1. Use the <code>--help</code> option to get the 
+current documentation, and look at the <a href="../Basic-Tutorial/#starting-otp">Basic Tutorial, Start up OPT</a> 
+for examples. The possibility to build the graph in 2 steps (streets then transit) is new in OTP2. 
+OTP2 does not support multiple routers.</p>
+<h2 id="file-loading">File Loading</h2>
+<p>OTP1 accesses all files using the local file system, no other <em>data-source</em> is supported. In OTP2 we 
+support accessing cloud storage. So far Google Cloud Storage is added and we plan to add support 
+for AWS S3 as well. Config files (<em>otp-config.json, build-config.json, router-config.json</em>) are read 
+from the local file system, while other files can be read/written from the local file-system or the
+cloud. OTP2 supports mixing any data sources that are supported. </p>
+<p>OTP1 loads input data files (<em>DEM, OSM, GTFS, NeTEx</em>) based on the suffix (file extension). But for 
+GTFS files OTP1 also opens the zip-file and looks for <em>stops.txt</em>. OTP2 identifies GTFS files by the 
+name only: it will detect any zip-file or directory that contains "gtfs" as part of the name. All 
+file types in OTP2 are resolved by matching the name with a regexp pattern. You can configure the 
+patterns in the <em>build-config.json</em> if the defaults do not suit you. </p>
+<p>OTP2 does not support multiple routers, but you can load as many GTFS and/or NeTEx feeds as 
+you want into a single instance of OTP2.</p>
+<h2 id="build-config">Build Config</h2>
+<p>New parameters:</p>
+<ul>
+<li><code>transitServiceStart</code> Limit the import of transit services to the given <em>start</em> date. Default: <code>-P1Y</code></li>
+<li><code>transitServiceEnd</code> Limit the import of transit services to the given <em>end</em> date. <em>Inclusive</em>. Default: <code>P3Y</code></li>
+</ul>
+<p>These properties changed names from:</p>
+<ul>
+<li><code>htmlAnnotations</code> to <code>dataImportReport</code></li>
+<li><code>maxHtmlAnnotationsPerFile</code> to <code>maxDataImportIssuesPerFile</code></li>
+<li><code>boardTimes</code> to <code>routingDefaults.boardSlackByMode</code></li>
+<li><code>alightTimes</code> to <code>routingDefaults.alightSlackByMode</code></li>
+</ul>
+<p>These parameters are no longer supported:</p>
+<ul>
+<li><code>stopClusterMode</code> </li>
+<li><code>parentStopLinking</code></li>
+<li><code>stationTransfers</code></li>
+</ul>
+<p>OTP2 records the "parentStation" relationship between stops and stations in its internal transit 
+ model, based on the GTFS and/or NeTEx input. This enables OTP to search from all stop in a station 
+ <em>without</em> walking/waiting when the request from/to input field is a station id. There is no way to 
+ automatically infer this parent station relationship based on geographic proximity in OTP2. </p>
+<p>Transfers in OTP2 are generated based on the stop location and the OSM data or GTFS Pathways. In 
+ future versions of OTP2 we also want to support generating simple transfers based on 
+ "line-of-sight" if no pathways or OSM data exist. See issue
+ <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3204">#3204</a>.</p>
+<p>Cleaning and patching input data is NOT a core feature of OTP, but anyone is welcome to implement 
+ a sandbox plugin to patch data. So, if any of the features above are needed they can be ported
+ from OTP1 into an OTP2 sandbox feature.</p>
+<h2 id="router-config">Router Config</h2>
+<p>See the <a href="../Configuration/#router-configuration">Router Configuration</a> for a description of the 
+new and existing routing parameters.</p>
+<p>New parameters:</p>
+<ul>
+<li><code>streetRoutingTimeout</code> Maximum time limit for street route queries. Replace the old <code>timeout</code>.</li>
+<li><code>transit</code> Transit tuning parameters, configure the raptor router. A set of parameters to tune 
+             the Raptor transit router. </li>
+</ul>
+<p>These parameters are no longer supported:</p>
+<ul>
+<li><code>timeout</code> Replaced by <code>streetRoutingTimeout</code></li>
+<li><code>timeouts</code> OTP1 searches the graph many times, while OTP2 do one search finding multiple results
+              in one search. So, there is no need for this parameter.</li>
+<li><code>boardTimes</code> is replaced by <code>request</code> parameter <code>boardSlack</code> and <code>boardSlackForMode</code>.</li>
+<li><code>alightTimes</code> is replaced by <code>request</code> parameter <code>alightSlack</code> and <code>alightSlackForMode</code>.</li>
+</ul>
+<h2 id="rest-api">REST API</h2>
+<h3 id="trip-planning">Trip Planning</h3>
+<p>Support for XML as a request/response format is removed. The only supported format is JSON.</p>
+<h4 id="query-parameter-changes">Query parameter changes</h4>
+<p>A lot of the query parameters in the REST API are ignored/deprecated, see the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/v2.0.0/src/main/java/org/opentripplanner/routing/api/request/RoutingRequest.java">RoutingRequest</a> 
+ and the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/v2.0.0/src/main/java/org/opentripplanner/api/common/RoutingResource.java">RoutingResource</a>
+ class for the documentation on what is now supported in 2.0. A few features did not make it into 
+ the 2.0, but is sheduled for the 2.1 release.
+ See <a href="https://github.com/opentripplanner/OpenTripPlanner/issues?q=is%3Aopen+is%3Aissue+milestone%3A2.1">GitHub issues 2.1</a>.  </p>
+<p>The following parameters are missing in OTP2 but will be added:</p>
+<ul>
+<li><code>startingTransitTripId</code> The ability to plan a trip from on board a vehicle should be implemented 
+    by Q1 2021.</li>
+<li><code>intermediatePlaces</code> - ability to specify intermediate destinations along the route. It is not 
+    certain when this will be implemented. </li>
+<li><code>nonpreferredTransferCost</code>, <code>(un)preferredRoutes</code>, <code>(un)preferredAgencies</code> - these help diversify
+    or customize the trips and operators visible in results. Due to the new transit routing
+    algorithm, Entur plans to   completely rewrite these features, accounting for market-neutrality
+    requirements and showing relevant trips and operators in local vs. intercity trips.</li>
+</ul>
+<p>Some features in OTP1 will not be present upon launch in OTP2, and they are proposed to be removed
+ permanently from OTP2, but may require some development to support valid important cases:</p>
+<ul>
+<li><code>maxWalkDistance</code>, <code>maxTransferWalkDistance</code>, &amp; <code>maxWait</code> - these parameters impose hard limits
+    and are no longer the preferred way to reduce the amount of walking or waiting in returned 
+    itineraries. In OTP2 the goal is to control this with <code>walkReluctance</code> and <code>waitReluctance</code>. 
+    Internally some limits on walking and waiting do still exist, but they are set quite high so 
+    trips with long walking or waiting times are still considered. Note that unlike in OTP1, if you
+    do set your own max walk or wait time on an API request, it will apply to both transit searches
+    and non-transit searches.</li>
+<li><code>maxHours</code> &amp; <code>useRequestedDateTimeInMaxHours</code> - This is replaced by <code>searchWindow</code>, which
+    limits the arrival or departure window of the trip</li>
+<li><code>worstTime</code> - This factor returns the “worst” trip in a depart after/arrive by search, i.e.
+    the latest or earliest trip available. It is not a priority for current OTP2 users but could
+    be added as a filter.</li>
+<li><code>waitAtBeginningFactor</code> - No longer necessary to weight the initial wait differently based on
+    the the Range Raptor search algorithm, which no longer prefers a departure at one valid time
+    over another. Filtering could be implemented on top of Raptor to show certain departure times
+    before others.</li>
+<li><code>pathComparator</code> - The ability to set a sort order based on departure or arrival should be the
+    domain of the API rather than the search. </li>
+<li><code>startingTransitStopId</code> - duplicative with fromPlace</li>
+<li><code>onlyTransitTrips</code> - the new feature for specifying access, egress, transit and direct mode
+    replace the need for this parameter.</li>
+</ul>
+<p>Parameters that have changed:</p>
+<ul>
+<li><code>numItineraries</code> The parameter is no longer used to terminate the request when the 
+    numItineraries is found, instead the new <code>searchWindow</code> parameter should be used to limit the
+    search. In OTP2 it crops the list of itineraries AFTER the search is complete. This parameter
+    is a post search filter function. The best option is to configure this on the server side and
+    not use it as a client side input parameter. A side effect from reducing the result is that
+    OTP2 cannot guarantee to find all pareto-optimal itineraries when paging. Also, a large
+    search-window and a small <code>numItineraries</code> waste computer CPU calculation time. Consider
+    tuning the <code>searchWindow</code> instead of setting this to a small value.</li>
+<li><code>modes</code> The REST API is unchanged, but is mapped into a new structure in the RoutingRequest. 
+    This means not all combinations of non-transit modes that was available in OTP1 is available in
+    OTP2.</li>
+<li><code>preferredAgencies</code>, <code>unpreferredAgencies</code>, <code>bannedAgencies</code> and <code>whiteListedAgencies</code> use
+    feed-scoped ids. If you are using the ids directly from the Index API, no changes are needed.</li>
+</ul>
+<p>New parameters in OTP2:   </p>
+<ul>
+<li><code>searchWindow</code> Limit the departure window or arrival window for the routing search.</li>
+<li><code>boardSlackByMode</code> How much time ride a vehicle takes for each given mode.</li>
+<li><code>alightSlackByMode</code> How much time alighting a vehicle takes for each given mode.</li>
+</ul>
+<h4 id="paging">Paging</h4>
+<p>In OTP1 most client provided a way to page the results by looking at the trips returned and passing 
+ in something like the <code>last-depature-time</code> + 1 minute to the next request, to get trips to add to 
+ the already fetched results. In OTP2 the recommended way to do this is to use the new <code>TripPlan</code> 
+ <code>metadata</code> returned by the router call.</p>
+<h4 id="response-changes">Response changes</h4>
+<ul>
+<li><code>metadata</code> is added to <code>TripPlan</code>. The <code>TripSearchMetadata</code> has three fields:</li>
+<li><code>searchWindowUsed</code></li>
+<li><code>nextDateTime</code></li>
+<li><code>prevDateTime</code></li>
+<li><code>agencyId</code> in the <code>leg</code> is now feed-scoped and similarly to other ids, is prefixed with <code>&lt;FEED_ID&gt;:</code></li>
+<li><code>debugOutput</code> in <code>TripPlan</code> has changed due to the different algorithms used in OTP version 1.x and 2.x.</li>
+<li>The <code>totalTime</code> is left as is, <code>directStreetRouterTime</code>, <code>transitRouterTime</code>, <code>filteringTime</code> 
+    and <code>renderingTime</code> are new fields.</li>
+<li><code>effectiveEndDate</code> is added to the <code>Alert</code>s</li>
+</ul>
+<h3 id="changes-to-the-index-api">Changes to the Index API</h3>
+<ul>
+<li>Error handling is improved, this is now consistently applied and uses build in framework support. </li>
+<li>The HTTP 400 and 404 response now contains a detailed error message in plain text targeted 
+    developers to help understanding why the 400 or 404 was returned.</li>
+<li><code>Route</code></li>
+<li>Deprecated 'routeBikesAllowed' field removed.</li>
+<li><code>sortOrder</code> will be empty (missing) when empty, NOT -999 as before.</li>
+<li>To access or references <code>TripPattern</code> use <code>tripPatternId</code>, not <code>code</code>. In OTP1 the
+  <code>code</code> was used. The code was the same as the id without the feedId prefix. The <code>code</code>
+  is removed from OTP2. Clients may not be affected by this change, unless they toke advantage 
+  of the semantics in the old <code>code</code>.</li>
+<li>The <code>mode</code> field is added to <code>Route</code>, it should probebly replace the <code>type</code>(unchanged). The 
+    <code>RouteShort</code> is not chencged - it has the <code>mode</code> field.</li>
+<li><code>Pattern</code> (or <code>TripPattern</code>)  <ul>
+<li>The semantics of the <code>id</code> should NOT be used to access other related entities like <code>Route</code>, 
+the <code>routeId</code> is added to <code>TripPatternShort</code> to allow navigation to Route. </li>
+</ul>
+</li>
+<li><code>Trip</code><ul>
+<li>The deprecated <code>tripBikesAllowed</code> is removed.</li>
+<li>The <code>routeId</code> replace <code>route</code>. The route is no longer part of the trip. To obtain the Route
+  object call the Index API with the routeId.</li>
+</ul>
+</li>
+<li><code>Stop</code><ul>
+<li>The new <code>stationId</code> is a feed-scoped-id to the parent station. It should be used instead of
+  the deprecated ~~parentStation~~.</li>
+</ul>
+</li>
+<li><code>StopShort</code><ul>
+<li>The new <code>stationId</code> is a feed-scoped-id to the parent station. It should be used instead of
+  the deprecated ~~cluster~~.</li>
+</ul>
+</li>
+<li><code>Agency</code><ul>
+<li>The <code>id</code> is now feed-scoped and similarly to other ids, is prefixed with <code>&lt;FEED_ID&gt;:</code></li>
+</ul>
+</li>
+<li><code>Alert</code><ul>
+<li><code>effectiveEndDate</code> is added to show the end time of the alert validity. </li>
+</ul>
+</li>
+</ul>
+<h3 id="alertpatcher">AlertPatcher</h3>
+<p>The AlertPatcher, which was under the <code>/patch</code> path, is removed. In order to update alerts, please 
+use a GTFS-RT Service Alert updater instead. An example of a simple service for producing static 
+GTFS-RT Service Alert feed from JSON is <a href="https://github.com/pailakka/manual-gtfsrt">manual-gtfsrt</a>.</p>
+<p>Querying for alerts has been moved under the index API, where <code>/alerts</code> can be appended to stop, 
+route, trip and pattern.</p>
+<h3 id="analyst">Analyst</h3>
+<p>The analyst API endpoints have been removed.</p>
+<h3 id="scripting">Scripting</h3>
+<p>The scripting API endpoint has been removed.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

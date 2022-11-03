@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.0/Changelog/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Changelog - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Choosing OTP2 or OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../sandbox/HealthAPI/" class="dropdown-item">Health API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GrpahQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/BikeRentalServiceDirectory/" class="dropdown-item">Bike Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Deployments/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Version-Comparison/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Changelog.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#changelog" class="nav-link">Changelog</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#200-2020-11-27" class="nav-link">2.0.0 (2020-11-27)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#ported-over-from-14-and-15" class="nav-link">Ported over from 1.4 and 1.5</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#13-2018-08-03" class="nav-link">1.3 (2018-08-03)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#12-2017-09-18" class="nav-link">1.2 (2017-09-18)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#11-2017-03-16" class="nav-link">1.1 (2017-03-16)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#10-2016-09-09" class="nav-link">1.0 (2016-09-09)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#020-2016-06-10" class="nav-link">0.20 (2016-06-10)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#0190-2016-05-25" class="nav-link">0.19.0 (2016-05-25)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#0180-2015-05-29" class="nav-link">0.18.0 (2015-05-29)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#0170-2015-05-14" class="nav-link">0.17.0 (2015-05-14)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#0160-2015-05-07" class="nav-link">0.16.0 (2015-05-07)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#0150-2015-04-14" class="nav-link">0.15.0 (2015-04-14)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#0140-2015-03-28" class="nav-link">0.14.0 (2015-03-28)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#0130-2014-12-05" class="nav-link">0.13.0 (2014-12-05)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#0121-2014-11-17" class="nav-link">0.12.1 (2014-11-17)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#0120-2014-11-11" class="nav-link">0.12.0 (2014-11-11)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#0110-2014-03-24" class="nav-link">0.11.0 (2014-03-24)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#0100-2014-03-18" class="nav-link">0.10.0 (2014-03-18)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#070-2012-04-29" class="nav-link">0.7.0 (2012-04-29)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#060-2012-04-25" class="nav-link">0.6.0 (2012-04-25)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#054-2012-04-06" class="nav-link">0.5.4 (2012-04-06)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#053-2012-03-23" class="nav-link">0.5.3 (2012-03-23)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#052-2012-03-20" class="nav-link">0.5.2 (2012-03-20)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#051-2012-03-16" class="nav-link">0.5.1 (2012-03-16)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#050-2012-03-09" class="nav-link">0.5.0 (2012-03-09)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#044-2012-02-06" class="nav-link">0.4.4 (2012-02-06)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="changelog">Changelog</h1>
+<h2 id="200-2020-11-27">2.0.0 (2020-11-27)</h2>
+<p>See the <a href="../OTP2-MigrationGuide/">OTP2 Migration Guide</a> on changes to the REST API.</p>
+<ul>
+<li>Sandbox for experimental features <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2745">#2745</a></li>
+<li>Bugfix for Missing platforms for stops in GTFS import causes a NPE <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2804">#2804</a></li>
+<li>Remove extra Djikstra implementations</li>
+<li>Remove redundant LineStrings in order to save memory <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2795">#2795</a></li>
+<li>NeTEx import support <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2769">#2769</a></li>
+<li>New Transit search algorithm, Raptor, replaces the AStar for all transit searches. </li>
+<li>Added NeTEx notices <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2824">#2824</a></li>
+<li>Make transfers and access/egress use effectiveWalkDistance to take slopes into account <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2857">#2857</a></li>
+<li>Add MultiModalStation and GroupOfStations to OTP model and added these to the NeTEx import <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2813">#2813</a></li>
+<li>Combined OSM loaders, removing several rarely used ones <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2878">#2878</a></li>
+<li>New Java Code Style (part of <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2755">#2755</a>)</li>
+<li>Cleanup and rename Graph Builder Annotations, now Data Import Issues <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2871">#2871</a></li>
+<li>Bugfix for graph building crashing on unsupported modes <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2899">#2899</a></li>
+<li>Add command line parameter for building partial graphs <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2583">#2583</a></li>
+<li>Refactor GenericLocation/AStar/RoutingContext to allow multiple start vertices <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2887">#2887</a> </li>
+<li>New Transit search algorithm, Raptor, replaces the AStar for all transit searches. </li>
+<li>Update only the relevant parts of the TransitLayer each time an update is applied <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2918">#2918</a></li>
+<li>Ability to switch off the fare service<a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2912">#2912</a>.</li>
+<li>Limit the transit service period<a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2925">#2925</a>.</li>
+<li>Removed unwanted cost added for wait time between access and transit with RangeRaptor <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2927">#2927</a></li>
+<li>Dynamic search parameters, calculate raptor search-window when needed. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2931">#2931</a></li>
+<li>Support for next/previous paging trip search results <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2941">#2941</a></li>
+<li>Fix mismatch in duration for walk legs, resulting in negative wait times <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2955">#2955</a></li>
+<li>NeTEx import now supports ServiceLinks <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2951">#2951</a></li>
+<li>Also check TripPatterns added by realtime when showing stoptimes for stop <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2954">#2954</a></li>
+<li>Copy geometries from previous TripPattern when realtime updates result in a TripPattern being replaced <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2987">#2987</a></li>
+<li>Support for the Norwegian language.</li>
+<li>Update pathways support to official GTFS specification <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2923">#2923</a></li>
+<li>Support for XML (de-)serialization is REMOVED from the REST API <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3031">#3031</a></li>
+<li>Refactor how to specify access/egress/direct/transit modes in the internal model and the Transmodel API <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3011">#3011</a></li>
+<li>Make agency id feed scoped <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3035">#3035</a></li>
+<li>Refactor kiss and ride to a more general car pickup mode <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3063">#3063</a></li>
+<li>Map NeTEx publicCode to OTP tripShortName and NeTEx private code to OTP internalPlanningCode <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3088">#3088</a></li>
+<li>Add MQTT transport for the GTFS-RT trip update updater <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3094">#3094</a></li>
+<li>Add FinlandWayPropertySetSource <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3096">#3096</a></li>
+<li>Map NeTEx publicCode to OTP tripShortName and NeTEx private code to OTP internalPlanningCode <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3088">#3088</a></li>
+<li>Reading and writing files(CONFIG, GRAPH, DEM, OSM, GTFS, NETEX, DATA_IMPORT_ISSUES) is changed. All files, except configuration files, are read from a data source. We support Google Cloud Storage and the local file system data sources for now, but plan to add at least support for AWS S3 <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2891">#2891</a></li>
+<li>Remove AlertPatcher <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3134">#3134</a></li>
+<li>Update DebugOutput to match new routing phases of OTP2 <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3109">#3109</a></li>
+<li>Filter transit itineraries with relative high cost <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3157">#3157</a></li>
+<li>Fix issue with colliding TripPattern ids after modifications form real-time updaters <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3202">#3202</a></li>
+<li>Fix: The updater config type is unknown: gtfs-http <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3195">#3195</a></li>
+<li>Fix: Problem building and loading the GTFS file in San Fransisco Bay Area <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3195">#3195</a></li>
+<li>Fix: The <code>BusRouteStreetMatcher</code> and <code>TransitToTaggedStopsModule</code> graph builder modules are not run if the graph is build in two steps, and add progress tracker to BusRouteStreetMatcher. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/3195">#3195</a></li>
+</ul>
+<h2 id="ported-over-from-14-and-15">Ported over from 1.4 and 1.5</h2>
+<ul>
+<li>Add application/x-protobuf to accepted protobuf content-types <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2839">#2839</a></li>
+<li>Make OTP run on Java 11 <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2812">#2812</a></li>
+<li>Fixes surefire test failure during build <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2816">#2816</a></li>
+<li>Disable linking from already linked stops <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2372">#2372</a></li>
+<li>Add Way Property Set for the UK <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2818">#2818</a></li>
+<li>Remove Open Traffic prototype code <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2698">#2698</a></li>
+<li>Docs: improve configuration documentation</li>
+<li>Update onebusaway-gtfs to latest version from OBA project <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2636">#2636</a></li>
+<li>Remove the coupling to OneBusAway GTFS within OTP's internal model by creating new classes replacing the external classes <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2494">#2494</a></li>
+<li>Allow itineraries in response to be sorted by duration <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2593">#2593</a></li>
+<li>Fix reverse optimization bug #2653, #2411</li>
+<li>increase GTFS-realtime feeds size limit from 64MB to 2G <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2738">#2738</a></li>
+<li>Fix XML response serialization <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2685">#2685</a></li>
+<li>Refactor InterleavedBidirectionalHeuristic <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2671">#2671</a></li>
+<li>Add "Accept" headers to GTFS-RT HTTP requests <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2796">#2796</a></li>
+<li>Fix minor test failure against BANO geocoder <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2798">#2798</a></li>
+<li>Fix frequency bounds checking <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2540">#2540</a></li>
+<li>Remove dependency on Conveyal jackson2-geojson</li>
+<li>Changed calculation of slope costs <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2579">#2579</a></li>
+<li>Replace Java built in serialization with faster Kryo <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2681">#2681</a></li>
+<li>Support OSM highway=razed tag <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2660">#2660</a></li>
+<li>Add bicimad bike rental updater <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2503">#2503</a></li>
+<li>Add Smoove citybikes updater <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2515">#2515</a></li>
+<li>Allow big GTFS-realtime feeds by increasing protobuf size limit to 2G <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2739">#2739</a></li>
+<li>Cannot transfer between stops at exactly the same location <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2371">#2371</a></li>
+<li>Improve documentation for <code>mode</code> routing parameter <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2809">#2809</a></li>
+<li>Switched to single license file, removing all OTP and OBA file license headers</li>
+</ul>
+<h2 id="13-2018-08-03">1.3 (2018-08-03)</h2>
+<ul>
+<li>Fix stop linking to only one edge of platform <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2472">#2472</a></li>
+<li>Log and allow changing number of HTTP handler threads</li>
+<li>Update Dutch base fare from 89 to 90 cents <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2608">#2608</a></li>
+<li>Add Dutch fare service <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2571">#2571</a></li>
+<li>Revise unit tests to use less memory</li>
+<li>Run all graph updater setup methods sequentially <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2545">#2545</a></li>
+<li>Allow vehicle rental systems with cars (stopgap parameter on bike rental)</li>
+<li>Bump R5 version to get newer gtfs-lib and FST serialization</li>
+<li>Move stopClusterMode parameter from routing config to build config <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2558">#2558</a></li>
+<li>Update encrypted Maven artifact signing key (it expired)</li>
+<li>Clean up logging</li>
+<li>Remove/update deprecated HTTPClient, add missing SSL ciphers <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2451">#2451</a></li>
+<li>Make maxTransfer options configurable through scripting API <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2507">#2507</a></li>
+<li>Fix scripts when entity IDs contain colons <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2474">#2474</a></li>
+<li>Add HTML report for stops more than 20m from linked road <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2460">#2460</a></li>
+<li>Update fares in NycFareServiceImpl <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2466">#2466</a></li>
+<li>Compact legs NPE fix <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2449">#2449</a> <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2490">#2490</a></li>
+<li>Docs: elevation data configuration, USGS DEM files</li>
+<li>Docs: Update list of deployments</li>
+<li>Docs: API, list of deployments, usage stats and tutorials</li>
+<li>Docs: Update leadership committee listing following Boston Summit</li>
+<li>Docs: Update OTP logo (Thanks Kate Chanba!)</li>
+</ul>
+<h2 id="12-2017-09-18">1.2 (2017-09-18)</h2>
+<ul>
+<li>Add support for consuming GBFS bike-rental availability feeds. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2458">#2458</a></li>
+<li>Add GBFS configuration example</li>
+<li>Add flag for including requested start/end time in maxHours in planner API. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2457">#2457</a></li>
+<li>Add maxTransferDistance graph builder parameter</li>
+<li>Add option for filtering non-pickup stops in TransitIndex stop times functions. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2377">#2377</a></li>
+<li>Support foot/bicycle=discouraged OSM tag. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2415">#2415</a></li>
+<li>Improve linking of transit platforms to connecting access ways. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2422">#2422</a> / <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2428">#2428</a></li>
+<li>Fix bug when building graph with parent station transfers. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2404">#2404</a> / <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2410">#2410</a></li>
+<li>Fix bugs in park and ride search. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2424">#2424</a></li>
+<li>Support different stop ID formats in field trip module</li>
+<li>Update URL in BANO geocoding module. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2438">#2438</a> / <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2439">#2439</a></li>
+<li>Add more debug information related to trips matching using GTFS-RT feed. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2432">#2432</a></li>
+<li>Update default PATH_NOT_FOUND message to new wording developed w/ TriMet. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2355">#2355</a></li>
+<li>Update Travis build configuration to not attempt GPG operations. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2441">#2441</a></li>
+<li>Fix javadoc URL in scripting documentation. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2437">#2437</a></li>
+<li>Automatically link to GitHub issues in Changelog. <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2426">#2426</a></li>
+<li>Expose FeedInfo objects in the Index API <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2456">#2456</a></li>
+<li>Changes to Puget Sound region fare calculation <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2484">#2484</a></li>
+<li>Fix coordinatates when clustering by parent station <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2447">#2447</a></li>
+<li>Allow setting OSM Way Properties from build-config.json <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2389">#2389</a></li>
+<li>Optionally compact ("reverse-optimize") results with complete reverse search <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2449">#2449</a></li>
+<li>Add updater for urbaninfrastructure city bikes <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2448">#2448</a></li>
+<li>Miscellaneous documentation updates</li>
+</ul>
+<h2 id="11-2017-03-16">1.1 (2017-03-16)</h2>
+<ul>
+<li>Deploy to Sonatype OSSRH and Maven Central</li>
+<li>Documentation updates including repo links</li>
+<li>New router-config stopClusterMode: clustering by parent station or geography <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2364">#2364</a></li>
+<li>Spanish and Portuguese UI Translations</li>
+<li>In TimeSurface API, serialize travel times to every point when detail=true</li>
+<li>Make OSM highway=corridor pedestrian routable</li>
+<li>Fix GraphIndex.stopTimesForStop to search on the request day rather than now</li>
+<li>Update GraphQL to latest version and improve support for complex arguments <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2367">#2367</a></li>
+<li>Add support for operationName to the graphql endpoint</li>
+<li>Fix findClosestStopsByWalking, properly set RoutingContext</li>
+<li>Fixed major routing problem where dead-end SimpleTransfers blocked walking paths <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2414">#2414</a></li>
+<li>Created Github issue template</li>
+<li>Avoid negative elevation figures: Compute ellipsoid-geoid offset and optionally apply to elevation calculations <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2301">#2301</a></li>
+<li>Fix VCub bike share updater using new API variable names.</li>
+<li>Fix spurious different-day warning <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2399">#2399</a></li>
+<li>Shutdown hook to gracefully shut down Grizzly <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2384">#2384</a></li>
+<li>Added headsign attribute for stoptimes in GraphQL <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2224">#2224</a></li>
+<li>Allow Cars on highway=*;bicycle=designated <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2374">#2374</a></li>
+<li>Expose PruneFloatingIslands parameters in build-config.json</li>
+<li>Lazy initialization of stop clusters where needed</li>
+<li>Include Agency/Route branding in responses</li>
+<li>Include turn-by-turn walking directions for transfer legs <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/1707">#1707</a></li>
+<li>Output error when edge lengths are negative, and set them to 1mm</li>
+<li>Add disableAlertFiltering API flag <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2351">#2351</a></li>
+<li>Do not show arrival times at terminal stops in stop time viewer <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2357">#2357</a></li>
+<li>Index API now returns stop information URL, enabling hyperlinks in trip viewer <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2352">#2352</a></li>
+<li>Remove all unused model classes for index API <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/1301">#1301</a></li>
+<li>Apply an interlining fix from 0.10 branch</li>
+<li>Allow quoted search phrases in the Lucene search <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2279">#2279</a></li>
+<li>Re-implement maxHours filter <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2332">#2332</a></li>
+<li>Properly set wheelchairAccessible on area edges</li>
+<li>Fixed file URL in test <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2339">#2339</a></li>
+<li>Add details field to fares, listing which legs each fare applies to <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/1699">#1699</a></li>
+</ul>
+<h2 id="10-2016-09-09">1.0 (2016-09-09)</h2>
+<ul>
+<li>Fix problem with missing embedded router-configs.</li>
+<li>Check whether trips have been banned when applying in-seat transfers (interlining).</li>
+<li>Load embedded config for existing graphs on disk.</li>
+<li>Apply max walk distance to transfers, not just initial and final walk.</li>
+<li>Remove Conveyal tiles from client (which was getting expensive), add free Carto/MapZen tiles.</li>
+<li>Fixed headsigns: in itineraries, headsign for a leg used to always be the last stop.</li>
+<li>Updated default map tile sets in the client because Mapquest is no longer gratis.</li>
+<li>Fix problem with empty list ??? <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/1873">#1873</a></li>
+<li>Rewrite of intermediate places handling in GraphPathFinder. Original request is cloned for each intermediate path.</li>
+<li>Routes in GraphQL API Change "type" to "mode" and add "type" as route type to Route for GraphQL</li>
+<li>Add effective end date to alerts (from HSL).</li>
+<li>Rutebanken Citybike bike share.</li>
+<li>Correct TPEG transport modes TPEG 401 and 402 to be "subway".</li>
+<li>Ignore exceptions caused by errors in OSM linear rings.</li>
+<li>Updated to version 2.18 of Jersey to fix hanging threads in Grizzly.</li>
+<li>Removed confusing "Busish" and "Trainish" pseudo-modes.</li>
+<li>FareService for Seattle: allow specifying fares in GTFS instead of hard-coding them in Java. Senior/youth fare prices are given in an extra column in fare attributes. Per-trip fares are taken into consideration when calculating fares in this region.</li>
+<li>Update new linker to link to transitStops if no streets are found.</li>
+<li>Show the name supplied in the request for the origin/destination points in the response.</li>
+<li>Throw a trivialPath exception if start/end point are on the same edge.</li>
+<li>Switch to only use the new SimpleStreetLinker, even for search start and end points. Completely removed old linker classes. Changes for proper handling of wheelchairs and bicycles at start and end points.</li>
+<li>Properly handle null timetableSnapshots when there is no real-time data.</li>
+</ul>
+<h2 id="020-2016-06-10">0.20 (2016-06-10)</h2>
+<ul>
+<li>Re-enabled Enunciate, which works properly with OTP now. This means we have auto-generated API docs.</li>
+<li>Make headsign and block ID visible in the Stop Viewer.</li>
+<li>NYC fare service: filter out non-NYC agencies.</li>
+<li>Optionally log all requests to a file.</li>
+<li>Make max distance for in-seat transfers (interlining) configurable. Previously it was hardcoded at 200m.</li>
+<li>Polish translation for web client.</li>
+<li>Introduced bikeShareId in trip plans (separate from stopIds).</li>
+<li>Support for ShareBike bike rental system in Oslo, Drammen, Trondheim, Milan, Barcelona and Mexico City among others.</li>
+<li>Changed default waitAtBeginningFactor and timeouts.</li>
+<li>Show alert in client when itinerary departure date differs from search date.</li>
+<li>Exposed realtimeState in GraphQL responses.</li>
+<li>Fixed a routerConfig NullPointerException.</li>
+<li>Support for San Francisco bike share from leoromanovsky.</li>
+<li>GraphQL API for most transit data from hannesj.</li>
+<li>Disallow shortcuts through multiple StationStopEdges.</li>
+<li>Add support for airplanes (from HSL)</li>
+<li>Major simplification and correction of the longDistance heuristic, removed obsolete runState.options.heuristicWeight.</li>
+<li>Return default OSM level for ways that are not found.</li>
+<li>Profile routing: use earliest arrival objective function on-street, properly handle TrivialPathExceptions.</li>
+<li>Fixed ID matching when applying AlertPatches.</li>
+<li>Fixed banning of agencies in multi agency feeds.</li>
+<li>More coherent handling of feed IDs as scope for GTFS IDs.</li>
+<li>Added transit service start and end timestamps to BuildInfo.</li>
+<li>Handle embeded router configuration for POSTed graphs and zips for building.</li>
+<li>Simplified router-config handling.</li>
+<li>Properly lazy-initialize profile routing stopClusters. Added stop clusters to the Index API.</li>
+<li>Completely removed the ill-advised path parser system, which was too clever for its own good.    </li>
+<li>Sort itineraries by total travel time rather than in-transit time.</li>
+<li>Rental bikes: allow loading generic KML.</li>
+<li>Removed the experimental TransportNetwork classes, which shared no code with the rest of OTP and were duplicated in the R5 project. There are still some elements that can be cleaned out when only R5 is used by Conveyal's analysis system. The broker code in OTP is now able to start up R5 workers for Analyst.</li>
+<li>Use the Conveyal fork of the OBA GTFS loader, so that we can add our own extensions to GTFS.</li>
+<li>Updated docs to offer Conveyal Maven repo as a place to get prebuilt OTP.</li>
+</ul>
+<h2 id="0190-2016-05-25">0.19.0 (2016-05-25)</h2>
+<ul>
+<li>TODO</li>
+</ul>
+<h2 id="0180-2015-05-29">0.18.0 (2015-05-29)</h2>
+<ul>
+<li>Ability to load elevation from projected GeoTIFF</li>
+<li>Clarified axis order for unprojected GeoTIFFs</li>
+<li>Stop viewer and car distance fixed in client</li>
+<li>Server-side localization improvements</li>
+<li>Proper names for intersections</li>
+<li>JSON config for loading bikeshare and park and ride lots from OSM</li>
+<li>More ways to fetch isochrones</li>
+<li>Fixed frequency-based routing in repeated RAPTOR</li>
+<li>Calculate graph envelope at build time not runtime</li>
+<li>Fixed slow excessive HashGrid search</li>
+<li>Readthedocs documentation updates</li>
+</ul>
+<h2 id="0170-2015-05-14">0.17.0 (2015-05-14)</h2>
+<ul>
+<li>Allow fetching arrivals/departures over a particular time window</li>
+<li>Completely new spatial analysis implementation: repeated RAPTOR search at every minute in a departure time window</li>
+<li>More reproducible spatial analysis results across similar graphs, thanks to more consistent splitting of streets etc.</li>
+<li>Sigmoidal accessibility metric rolloff (rather than hard-edged cutoff)</li>
+<li>Correction of equirectangular projection used in spatial analysis</li>
+<li>Improved, simplified, deterministic linking of stops into the street network</li>
+</ul>
+<h2 id="0160-2015-05-07">0.16.0 (2015-05-07)</h2>
+<ul>
+<li>Several improvements to OSM tag based traversal permissions</li>
+<li>Scripting documentation</li>
+<li>Accept TIFF files whose names end in .tiff not .tif</li>
+<li>Store distances (not times) in Analyst Samples to allow variable walk speed</li>
+<li>Fixed bug in graph auto-scanning</li>
+<li>Fixed client-side bug in first and last itinerary buttons</li>
+<li>OTP startup scripts no longer use wildcards</li>
+<li>Transit, bike rental, and parking linking done in one module</li>
+<li>Elevation tiles for the US can be fetched from Amazon S3</li>
+<li>Bumped language level to Java 8 (lambda functions, method references, collection streams)</li>
+</ul>
+<h2 id="0150-2015-04-14">0.15.0 (2015-04-14)</h2>
+<ul>
+<li>Fare module for Seattle</li>
+<li>JSON fare module and OSM street naming configuration</li>
+<li>Significant improvements to speed and result quality of Profile Routing</li>
+<li>Support for added and modified GTFS-RT trips (thanks Jaap Koelewijn of DAT Mobility and Plannerstack)</li>
+<li>Detailed edge lists in profile routing responses (for Transitive.js)</li>
+<li>Support for multiple access modes including bike rental in profile routing</li>
+<li>Fixes to graph reloading via web API</li>
+<li>Improved comments in code and documentation of PointSets</li>
+<li>Pulled MapDB GTFS loader out into a separate repo</li>
+<li>Working artifact version was 0.15.0-SNAPSHOT instead of 1.0.0-SNAPSHOT (anticipating frequent point releases)</li>
+</ul>
+<h2 id="0140-2015-03-28">0.14.0 (2015-03-28)</h2>
+<ul>
+<li>JSON configuration of graph building and routers</li>
+<li>Began moving documentation (including this changelog) into the OTP repo and rewriting it page by page. It is built statically from Markdown using mkdocs and published on readthedocs.</li>
+<li>Street edge lists and bike rental station IDs in profile routing results (allows better rendering)</li>
+<li>Improved correctness of profile routing</li>
+<li>Qualified modes including rented bikes work in profile routing</li>
+<li>Simplification of qualified mode sets</li>
+<li>Elevation models are loaded from TIFFs in graph directory</li>
+<li>Tiles for differences between TimeSurfaces</li>
+<li>Restructured relationship between Routers and Graphs</li>
+<li>Various changes enabling use of Analyst features in a cluster computing environment.</li>
+<li>Removed several single-implementation interfaces, factories, services and other superfluous abstractions</li>
+<li>Various client fixes related to the transit index API</li>
+<li>Revised nearby stops logic and transfer generation to eliminate useless transfer edges</li>
+<li>New Index API endpoints for geometries, transfers etc.</li>
+<li>Isochrone generation fixes</li>
+<li>Default mode of operation is now “long distance mode”</li>
+<li>Process for finding alternative routes is now based on banning trips and retrying, while reusing the heuristic</li>
+<li>Optimization objective functions are swappable, and have been simplified and corrected</li>
+<li>All client Javascript librariess are now pulled from a CDN</li>
+<li>Dutch BAG and French BANO geocoders</li>
+<li>Bus to street matching improvements</li>
+<li>Complete MapDB based GTFS and OSM loader libraries (will become separate projects, not yet connected to OTP graph builder)</li>
+<li>API documentation generation working again</li>
+<li>Disable some time consuming graph building steps by default</li>
+<li>Finnish and Swedish translations</li>
+<li>Subway-specific JSON configuration options (street to platform time)</li>
+<li>Realtime fetch / streaming configurable via JSON</li>
+<li>Stairs reluctance is much higher when carrying a bike</li>
+<li>Graph visualizer routing progress animates when a search is triggered via the web API</li>
+<li>Assume WGS84 (spherical distance calculations) everywhere</li>
+<li>Removed custom motor vehicle (which was unmaintained and not documented)</li>
+<li>Ability to poll for bike rental locations only once at startup</li>
+<li>Stoptimes are fetched for a specific service day in index API</li>
+<li>Bicycle triangle support in profile routing</li>
+<li>Proper handling of multiple access modes with different speeds in profile routing</li>
+<li>Command line option to output OTP's version</li>
+</ul>
+<h2 id="0130-2014-12-05">0.13.0 (2014-12-05)</h2>
+<ul>
+<li>Detect apparent errors in GTFS interlining</li>
+<li>Long distance mode: use a pure weight-based state comparison, and use trip-banning retrying logic to get multiple paths. This compromises correctness somewhat but brings search times back within reason for large regional graphs. Also, we create significantly less SimpleTransfers.</li>
+<li>Progress on GTFS reading and writing library (not yet used by OTP).</li>
+<li>Bug fixes for tiny street edges, time zones.</li>
+<li>Deployment of artifacts to maven.conveyal.com via S3.</li>
+<li>Handle park and ride lots that have roads running through them, but don't share nodes with those roads.</li>
+</ul>
+<h2 id="0121-2014-11-17">0.12.1 (2014-11-17)</h2>
+<ul>
+<li>Fixed threading problem caused by graph visualization instrumentation <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/1611">#1611</a></li>
+<li>Fixed 'unconnected areas' infinite loop <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/1605">#1605</a></li>
+</ul>
+<h2 id="0120-2014-11-11">0.12.0 (2014-11-11)</h2>
+<ul>
+<li>Graph building from zipball of data sent over the wire</li>
+<li>OTP-specific GTFS loader library with error checking and recovery</li>
+<li>Bike and car park and ride improvements</li>
+<li>Stable hash codes for stop patterns and trips</li>
+<li>Bicycle safety and wheelchair access tile generators</li>
+<li>Newer versions of Grizzly, Jackson, and Enunciate (documentation generation now works)</li>
+<li>Redesigned HashGrid spatial index</li>
+<li>Significant reduction in graph size in memory and on disk</li>
+<li>Improved internationalization</li>
+<li>Ability to pause and step search in graph visualizer</li>
+<li>Additional graph visualizer modes for spotting overbranching</li>
+<li>Movement toward 1.0 web services API</li>
+<li>Kiss and Ride</li>
+<li>Complete removal of Spring</li>
+<li>Complete removal of Lombok</li>
+<li>CORS replaces JSONP</li>
+<li>Pointset classes for dealing with one-to-many calculations and accessibility calculations</li>
+<li>Experimental "Profile routing" which enumerates reasonable route combinations over a time range rather than exact itineraries</li>
+<li>Single-module Maven build (complete elimination of submodules)</li>
+<li>Alternate Gradle build script</li>
+<li>full internationalization of the map-based web client</li>
+<li>basic Lucene-based built-in geocoder</li>
+</ul>
+<h2 id="0110-2014-03-24">0.11.0 (2014-03-24)</h2>
+<ul>
+<li>Built-in HTTP server layer, making it possible to distribute OTP as a standalone JAR</li>
+<li>"Long-distance" mode for large graphs, including bidirectional goal direction heuristic.</li>
+<li>Simplified Maven project structure with less submodules</li>
+<li>GTFS-RT trip update support, including streaming incremental data, which directly affects route optimization</li>
+</ul>
+<h2 id="0100-2014-03-18">0.10.0 (2014-03-18)</h2>
+<p>This release was made to consolidate all the development that had occurred with a 0.9.x-SNAPSHOT Maven version. The changes were very significant and it was not appropriate to tag them as a minor bugfix release after the 0.9 tag. Though this release was performed at the same time as 0.11.0, it represents a much earlier stage in the development of OTP.</p>
+<h2 id="070-2012-04-29">0.7.0 (2012-04-29)</h2>
+<ul>
+<li>Bike rental support (thanks Laurent Grégoire)</li>
+<li>Realtime bike rental availability feed support</li>
+<li>Updated to new version of One Bus Away GTFS/CSV, fixing timezone and string interning issues (thanks Brian Ferris)</li>
+<li>Bugfixes in area routing, OSM loading, nonexistant NED tiles, route short names</li>
+<li>Dutch and French language updates</li>
+<li>Catch negative edge weights due to broken GTFS</li>
+<li>Significant (10-20%) speedup by moving a field into StateData (thanks Laurent Grégoire)</li>
+</ul>
+<h2 id="060-2012-04-25">0.6.0 (2012-04-25)</h2>
+<ul>
+<li>area routing</li>
+<li>more lenient parsing of times</li>
+<li>new directions icon set with SVG sources (thanks Laurent G)</li>
+</ul>
+<h2 id="054-2012-04-06">0.5.4 (2012-04-06)</h2>
+<ul>
+<li>catch 0 divisors in NED builder, preventing NaN propagation to edge lengths</li>
+<li>avoid repeated insertion of edges into edge lists, which are now threadsafe edge sets</li>
+<li>identity equality for edges</li>
+<li>bounding box check in UnifiedCoverage (speed up NED loading)</li>
+<li>Dutch API messages</li>
+<li>elevation override fix</li>
+<li>less verbose graph builder (be sure to check graphbuilder annotation summary)</li>
+<li>replacement streets given names</li>
+<li>geocoder bug fix (thanks Laurent Gregoire)</li>
+<li>git commit IDs included in MavenVersion, allowing clearer OTP/Graph version mismatch warnings</li>
+<li>fix problems with immediate reboarding and unexpected edges in itinerary builder</li>
+<li>favicon (thanks Joel Haasnoot)</li>
+<li>Legs in API response have TripId (for realtime information)</li>
+<li>Polish locale (thanks Łukasz Witkowski)</li>
+<li>transfers.txt can define station paths, entry costs for stations</li>
+<li>allow loading a base graph into graphbuilder instead of starting from scratch</li>
+</ul>
+<h2 id="053-2012-03-23">0.5.3 (2012-03-23)</h2>
+<ul>
+<li>GTFS loader now loads feeds one-at-a-time, allowing per-feed configuration</li>
+<li>half-written graph files are now deleted on graph build error</li>
+<li>DST issue OTP-side fixes, tests adjusted to use timezones</li>
+<li>updated French translation</li>
+<li>fixed problem with loop ways in OSM</li>
+<li>graph coherency checking</li>
+<li>improved OSM floor number handling</li>
+<li>handle units in ele tags</li>
+<li>ferry icons (thanks Joel Haasnoot)</li>
+<li>mapbox streets tile layer is now the default</li>
+<li>complete Dutch translation</li>
+</ul>
+<h2 id="052-2012-03-20">0.5.2 (2012-03-20)</h2>
+<ul>
+<li>hop speed/distance checks, duplicate shape point filtering, etc.</li>
+</ul>
+<h2 id="051-2012-03-16">0.5.1 (2012-03-16)</h2>
+<ul>
+<li>more transit index features</li>
+<li>default agencyIDs now determined on a per-feed basis</li>
+<li>fixed fare overflow problem</li>
+<li>fixed bug in loop road turn conversion</li>
+<li>additional graphbuilder warnings and annotations</li>
+<li>fixed a batch of bugs found by fixbugs  </li>
+</ul>
+<h2 id="050-2012-03-09">0.5.0 (2012-03-09)</h2>
+<ul>
+<li>stop codes, zones, and agency names in planner responses</li>
+<li>encapsulation of edge list modifications</li>
+<li>expanded edge and vertex type hierarchy</li>
+<li>use mapquest OSM server by default</li>
+<li>Turkish locale (thanks Hasan Tayyar Beşik)</li>
+<li>German and Italian locales (thanks Gerardo Carrieri)</li>
+<li>bookmarkable trip URLs (thanks Matt Conway)</li>
+<li>elevator and OSM level support (thanks Matt Conway)</li>
+<li>BART/Muni fare service</li>
+<li>release and javadoc/apidoc publishing automation</li>
+<li>graph versioning based on Maven artifact version</li>
+<li>API for browsing graph internals</li>
+<li>improved stop linking</li>
+<li>optional island removal graphbuilder step</li>
+<li>and of course, lots of bugfixes</li>
+</ul>
+<h2 id="044-2012-02-06">0.4.4 (2012-02-06)</h2>
+<p>Release in anticipation of upcoming merges.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

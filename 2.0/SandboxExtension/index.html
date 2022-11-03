@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.0/SandboxExtension/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Sandbox development - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Choosing OTP2 or OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../sandbox/HealthAPI/" class="dropdown-item">Health API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GrpahQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/BikeRentalServiceDirectory/" class="dropdown-item">Bike Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Codestyle/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../sandbox/HealthAPI/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/SandboxExtension.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#otp-sandbox-extensions" class="nav-link">OTP Sandbox Extensions</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#available-extensions" class="nav-link">Available extensions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#terminology" class="nav-link">Terminology</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#sandbox-goals" class="nav-link">Sandbox Goals</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#contract" class="nav-link">Contract</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="otp-sandbox-extensions">OTP Sandbox Extensions</h1>
+<ul>
+<li>The sandbox is a place to test and implement new "experimental" features.  </li>
+<li>This should not be used for bug fixes and smaller changes.</li>
+<li>Consider forking if the feature is valuable to one deployment only.</li>
+</ul>
+<h2 id="available-extensions">Available extensions</h2>
+<p>Here is a list of features implemented as OTP Sandbox Extensions. The Sandbox extensions are 
+provided "as is". </p>
+<ul>
+<li><a href="../sandbox/Examples/">Examples</a> - Sandbox examples on how to implement extensions.</li>
+<li><a href="../sandbox/GoogleCloudStorage/">Google Cloud Storage</a> - Enable Google Cloud Storage as a OTP Data Source</li>
+<li><a href="../sandbox/HealthAPI/">Health API</a> - API used to check the health status of the OTP instance.</li>
+<li><a href="../sandbox/transferanalyzer/">Transfer analyser</a> - Module used for analyzing the transfers between 
+nearby stops generated by routing via OSM data.</li>
+<li><a href="../sandbox/LegacyGraphQLApi/">HSL Legacy GraphQL API</a> - HSL's GraphQL API used by the Digitransit project.</li>
+<li><a href="../sandbox/TransmodelApi/">Transmodel API</a> - Enturs GraphQL Transmodel API.</li>
+<li><a href="../sandbox/SiriUpdator/">SIRI updator</a> - Update OTP with realtime information from a Transmodel SIRI data source.</li>
+<li><a href="../sandbox/BikeRentalServiceDirectory/">BikeRentalServiceDirectory</a> - GBFS service directory endpoint.</li>
+</ul>
+<h2 id="terminology">Terminology</h2>
+<p><strong>Main/core</strong>   -- All OTP code and additional files, NOT part of the sandbox. 
+(<code>docs</code>, <code>src/main</code>, <code>src/test</code> and so on)</p>
+<p><strong>Extensions</strong> -- All features implemented in the OTP Sandbox, provided with no guarantees. 
+(<code>src/ext</code>, <code>src/ext-test</code>)  </p>
+<h2 id="sandbox-goals">Sandbox Goals</h2>
+<ul>
+<li>Reduce work for PR approval</li>
+<li>Allow experimental code to evolve (in a Sandbox)</li>
+<li>Encourage refactoring and creation of extension points in the main code.</li>
+<li>Increase visibility and cooperation of development of new features.</li>
+<li>Feature toggle </li>
+<li>Sandbox features should use the <em>OTPFeature</em> to enable the code. Sandbox features are by
+   default off. To toggle features on/off se the <a href="../Configuration/">configuration documentation</a>.</li>
+</ul>
+<h2 id="contract">Contract</h2>
+<ul>
+<li>Give your feature a name: <code>&lt;extension name&gt;</code></li>
+<li>A new feature is isolated from the rest of the code by putting it in the directory <code>src/ext</code>. 
+  Java code should have package prefix <code>org.opentripplanner.ext.&lt;extension name&gt;</code>. Unit tests 
+  should be added in the test directory: <code>src/ext-test</code></li>
+<li>To integrate the new feature into OTP you may have to create new extension points in the 
+  main/core code. Changes to the core OTP are subject to normal a review process.  </li>
+<li>Create a readme file (<code>docs/sandbox/&lt;Extension Name&gt;.md</code> package including:<ul>
+<li>Extension Name</li>
+<li>Contact info </li>
+<li>Change log</li>
+<li>Documentation of the feature (optional)</li>
+</ul>
+</li>
+<li>List your extension in the <a href="#Available extensions">Available extensions</a> section and in the 
+  <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/v2.0.0/mkdocs.yml">mydocs config file</a>.</li>
+<li>Use feature toggling to enable a feature at runtime. The feature must be disabled by default. 
+  A feature is toggled <em>on</em> using the config files.</li>
+<li>Only code modifying the main code(<code>src/main</code>, not <code>src/ext</code>) is reviewed. The current coding 
+  standard apply to the extension code as well - but the code is not necessarily reviewed.</li>
+<li>There are no grantees - the authors of an extension can change its API any time they want. </li>
+<li>Anyone can request the feature to be merged into the main code. An approval from the PLC and a 
+  new review is then required. The reviewers may request any changes, including API changes. </li>
+<li>If an extension is taken into the core/main OTP code, any API included may change, no BACKWARD
+  compatibility is guaranteed. I.e. the reviewers may require changes before it is merged.</li>
+<li>The feature submitters is responsible for maintaining and testing the extension code, but do not
+  need to provide any guarantees or support. If the extension is merged into the main code the 
+  author will in fact need to provide support and maintenance.</li>
+<li>When someone at a later point in time want to change the main code the only thing they are
+  responsible for - with regard to the extension code - is:</li>
+<li>that it compiles.</li>
+<li>that the unit tests run. If a test is not easy to fix, it can be tagged with @Ignore. If ignored
+    it would be polite to notify the author. </li>
+<li>Changes to the main OTP API that cannot be toggled <em>in</em> must be clearly marked/tagged as part of 
+  an experimental feature and documented - This code is subject to review.</li>
+<li>If a feature is old and not maintained it can be removed 1 month after notifying the submitter 
+  (using contact info in README file).</li>
+<li>Introducing new dependencies needs approval. They are NOT approved if they are likely to be a 
+  maintenance challenge (many transitive dependencies or potential conflicts with other 
+  versions/libraries).</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

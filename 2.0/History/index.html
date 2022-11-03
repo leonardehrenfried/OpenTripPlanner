@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.0/History/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>History - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Choosing OTP2 or OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../sandbox/HealthAPI/" class="dropdown-item">Health API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GrpahQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/BikeRentalServiceDirectory/" class="dropdown-item">Bike Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Governance/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Deployments/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/History.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#opentripplanner-project-history" class="nav-link">OpenTripPlanner Project History</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#opentripplanner-1" class="nav-link">OpenTripPlanner 1</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#opentripplanner-2" class="nav-link">OpenTripPlanner 2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="opentripplanner-project-history">OpenTripPlanner Project History</h1>
+<h2 id="opentripplanner-1">OpenTripPlanner 1</h2>
+<p>OpenTripPlanner was seeded by Portland, Oregon's transit agency <a href="http://trimet.org/">TriMet</a> with a <a href="http://www.oregonmetro.gov/tools-partners/grants-and-resources/travel-options-grants">Regional Travel Options grant</a> and opened with a <a href="https://github.com/opentripplanner/OpenTripPlanner/wiki/kick-off-workshop">3-day Kick-Off Workshop</a> in July of 2009 bringing together transit agencies and the authors of the major open source transit passenger information software of the day: David Emory of FivePoints, Brian Ferris of <a href="https://github.com/OneBusAway/onebusaway/wiki">OneBusAway</a>, and Brandon Martin-Anderson of <a href="http://bmander.github.com/graphserver/">Graphserver</a>. From 2009 through 2012, development was coordinated by New York nonprofit <a href="http://openplans.org/">OpenPlans</a>. In 2011 a second workshop was held to mark the end of the first phase of development. TriMet's 2009-2011 <a href="https://raw.githubusercontent.com/wiki/opentripplanner/OpenTripPlanner/History/2011-07-OTP-Workshop/OTP%202009-2011%20RTO%20Grant%20Final%20Report.pdf">OTP Final Report</a> summarizes progress at that point.</p>
+<p>The project has since grown to encompass a global community of users and developers. By early 2013, OpenTripPlanner had become the primary trip planning software used by TriMet in the <a href="http://ride.trimet.org/">Portland regional trip planner</a> and was backing several popular mobile applications. Public-facing OpenTripPlanner instances were available in at least ten countries throughout the world. At this point the OpenPlans transportation software team became the independent consultancy <a href="http://www.conveyal.com/">Conveyal</a>. The original OpenTripPlanner development team from OpenPlans still actively participates in programming, design, and community coordination via the mailing list and their roles on the OTP <a href="../Governance/">Project Leadership Committee</a>.</p>
+<p>In summer of 2013, the OpenTripPlanner project was accepted for membership in the <a href="http://sfconservancy.org/">Software Freedom Conservancy (SFC)</a>. SFC handles the legal and financial details common to many open source projects.</p>
+<p>In 2013-2014 OpenTripPlanner was a focal point in the Dutch Transport Ministry's <a href="https://beterbenutten.nl/mmri">MMRI (MultiModal Travel Information) project</a> which encouraged investment in trip planning platforms and services. A consortium of five companies worked together to improve OpenTripPlanner performance in large regional transport networks and add support for streaming real-time data, making itineraries reflect service modifications and delays only seconds after vehicles report their positions. Another consortium embarked on a full rewrite of the trip planning core called <a href="https://github.com/bliksemlabs/rrrr">RRRR (or R4)</a>, a proof of concept validating extremely efficient routing techniques and serving as an early prototype for OTP2.</p>
+<p>In the fall of 2014, Arlington, Virginia launched a new commute planning site for the Washington, DC metropolitan area, depending on OpenTripPlanner to weigh the costs and benefits of various travel options. In 2015 the New York State department of transportation's 511 transit trip planner began using OTP to provide itineraries for public transit systems throughout the state from a single unified OTP instance. Starting in early 2016, the regional transport authorities of Helsinki, Finland (HSL) and Oslo, Norway (Ruter) began using a completely open source passenger information system based on OpenTripPlanner. National-scale OpenTripPlanner instances were also created in Finland and Norway.</p>
+<p>After seven years of hard work and almost 10,000 commits from over 100 contributors around the world, OTP version 1.0 was released on 9 September 2016.</p>
+<h2 id="opentripplanner-2">OpenTripPlanner 2</h2>
+<p>The OTP community has a long history with round-based routing algorithms. FivePoints, one of the predecessor projects to OTP, used a round-based method several years before the now-familiar Raptor algorithm was published in <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2012/01/raptor_alenex.pdf">an influential paper</a>. OpenPlans carried out experiments with routing innovations like Raptor and contraction hierarchies as they emerged in the academic literature. Research and development work on OTP scalability has focused on round-based tabular approaches since the MMRI pre-commercial procurement projects of 2013-2014. Conveyal built its high-performance transportation network analysis system around its <a href="https://github.com/conveyal/r5">R5 router</a>. So in strategy discussions, the expected technical direction was clear.</p>
+<p>In the second quarter of 2018, Ruter and Entur took the lead on finally integrating a new round-based transit routing engine inspired by R5 into OTP. They also began adding support for importing EU-standard Netex data, making it possible for passenger information services in Europe to achieve regulatory compliance with a fully open source software stack. In June 2018, at the first OTP international summit hosted by Cambridge Systematics in Boston, the project leadership committee officially approved this roadmap toward OTP2.</p>
+<p>In April of 2019, the <a href="https://www.entur.org/otp-summit/">second OTP international summit</a> was hosted by Entur in Oslo. Encouraged by the crowd of participants from across the Nordic countries and North America, work on OTP2 continued unabated through 2019 and into 2020 with multiple weekly videoconferences bringing together software developers from Entur, Conveyal, IBI Group, and Kyyti among others.</p>
+<p>As of September 2020, OTP2 is now in feature freeze, undergoing final testing and cleanup for a 2.0 release in Q4 of 2020. The release candidate of OTP2 is seeing production use for a subset of requests in national-scale trip planners. </p>
+<p>The release of OTP 2.0 is planned in advance of the next OTP leadership committee meeting in early December 2020. A working group is also being assembled to ensure follow-up maintenance of the final version of OTP1 to be released concurrently with 2.0.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

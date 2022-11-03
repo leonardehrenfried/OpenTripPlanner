@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.0/Netex-Norway/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Netex and SIRI - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Choosing OTP2 or OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../sandbox/HealthAPI/" class="dropdown-item">Health API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GrpahQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/BikeRentalServiceDirectory/" class="dropdown-item">Bike Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Preparing-OSM/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Security/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Netex-Norway.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#using-european-data-standards" class="nav-link">Using European Data Standards</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#building-with-netex-data" class="nav-link">Building with Netex Data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#adding-siri-realtime-data" class="nav-link">Adding SIRI Realtime Data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="using-european-data-standards">Using European Data Standards</h1>
+<h2 id="building-with-netex-data">Building with Netex Data</h2>
+<p>One important new feature of OTP2 is the ability to load <a href="https://en.wikipedia.org/wiki/NeTEx">Netex</a> data. Netex is a European <a href="http://netex-cen.eu">specification for transit data exchange</a>, comparable in purpose to GTFS but broader in scope. An EU directive aims to have all EU countries sharing Netex data by the end of 2019.</p>
+<p>Different countries are currently using different incompatible "profiles" of Netex, but an effort is underway to converge on a single European standard profile. This is based in large part on the Norwegian profile, and Norway's national passenger information and ticketing agency Entur has contributed the OTP2 Netex loading code. Therefore if you'd like to try loading Netex data, Norway is a good place to start. </p>
+<p>The Norwegian Netex data can be downloaded from the <a href="https://developer.entur.org/pages-intro-files">Entur developer pages</a>. There is a column of Netex download links partway down the page, and the first row is for all of Norway.</p>
+<p>Full OSM data for Norway can be downloaded from the <a href="http://download.geofabrik.de/europe/norway.html">Geofabrik Norway downloads page</a>. Get the <code>norway-latest.osm.pbf</code> file, which can then be filtered to remove buildings and other unused data before loading into OTP using a command like the one below. This filtering step can be skipped if you don't have the necessary Osmium tools installed.</p>
+<p><code>osmium tags-filter norway-latest.osm.pbf w/highway w/public_transport=platform w/railway=platform w/park_ride=yes r/type=restriction -o norway-filtered.osm.pbf -f pbf,add_metadata=false,pbf_dense_nodes=true</code></p>
+<p>Be sure to move the original unfiltered file out of your graph inputs directory (or rename it with a suffix like <code>norway-latest.osm.pbf.ignore</code>) otherwise OTP2 will try to include both the filtered and unfiltered OSM data in your graph.</p>
+<p>The <code>build-config.json</code> for a Norwegian graph using Netex data looks like this:</p>
+<pre><code class="language-json">{
+  &quot;areaVisibility&quot;: true,
+  &quot;parentStopLinking&quot;: true,
+  &quot;platformEntriesLinking&quot;: true,
+  &quot;osmWayPropertySet&quot;: &quot;norway&quot;,
+  &quot;islandWithoutStopsMaxSize&quot;: 5,
+  &quot;islandWithStopsMaxSize&quot;: 5,
+  &quot;dataImportReport&quot;: true,
+  &quot;netex&quot; : {
+    &quot;moduleFilePattern&quot; : &quot;.*-netex\\.zip&quot;,
+    &quot;sharedFilePattern&quot;: &quot;_stops.xml&quot;,
+    &quot;sharedGroupFilePattern&quot;: &quot;_(\\w{3})(_flexible)?_shared_data.xml&quot;,
+    &quot;groupFilePattern&quot;: &quot;(\\w{3})_.*\\.xml&quot;,
+    &quot;netexFeedId&quot;: &quot;EN&quot;
+  }
+}
+</code></pre>
+<p>Note the special section specifying how to find Netex XML files within the single ZIP archive you downloaded.</p>
+<p>Once you have the graph inputs (the OSM PBF file, the Netex ZIP file, and the <code>build-config.json</code>) saved together in a directory, you can instruct OTP2 to build a graph from these inputs:</p>
+<p><code>java -Xmx10G otp2.jar --build --save /path/to/graph/inputs</code></p>
+<p>This should produce a file <code>graph.obj</code> in the same directory as your inputs. Building this Norway graph takes approximately 16 minutes (without elevation data, as configured above), and can be done within 10GB of heap memory (JVM switch <code>-Xmx10G</code>). Increasing that to 12 or 14GB might speed it up a bit if you have the space. The Graph file it produces is just under 600MB. The server will take about 30 seconds to load this Graph and start up, and will consume about 4GB of heap memory under light use.</p>
+<p>You can then start up an OTP server with a command like this:</p>
+<p><code>java -Xmx6G otp2.jar --load /path/to/graph</code></p>
+<p>Once the server is started up, go to <code>http://localhost:8080</code> in a browser to try out your server using OTP's built in testing web client. Try some long trips like Oslo to Bergen and see if you can get long distance trains and flights as alternatives. You might need to increase the walking limit above its very low default value.</p>
+<h2 id="adding-siri-realtime-data">Adding SIRI Realtime Data</h2>
+<p>Another important feature in OTP2 is the ability to use <a href="https://en.wikipedia.org/wiki/Service_Interface_for_Real_Time_Information">SIRI realtime data</a>. Within the EU data standards, SIRI is analogous to GTFS-RT: a way to apply realtime updates on top of schedule data. While technically a distinct specification from Netex, both Netex and SIRI use the Transmodel vocabulary, allowing SIRI messages to reference entities in Netex schedule data. Like GTFS-RT, SIRI is consumed by OTP2 using "graph updaters" which are configured in the <code>router-config.json</code> file, which is placed in the same directory as the <code>graph.obj</code> file and loaded at server startup.</p>
+<pre><code class="language-json">{
+    &quot;updaters&quot;: [
+        {
+            &quot;type&quot;: &quot;siri-sx-updater&quot;,
+            &quot;frequencySec&quot;: 60,
+            &quot;url&quot;: &quot;https://api.example.com/siri&quot;,
+            &quot;feedId&quot;: &quot;siri-sx&quot;,
+            &quot;blockReadinessUntilInitialized&quot;: true
+        },
+        {
+            &quot;type&quot;: &quot;siri-et-updater&quot;,
+            &quot;frequencySec&quot;: 20,
+            &quot;previewIntervalMinutes&quot;: 180,
+            &quot;url&quot;: &quot;https://api.example.com/siri&quot;,
+            &quot;feedId&quot;: &quot;siri-et&quot;,
+            &quot;blockReadinessUntilInitialized&quot;: true
+        },
+        {
+            &quot;type&quot;: &quot;siri-vm-updater&quot;,
+            &quot;frequencySec&quot;: 60,
+            &quot;url&quot;: &quot;https://api.example.com/siri&quot;,
+            &quot;feedId&quot;: &quot;siri-vm&quot;,
+            &quot;blockReadinessUntilInitialized&quot;: true
+        },
+        {
+            &quot;type&quot;: &quot;raptor-transit-layer&quot;,
+            &quot;updateIntervalSeconds&quot;: 20
+        }
+    ]
+}
+</code></pre>
+<p>The first three updaters fetch three different kinds of SIRI data: </p>
+<ul>
+<li>Situation Exchange (SX, text notices analogous to GTFS-RT Alerts)</li>
+<li>Estimated Timetable (ET, predicted arrival times analogous to GTFS-RT TripUpdates)</li>
+<li>Vehicle Monitoring (VM, location and status of vehicles analogous to GTFS-RT VehiclePositions)</li>
+</ul>
+<p>These updaters can handle differential updates, but they use a polling approach rather than the message-oriented streaming approach of the GTFS-RT Websocket updater. The server keeps track of clients, sending only the things that have changed since the last polling operation. </p>
+<p>Note that between these SIRI updaters and the GTFS-RT Websocket updater, we now have both polling and streaming examples of GTFS-RT "incrementality" semantics, so should be able to finalize that part of the specification.</p>
+<p>The final updater regularly performs a copy of the realtime data into a format suitable for use by OTP2's new Raptor router. Without this updater the realtime data will be received and cataloged, but not visible to the router.</p>
+<p>TODO explain on <code>blockReadinessUntilInitialized</code> for load balancers.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

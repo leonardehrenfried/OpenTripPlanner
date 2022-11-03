@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.0/RoutingModes/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>RoutingModes - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Choosing OTP2 or OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+<li>
+    <a href="../Configuration/" class="dropdown-item">Configuration</a>
+</li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../sandbox/HealthAPI/" class="dropdown-item">Health API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GrpahQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/BikeRentalServiceDirectory/" class="dropdown-item">Bike Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/RoutingModes.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#routing-modes" class="nav-link">Routing modes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="routing-modes">Routing modes</h2>
+<p>TODO OTP2 - Where in the documentation does this belong? This is currently not part of the menu or 
+          - any linked to by any of the other documents.</p>
+<p>The routing request parameter <code>mode</code> determines which transport modalities should be considered when calculating the list
+of routes.</p>
+<p>Some modes (mostly bicycle and car) also have optional qualifiers <code>RENT</code> and <code>PARK</code> to specify if vehicles are to be parked at a station or rented. In theory
+this can also apply to other modes but makes sense only in select cases which are listed below.</p>
+<p>Whether a transport mode is available highly depends on the input feeds (GTFS, OSM, bike sharing feeds) and the graph building options supplied to OTP.</p>
+<p>The complete list of modes are:</p>
+<ul>
+<li>
+<p><code>WALK</code>: Walking some or all of the route.</p>
+</li>
+<li>
+<p><code>TRANSIT</code>: General catch-all for all public transport modes.</p>
+</li>
+<li>
+<p><code>BICYCLE</code>: Cycling for the entirety of the route or taking a bicycle onto the public transport and cycling from the arrival station to the destination.</p>
+</li>
+<li>
+<p><code>BICYCLE_RENT</code>: Taking a rented, shared-mobility bike for part or the entirety of the route.  </p>
+<p><em>Prerequisite:</em> Vehicle positions need to be added to OTP either as static stations or dynamic data feeds. </p>
+<p>For dynamic bike positions configure an input feed. See <a href="../Configuration/#configuring-real-time-updaters">Configuring real-time updaters</a>.</p>
+<p>For static stations check the graph building documentation for the property <code>staticBikeRental</code>.</p>
+</li>
+<li>
+<p><code>BICYCLE_PARK</code>: Leaving the bicycle at the departure station and walking from the arrival station to the destination.</p>
+<p>This mode needs to be combined with at least one transit mode (or <code>TRANSIT</code>) otherwise it behaves like an ordinary bicycle journey.</p>
+<p><em>Prerequisite:</em> Bicycle parking stations present in the OSM file and visible to OTP by enabling the property <code>staticBikeParkAndRide</code> during graph build.</p>
+</li>
+<li>
+<p><code>CAR</code>: Driving your own car the entirety of the route. </p>
+<p>If this is combined with <code>TRANSIT</code> it will return routes with a 
+<a href="https://en.wikipedia.org/wiki/Park_and_ride#Kiss_and_ride_/_kiss_and_fly">Kiss &amp; Ride</a> component. This means that the car is not parked in a permanent
+parking area but rather the passenger is dropped off (for example, at an airport) and the driver continues driving the car away from the drop off
+location.</p>
+</li>
+<li>
+<p><code>CAR_PARK</code>: Driving a car to the park-and-ride facilities near a station and taking public transport.</p>
+<p>This mode needs to be combined with at least one transit mode (or <code>TRANSIT</code>) otherwise it behaves like an ordinary car journey.</p>
+<p><em>Prerequisite:</em> Park-and-ride areas near the station need to be present in the OSM input file.</p>
+</li>
+</ul>
+<p>The following modes are 1-to-1 mappings from the <a href="https://developers.google.com/transit/gtfs/reference/#routestxt">GTFS <code>route_type</code></a>:</p>
+<ul>
+<li>
+<p><code>TRAM</code>: Tram, streetcar, or light rail. Used for any light rail or street-level system within a metropolitan area.</p>
+</li>
+<li>
+<p><code>SUBWAY</code>: Subway or metro. Used for any underground rail system within a metropolitan area.</p>
+</li>
+<li>
+<p><code>RAIL</code>: Used for intercity or long-distance travel.</p>
+</li>
+<li>
+<p><code>BUS</code>: Used for short- and long-distance bus routes.</p>
+</li>
+<li>
+<p><code>FERRY</code>: Ferry. Used for short- and long-distance boat service.</p>
+</li>
+<li>
+<p><code>CABLE_CAR</code>: Cable car. Used for street-level cable cars where the cable runs beneath the car.</p>
+</li>
+<li>
+<p><code>GONDOLA</code>: Gondola or suspended cable car. Typically used for aerial cable cars where the car is suspended from the cable.</p>
+</li>
+<li>
+<p><code>FUNICULAR</code>: Funicular. Used for any rail system that moves on steep inclines with a cable traction system.</p>
+</li>
+</ul>
+<p>Lastly, this mode is part of the <a href="https://developers.google.com/transit/gtfs/reference/extended-route-types">Extended GTFS route types</a>:</p>
+<ul>
+<li><code>AIRPLANE</code>: Taking an airplane.</li>
+</ul>
+<p>Note that there are conceptual overlaps between <code>TRAM</code>, <code>SUBWAY</code> and <code>RAIL</code> and some transport providers categorize their routes differently to others.
+In other words, what is considered a <code>SUBWAY</code> in one city might be of type <code>RAIL</code> in another. Study your input GTFS feed carefully to 
+find out the appropriate mapping in your region.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
