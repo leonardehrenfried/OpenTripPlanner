@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.1/RouterConfiguration/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Router - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Comparing OTP2 to OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Configuration</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../Configuration/" class="dropdown-item">Introduction</a>
+</li>
+            
+<li>
+    <a href="../BuildConfiguration/" class="dropdown-item">Build</a>
+</li>
+            
+<li>
+    <a href="./" class="dropdown-item active">Router</a>
+</li>
+    </ul>
+  </li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">About</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ActuatorAPI/" class="dropdown-item">Actuator API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/VehicleRentalServiceDirectory/" class="dropdown-item">Vehicle Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SmooveBikeRental/" class="dropdown-item">Smoove Bike Rental Updator Support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/MapboxVectorTilesApi/" class="dropdown-item">Mapbox Vector Tiles API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Flex/" class="dropdown-item">Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ReportApi/" class="dropdown-item">Report API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/InteractiveOtpMain/" class="dropdown-item">Interactive OTP Launcher</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ParkAndRideApi/" class="dropdown-item">Park and Ride API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/DataOverlay/" class="dropdown-item">Data Overlay</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/VehicleParking/" class="dropdown-item">Vehicle Parking Updaters</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../BuildConfiguration/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Preparing-OSM/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/RouterConfiguration.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#router-configuration" class="nav-link">Router configuration</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#routing-defaults" class="nav-link">Routing defaults</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#boarding-and-alighting-times" class="nav-link">Boarding and alighting times</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#timeout" class="nav-link">Timeout</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#maxaccessegressdurationsecondsformode" class="nav-link">maxAccessEgressDurationSecondsForMode</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#logging-incoming-requests" class="nav-link">Logging incoming requests</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#tuning-transit-routing" class="nav-link">Tuning transit routing</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#real-time-data" class="nav-link">Real-time data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#configure-using-command-line-arguments" class="nav-link">Configure using command-line arguments</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="router-configuration">Router configuration</h1>
+<p>This section covers all options that can be set for each router using the <code>router-config.json</code> file.
+These options can be applied by the OTP server without rebuilding the graph.</p>
+<table>
+<thead>
+<tr>
+<th>config key</th>
+<th>description</th>
+<th>value type</th>
+<th>value default</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>routingDefaults</code></td>
+<td>Default routing parameters, which will be applied to every request</td>
+<td>object</td>
+<td></td>
+<td>see <a href="#routing-defaults">routing defaults</a></td>
+</tr>
+<tr>
+<td><code>streetRoutingTimeout</code></td>
+<td>maximum time limit for street route queries</td>
+<td>double</td>
+<td>null</td>
+<td>units: seconds; see <a href="#timeout">timeout</a></td>
+</tr>
+<tr>
+<td><code>requestLogFile</code></td>
+<td>Path to a plain-text file where requests will be logged</td>
+<td>string</td>
+<td>null</td>
+<td>see <a href="#logging-incoming-requests">logging incoming requests</a></td>
+</tr>
+<tr>
+<td><code>transit</code></td>
+<td>Transit tuning parameters</td>
+<td><code>TransitRoutingConfig</code></td>
+<td></td>
+<td>see <a href="#Tuning-transit-routing">Tuning transit routing</a></td>
+</tr>
+<tr>
+<td><code>updaters</code></td>
+<td>configure real-time updaters, such as GTFS-realtime feeds</td>
+<td>object</td>
+<td>null</td>
+<td>see <a href="#configuring-real-time-updaters">configuring real-time updaters</a></td>
+</tr>
+<tr>
+<td><code>transmodelApi</code></td>
+<td>configure Entur Transmodel API (<strong>Sandbox</strong>)</td>
+<td>object</td>
+<td>null</td>
+<td>See the code for parameters, no doc provided.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="routing-defaults">Routing defaults</h2>
+<p>There are many trip planning options used in the OTP web API, and more exist
+internally that are not exposed via the API. You may want to change the default value for some of these parameters,
+i.e. the value which will be applied unless it is overridden in a web API request.</p>
+<p>A full list of them can be found in the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/v2.1.0/src/main/java/org/opentripplanner/routing/api/request/RoutingRequest.java">RoutingRequest</a>.
+Any public field or setter method in this class can be given a default value using the routingDefaults section of
+<code>router-config.json</code> as follows:</p>
+<pre><code class="language-JSON">// router-config.json
+{
+    &quot;routingDefaults&quot;: {
+        &quot;walkSpeed&quot;: 2.0,
+        &quot;stairsReluctance&quot;: 4.0,
+        &quot;carDropoffTime&quot;: 240
+    }
+}
+</code></pre>
+<h3 id="tuning-transfer-optimization">Tuning transfer optimization</h3>
+<p>The main purpose of transfer optimization is to handle cases where it is possible to transfer between two routes at more than one point (pair of stops). The transfer optimization ensures that transfers occur at the best possible location. By post-processing all paths returned by the router, OTP can apply sophisticated calculations that are too slow or not algorithmically valid within Raptor. Transfers are optimized before the paths are passed to the itinerary-filter-chain.</p>
+<p>For a detailed description of the design and the optimization calculations see the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/dev-2.x/src/main/java/org/opentripplanner/routing/algorithm/transferoptimization/package.md">design documentation</a> (dev-2.x latest).</p>
+<h4 id="transfer-optimization-configuration">Transfer optimization configuration</h4>
+<p>To toggle transfer optimization on or off use the OTPFeature <code>OptimizeTransfers</code> (default is on).
+You should leave this on unless there is a critical issue with it. The OTPFeature <code>GuaranteedTransfers</code> will toggle on and off the priority optimization (part of OptimizeTransfers).</p>
+<p>The optimized transfer service will try to, in order:</p>
+<ol>
+<li>Use transfer priority. This includes stay-seated and guaranteed transfers.</li>
+<li>Use the transfers with the best distribution of the wait-time, and avoid very short transfers.</li>
+<li>Avoid back-travel</li>
+<li>Boost stop-priority to select preferred and recommended stops.</li>
+</ol>
+<p>If two paths have the same transfer priority level, then we break the tie by looking at waiting
+times. The goal is to maximize the wait-time for each stop, avoiding situations where there is
+little time available to make the transfer. This is balanced with the generalized-cost. The cost is
+adjusted with a new cost for wait-time (optimized-wait-time-cost).</p>
+<p>The defaults should work fine, but if you have results with short wait-times dominating a better
+option or "back-travel", then try to increase the <code>minSafeWaitTimeFactor</code>,
+<code>backTravelWaitTimeFactor</code> and/or <code>extraStopBoardAlightCostsFactor</code>.</p>
+<pre><code class="language-JSON">// router-config.json
+{
+  &quot;routingDefaults&quot;: {
+    &quot;transferOptimization&quot;: {
+      &quot;optimizeTransferWaitTime&quot;: true,
+      &quot;minSafeWaitTimeFactor&quot;: 5.0,
+      &quot;backTravelWaitTimeFactor&quot;: 1.0,
+      &quot;extraStopBoardAlightCostsFactor&quot;: 2.5
+    }
+  }
+}
+</code></pre>
+<p>See the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/dev-2.x/src/main/java/org/opentripplanner/routing/algorithm/transferoptimization/api/TransferOptimizationParameters.java">TransferOptimizationParameters</a> (dev-2.x latest) for a description of these parameters.</p>
+<h3 id="tuning-itinerary-filtering">Tuning itinerary filtering</h3>
+<p>Nested inside <code>routingDefaults { itineraryFilters{...} }</code> in <code>router-config.json</code>.</p>
+<p>The purpose of the itinerary filter chain is to post process the result returned by the routing
+search. The filters may modify itineraries, sort them, and filter away less preferable results.</p>
+<p>OTP2 may produce numerous <em>pareto-optimal</em> results when using <code>time</code>, <code>number-of-transfers</code> and
+<code>generalized-cost</code> as criteria. Use the parameters listed here to reduce/filter the itineraries
+return by the search engine before returning the results to client. There is also a few mandatory
+none configurable filters removing none optimal results. You may see these filters pop-up in the
+filter debugging.</p>
+<table>
+<thead>
+<tr>
+<th>config key</th>
+<th>description</th>
+<th>value type</th>
+<th>value default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td>Enable this to attach a system notice to itineraries instead of removing them. This is very convenient when tuning the filters.</td>
+<td>boolean</td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td><code>groupSimilarityKeepOne</code></td>
+<td>Pick ONE itinerary from each group after putting itineraries that is 85% similar together.</td>
+<td>double</td>
+<td><code>0.85</code> (85%)</td>
+</tr>
+<tr>
+<td><code>groupSimilarityKeepThree</code></td>
+<td>Reduce the number of itineraries to three itineraries by reducing each group of itineraries grouped by 68% similarity.</td>
+<td>double</td>
+<td><code>0.68</code> (68%)</td>
+</tr>
+<tr>
+<td><code>groupedOtherThanSameLegsMaxCostMultiplier</code></td>
+<td>Filter grouped itineraries, where the non-grouped legs are more expensive than in the lowest cost one.</td>
+<td>double</td>
+<td><code>2.0</code> (2x cost)</td>
+</tr>
+<tr>
+<td><code>transitGeneralizedCostLimit</code></td>
+<td>A relative maximum limit for the generalized cost for transit itineraries. The limit is a linear function of the minimum generalized-cost. The function is used to calculate a max-limit. The max-limit is then used to to filter by generalized-cost. Transit itineraries with a cost higher than the max-limit is dropped from the result set. None transit itineraries is excluded from the filter. To set a filter to be <em>1 hour plus 2 times the best cost</em> use: <code>3600 + 2.0 x</code>. To set an absolute value(3000s) use: <code>3000 + 0x</code></td>
+<td>linear function</td>
+<td><code>3600 + 2.0 x</code></td>
+</tr>
+<tr>
+<td><code>nonTransitGeneralizedCostLimit</code></td>
+<td>A relative maximum limit for the generalized cost for non-transit itineraries. The max limit is calculated using ALL itineraries, but only non-transit itineraries will be filtered out. The limit is a linear function of the minimum generalized-cost. The function is used to calculate a max-limit. The max-limit is then used to to filter by generalized-cost. Non-transit itineraries with a cost higher than the max-limit is dropped from the result set. To set a filter to be <em>1 hour plus 2 times the best cost</em> use: <code>3600 + 2.0 x</code>. To set an absolute value(3000s) use: <code>3000 + 0x</code></td>
+<td>linear function</td>
+<td><code>3600 + 2.0 x</code></td>
+</tr>
+<tr>
+<td><code>bikeRentalDistanceRatio</code></td>
+<td>For routes that consist only of bike rental and walking what is the minimum fraction of <em>distance</em> of the bike rental leg. This filters out results that consist of a long walk plus a relatively short bike rental leg. A value of <code>0.3</code> means that a minimum of 30% of the total distance must be spent on the bike in order for the result to be included.</td>
+<td>double</td>
+<td><code>0.0</code></td>
+</tr>
+<tr>
+<td><code>parkAndRideDurationRatio</code></td>
+<td>For P+R routes that consist only of driving and walking what is the minimum fraction of <em>time</em> of the driving leg. This filters out results that consist of driving plus a very long walk leg at the end. A value of <code>0.3</code> means that a minimum of 30% of the total time must be spent in the car in order for the result to be included. However, if there is only a single result, it is never filtered.</td>
+<td>double</td>
+<td><code>0.0</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="group-by-similarity-filters">Group by similarity filters</h4>
+<p>The group-by-filter is a bit complex, but should be simple to use. Set <code>debug=true</code> and experiment
+with <code>searchWindow</code> and the three group-by parameters(<code>groupSimilarityKeepOne</code>,
+<code>groupSimilarityKeepThree</code> and <code>groupedOtherThanSameLegsMaxCostMultiplier</code>).</p>
+<p>The group-by-filter work by grouping itineraries together and then reducing the number of
+itineraries in each group, keeping the itinerary/itineraries with the best itinerary
+<em>generalized-cost</em>. The group-by function first pick all transit legs that account for more than N%
+of the itinerary based on distance traveled. This become the group-key. Two keys are the same if all
+legs in one of the keys also exist in the other. Note, one key may have a lager set of legs than
+the other, but they can still be the same. When comparing two legs we compare the <code>tripId</code> and make
+sure the legs overlap in place and time. Two legs are the same if both legs ride at least a common
+subsection of the same trip. The <code>keepOne</code> filter will keep ONE itinerary in each group. The
+<code>keepThree</code> keeps 3 itineraries for each group.</p>
+<p>The grouped itineraries can be further reduced by using <code>groupedOtherThanSameLegsMaxCostMultiplier</code>.
+This parameter filters out itineraries, where the legs that are not common for all the grouped
+itineraries have a much higher cost, than the lowest in the group. By default, it filters out
+itineraries that are at least double in cost for the non-grouped legs.</p>
+<h3 id="drive-to-transit-routing-defaults">Drive-to-transit routing defaults</h3>
+<p>When using the "park and ride" or "kiss and ride" modes (drive to transit), the initial driving time to reach a transit
+stop or park and ride facility is constrained. You can set a drive time limit in seconds by adding a line like
+<code>maxPreTransitTime = 1200</code> to the routingDefaults section. If the limit is too high on a very large street graph, routing
+performance may suffer.</p>
+<h2 id="boarding-and-alighting-times">Boarding and alighting times</h2>
+<p>Sometimes there is a need to configure a longer ride or alighting times for specific modes, such as airplanes or ferries,
+where the check-in process needs to be done in good time before ride. The ride time is added to the time when going
+from the stop (offboard) vertex to the onboard vertex, and the alight time is added vice versa. The times are configured as
+seconds needed for the ride and alighting processes in <code>router-config.json</code> as follows:</p>
+<pre><code class="language-JSON">// router-config.json
+{
+  &quot;routingDefaults&quot;: {
+    &quot;boardSlackForMode&quot;: {
+      &quot;AIRPLANE&quot;: 2700
+    },
+    &quot;alightSlackForMode&quot;: {
+      &quot;AIRPLANE&quot;: 1200
+    }
+  }
+}
+</code></pre>
+<h2 id="timeout">Timeout</h2>
+<p>In OTP1 path searches sometimes toke a long time to complete. With the new Raptor algorithm this not
+the case anymore. The street part of the routing may still take a long time if searching very long
+distances. You can set the street routing timeout to avoid tying up server resources on pointless
+searches and ensure that your users receive a timely response. You can also limit the max distance
+to search for WALK, BIKE and CAR. When a search times out, a WARN level log entry is made with
+information that can help identify problematic searches and improve our routing methods. There are
+no timeouts for the transit part of the routing search, instead configure a reasonable dynamic
+search-window. To set the street routing timeout use the following config:</p>
+<pre><code class="language-JSON">// router-config.json
+{
+  &quot;streetRoutingTimeout&quot;: 5.5
+}
+</code></pre>
+<p>This specifies a timeout in (optionally fractional) seconds. The search abort after this many seconds and any paths found are returned to the client.</p>
+<h2 id="maxaccessegressdurationsecondsformode">maxAccessEgressDurationSecondsForMode</h2>
+<p>Override the settings in maxAccessEgressDurationSeconds for specific street modes. This is done because
+some street modes searches are much more resource intensive than others.</p>
+<pre><code class="language-JSON">// router-config.json
+&quot;maxAccessEgressDurationSecondsForMode&quot;: {
+  &quot;BIKE_RENTAL&quot;: 1200
+}
+</code></pre>
+<p>This will limit only the BIKE_RENTAL mode to 1200 seconds, while keeping the default limit for all
+other access/egress modes.</p>
+<h2 id="logging-incoming-requests">Logging incoming requests</h2>
+<p>You can log some characteristics of trip planning requests in a file for later analysis. Some transit agencies and
+operators find this information useful for identifying existing or unmet transportation demand. Logging will be
+performed only if you specify a log file name in the router config:</p>
+<pre><code class="language-JSON">// router-config.json
+{
+  &quot;requestLogFile&quot;: &quot;/var/otp/request.log&quot;
+}
+</code></pre>
+<p>Each line in the resulting log file will look like this:</p>
+<p><code>2016-04-19T18:23:13.486 0:0:0:0:0:0:0:1 ARRIVE 2016-04-07T00:17 WALK,BUS,CABLE_CAR,TRANSIT,BUSISH 45.559737193889966 -122.64999389648438 45.525592487765635 -122.39044189453124 6095 3 5864 3 6215 3</code></p>
+<p>The fields separated by whitespace are (in order):</p>
+<ol>
+<li>Date and time the request was received</li>
+<li>IP address of the user</li>
+<li>Arrive or depart search</li>
+<li>The arrival or departure time</li>
+<li>A comma-separated list of all transport modes selected</li>
+<li>Origin latitude and longitude</li>
+<li>Destination latitude and longitude</li>
+</ol>
+<p>Finally, for each itinerary returned to the user, there is a travel duration in seconds and the number of transit vehicles used in that itinerary.</p>
+<h2 id="tuning-transit-routing">Tuning transit routing</h2>
+<p>Nested inside <code>transit {...}</code> in <code>router-config.json</code>.</p>
+<p>Some of these parameters for tuning transit routing is only available through configuration and cannot be set in the routing request. These parameters work together with the default routing request and the actual routing request.</p>
+<table>
+<thead>
+<tr>
+<th>config key</th>
+<th>description</th>
+<th>value type</th>
+<th>value default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>maxNumberOfTransfers</code></td>
+<td>Use this parameter to allocate enough space for Raptor. Set it to the maximum number of transfers for any given itinerary expected to be found within the entire transit network. The memory overhead of setting this higher than the maximum number of transfers is very little so it is better to set it too high then to low.</td>
+<td>int</td>
+<td><code>12</code></td>
+</tr>
+<tr>
+<td><code>scheduledTripBinarySearchThreshold</code></td>
+<td>The threshold is used to determine when to perform a binary trip schedule search to reduce the number of trips departure time lookups and comparisons. When testing with data from Entur and all of Norway as a Graph, the optimal value was around 50. Changing this may improve the performance with just a few percent.</td>
+<td>int</td>
+<td><code>50</code></td>
+</tr>
+<tr>
+<td><code>iterationDepartureStepInSeconds</code></td>
+<td>Step for departure times between each RangeRaptor iterations. A transit network usually uses minute resolution for its depature and arrival times. To match that, set this variable to 60 seconds.</td>
+<td>int</td>
+<td><code>60</code></td>
+</tr>
+<tr>
+<td><code>searchThreadPoolSize</code></td>
+<td>Split a travel search in smaller jobs and run them in parallel to improve performance. Use this parameter to set the total number of executable threads available across all searches. Multiple searches can run in parallel - this parameter have no effect with regard to that. If 0, no extra threads are started and the search is done in one thread.</td>
+<td>int</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>dynamicSearchWindow</code></td>
+<td>The dynamic search window coefficients used to calculate the EDT(earliest-departure-time), LAT(latest-arrival-time) and SW(raptor-search-window) using heuristics.</td>
+<td>object</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>stopTransferCost</code></td>
+<td>Use this to set a stop transfer cost for the given <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/v2.1.0/src/main/java/org/opentripplanner/model/TransferPriority.java">TransferPriority</a>. The cost is applied to boarding and alighting at all stops. All stops have a transfer cost priority set, the default is <code>ALLOWED</code>. The <code>stopTransferCost</code> parameter is optional, but if listed all values must be set.</td>
+<td>enum map</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>transferCacheMaxSize</code></td>
+<td>The maximum number of distinct transfers parameters (<code>RoutingRequest</code>s) to cache pre-calculated transfers for. If too low, requests may be slower. If too high, more memory may be used then required.</td>
+<td>int</td>
+<td><code>25</code></td>
+</tr>
+<tr>
+<td><code>pagingSearchWindowAdjustments</code></td>
+<td>The provided array of durations is used to increase the search-window for the next/previous page when the current page return few options. If ZERO results is returned the first duration in the list is used, if ONE result is returned then the second duration is used and so on. The duration is added to the existing search-window and inserted into the next and previous page cursor. See JavaDoc for <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/v2.1.0/src/main/java/org/opentripplanner/routing/algorithm/raptor/transit/TransitTuningParameters.java">TransitTuningParameters#pagingSearchWindowAdjustments</a> for more info.</td>
+<td>duration[]</td>
+<td><code>["4h", "2h", "1h", "30m", "20m", "10m"]</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="tuning-transit-routing-dynamic-search-window">Tuning transit routing - Dynamic search window</h3>
+<p>Nested inside <code>transit : { dynamicSearchWindow : { ... } }</code> in <code>router-config.json</code>.</p>
+<table>
+<thead>
+<tr>
+<th>config key</th>
+<th>description</th>
+<th>value type</th>
+<th>value default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>minTransitTimeCoefficient</code></td>
+<td>The coefficient to multiply with minimum transit time found using a heuristic search. This scaled value is added to the <code>minWinTimeMinutes</code>. A value between <code>0.0</code> to <code>3.0</code> is expected to give ok results.</td>
+<td>double</td>
+<td><code>0.5</code></td>
+</tr>
+<tr>
+<td><code>minWaitTimeCoefficient</code></td>
+<td>The coefficient to multiply with a minimum wait time estimated based on the heuristic search. This will increase the search-window in low transit frequency areas. This value is added to the <code>minWinTimeMinutes</code>. A value between <code>0.0</code> to <code>1.0</code> is expected to give ok results.</td>
+<td>double</td>
+<td><code>0.5</code></td>
+</tr>
+<tr>
+<td><code>minWinTimeMinutes</code></td>
+<td>The constant minimum number of minutes for a raptor search window. Use a value between 20-180 minutes in a normal deployment.</td>
+<td>int</td>
+<td><code>40</code></td>
+</tr>
+<tr>
+<td><code>maxWinTimeMinutes</code></td>
+<td>Set an upper limit to the calculation of the dynamic search window to prevent exceptionable cases to cause very long search windows. Long search windows consumes a lot of resources and may take a long time. Use this parameter to tune the desired maximum search time.</td>
+<td>int</td>
+<td><code>180</code> (3 hours)</td>
+</tr>
+<tr>
+<td><code>stepMinutes</code></td>
+<td>The search window is rounded of to the closest multiplication of N minutes. If N=10 minutes, the search-window can be 10, 20, 30 ... minutes. It the computed search-window is 5 minutes and 17 seconds it will be rounded up to 10 minutes.</td>
+<td>int</td>
+<td><code>10</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="tuning-transit-routing-stop-transfer-cost">Tuning transit routing - Stop transfer cost</h3>
+<p>Nested inside <code>transit : { stopTransferCost : { ... } }</code> in <code>router-config.json</code>.</p>
+<p>This <em>cost</em> is in addition to other costs like <code>boardCost</code> and indirect cost from waiting (board-/alight-/transfer slack). You should account for this when you tune the routing search parameters.</p>
+<p>If not set the <code>stopTransferCost</code> is ignored. This is only available for NeTEx imported Stops.</p>
+<p>The cost is a scalar, but is equivalent to the felt cost of riding a transit trip for 1 second.</p>
+<table>
+<thead>
+<tr>
+<th>config key</th>
+<th>description</th>
+<th>value type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DISCOURAGED</code></td>
+<td>Use a very high cost like <code>72 000</code> to eliminate transfers ath the stop if not the only option.</td>
+<td>int</td>
+</tr>
+<tr>
+<td><code>ALLOWED</code></td>
+<td>Allowed, but not recommended. Use something like <code>150</code>.</td>
+<td>int</td>
+</tr>
+<tr>
+<td><code>RECOMMENDED</code></td>
+<td>Use a small cost penalty like <code>60</code>.</td>
+<td>int</td>
+</tr>
+<tr>
+<td><code>PREFERRED</code></td>
+<td>The best place to do transfers. Should be set to <code>0</code>(zero).</td>
+<td>int</td>
+</tr>
+</tbody>
+</table>
+<p>Use values in a range from <code>0</code> to <code>100 000</code>. <strong>All key/value pairs are required if the <code>stopTransferCost</code> is listed.</strong></p>
+<h3 id="transit-example">Transit example</h3>
+<pre><code class="language-JSON">// router-config.json
+{
+    &quot;transit&quot;: {
+        &quot;maxNumberOfTransfers&quot;: 12,
+        &quot;scheduledTripBinarySearchThreshold&quot;: 50,
+        &quot;iterationDepartureStepInSeconds&quot;: 60,
+        &quot;searchThreadPoolSize&quot;: 0,
+        &quot;dynamicSearchWindow&quot;: {
+            &quot;minTransitTimeCoefficient&quot; : 0.5,
+            &quot;minWaitTimeCoefficient&quot; : 0.5,
+            &quot;minTimeMinutes&quot;: 30,
+            &quot;maxLengthMinutes&quot; : 360,
+            &quot;stepMinutes&quot;: 10
+        },
+        &quot;stopTransferCost&quot;: {
+            &quot;DISCOURAGED&quot;: 72000,
+            &quot;ALLOWED&quot;:       150,
+            &quot;RECOMMENDED&quot;:    60,
+            &quot;PREFERRED&quot;:       0
+        }
+    }
+}
+</code></pre>
+<h2 id="real-time-data">Real-time data</h2>
+<p>GTFS feeds contain <em>schedule</em> data that is is published by an agency or operator in advance. The feed does not account
+for unexpected service changes or traffic disruptions that occur from day to day. Thus, this kind of data is also
+referred to as 'static' data or 'theoretical' arrival and departure times.</p>
+<h3 id="gtfs-realtime">GTFS-Realtime</h3>
+<p>The <a href="https://developers.google.com/transit/gtfs-realtime/">GTFS-RT spec</a> complements GTFS with three additional kinds of
+feeds. In contrast to the base GTFS schedule feed, they provide <em>real-time</em> updates (<em>'dynamic'</em> data) and are are
+updated from minute to minute.</p>
+<ul>
+<li>
+<p><strong>Alerts</strong> are text messages attached to GTFS objects, informing riders of disruptions and changes.</p>
+</li>
+<li>
+<p><strong>TripUpdates</strong> report on the status of scheduled trips as they happen, providing observed and predicted arrival and
+  departure times for the remainder of the trip.</p>
+</li>
+<li>
+<p><strong>VehiclePositions</strong> give the location of some or all vehicles currently in service, in terms of geographic coordinates
+  or position relative to their scheduled stops.</p>
+</li>
+</ul>
+<h3 id="vehicle-rental-systems-using-gbfs">Vehicle rental systems using GBFS</h3>
+<p>Besides GTFS-RT transit data, OTP can also fetch real-time data about vehicle rental networks including the number
+of bikes and free parking spaces at each station. We support vehicle rental systems from using GBFS feed format.</p>
+<h3 id="vehicle-parking-sandbox-feature">Vehicle parking (sandbox feature)</h3>
+<p>Vehicle parking options and configuration is documented in its <a href="../sandbox/VehicleParking/">sandbox documentation</a>.</p>
+<h3 id="configuring-real-time-updaters">Configuring real-time updaters</h3>
+<p>Real-time data can be provided using either a pull or push system. In a pull configuration, the GTFS-RT consumer polls the
+real-time provider over HTTP. That is to say, OTP fetches a file from a web server every few minutes. In the push
+configuration, the consumer opens a persistent connection to the GTFS-RT provider, which then sends incremental updates
+immediately as they become available. OTP can use both approaches. The <a href="https://github.com/OneBusAway/onebusaway-gtfs-realtime-exporter">OneBusAway GTFS-realtime exporter project</a> provides this kind of streaming, incremental updates over a websocket rather than a single large file.</p>
+<p>Real-time data sources are configured in <code>router-config.json</code>. The <code>updaters</code> section is an array of JSON objects, each
+of which has a <code>type</code> field and other configuration fields specific to that type. Common to all updater entries that
+connect to a network resource is the <code>url</code> field.</p>
+<pre><code class="language-JSON">// router-config.json
+{
+    // Routing defaults are any public field or setter in the Java class
+    // org.opentripplanner.routing.api.request.RoutingRequest
+    &quot;routingDefaults&quot;: {
+        &quot;numItineraries&quot;: 6,
+        &quot;walkSpeed&quot;: 2.0,
+        &quot;stairsReluctance&quot;: 4.0,
+        &quot;carDropoffTime&quot;: 240
+    },
+
+    &quot;updaters&quot;: [
+
+        // GTFS-RT service alerts (frequent polling)
+        {
+            &quot;type&quot;: &quot;real-time-alerts&quot;,
+            &quot;frequencySec&quot;: 30,
+            &quot;url&quot;: &quot;http://developer.trimet.org/ws/V1/FeedSpecAlerts/appID/0123456789ABCDEF&quot;,
+            &quot;feedId&quot;: &quot;TriMet&quot;
+        },
+
+        //&lt;!--- Tampa Area GBFS bike share --&gt;
+        {
+          &quot;type&quot;: &quot;vehicle-rental&quot;,
+          &quot;frequencySec&quot;: 300,
+          &quot;sourceType&quot;: &quot;gbfs&quot;,
+          &quot;url&quot;: &quot;http://coast.socialbicycles.com/opendata/gbfs.json&quot;
+        },
+
+        // Vehicle parking availability
+        {
+            &quot;type&quot;: &quot;vehicle-parking&quot;
+        },
+
+        // Polling for GTFS-RT TripUpdates)
+        {
+            &quot;type&quot;: &quot;stop-time-updater&quot;,
+            &quot;frequencySec&quot;: 60,
+            // this is either http or file... shouldn't it default to http or guess from the presence of a URL?
+            &quot;sourceType&quot;: &quot;gtfs-http&quot;,
+            &quot;url&quot;: &quot;http://developer.trimet.org/ws/V1/TripUpdate/appID/0123456789ABCDEF&quot;,
+            &quot;feedId&quot;: &quot;TriMet&quot;
+        },
+
+        // Streaming differential GTFS-RT TripUpdates over websockets
+        {
+            &quot;type&quot;: &quot;websocket-gtfs-rt-updater&quot;
+        }
+    ]
+}
+</code></pre>
+<h4 id="gbfs-configuration">GBFS Configuration</h4>
+<p><a href="https://github.com/NABSA/gbfs">GBFS</a> is used for a variety of shared mobility services, with partial support for both v1 and v2.2 (<a href="https://github.com/NABSA/gbfs/blob/master/systems.csv">list of known GBFS feeds</a>).</p>
+<p>To add a GBFS feed to the router add one entry in the <code>updater</code> field of <code>router-config.json</code> in the format:</p>
+<pre><code class="language-JSON">// router-config.json
+{
+   &quot;type&quot;: &quot;vehicle-rental&quot;,
+   &quot;sourceType&quot;: &quot;gbfs&quot;,
+   // frequency in seconds in which the GBFS service will be polled
+   &quot;frequencySec&quot;: 60,
+   // The URL of the GBFS feed auto-discovery file
+   &quot;url&quot;: &quot;http://coast.socialbicycles.com/opendata/gbfs.json&quot;,
+   // Optionally specify the language version of the feed to use. If no language is set, the first language in the feed is used. 
+   &quot;language&quot;: &quot;en&quot;,
+   // if it should be possible to arrive at the destination with a rented bicycle, without dropping it off
+   &quot;allowKeepingRentedBicycleAtDestination&quot;: true
+}
+</code></pre>
+<h5 id="arriving-with-rental-bikes-at-the-destination">Arriving with rental bikes at the destination</h5>
+<p>In some cases it may be useful to not drop off the rented bicycle before arriving at the
+destination. This is useful if bicycles may only be rented for round trips, or the destination is an
+intermediate place.</p>
+<p>For this to be possible three things need to be configured:</p>
+<ol>
+<li>
+<p>In the updater configuration <code>allowKeepingRentedBicycleAtDestination</code> should be set to <code>true</code>.</p>
+</li>
+<li>
+<p><code>allowKeepingRentedBicycleAtDestination</code> should also be set for each request, either using
+   <a href="#routing-defaults">routing defaults</a>, or per-request.</p>
+</li>
+<li>
+<p>If keeping the bicycle at the destination should be discouraged, then
+   <code>keepingRentedBicycleAtDestinationCost</code> (default: <code>0</code>) may also be set in the
+   <a href="#routing-defaults">routing defaults</a>.</p>
+</li>
+</ol>
+<h4 id="vehicle-rental-service-directory-configuration-sandbox-feature">Vehicle Rental Service Directory configuration (sandbox feature)</h4>
+<p>To configure and url for the <a href="../sandbox/VehicleRentalServiceDirectory/">VehicleRentalServiceDirectory</a>.</p>
+<pre><code class="language-JSON">// router-config.json
+{
+  &quot;vehicleRentalServiceDirectory&quot;: {
+    &quot;url&quot;: &quot;https://api.dev.entur.io/mobility/v1/bikes&quot;
+  }
+}
+</code></pre>
+<h1 id="configure-using-command-line-arguments">Configure using command-line arguments</h1>
+<p>Certain settings can be provided on the command line, when starting OpenTripPlanner. See the <code>CommandLineParameters</code> class for <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/v2.1.0/src/main/java/org/opentripplanner/standalone/config/CommandLineParameters.java">a full list of arguments</a>.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

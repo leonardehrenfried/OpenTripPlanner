@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.1/Codestyle/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Codestyle - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Comparing OTP2 to OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Configuration</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../Configuration/" class="dropdown-item">Introduction</a>
+</li>
+            
+<li>
+    <a href="../BuildConfiguration/" class="dropdown-item">Build</a>
+</li>
+            
+<li>
+    <a href="../RouterConfiguration/" class="dropdown-item">Router</a>
+</li>
+    </ul>
+  </li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">About</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ActuatorAPI/" class="dropdown-item">Actuator API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/VehicleRentalServiceDirectory/" class="dropdown-item">Vehicle Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SmooveBikeRental/" class="dropdown-item">Smoove Bike Rental Updator Support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/MapboxVectorTilesApi/" class="dropdown-item">Mapbox Vector Tiles API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Flex/" class="dropdown-item">Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ReportApi/" class="dropdown-item">Report API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/InteractiveOtpMain/" class="dropdown-item">Interactive OTP Launcher</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ParkAndRideApi/" class="dropdown-item">Park and Ride API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/DataOverlay/" class="dropdown-item">Data Overlay</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/VehicleParking/" class="dropdown-item">Vehicle Parking Updaters</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Bibliography/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../SandboxExtension/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Codestyle.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#codestyle" class="nav-link">Codestyle</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#java" class="nav-link">Java</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#javascript" class="nav-link">JavaScript</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="codestyle">Codestyle</h1>
+<p>We use the following code conventions for <a href="#Java">Java</a> and <a href="#JavaScript">JavaScript</a>.</p>
+<h2 id="java">Java</h2>
+<p>The OpenTripPlanner Java code style is revised in OTP2. We use the Google Java style guide, with a 
+few modifications. Here is the original Google style guide: 
+https://google.github.io/styleguide/javaguide.html</p>
+<h3 id="intellj-code-style-formatter">IntellJ Code Style formatter</h3>
+<p>If you use IntelliJ, import the provided <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/2.1-rc/intellij-code-style.xml">intellij-code-style.xml</a>. 
+Open the <code>Preferences</code> from the menu and select <em>Editor &gt; Code Style</em>. Then import the code-style
+xml document. Configure <em>Scheme</em> using  <em>Import Scheme &gt; IntelliJ IDEA code style XML</em>.</p>
+<p>Note that the IntelliJ formatter will not always format the code according to the coding standard.
+It struggle to do the line breaks properly. Hence, use it to format new code and to rearrange 
+members, then manually fix any mistakes.</p>
+<h3 id="other-ides">Other IDEs</h3>
+<p>We do not have support for other IDEs at the moment. If you use another editor and make one please
+feel free to share it.  </p>
+<h3 id="code-style">Code Style</h3>
+<p>Our style differs in the following ways from the Google guide. Each point references the section of
+the original document that is modified.</p>
+<ul>
+<li>
+<p>4.5.1 We apply the same line breaking rules to parentheses as to curly braces. Any time the
+    contents of the parentheses are not all placed on one line, we insert a line break after the
+    opening paren, and place the closing one at the beginning of a new line. 
+    ```java
+    // 
+    int value = calculateSomeValue(
+        arg1, 
+        arg2, 
+        arg3
+    );</p>
+<p>// Also Ok
+int value = calculateSomeValue(
+    arg1, arg2, arg3 
+);</p>
+<p>// Avoid this
+int value = calculateSomeValue(arg1,
+    arg2, arg3 
+);
+// and this
+int value = calculateSomeValue(
+    arg1, arg2, arg3) </p>
+<p>```</p>
+</li>
+<li>
+<p>4.6.1 We insert double empty lines before comments that introduce the highest level groupings of
+    methods or fields within a class, for example <code>/* private methods */</code>, 
+    <code>/* symbolic constants */</code>. 
+    ```
+    public foo() { 
+    }</p>
+<p>/<em> private methods </em>/</p>
+<p>private bar() ...
+<code>``
+  - 4.8.3 the final example is not allowed. All opening brackets or parens should be on the same
+line as the identifier or other construct that they follow.
+  - 4.8.5 All annotations on classes, fields, and methods should always have a newline after the
+last annotation, i.e. they should not appear on the same line as the identifier they annotate,
+and should only appear on the same line as other annotations. Series of multiple annotations may
+each appear on a separate line, or may all be grouped together on the same line.
+  - 4.8.6.1 On multi-line</code>/<em> ... </em>/<code>comments we do not begin the intermediate lines with asterisks</code><em><code>.
+  - 5.2.8 We only use single capital letters (single characters) for generic type parameters.
+  - 7.2 We do not begin Javadoc with summary fragments. This is because will no longer generate and
+publish Javadoc pages, the Javadoc will only be used within IDEs.
+  - 7.3.1 The item in the original document implies that trivial Javadoc like</code>/</em><em> Returns the 
+canonical name. </em>/` should still be included. There is almost always something more to explain
+to someone who is seeing this method or class for the first time.</p>
+</li>
+</ul>
+<h3 id="notes-on-breaking-lines">Notes on breaking lines</h3>
+<p>The eye scan the code much faster if there is less need of horizontal movement, so formatting the 
+code becomes a balance on how long the lies should be and how to break it. Try to brake the code
+at the outer-most scope aligning expressions with the same scope. Consider to chop down all 
+expressions with the same scope and indent them, do not align code further to the right than the
+indentation margin.</p>
+<pre><code>  // Conider this code:
+  xxxx xxx = xxx + xxx * xxx - ( x.xxxx().xx().xxx() - xxx ) / xxx;
+
+  // Break tha line as every operator, pharenphasis and method chanin.
+  // This is a bit extrem, but illustrates the correct way to break the lines.
+  xxxx xxx 
+      = xxx 
+      + 
+          xxx 
+          * xxx 
+      - 
+          ( 
+              x.xxxx()
+                  .xx()
+                  .xxx() 
+              - xxx 
+          ) 
+          / xxx
+      ;
+
+  // Prefered compromize
+  xxxx xxx = xxx + xxx * xxx 
+      - ( x.xxxx().xx().xxx() - xxx ) / xxx
+
+  // or 
+  xxxx xxx 
+      = xxx + xxx * xxx 
+      - ( 
+          x.xxxx().xx().xxx() 
+          - xxx 
+      ) / xxx
+</code></pre>
+<pre><code>  // Right alignment not allowed
+  xxxx xxx = xxx 
+           + xxx * xxx; 
+
+  // use indentation margin instead
+  xxxx xxx = xxx
+      + xxx * xxx; 
+
+</code></pre>
+<h3 id="sorting-class-members">Sorting class members</h3>
+<p>Some of the classes in OTP have a lot of fields and methods. Keeping members sorted reduce the
+merge conflicts. Adding fields and methods to the end of the list will cause merge conflicts 
+more often than inserting methods and fields in an ordered list. Fields and methods can be sorted
+in "feature" sections or alphabetically, but stick to it and respect it when adding new methods 
+and fields.</p>
+<p>The provided formatter will group class members in this order:</p>
+<ol>
+<li>Getter and Setter methods are kept together</li>
+<li>Overridden methods are kept together</li>
+<li>Dependent methods are sorted in a breadth-first order.</li>
+<li>Members are sorted like this:<ol>
+<li><code>static</code> <code>final</code> fields</li>
+<li><code>static</code> fields</li>
+<li><code>static</code> initializer</li>
+<li><code>final</code> fields</li>
+<li>fields</li>
+<li>class initializer (avoid using it)</li>
+<li>Constructor</li>
+<li><code>static</code> methods</li>
+<li><code>static</code> getter and setters</li>
+<li>methods</li>
+<li>getter and setters</li>
+<li>enums</li>
+<li>interfaces</li>
+<li><code>static</code> classes</li>
+<li>classes</li>
+</ol>
+</li>
+<li>Each section of members are sorted by visibility:<ol>
+<li>´public´</li>
+<li>package private</li>
+<li>´protected´</li>
+<li>´private´</li>
+</ol>
+</li>
+</ol>
+<h3 id="javadoc-guidlines">JavaDoc Guidlines</h3>
+<p>What to put in Javadoc:
+- On methods: 
+  - Side effects on instance state (is it a pure function)
+  - Contract of the method
+    - Input domain for which the logic is designed
+    - Range of outputs produced from valid inputs
+    - Is behavior undefined or will fail when conditions are not met
+    - Are null values allowed as inputs
+    - Will null values occur as outputs (what do they mean)
+  - Invariants that hold if the preconditions are met
+  - Concurrency
+    - Is method thread-safe
+    - Usage constraints for multi-threaded use
+- On classes:
+  - Initialization and teardown process
+  - Can instance be reused for multiple operations, or should it be discarded
+  - Is it immutable or should anything be treated as immutable
+  - Is it a utility class of static methods that should not be instantiated</p>
+<h2 id="javascript">JavaScript</h2>
+<p>As of #206, we follow <a href="http://javascript.crockford.com/code.html">Crockford's JavaScript code conventions</a>. Further guidelines include:</p>
+<ul>
+<li>All .js source files should contain one class only</li>
+<li>Capitalize the class name, as well as the source file name (a la Java)</li>
+<li>Include the namespace definition in each and every file: <code>otp.namespace("otp.configure");</code></li>
+<li>Include a class comment. For example,                                                                                                      </li>
+</ul>
+<pre><code class="language-javascript">/**
+ * Configure Class
+ *
+ * Purpose is to allow a generic configuration object to be read via AJAX/JSON, and inserted into an
+ * Ext Store
+ * The implementation is TriMet route map specific...but replacing ConfigureStore object (or member
+ * variables) with another implementation, will give this widget flexibility for other uses beyond 
+ * the iMap.
+ *
+ * @class
+ */
+</code></pre>
+<p><em>Note: There is still a lot of code following other style conventions, but please adhere to 
+consistent style when you write new code, and help clean up and reformat code as you refactor.</em></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

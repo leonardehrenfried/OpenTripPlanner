@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.1/Configuration/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Introduction - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Comparing OTP2 to OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Configuration</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="./" class="dropdown-item active">Introduction</a>
+</li>
+            
+<li>
+    <a href="../BuildConfiguration/" class="dropdown-item">Build</a>
+</li>
+            
+<li>
+    <a href="../RouterConfiguration/" class="dropdown-item">Router</a>
+</li>
+    </ul>
+  </li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">About</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ActuatorAPI/" class="dropdown-item">Actuator API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/VehicleRentalServiceDirectory/" class="dropdown-item">Vehicle Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SmooveBikeRental/" class="dropdown-item">Smoove Bike Rental Updator Support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/MapboxVectorTilesApi/" class="dropdown-item">Mapbox Vector Tiles API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Flex/" class="dropdown-item">Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ReportApi/" class="dropdown-item">Report API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/InteractiveOtpMain/" class="dropdown-item">Interactive OTP Launcher</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ParkAndRideApi/" class="dropdown-item">Park and Ride API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/DataOverlay/" class="dropdown-item">Data Overlay</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/VehicleParking/" class="dropdown-item">Vehicle Parking Updaters</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Getting-OTP/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../BuildConfiguration/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Configuration.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#configuring-opentripplanner" class="nav-link">Configuring OpenTripPlanner</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#base-directory" class="nav-link">Base Directory</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#three-scopes-of-configuration" class="nav-link">Three Scopes of Configuration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#configuration-types" class="nav-link">Configuration types</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#system-environment-and-project-information-substitution" class="nav-link">System environment and project information substitution</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#config-version" class="nav-link">Config version</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#otp-serialization-version-id-and-graphobj-file-header" class="nav-link">OTP Serialization version id and Graph.obj file header</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#include-file-directive" class="nav-link">Include file directive</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="configuring-opentripplanner">Configuring OpenTripPlanner</h1>
+<p><em>Note: if you are familiar with OTP1 configuration and are migrating to OTP2, please read the 
+<a href="../OTP2-MigrationGuide/">OTP2 Migration Guide</a> to learn what has changed.</em></p>
+<h2 id="base-directory">Base Directory</h2>
+<p>On the OTP2 command line you must always specify a single directory after all the switches. This tells OTP2 where to look for any configuration files. By default OTP will also scan this directory for input files to build a graph (GTFS, OSM, elevation, and base street graphs) or the <code>graph.obj</code> file to load when starting a server.</p>
+<p>A typical OTP2 directory for a New York City graph might include the following:</p>
+<pre><code>otp-config.json
+build-config.json
+router-config.json
+new-york-city-no-buildings.osm.pbf
+nyc-elevation.tiff
+long-island-rail-road.gtfs.zip
+mta-new-york-city-transit.gtfs.zip
+port-authority-of-new-york-new-jersey.gtfs.zip
+graph.obj
+</code></pre>
+<p>You could have more than one of these directories if you are building separate graphs for separate regions. Each one should contain one or more GTFS feeds, a PBF OpenStreetMap file, some JSON configuration files, and any output files such as <code>graph.obj</code>. For convenience, especially if you work with only one graph at a time, you may want to place your OTP2 JAR file in this same directory. Note that file types are detected through a case-insensitive combination of file extension and words within the file name. GTFS file names must end in <code>.zip</code> and contain the letters <code>gtfs</code>, and OSM files must end in <code>.pbf</code>.</p>
+<p>It is also possible to provide a list of input files in the configuration, which will override the
+default behavior of scanning the base directory for input files. Scanning is overridden 
+independently for each file type, and can point to remote cloud storage with arbitrary URIs. 
+See <a href="./#Storage">the storage section</a> for further details. </p>
+<h2 id="three-scopes-of-configuration">Three Scopes of Configuration</h2>
+<p>OTP is configured via three configuration JSON files which are read from the directory specified on its command line. We try to provide sensible defaults for every option, so all three of these files are optional, as are all the options within each file. Each configuration file corresponds to options that are relevant at a particular phase of OTP usage. </p>
+<p>Options and parameters that are taken into account during the graph building process will be "baked into" the graph, and cannot be changed later in a running server. These are specified in <code>build-config.json</code>. Other details of OTP operation can be modified without rebuilding the graph. These run-time configuration options are found in <code>router-config.json</code>. Finally, <code>otp-config.json</code> contains simple switches that enable or disable system-wide features. </p>
+<h2 id="configuration-types">Configuration types</h2>
+<p>The OTP configuration files use the JSON file format. OTP allows comments and unquoted field names 
+in the JSON configuration files to be more human-friendly. OTP supports all the basic JSON types: 
+nested objects <code>{...}</code>, arrays <code>[]</code>, numbers <code>789.0</code> and boolean <code>true</code> or <code>false</code>. In addition to 
+these basic types some configuration parameters are parsed with some restrictions. In the 
+documentation below we will refer to the following types:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boolean</td>
+<td>This is the Boolean JSON type.</td>
+<td><code>true</code> or <code>false</code></td>
+</tr>
+<tr>
+<td>number</td>
+<td>This is the Number JSON type.</td>
+<td><code>1</code>, <code>5</code>, <code>3.14</code></td>
+</tr>
+<tr>
+<td>string</td>
+<td>A quoted string. This is the String JSON type.</td>
+<td><code>"This is a string!"</code></td>
+</tr>
+<tr>
+<td><em>Type</em>[]</td>
+<td>Array of of given Type. This is the Array JSON type.</td>
+<td><code>[ 1, 2, 3 ]</code></td>
+</tr>
+<tr>
+<td>double</td>
+<td>A decimal floating point <em>number</em>. 64 bit.</td>
+<td><code>3.14</code></td>
+</tr>
+<tr>
+<td>integer</td>
+<td>A decimal integer <em>number</em>. 32 bit.</td>
+<td><code>1</code>, <code>-7</code>, <code>2100200300</code></td>
+</tr>
+<tr>
+<td>long</td>
+<td>A decimal integer <em>number</em>. 64 bit.</td>
+<td><code>-1234567890123456789</code></td>
+</tr>
+<tr>
+<td>enum</td>
+<td>A fixed set of string literals.</td>
+<td>BicycleOptimize: <code>"QUICK"</code>, <code>"SAFE"</code> ...</td>
+</tr>
+<tr>
+<td>enum-map</td>
+<td>List of key/value pairs, where the key is a enum and the value can be any given type.</td>
+<td><code>{ RAIL: 1.2, BUS: 2.3 }</code></td>
+</tr>
+<tr>
+<td>enum-set</td>
+<td>List of enum string values</td>
+<td><code>[ "RAIL", "TRAM" ]</code></td>
+</tr>
+<tr>
+<td>locale</td>
+<td><em><code>Language[\_country[\_variant]]</code></em>. A Locale object represents a specific geographical, political, or cultural region. For more information see the <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Locale.html">Java 11 Locale</a>.</td>
+<td><code>en_US</code>, <code>nn_NO</code></td>
+</tr>
+<tr>
+<td>date</td>
+<td>Local date. The format is <em>YYYY-MM-DD</em> (ISO-8601).</td>
+<td><code>2020-09-21</code></td>
+</tr>
+<tr>
+<td>date or period</td>
+<td>A <em>local date</em>, or a <em>period</em> relative to today. The local date has the format <code>YYYY-MM-DD</code> and the period has the format <code>PnYnMnD</code> or <code>-PnYnMnD</code> where <code>n</code> is a integer number.</td>
+<td><code>P1Y</code> is one year from now, <code>-P3M2D</code> means 3 months and 2 days ago, and <code>P1D</code> means tomorrow.</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>A <em>duration</em> is a amount of time. The format is <code>PnDTnHnMnS</code> or <code>nDnHnMnS</code> where <code>n</code> is a  integer number. The <code>D</code>(days), <code>H</code>(hours), <code>M</code>(minutes) and <code>S</code>(seconds) are not case sensitive.</td>
+<td><code>3h</code> is 3 hours, <code>2m</code> means 2 minutes, and <code>1d5h2m3s</code> is 1 day, 5 hours, 2 minutes and 3 seconds. Use the "PT" form with negative values like <code>-P2dT-1s</code> and <code>P-2dT1s</code> (both is minus 2 days plus one second).</td>
+</tr>
+<tr>
+<td>regexp pattern</td>
+<td>A regular expression pattern used to match a sting.</td>
+<td><code>"$^"</code> matches an empty string. <code>"gtfs"</code> matches <code>"A-*gtfs*-file.zip"</code>. <code>"$\w{3})-.*\.xml^"</code> matches a filename with 3 alpha-numeric characters in the beginning of the filename and <em>.xml</em> as file extension.</td>
+</tr>
+<tr>
+<td>uri</td>
+<td>An URI path to a resource like a file or a URL. Relative URIs are resolved relative to the OTP base path.</td>
+<td><code>"gs://bucket/path/a.obj"</code> <code>"http://foo.bar/"</code> <code>"file:///Users/x/local/file"</code> <code>"myGraph.obj"</code> <code>"../street/streetGraph-${otp.serialization.version.id}.obj"</code></td>
+</tr>
+<tr>
+<td>linear function</td>
+<td>A linear function with one input parameter(x) used to calculate a value. Usually used to calculate a limit. For example to calculate a limit in seconds to be 1 hour plus 2 times the value(x) use: <code>3600 + 2.0 x</code>, to set an absolute value(3000) use: <code>3000 + 0x</code></td>
+<td><code>"600 + 2.0 x"</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="system-environment-and-project-information-substitution">System environment and project information substitution</h2>
+<p>OTP support injecting system environment variables and project information parameters into the 
+configuration. A pattern like <code>${VAR_NAME}</code> in a configuration file is substituted with an
+environment variable with name <code>VAR_NAME</code>. The substitution is done BEFORE the JSON is parsed, so
+both json keys and values is subject to substitution. This is useful if you want OTPs version 
+number to be part of the <em>graph-file-name</em>, or you want to inject credentials in a cloud based 
+deployment.</p>
+<pre><code class="language-JSON">{
+  storage : {
+    gsCredentials: &quot;${GCS_SERVICE_CREDENTIALS}&quot;,
+    graph: &quot;file:///var/otp/graph-${otp.serialization.version.id}.obj&quot;,
+  }
+}
+</code></pre>
+<p>In the example above the environment variable <code>GCS_SERVICE_CREDENTIALS</code> on the local machine where
+OTP is deployed is injected into the config. Also, the OTP serialization version id is injected.</p>
+<p>The project information variables available are:</p>
+<ul>
+<li><code>maven.version</code></li>
+<li><code>maven.version.short</code></li>
+<li><code>maven.version.major</code></li>
+<li><code>maven.version.minor</code></li>
+<li><code>maven.version.patch</code></li>
+<li><code>maven.version.qualifier</code></li>
+<li><code>git.branch</code></li>
+<li><code>git.commit</code></li>
+<li><code>git.commit.timestamp</code></li>
+<li><code>graph.file.header</code></li>
+<li><code>otp.serialization.version.id</code></li>
+</ul>
+<h2 id="config-version">Config version</h2>
+<p>All three configuration files have an optional <code>configVersion</code> property. The property can be used
+to version the configuration in a deployment pipeline. The <code>configVersion</code> is not used by OTP in 
+any way, but is logged at startup and is available as part of the <em>server-info</em> data in the REST 
+API. The intended usage is to be able to check which version of the configuration the graph was 
+build with and which version the router uses. In an deployment with many OTP instances it can be 
+useful to ask an instance about the version, instead of tracking the deployment pipline backwards 
+to find the version used. How you inject a version into the configuration file is up to you, but
+you can do it in your build-pipline, at deployment time or use system environment variable 
+substituton. </p>
+<h2 id="otp-serialization-version-id-and-graphobj-file-header">OTP Serialization version id and <em>Graph.obj</em> file header</h2>
+<p>OTP has a <em>OTP Serialization Version Id</em> maintained in the pom.xml_ file. OTP store the id in the
+serialized <em>Graph.obj</em> file header, allowing OTP the check for compatibility issues when loading
+the graph. The header info is available to configuration substitution:</p>
+<ul>
+<li><code>${graph.file.header}</code> Will expand to: <code>OpenTripPlannerGraph;0000007;</code></li>
+<li><code>${otp.serialization.version.id}</code> Will expand to: <code>7</code></li>
+</ul>
+<p>The intended usage is to be able to have a graph build pipeline which "knows" which graph 
+that matches OTP planner instances. For example, you may build new graphs for every OTP 
+serialization version id in use by the planning OPT instances you have deploied and plan to deploy.
+This way you can roll forward and backward new OTP instances without worring about building new 
+graphs.</p>
+<p>There are various ways to access this information. To get the <code>Graph.obj</code> serialization version id 
+you can run the following bash command:
+ - <code>head -c 29 Graph.obj  ==&gt;  OpenTripPlannerGraph;0000007;</code> (file header)
+ - <code>head -c 28 Graph.obj | tail -c 7  ==&gt;  0000007</code>  (version id)</p>
+<p>The Maven <em>pom.xml</em>, the <em>META-INF/MANIFEST.MF</em>, the OTP command line(<code>--serVerId</code>), log start-up
+messages and all OTP APIs can be used to get the OTP Serialization Version Id.  </p>
+<h2 id="include-file-directive">Include file directive</h2>
+<p>It is possible to inject the contents of another file into a configuration file. This makes it 
+possible to keep parts of the configuration in separate files. To include the contents of a file, use
+<code>${includeFile:FILE_NAME}</code>. The <code>FILE_NAME</code> must be the name of a file in the configuration 
+directory. Relative paths are not supported. </p>
+<p>
+To allow both files (the configuration file and the injected file) to be valid JSON files, a special
+case is supported. If the include file directive is quoted, then the quotes are removed, if the 
+text inserted is valid JSON (starts with `{` and ends with `}`). 
+
+Variable substitution is performed on configuration file after the include file directive; Hence
+variable substitution is also performed on the text in the injected file.
+
+Here is an example including variable substitution, assuming version 2.1.0 of OTP:
+
+
+<pre><code class="language-JSON">// build-config.json
+{
+  &quot;storage&quot; : &quot;${includeFile:storage.json}&quot;
+} 
+</code></pre>
+
+
+
+<pre><code class="language-JSON">// storage.json
+{
+  &quot;streetGraph&quot;: &quot;street-graph-v${maven.version}.obj&quot;
+}
+</code></pre>
+
+The result will look like this:
+
+<pre><code class="language-JSON">{
+  &quot;storage&quot; : {
+    &quot;streetGraph&quot;: &quot;street-graph-v2.1.0.obj&quot;
+  }
+} 
+</code></pre>
+
+
+
+# System-wide Configuration
+
+Using the file `otp-config.json` you can enable or disable different APIs and experimental
+[Sandbox Extensions](SandboxExtension.md). By default, all supported APIs are enabled and all 
+sandbox features are disabled. So for most OTP2 use cases it is not necessary to create this file.
+Features that can be toggled in this file are generally only affect the routing phase of OTP2
+usage, but for consistency all such "feature flags", even those that would affect graph building,
+are managed in this one file. See the [OTPFeature](https://github.com/opentripplanner/OpenTripPlanner/blob/v2.1.0/src/main/java/org/opentripplanner/util/OTPFeature.java) 
+Java class for an enumeration of all available features and their default settings. Here is an 
+example:
+
+
+<pre><code class="language-JSON">// otp-config.json
+{
+    &quot;otpFeatures&quot; : {
+        &quot;APIBikeRental&quot; : false,
+        &quot;SandboxExampleAPIGraphStatistics&quot; : true
+    }
+}
+</code></pre>
+
+
+## OTP Features
+Here is a list of all features which can be toggled on/off.
+
+Feature | Description | Enabled by default | Sandbox
+--------|-------------|--------------------|-------- 
+`APIBikeRental` | Enable the bike rental endpoint | yes | no
+`APIServerInfo` | Enable the server info endpoint |  yes | no
+`APIGraphInspectorTile` | Enable the inspector  endpoint for graph information for inspection/debugging purpose | yes | no
+`APIUpdaterStatus` | Enable endpoint for graph updaters status | yes | no
+`OptimizeTransfers` | OTP will inspect all itineraries found and optimize where (which stops) the transfer will happen. Waiting time, priority and guaranteed transfers are taken into account. | yes | no
+`MinimumTransferTimeIsDefinitive` | If the minimum transfer time is a lower bound (default) or the definitive time for the transfer. Set this to true if you want to set a transfer time lower than what OTP derives from OSM data. | no | no
+`ParallelRouting` | Enable performing parts of the trip planning in parallel | no | no
+`TransferConstraints` | Enforce transfers to happen according to the _transfers.txt_(GTFS) and Interchanges(NeTEx). Turing this _off_ will increase the routing performance a little. | yes | no
+`ActuatorAPI` | Enpoint for actuators (service health status) | no | yes
+`GoogleCloudStorage` | Enable Google Cloud Storage integration | no | yes
+`SandboxAPITransmodelApi` | Enable Entur Transmodel(NeTEx) GraphQL API | no | yes
+`SandboxAPILegacyGraphQLApi` | Enable (GTFS) GraphQL API | no | yes
+`SandboxAPIMapboxVectorTilesApi` | Enable Mapbox vector tiles API | no | yes
+`SandboxAPIParkAndRideApi` | Enable park-and-ride endpoint | no | yes
+`TransferAnalyzer` | Analyze transfers during graph build | no | yes
+`FlexRouting` | Enable FLEX routing | no | yes
+`FloatingBike` | Enable floating bike routing | no | yes</div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

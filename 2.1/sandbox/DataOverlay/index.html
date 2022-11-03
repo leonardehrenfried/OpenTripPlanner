@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.1/sandbox/DataOverlay/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Data Overlay - OpenTripPlanner 2</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../../css/version-select.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../../Version-Comparison/" class="dropdown-item">Comparing OTP2 to OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="../../Getting-OTP/" class="dropdown-item">Getting OTP</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Configuration</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../../Configuration/" class="dropdown-item">Introduction</a>
+</li>
+            
+<li>
+    <a href="../../BuildConfiguration/" class="dropdown-item">Build</a>
+</li>
+            
+<li>
+    <a href="../../RouterConfiguration/" class="dropdown-item">Router</a>
+</li>
+    </ul>
+  </li>
+                                    
+<li>
+    <a href="../../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../SandboxExtension/" class="dropdown-item">About</a>
+</li>
+                                    
+<li>
+    <a href="../ActuatorAPI/" class="dropdown-item">Actuator API</a>
+</li>
+                                    
+<li>
+    <a href="../transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../VehicleRentalServiceDirectory/" class="dropdown-item">Vehicle Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../SmooveBikeRental/" class="dropdown-item">Smoove Bike Rental Updator Support</a>
+</li>
+                                    
+<li>
+    <a href="../MapboxVectorTilesApi/" class="dropdown-item">Mapbox Vector Tiles API</a>
+</li>
+                                    
+<li>
+    <a href="../Flex/" class="dropdown-item">Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="../ReportApi/" class="dropdown-item">Report API</a>
+</li>
+                                    
+<li>
+    <a href="../InteractiveOtpMain/" class="dropdown-item">Interactive OTP Launcher</a>
+</li>
+                                    
+<li>
+    <a href="../Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                    
+<li>
+    <a href="../ParkAndRideApi/" class="dropdown-item">Park and Ride API</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Data Overlay</a>
+</li>
+                                    
+<li>
+    <a href="../VehicleParking/" class="dropdown-item">Vehicle Parking Updaters</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../ParkAndRideApi/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../VehicleParking/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/sandbox/DataOverlay.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#data-overlay" class="nav-link">Data Overlay</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#contact-info" class="nav-link">Contact Info</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#changelog" class="nav-link">Changelog</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#documentation" class="nav-link">Documentation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="data-overlay">Data Overlay</h1>
+<p>Use grid data in NetCDF format to populate the graph. Also provides custom route endpoint parameters for the data "penalty" and "threshold". This allows route planning to be based on the custom data calculated penalties. Data examples: air quality, environmental, and other data types that are tied to certain geographical locations.</p>
+<h2 id="contact-info">Contact Info</h2>
+<p>Developed and maintained by <strong>Metatavu OY</strong>, Finland.</p>
+<p>Developers:</p>
+<p><strong>Katja Danilova</strong> - katja.danilova@metatavu.fi\
+<strong>Simeon Platonov</strong> - simeon.platonov@metatavu.fi\
+<strong>Daniil Smirnov</strong> - daniil.smirnov@metatavu.fi</p>
+<p>In case of any questions please contact any of the people above by emails. We would like to continue developing and improving this feature and would love to hear any ideas from the community.</p>
+<p>Company email: info@metatavu.fi</p>
+<h2 id="changelog">Changelog</h2>
+<ul>
+<li>Initial version (December 2021)</li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<p>We have been working with OTP since version 1 mainly for producing the Air Quality affected routing for the city of Helsinki, Finland. That project required us to modify the original OTP quite a lot so we didn't propose our efforts for the community.</p>
+<p>With the OTP2 release we decided to create a dedicated layer on top of OTP2 which not only leaves the initial structure of the OpenTripPlanner intact, but also brings some additional features for those, who actually need them. This layer's main feature is populating the graph with a grid data (i.e air quality, temperature, humidity, pressure, wind speed and direction, and e.t.c). For this to work two files are required: the actual data file (i.e in NetCDF format) and a .json settings file which describes the contents of the data file. Please refer to the diagram for more information.</p>
+<p>It is a sandbox feature.</p>
+<p>Please see the configuration part for setup instructions and examples.</p>
+<h3 id="configuration">Configuration</h3>
+<p>Enable the feature by including it to the <code>otp-config.json</code>:</p>
+<pre><code class="language-json">// otp-config.json
+{ &quot;otpFeatures&quot;: { &quot;DataOverlay&quot; : true } }
+</code></pre>
+<p>Plugin configuration should explain the NetCDF data file and request parameters that use the data file.
+* <em>fileName</em> points to the data file
+* <em>latitudeVariable</em>, <em>longitudeVariable</em> and <em>timeVariable</em> should be equal to the corresponding variable names of the data file
+* <em>timeFormat</em> options: MS_EPOCH, SECONDS, HOURS
+* <em>indexVariables</em> contain a list of variables of data file that will affect the routing.
+  * <em>name</em> can have any value and exists to act as a reference for <em>requestPatameters</em> (see below)
+  * <em>displayName</em> is a variable name in human-readable form that should make it more understandable
+  * <em>variable</em> is the actual name of the variable from data file
+* <em>requestParameters</em> contains the list of REST request parameters that affects the cost calculation. 
+  * <em>name</em> should be chosen from the list of enums: org.opentripplanner.ext.dataoverlay.api.ParameterName
+  * <em>variable</em> should correspond to the <em>name</em> of one of the entries from <em>indexVariables</em> list and explain which data field this parameter corresponds to
+  * <em>formula</em> should use the keywords VALUE and THRESHOLD and describe the way the penalty is calculated. Note: if the result of the formula is negative it is ignored.</p>
+<p>Example of build-config.json that includes the dataOverlay plugin configuration:</p>
+<pre><code class="language-json">// build-config.json
+{
+  &quot;dataOverlay&quot; :
+  {
+    &quot;fileName&quot;: &quot;graphs/data-file.nc4&quot;,
+    &quot;latitudeVariable&quot;: &quot;lat&quot;,
+    &quot;longitudeVariable&quot;: &quot;lon&quot;,
+    &quot;timeVariable&quot;: &quot;time&quot;,
+    &quot;timeFormat&quot;: &quot;HOURS&quot;,
+    &quot;indexVariables&quot;: [
+      {
+        &quot;name&quot;: &quot;harmfulMicroparticlesPM2_5&quot;,
+        &quot;displayName&quot;: &quot;Harmful micro particles pm 2.5&quot;,
+        &quot;variable&quot;: &quot;cnc_PM2_5&quot;
+      },
+      {
+        &quot;name&quot;: &quot;harmfulMicroparticlesPM10&quot;,
+        &quot;displayName&quot;: &quot;Harmful micro particles pm 10&quot;,
+        &quot;variable&quot;: &quot;cnc_PM10&quot;
+      }
+    ],
+    &quot;requestParameters&quot;: [
+      {
+        &quot;name&quot;: &quot;PARTICULATE_MATTER_2_5&quot;,
+        &quot;variable&quot;: &quot;harmfulMicroparticlesPM2_5&quot;,
+        &quot;formula&quot;: &quot;(VALUE + 1 - THRESHOLD) * PENALTY&quot;
+      },
+      {
+        &quot;name&quot;: &quot;PARTICULATE_MATTER_10&quot;,
+        &quot;variable&quot;: &quot;harmfulMicroparticlesPM10&quot;,
+        &quot;formula&quot;: &quot;(VALUE + 1 - THRESHOLD) * PENALTY&quot;
+      }
+    ]
+  }
+
+}
+</code></pre>
+<p>Default values for Data overlay plugin can also be included in router-config instead of being sent with each request. If any Data overlay parameters are passed in user query, all the default values from router-config are ignored.</p>
+<pre><code class="language-json">// router-config.json
+{
+  &quot;routingDefaults&quot;: {
+    &quot;dataOverlay&quot; : {
+      &quot;particulate_matter_10_threshold&quot; : 100,
+      &quot;particulate_matter_10_penalty&quot; : 19
+    }
+  }
+}
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

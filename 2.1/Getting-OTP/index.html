@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://docs.opentripplanner.org/2.1/Getting-OTP/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Getting OTP - OpenTripPlanner 2</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/version-select.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenTripPlanner 2</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Governance/" class="dropdown-item">Governance</a>
+</li>
+                                    
+<li>
+    <a href="../History/" class="dropdown-item">History</a>
+</li>
+                                    
+<li>
+    <a href="../Deployments/" class="dropdown-item">Deployments</a>
+</li>
+                                    
+<li>
+    <a href="../Changelog/" class="dropdown-item">Changelog</a>
+</li>
+                                    
+<li>
+    <a href="../Version-Comparison/" class="dropdown-item">Comparing OTP2 to OTP1</a>
+</li>
+                                    
+<li>
+    <a href="../OTP2-MigrationGuide/" class="dropdown-item">OTP2 migration guide</a>
+</li>
+                                    
+<li>
+    <a href="../Visual-Identity/" class="dropdown-item">Visual Identity</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Usage <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Basic-Tutorial/" class="dropdown-item">Basic Tutorial</a>
+</li>
+                                    
+<li>
+    <a href="./" class="dropdown-item active">Getting OTP</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#" class="dropdown-item">Configuration</a>
+    <ul class="dropdown-menu">
+            
+<li>
+    <a href="../Configuration/" class="dropdown-item">Introduction</a>
+</li>
+            
+<li>
+    <a href="../BuildConfiguration/" class="dropdown-item">Build</a>
+</li>
+            
+<li>
+    <a href="../RouterConfiguration/" class="dropdown-item">Router</a>
+</li>
+    </ul>
+  </li>
+                                    
+<li>
+    <a href="../Preparing-OSM/" class="dropdown-item">Preparing OSM Data</a>
+</li>
+                                    
+<li>
+    <a href="../Netex-Norway/" class="dropdown-item">Netex and SIRI</a>
+</li>
+                                    
+<li>
+    <a href="../Security/" class="dropdown-item">Security</a>
+</li>
+                                    
+<li>
+    <a href="../Troubleshooting-Routing/" class="dropdown-item">Troubleshooting</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Development <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../Developers-Guide/" class="dropdown-item">Developers' Guide</a>
+</li>
+                                    
+<li>
+    <a href="../Interfaces-Data-Sources/" class="dropdown-item">Interfaces and Data Sources</a>
+</li>
+                                    
+<li>
+    <a href="../Localization/" class="dropdown-item">Localization</a>
+</li>
+                                    
+<li>
+    <a href="../Bibliography/" class="dropdown-item">Bibliography</a>
+</li>
+                                    
+<li>
+    <a href="../Codestyle/" class="dropdown-item">Codestyle</a>
+</li>
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">Sandbox development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sandbox <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../SandboxExtension/" class="dropdown-item">About</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ActuatorAPI/" class="dropdown-item">Actuator API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/transferanalyzer/" class="dropdown-item">Direct transfer analyzer</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/GoogleCloudStorage/" class="dropdown-item">Google Cloud Storage</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/LegacyGraphQLApi/" class="dropdown-item">HSL Legacy GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/TransmodelApi/" class="dropdown-item">Transmodel(NeTEx) GraphQL API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SiriUpdator/" class="dropdown-item">SIRI Updater</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/VehicleRentalServiceDirectory/" class="dropdown-item">Vehicle Rental Service Directory API support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/SmooveBikeRental/" class="dropdown-item">Smoove Bike Rental Updator Support</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/MapboxVectorTilesApi/" class="dropdown-item">Mapbox Vector Tiles API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Flex/" class="dropdown-item">Flex Routing</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ReportApi/" class="dropdown-item">Report API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/InteractiveOtpMain/" class="dropdown-item">Interactive OTP Launcher</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/Examples/" class="dropdown-item">Sandbox Extension Example</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/ParkAndRideApi/" class="dropdown-item">Park and Ride API</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/DataOverlay/" class="dropdown-item">Data Overlay</a>
+</li>
+                                    
+<li>
+    <a href="../sandbox/VehicleParking/" class="dropdown-item">Vehicle Parking Updaters</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a rel="prev" href="../Basic-Tutorial/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../Configuration/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="http://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/Getting-OTP.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#getting-opentripplanner" class="nav-link">Getting OpenTripPlanner</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#pre-built-jars" class="nav-link">Pre-built JARs</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#building-from-source" class="nav-link">Building from Source</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#maven-repository" class="nav-link">Maven Repository</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="getting-opentripplanner">Getting OpenTripPlanner</h1>
+<h2 id="pre-built-jars">Pre-built JARs</h2>
+<p>OpenTripPlanner is distributed as a single stand-alone runnable JAR file. We create a tag and release page on GitHub for each release version, and also deploy them to the Maven Central repository. You can go to the <a href="https://github.com/opentripplanner/OpenTripPlanner/releases">release pages on GitHub</a> or <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/">the OTP directory at Maven Central</a>, navigate to the highest version number, and download the file whose name ends with <code>shaded.jar</code>.</p>
+<p>Note that version numbers like <code>v2.1.0-rc1</code> or <code>v2.1.0-SNAPSHOT</code> refer to development builds <em>before</em> the release version <code>v2.1.0</code>. The existence of a build <code>vX.Y.Z-SNAPSHOT</code> does not mean that <code>vX.Y.Z</code> has been released yet.</p>
+<p>We use the <a href="https://github.com/opentripplanner/OpenTripPlanner/actions">Github Actions CI system</a> to build OTP every time a change is made. You can find the JARs resulting from those builds in the <a href="https://github.com/opentripplanner/OpenTripPlanner/packages/562174">Github Packages repository</a>. It can be harder to find the specific version you're looking for here, so we recommend using the release pages or Maven Central as described above.</p>
+<h2 id="building-from-source">Building from Source</h2>
+<p>You may also choose to build OTP from its source code. If you will be modifying OTP you will need to know how to rebuild
+ it (though your IDE may take care of this build cycle for you). If you have the right software installed, 
+ building OTP locally from its source code is not particularly difficult. You should only need the following software:</p>
+<ul>
+<li>
+<p>Git, a version control system</p>
+</li>
+<li>
+<p>Java Development Kit, preferably version 11</p>
+</li>
+<li>
+<p>Maven, a build and dependency management system</p>
+</li>
+</ul>
+<p>You will also need a reliable internet connection so Maven can fetch all of OTP's dependencies (the libraries it uses). </p>
+<p>Once you have these packages installed, create and/or switch to the directory where you will keep your Git repositories and make a local copy of the OTP source code:</p>
+<pre><code class="language-shell">mkdir git
+cd git
+git clone git@github.com:opentripplanner/OpenTripPlanner.git
+</code></pre>
+<p>Then change to the newly cloned OpenTripPlanner repository directory and start a build:</p>
+<pre><code class="language-shell">cd OpenTripPlanner
+mvn clean package
+</code></pre>
+<p>Maven should then be able to download all the libraries and other dependencies necessary to compile OTP. 
+If all goes well you should see a success message like the following:</p>
+<pre><code>[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 42.164s
+[INFO] Finished at: Tue Feb 18 19:35:48 CET 2014
+[INFO] Final Memory: 88M/695M
+[INFO] ------------------------------------------------------------------------
+</code></pre>
+<p>This build process should produce a JAR file called <code>otp-x.y.z-shaded.jar</code> in the <code>target/</code> directory which contains
+all the compiled OTP classes and their dependencies (the external libraries they use). The shell script called 'otp'
+in the root of the cloned repository will
+start the main class of that JAR file under a Java virtual machine, so after the Maven build completes you should be 
+able to run <code>./otp --help</code> and see an OTP help message including command line options. Due to the way Maven works, this
+script is not executable by default, so you will need to do <code>chmod u+x ./otp</code> before you run it to mark it as executable.</p>
+<p>The words "clean package" are the build steps you want to run. You're telling maven to clean up any extraneous junk in
+ the directory, then perform all the build steps, including compilation, up to and including "package",
+ which bundles the compiled program into a single JAR file for distribution.</p>
+<p>If you have just cloned OTP you will be working with the default "master" branch, where most active development occurs.
+ This is not the most stable or deployment-ready code available. To avoid newly minted bugs or undocumented behavior,
+ you can use Git to check out a specific release (tag or branch) of OTP to work with. The Maven build also includes 
+ many time-consuming integration tests. When working with a stable release of OTP, 
+ you may want to turn them off by adding the switch: <code>-DskipTests</code>.</p>
+<p>For example, you could do the following:</p>
+<pre><code class="language-bash">cd OpenTripPlanner
+git checkout v2.0.0
+git clean -df
+mvn clean package -DskipTests
+</code></pre>
+<p>Please note that the build process creates two distinct versions of the OTP JAR file. The one ending in <code>-shaded.jar</code>
+is much bigger because it contains copies of all the external libraries that OTP uses.
+It serves as a stand-alone runnable distribution of OTP. The one with a version number but without the word <code>shaded</code>
+contains only OTP itself, without any external dependencies. This JAR is useful when OTP is included as a component in
+some other project, where we want the dependency management system to gather all the external libraries automatically.</p>
+<h2 id="maven-repository">Maven Repository</h2>
+<p>OpenTripPlanner is a Maven project. Maven is a combined build and dependency management system: it fetches
+all the external libraries that OTP uses, runs all the commands to compile the OTP source code into runnable form,
+performs tests, and can then deploy the final "artifact" (the runnable JAR file) to the Maven repository, from which it
+can be automatically included in other Java projects.</p>
+<p>This repository is machine-readable (by Maven or other build systems) and also provides human readable directory listings via HTTP. You can fetch an OTP JAR from this repository by constructing the proper URL for the release
+you want. For example, release 2.1.0 will be found at <code>https://repo1.maven.org/maven2/org/opentripplanner/otp/2.1.0/otp-2.1.0-shaded.jar</code>.</p>
+<p>To make use of OTP in another Maven project, you must specify it as a dependency in that project's <code>pom.xml</code>:</p>
+<pre><code class="language-XML">&lt;dependency&gt;
+  &lt;groupId&gt;org.opentripplanner&lt;/groupId&gt;
+  &lt;artifactId&gt;otp&lt;/artifactId&gt;
+  &lt;version&gt;2.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>After each successful build, the <a href="https://travis-ci.org/opentripplanner/OpenTripPlanner">Travis continuous integration system</a> deploys the final OTP "artifact" (the runnable JAR) to our Maven repository as a "SNAPSHOT" build. This means that a Maven project depending on OTP as a library can always fetch the latest work in progress by specifying a snapshot artifact:</p>
+<pre><code class="language-XML">&lt;repositories&gt;
+  &lt;repository&gt;
+    &lt;id&gt;ossrh_snapshots&lt;/id&gt;
+    &lt;name&gt;Sonatype OSSRH Shapshot Repository&lt;/name&gt;
+    &lt;url&gt;https://oss.sonatype.org/content/repositories/snapshots/&lt;/url&gt; 
+  &lt;/repository&gt;
+&lt;/repositories&gt;
+</code></pre>
+<pre><code class="language-XML">&lt;dependency&gt;
+  &lt;groupId&gt;org.opentripplanner&lt;/groupId&gt;
+  &lt;artifactId&gt;otp&lt;/artifactId&gt;
+  &lt;version&gt;2.1.0-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../js/version-select.js" defer></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
