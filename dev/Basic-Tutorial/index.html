@@ -953,6 +953,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ReleaseChecklist/" class="md-nav__link">
+        Release Checklist
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -1336,9 +1350,9 @@ JAR containing all other libraries needed for OTP to work, and is available from
 repository. You will be able to go
 to <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/">the OTP directory at Maven Central</a>,
 navigate to
-the <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/2.1.0/">directory for the 2.1 release</a>,
+the <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/2.2.0/">directory for the 2.1 release</a>,
 and download
-the <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/2.1.0/otp-2.1.0-shaded.jar">file whose name ends with <code>shaded.jar</code></a>
+the <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/2.2.0/otp-2.2.0-shaded.jar">file whose name ends with <code>shaded.jar</code></a>
 .</p>
 <p>You may also want to get your own copy of the OTP source code
 and <a href="../Getting-OTP/">build a bleeding edge development JAR from scratch</a>, especially if you plan to
@@ -1427,7 +1441,7 @@ below and in other tutorials.</p>
 <h2 id="simple-one-step-server">Simple One-step Server</h2>
 <p>The simplest way to use OTP is to build a graph in a single step and start a server immediately,
 without saving it to disk. The command to do so is:</p>
-<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --build --serve /home/username/otp
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.2.0-shaded.jar --build --serve /home/username/otp
 </code></pre></div>
 <p>where <code>/home/username/otp</code> should be the directory where you put your configuration and input files.</p>
 <p>If you're using the Portland input data, the graph build operation should take about one minute to
@@ -1446,12 +1460,12 @@ like <code>--port 8801 --securePort 8802</code>.</p>
 build a graph from street and transit data then save it to a file using the <code>--build</code> and <code>--save</code>
 command line parameters together. If for example your current working directory (<code>.</code>) contains the
 input files and the OTP JAR file, you can use this command:</p>
-<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --build --save .
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.2.0-shaded.jar --build --save .
 </code></pre></div>
 <p>This will produce a file called <code>graph.obj</code> in the same directory as the inputs. The server can then
 be started later using the <code>--load</code> parameter, and will read this file instead of building the graph
 from scratch:</p>
-<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --load .
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.2.0-shaded.jar --load .
 </code></pre></div>
 <p>Another reason to perform these two phases separately is that the building process loads the entire
 GTFS and OSM data sets into memory, so can require significantly more memory than just running a
@@ -1464,14 +1478,14 @@ transit data to change more frequently than street data, so it can be convenient
 graph once, and then layer transit data on top of the streets to make the final graph.</p>
 <p>Again assuming the input files and OTP JAR file are in the current working directory, you can build
 a street graph with OSM and elevation data only (ignoring transit input files) with this command:</p>
-<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --buildStreet .
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.2.0-shaded.jar --buildStreet .
 </code></pre></div>
 <p>Then, to build a graph layering transit data on top of the saved street graph (built using the
 previous command):</p>
-<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --loadStreet --save .
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.2.0-shaded.jar --loadStreet --save .
 </code></pre></div>
 <p>Finally, the server can be started using the <code>--load</code> parameter:</p>
-<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.1.0-shaded.jar --load .
+<div class="highlight"><pre><span></span><code>$ java -Xmx2G -jar otp-2.2.0-shaded.jar --load .
 </code></pre></div>
 <h2 id="command-line-switches">Command Line Switches</h2>
 <p>The flow diagram below summarizes all the command line switches used in the above examples, and how

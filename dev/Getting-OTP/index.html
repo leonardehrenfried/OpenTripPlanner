@@ -891,6 +891,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ReleaseChecklist/" class="md-nav__link">
+        Release Checklist
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -1267,8 +1281,8 @@ repository. You can go to
 the <a href="https://github.com/opentripplanner/OpenTripPlanner/releases">release pages on GitHub</a>
 or <a href="https://repo1.maven.org/maven2/org/opentripplanner/otp/">the OTP directory at Maven Central</a>,
 navigate to the highest version number, and download the file whose name ends with <code>shaded.jar</code>.</p>
-<p>Note that version numbers like <code>v2.1.0-rc1</code> or <code>v2.1.0-SNAPSHOT</code> refer to development builds _
-before_ the release version <code>v2.1.0</code>. The existence of a build <code>vX.Y.Z-SNAPSHOT</code> does not mean
+<p>Note that version numbers like <code>v2.1.0-rc1</code> or <code>v2.3.0-SNAPSHOT</code> refer to development builds _
+before_ the release version <code>v2.2.0</code>. The existence of a build <code>vX.Y.Z-SNAPSHOT</code> does not mean
 that <code>vX.Y.Z</code> has been released yet.</p>
 <p>We use the <a href="https://github.com/opentripplanner/OpenTripPlanner/actions">Github Actions CI system</a> to
 build OTP every time a change is made. You can find the JARs resulting from those builds in
@@ -1331,7 +1345,7 @@ When working with a stable release of OTP, you may want to turn them off by addi
 switch: <code>-DskipTests</code>.</p>
 <p>For example, you could do the following:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span> OpenTripPlanner
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git checkout v2.0.0
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git checkout v2.2.0
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>git clean -df
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>mvn clean package -DskipTests
 </code></pre></div>
@@ -1350,34 +1364,15 @@ code into runnable form, performs tests, and can then deploy the final "artifact
 file) to the Maven repository, from which it can be automatically included in other Java projects.</p>
 <p>This repository is machine-readable (by Maven or other build systems) and also provides human
 readable directory listings via HTTP. You can fetch an OTP JAR from this repository by constructing
-the proper URL for the release you want. For example, release 2.1.0 will be found
-at <code>https://repo1.maven.org/maven2/org/opentripplanner/otp/2.1.0/otp-2.1.0-shaded.jar</code>.</p>
+the proper URL for the release you want. For example, release 2.2.0 will be found
+at <code>https://repo1.maven.org/maven2/org/opentripplanner/otp/2.2.0/otp-2.2.0-shaded.jar</code>.</p>
 <p>To make use of OTP in another Maven project, you must specify it as a dependency in that
 project's <code>pom.xml</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">&lt;dependency&gt;</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  <span class="nt">&lt;groupId&gt;</span>org.opentripplanner<span class="nt">&lt;/groupId&gt;</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  <span class="nt">&lt;artifactId&gt;</span>otp<span class="nt">&lt;/artifactId&gt;</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  <span class="nt">&lt;version&gt;</span>2.2.0<span class="nt">&lt;/version&gt;</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nt">&lt;/dependency&gt;</span>
-</code></pre></div>
-<p>After each successful build,
-the <a href="https://travis-ci.org/opentripplanner/OpenTripPlanner">Travis continuous integration system</a>
-deploys the final OTP "artifact" (the runnable JAR) to our Maven repository as a "SNAPSHOT" build.
-This means that a Maven project depending on OTP as a library can always fetch the latest work in
-progress by specifying a snapshot artifact:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">&lt;repositories&gt;</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  <span class="nt">&lt;repository&gt;</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="nt">&lt;id&gt;</span>ossrh_snapshots<span class="nt">&lt;/id&gt;</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="nt">&lt;name&gt;</span>Sonatype OSSRH Shapshot Repository<span class="nt">&lt;/name&gt;</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="nt">&lt;url&gt;</span>https://oss.sonatype.org/content/repositories/snapshots/<span class="nt">&lt;/url&gt;</span> 
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  <span class="nt">&lt;/repository&gt;</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nt">&lt;/repositories&gt;</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">&lt;dependency&gt;</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  <span class="nt">&lt;groupId&gt;</span>org.opentripplanner<span class="nt">&lt;/groupId&gt;</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>  <span class="nt">&lt;artifactId&gt;</span>otp<span class="nt">&lt;/artifactId&gt;</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>  <span class="nt">&lt;version&gt;</span>2.1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nt">&lt;/dependency&gt;</span>
 </code></pre></div>
 
 
