@@ -8,10 +8,10 @@
       
       
       
-        <link rel="canonical" href="https://docs.opentripplanner.org/2.2/ReleaseChecklist/">
+        <link rel="canonical" href="https://docs.opentripplanner.org/2.2/DevReleaseChecklist/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.7">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.8">
     
     
       
@@ -22,7 +22,11 @@
       <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.815d1a91.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
         
       
       
@@ -54,7 +58,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
   
     
     
@@ -1190,7 +1194,7 @@
                 
                   
 
-  <a href="https://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/ReleaseChecklist.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/opentripplanner/OpenTripPlanner/edit/master/docs/DevReleaseChecklist.md" title="Edit this page" class="md-content__button md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
@@ -1243,10 +1247,10 @@ manually is more tedious, but keeps eyes on each step and is less prone to failu
   The current version of ENUNCIATE does not support Java 17 "out of the box", use 
   <code>export MAVEN_OPTS=´--add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED´</code>
   to ignore the problem.</li>
-<li>The <code>install</code> goal will sign the Maven artifacts so you need the GPG signing certificate set
-  up</li>
-<li>You can also use the <code>package</code> goal instead of the <code>install</code> goal to avoid signing if you
-  don't have the GPG certificate installed.</li>
+<li>~~The <code>install</code> goal will sign the Maven artifacts so you need the GPG signing certificate set
+  up~~</li>
+<li>~~You can also use the <code>package</code> goal instead of the <code>install</code> goal to avoid signing if you
+  don't have the GPG certificate installed.~~</li>
 <li>All tests should pass</li>
 <li>This build will also create Enunciate API docs and Javadoc with the correct non-snapshot
   version number</li>
@@ -1378,7 +1382,7 @@ up correctly for the CI-driven final release.</p>
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "toc.integrate"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
       
     
   </body>

@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://docs.opentripplanner.org/2.2/BuildConfiguration/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.4.1, mkdocs-material-8.5.7">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.8">
     
     
       
@@ -22,7 +22,11 @@
       <link rel="stylesheet" href="../assets/stylesheets/main.20d9efc8.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.815d1a91.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
         
       
       
@@ -54,7 +58,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
   
     
     
@@ -1391,7 +1395,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>Perform visibility calculations.</td>
 <td align="center"><em>Optional</em></td>
 <td><code>false</code></td>
-<td align="center">1.5</td>
+<td align="center">2.0</td>
 </tr>
 <tr>
 <td>banDiscouragedBiking</td>
@@ -1415,7 +1419,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>Whether to create stay-seated transfers in between two trips with the same block id.</td>
 <td align="center"><em>Optional</em></td>
 <td><code>true</code></td>
-<td align="center">2.2</td>
+<td align="center">na</td>
 </tr>
 <tr>
 <td><a href="#buildReportDir">buildReportDir</a></td>
@@ -1447,7 +1451,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>Should minimum transfer times in GTFS files be discarded.</td>
 <td align="center"><em>Optional</em></td>
 <td><code>false</code></td>
-<td align="center">2.2</td>
+<td align="center">na</td>
 </tr>
 <tr>
 <td><a href="#distanceBetweenElevationSamples">distanceBetweenElevationSamples</a></td>
@@ -1511,7 +1515,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>When a graph island with stops in it should be pruned.</td>
 <td align="center"><em>Optional</em></td>
 <td><code>5</code></td>
-<td align="center">2.1</td>
+<td align="center">2.0</td>
 </tr>
 <tr>
 <td><a href="#islandWithoutStopsMaxSize">islandWithoutStopsMaxSize</a></td>
@@ -1519,7 +1523,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>When a graph island without stops should be pruned.</td>
 <td align="center"><em>Optional</em></td>
 <td><code>40</code></td>
-<td align="center">2.1</td>
+<td align="center">2.0</td>
 </tr>
 <tr>
 <td>matchBusRoutesToStreets</td>
@@ -1527,7 +1531,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>Based on GTFS shape data, guess which OSM streets each bus runs on to improve stop linking.</td>
 <td align="center"><em>Optional</em></td>
 <td><code>false</code></td>
-<td align="center">1.5</td>
+<td align="center">2.0</td>
 </tr>
 <tr>
 <td>maxAreaNodes</td>
@@ -1551,7 +1555,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>The maximum distance to propagate elevation to vertices which have no elevation.</td>
 <td align="center"><em>Optional</em></td>
 <td><code>2000</code></td>
-<td align="center">1.5</td>
+<td align="center">na</td>
 </tr>
 <tr>
 <td>maxInterlineDistance</td>
@@ -1559,7 +1563,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>Maximal distance between stops in meters that will connect consecutive trips that are made with same vehicle.</td>
 <td align="center"><em>Optional</em></td>
 <td><code>200</code></td>
-<td align="center">1.5</td>
+<td align="center">2.0</td>
 </tr>
 <tr>
 <td><a href="#maxStopToShapeSnapDistance">maxStopToShapeSnapDistance</a></td>
@@ -1615,7 +1619,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>Whether we should create bike P+R stations from OSM data.</td>
 <td align="center"><em>Optional</em></td>
 <td><code>false</code></td>
-<td align="center">1.5</td>
+<td align="center">2.0</td>
 </tr>
 <tr>
 <td>staticParkAndRide</td>
@@ -1623,7 +1627,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>Whether we should create car P+R stations from OSM data.</td>
 <td align="center"><em>Optional</em></td>
 <td><code>true</code></td>
-<td align="center">1.5</td>
+<td align="center">2.0</td>
 </tr>
 <tr>
 <td><a href="#streetGraph">streetGraph</a></td>
@@ -1639,7 +1643,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>Minutes necessary to reach stops served by trips on routes of route_type=1 (subway) from the street.</td>
 <td align="center"><em>Optional</em></td>
 <td><code>2.0</code></td>
-<td align="center">1.5</td>
+<td align="center">2.0</td>
 </tr>
 <tr>
 <td><a href="#transitModelTimeZone">transitModelTimeZone</a></td>
@@ -1679,7 +1683,7 @@ Sections follow that describe particular settings in more depth.</p>
 <td>What OSM tags should be looked on for the source of matching stops to platforms and stops.</td>
 <td align="center"><em>Optional</em></td>
 <td></td>
-<td align="center">2.2</td>
+<td align="center">na</td>
 </tr>
 <tr>
 <td><a href="../sandbox/DataOverlay/">dataOverlay</a></td>
@@ -2260,7 +2264,7 @@ See <a href="#writeCachedElevations">writeCachedElevations</a> for details.</p>
 
 <h3 id="areaVisibility">areaVisibility</h3>
 
-<p><strong>Since version:</strong> <code>1.5</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code>  \
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code>  \
 <strong>Path:</strong> / </p>
 <p>Perform visibility calculations.</p>
 <p>If this is <code>true</code> OTP attempts to calculate a path straight through an OSM area using the
@@ -2292,7 +2296,7 @@ or format check on the version and it can be any string.</p>
 <p>The reports are stored in the same location as the graph.</p>
 <h3 id="discardMinTransferTimes">discardMinTransferTimes</h3>
 
-<p><strong>Since version:</strong> <code>2.2</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code>  \
+<p><strong>Since version:</strong> <code>na</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code>  \
 <strong>Path:</strong> / </p>
 <p>Should minimum transfer times in GTFS files be discarded.</p>
 <p>This is useful eg. when the minimum transfer time is only set for ticketing purposes,
@@ -2339,14 +2343,14 @@ graph.</p>
 all of the elevation values in the street edges.</p>
 <h3 id="islandWithStopsMaxSize">islandWithStopsMaxSize</h3>
 
-<p><strong>Since version:</strong> <code>2.1</code> ∙ <strong>Type:</strong> <code>integer</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>5</code>  \
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>integer</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>5</code>  \
 <strong>Path:</strong> / </p>
 <p>When a graph island with stops in it should be pruned.</p>
 <p>This field indicates the pruning threshold for islands with stops. Any such island under this
 size will be pruned.</p>
 <h3 id="islandWithoutStopsMaxSize">islandWithoutStopsMaxSize</h3>
 
-<p><strong>Since version:</strong> <code>2.1</code> ∙ <strong>Type:</strong> <code>integer</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>40</code>  \
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>integer</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>40</code>  \
 <strong>Path:</strong> / </p>
 <p>When a graph island without stops should be pruned.</p>
 <p>This field indicates the pruning threshold for islands without stops. Any such island under
@@ -2401,7 +2405,7 @@ recalculating them all over again.</p>
 <p>The file is created or overwritten if OTP saves the graph to the file</p>
 <h3 id="subwayAccessTime">subwayAccessTime</h3>
 
-<p><strong>Since version:</strong> <code>1.5</code> ∙ <strong>Type:</strong> <code>double</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>2.0</code>  \
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>double</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>2.0</code>  \
 <strong>Path:</strong> / </p>
 <p>Minutes necessary to reach stops served by trips on routes of route_type=1 (subway) from the street.</p>
 <p>Note! The preferred way to do this is to update the OSM data.
@@ -2412,7 +2416,7 @@ the passenger. For example, this helps avoid suggesting short bus rides between 
 a way to improve travel time. You can specify how long it takes to reach a subway platform.</p>
 <p>This setting does not generalize to other modes like airplanes because you often need much longer time
 to check in to a flight (2-3 hours for international flights) than to alight and exit the airport
-(perhaps 1 hour). Use <a href="../RouteRequest/#rd_boardSlackForMode"><code>boardSlackForMode</code></a> and
+(perhaps 1 hour). Use <a href="../RouteRequest/#rd_alightSlackForMode">alightSlackForMode</a> and
 <a href="../RouteRequest/#rd_alightSlackForMode"><code>alightSlackForMode</code></a> for this.</p>
 <h3 id="transitModelTimeZone">transitModelTimeZone</h3>
 
@@ -2465,17 +2469,17 @@ become stale and not include new OSM ways. Therefore, periodic update of this ca
 recommended.</p>
 <h3 id="boardingLocationTags">boardingLocationTags</h3>
 
-<p><strong>Since version:</strong> <code>2.2</code> ∙ <strong>Type:</strong> <code>string[]</code> ∙ <strong>Cardinality:</strong> <code>Optional</code>  \
+<p><strong>Since version:</strong> <code>na</code> ∙ <strong>Type:</strong> <code>string[]</code> ∙ <strong>Cardinality:</strong> <code>Optional</code>  \
 <strong>Path:</strong> / </p>
 <p>What OSM tags should be looked on for the source of matching stops to platforms and stops.</p>
-<p><a href="../BoardingLocations/">Detailed documentation</a></p>
+<p><a href="docs/BoardingLocations.md">Detailed documentation</a></p>
 <h3 id="dem">dem</h3>
 
 <p><strong>Since version:</strong> <code>2.2</code> ∙ <strong>Type:</strong> <code>object[]</code> ∙ <strong>Cardinality:</strong> <code>Optional</code>  \
 <strong>Path:</strong> / </p>
 <p>Specify parameters for DEM extracts.</p>
 <p>The dem section allows you to override the default behavior of scanning for elevation
-files in the <a href="../Configuration/#Base-Directory">base directory</a>. You can specify data
+files in the *<a href="../Configuration/#Base-Directory">base directory</a>. You can specify data
 located outside the local filesystem (including cloud storage services) or at various
 different locations around the local filesystem.</p>
 <p>If not specified OTP will fall back to auto-detection based on the directory provided on
@@ -2628,7 +2632,7 @@ the local filesystem.</p>
 <strong>Path:</strong> / </p>
 <p>Scan for transit data files</p>
 <p>The transitFeeds section of <code>build-config.json</code> allows you to override the default behavior
-of scanning for transit data files in the <a href="../Configuration/#Base-Directory">base directory</a>.
+of scanning for transit data files in the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/dev-2.x/docs/Configuration.md#Base-Directory">base directory</a>.
 You can specify data located outside the local filesystem (including cloud storage services)
 or at various different locations around the local filesystem.</p>
 <p>When a feed of a particular type (<code>netex</code> or <code>gtfs</code>) is specified in the transitFeeds
@@ -2823,7 +2827,7 @@ case where this is not the case.</p>
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "toc.integrate"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.8492ddcf.min.js"></script>
+      <script src="../assets/javascripts/bundle.d6c3db9e.min.js"></script>
       
     
   </body>
