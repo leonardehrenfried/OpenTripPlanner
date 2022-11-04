@@ -1325,23 +1325,18 @@ messages and all OTP APIs can be used to get the OTP Serialization Version Id.  
 possible to keep parts of the configuration in separate files. To include the contents of a file, use
 <code>${includeFile:FILE_NAME}</code>. The <code>FILE_NAME</code> must be the name of a file in the configuration 
 directory. Relative paths are not supported. </p>
-<p>
-To allow both files (the configuration file and the injected file) to be valid JSON files, a special
+<p>To allow both files (the configuration file and the injected file) to be valid JSON files, a special
 case is supported. If the include file directive is quoted, then the quotes are removed, if the 
-text inserted is valid JSON (starts with `{` and ends with `}`). 
-
-Variable substitution is performed on configuration file after the include file directive; Hence
-variable substitution is also performed on the text in the injected file.
-
-Here is an example including variable substitution, assuming version 2.1.0 of OTP:
-
+text inserted is valid JSON (starts with <code>{</code> and ends with <code>}</code>). </p>
+<p>Variable substitution is performed on configuration file after the include file directive; Hence
+variable substitution is also performed on the text in the injected file.</p>
+<p>Here is an example including variable substitution, assuming version 2.1.0 of OTP:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// build-config.json</span><span class="w"></span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">{</span><span class="w"></span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">&quot;storage&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${includeFile:storage.json}&quot;</span><span class="w"></span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="p">}</span><span class="w"> </span>
 </code></pre></div>
-
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// storage.json</span><span class="w"></span>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// storage.json</span><span class="w"></span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">{</span><span class="w"></span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;streetGraph&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;street-graph-v${maven.version}.obj&quot;</span><span class="w"></span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span><span class="w"></span>
@@ -1352,20 +1347,16 @@ The result will look like this:
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">&quot;streetGraph&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;street-graph-v2.1.0.obj&quot;</span><span class="w"></span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="p">}</span><span class="w"></span>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">}</span><span class="w"> </span>
-</code></pre></div>
-
-
-# System-wide Configuration
-
-Using the file `otp-config.json` you can enable or disable different APIs and experimental
-[Sandbox Extensions](SandboxExtension.md). By default, all supported APIs are enabled and all 
+</code></pre></div></p>
+<h1 id="system-wide-configuration">System-wide Configuration</h1>
+<p>Using the file <code>otp-config.json</code> you can enable or disable different APIs and experimental
+<a href="../SandboxExtension/">Sandbox Extensions</a>. By default, all supported APIs are enabled and all 
 sandbox features are disabled. So for most OTP2 use cases it is not necessary to create this file.
 Features that can be toggled in this file are generally only affect the routing phase of OTP2
 usage, but for consistency all such "feature flags", even those that would affect graph building,
-are managed in this one file. See the [OTPFeature](https://github.com/opentripplanner/OpenTripPlanner/blob/v2.1.0/src/main/java/org/opentripplanner/util/OTPFeature.java) 
+are managed in this one file. See the <a href="https://github.com/opentripplanner/OpenTripPlanner/blob/v2.1.0/src/main/java/org/opentripplanner/util/OTPFeature.java">OTPFeature</a> 
 Java class for an enumeration of all available features and their default settings. Here is an 
-example:
-
+example:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// otp-config.json</span><span class="w"></span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">{</span><span class="w"></span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;otpFeatures&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -1374,29 +1365,122 @@ example:
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="p">}</span><span class="w"></span>
 <a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">}</span><span class="w"></span>
 </code></pre></div>
-
-## OTP Features
-Here is a list of all features which can be toggled on/off.
-
-Feature | Description | Enabled by default | Sandbox
---------|-------------|--------------------|-------- 
-`APIBikeRental` | Enable the bike rental endpoint | yes | no
-`APIServerInfo` | Enable the server info endpoint |  yes | no
-`APIGraphInspectorTile` | Enable the inspector  endpoint for graph information for inspection/debugging purpose | yes | no
-`APIUpdaterStatus` | Enable endpoint for graph updaters status | yes | no
-`OptimizeTransfers` | OTP will inspect all itineraries found and optimize where (which stops) the transfer will happen. Waiting time, priority and guaranteed transfers are taken into account. | yes | no
-`MinimumTransferTimeIsDefinitive` | If the minimum transfer time is a lower bound (default) or the definitive time for the transfer. Set this to true if you want to set a transfer time lower than what OTP derives from OSM data. | no | no
-`ParallelRouting` | Enable performing parts of the trip planning in parallel | no | no
-`TransferConstraints` | Enforce transfers to happen according to the _transfers.txt_(GTFS) and Interchanges(NeTEx). Turing this _off_ will increase the routing performance a little. | yes | no
-`ActuatorAPI` | Enpoint for actuators (service health status) | no | yes
-`GoogleCloudStorage` | Enable Google Cloud Storage integration | no | yes
-`SandboxAPITransmodelApi` | Enable Entur Transmodel(NeTEx) GraphQL API | no | yes
-`SandboxAPILegacyGraphQLApi` | Enable (GTFS) GraphQL API | no | yes
-`SandboxAPIMapboxVectorTilesApi` | Enable Mapbox vector tiles API | no | yes
-`SandboxAPIParkAndRideApi` | Enable park-and-ride endpoint | no | yes
-`TransferAnalyzer` | Analyze transfers during graph build | no | yes
-`FlexRouting` | Enable FLEX routing | no | yes
-`FloatingBike` | Enable floating bike routing | no | yes
+<h2 id="otp-features">OTP Features</h2>
+<p>Here is a list of all features which can be toggled on/off.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Description</th>
+<th>Enabled by default</th>
+<th>Sandbox</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>APIBikeRental</code></td>
+<td>Enable the bike rental endpoint</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>APIServerInfo</code></td>
+<td>Enable the server info endpoint</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>APIGraphInspectorTile</code></td>
+<td>Enable the inspector  endpoint for graph information for inspection/debugging purpose</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>APIUpdaterStatus</code></td>
+<td>Enable endpoint for graph updaters status</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>OptimizeTransfers</code></td>
+<td>OTP will inspect all itineraries found and optimize where (which stops) the transfer will happen. Waiting time, priority and guaranteed transfers are taken into account.</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>MinimumTransferTimeIsDefinitive</code></td>
+<td>If the minimum transfer time is a lower bound (default) or the definitive time for the transfer. Set this to true if you want to set a transfer time lower than what OTP derives from OSM data.</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>ParallelRouting</code></td>
+<td>Enable performing parts of the trip planning in parallel</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>TransferConstraints</code></td>
+<td>Enforce transfers to happen according to the <em>transfers.txt</em>(GTFS) and Interchanges(NeTEx). Turing this <em>off</em> will increase the routing performance a little.</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td><code>ActuatorAPI</code></td>
+<td>Enpoint for actuators (service health status)</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>GoogleCloudStorage</code></td>
+<td>Enable Google Cloud Storage integration</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>SandboxAPITransmodelApi</code></td>
+<td>Enable Entur Transmodel(NeTEx) GraphQL API</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>SandboxAPILegacyGraphQLApi</code></td>
+<td>Enable (GTFS) GraphQL API</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>SandboxAPIMapboxVectorTilesApi</code></td>
+<td>Enable Mapbox vector tiles API</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>SandboxAPIParkAndRideApi</code></td>
+<td>Enable park-and-ride endpoint</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>TransferAnalyzer</code></td>
+<td>Analyze transfers during graph build</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>FlexRouting</code></td>
+<td>Enable FLEX routing</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><code>FloatingBike</code></td>
+<td>Enable floating bike routing</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
 
 
 
