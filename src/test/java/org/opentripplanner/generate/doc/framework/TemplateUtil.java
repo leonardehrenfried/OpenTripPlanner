@@ -1,17 +1,29 @@
 package org.opentripplanner.generate.doc.framework;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.opentripplanner.standalone.config.framework.json.NodeAdapter;
 
 /**
  * Replace a text in a file wrapped using HTML comments
  */
 public class TemplateUtil {
-
+  public static final ObjectMapper objectMapper = new ObjectMapper();
+  public static final DefaultPrettyPrinter prettyPrinter = new DefaultPrettyPrinter();
   private static final String PARAMETERS_TABLE = "PARAMETERS-TABLE";
   private static final String PARAMETERS_DETAILS = "PARAMETERS-DETAILS";
   private static final String EXAMPLE = "JSON-EXAMPLE";
   private static final String COMMENT_OPEN = "<!-- ";
   private static final String COMMENT_CLOSE = " -->";
+
+  static {
+    objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+    prettyPrinter.indentArraysWith(DefaultIndenter.SYSTEM_LINEFEED_INSTANCE);
+  }
 
   public static String replaceParametersTable(String doc, String replacement) {
     return replaceSection(doc, PARAMETERS_TABLE, replacement);
@@ -22,7 +34,7 @@ public class TemplateUtil {
   }
 
   public static String replaceJsonExample(String doc, NodeAdapter root, String source) {
-    return replaceSection(doc, EXAMPLE, jsonExample(root, source));
+    return replaceSection(doc, EXAMPLE, jsonExample(root.rawNode(), source));
   }
 
   public static String replaceSection(String doc, String token, String replacement) {
@@ -51,15 +63,22 @@ public class TemplateUtil {
   /**
    * Create a JSON example for the node. The given source  from the node
    */
-  public static String jsonExample(NodeAdapter nodeAdapter, String source) {
+  public static String jsonExample(JsonNode json, String comment) {
     return """
       ```JSON
       // %s
       %s
       ```
       """.formatted(
-        source,
-        nodeAdapter.toPrettyString()
+        comment,
+      prettyPrintJson(json)
       );
+  }
+  private static String prettyPrintJson(JsonNode body) {
+    try {
+      return objectMapper.writer(prettyPrinter).writeValueAsString(body);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
   }
 }
