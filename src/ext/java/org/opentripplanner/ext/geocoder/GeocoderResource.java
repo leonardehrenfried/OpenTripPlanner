@@ -98,7 +98,8 @@ public class GeocoderResource {
           sl.getCoordinate().latitude(),
           sl.getCoordinate().longitude(),
           stringifyStopLocation(sl),
-          FeedScopedIdMapper.mapToApi(sl.getId())
+          FeedScopedIdMapper.mapToApi(sl.getId()),
+          sl.getGtfsVehicleType() == null ? null : sl.getGtfsVehicleType().toString()
         )
       )
       .collect(Collectors.toList());
@@ -137,18 +138,9 @@ public class GeocoderResource {
       : Objects.toString(sl.getName());
   }
 
-  public static class SearchResult {
-
-    public double lat;
-    public double lng;
-    public String description;
-    public String id;
-
-    private SearchResult(double lat, double lng, String description, String id) {
-      this.lat = lat;
-      this.lng = lng;
-      this.description = description;
-      this.id = id;
+  public record SearchResult(double lat, double lng, String description, String id, String mode) {
+    public SearchResult(double lat, double lon, String description, String id) {
+      this(lat, lon, description, id, null);
     }
   }
 }
