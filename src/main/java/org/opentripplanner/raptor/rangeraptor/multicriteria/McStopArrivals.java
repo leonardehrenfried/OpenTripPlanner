@@ -65,13 +65,13 @@ public final class McStopArrivals<T extends RaptorTripSchedule> {
   public boolean reachedByTransit(int stopIndex) {
     return (
       arrivals[stopIndex] != null &&
-      arrivals[stopIndex].stream().anyMatch(McStopArrivals::arrivedByTransit)
+      arrivals[stopIndex].stream().anyMatch(arrival -> arrival.arrivedBy(TRANSIT))
     );
   }
 
   public int bestTransitArrivalTime(int stopIndex) {
     return arrivals[stopIndex].stream()
-      .filter(McStopArrivals::arrivedByTransit)
+      .filter(arrival -> arrival.arrivedBy(TRANSIT))
       .mapToInt(AbstractStopArrival::arrivalTime)
       .min()
       .orElseThrow();
@@ -79,7 +79,7 @@ public final class McStopArrivals<T extends RaptorTripSchedule> {
 
   public int smallestNumberOfTransfers(int stopIndex) {
     return arrivals[stopIndex].stream()
-      .filter(McStopArrivals::arrivedByTransit)
+      .filter(arrival -> arrival.arrivedBy(TRANSIT))
       .mapToInt(AbstractStopArrival::numberOfTransfers)
       .min()
       .orElseThrow();
@@ -174,9 +174,5 @@ public final class McStopArrivals<T extends RaptorTripSchedule> {
           );
         return true;
       });
-  }
-
-  private static boolean arrivedByTransit(AbstractStopArrival<?> arrival) {
-    return arrival.arrivedBy(TRANSIT);
   }
 }
