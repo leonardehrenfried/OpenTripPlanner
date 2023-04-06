@@ -78,14 +78,18 @@ public class TimetableHelper {
     int realtimeArrivalTime = getAvailableTime(
       departureDate,
       call::getActualArrivalTime,
-      call::getExpectedArrivalTime
+      call::getExpectedArrivalTime,
+      call::getActualDepartureTime,
+      call::getExpectedDepartureTime
     );
 
     int scheduledDepartureTime = tripTimes.getDepartureTime(index);
     int realtimeDepartureTime = getAvailableTime(
       departureDate,
       call::getActualDepartureTime,
-      call::getExpectedDepartureTime
+      call::getExpectedDepartureTime,
+      call::getActualArrivalTime,
+      call::getExpectedArrivalTime
     );
 
     int[] possibleArrivalTimes = index == 0
