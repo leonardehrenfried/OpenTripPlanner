@@ -157,7 +157,6 @@ public class ModifiedTripBuilder {
             startOfService,
             newTimes,
             callCounter,
-            callCounter == (stops.size() - 1),
             predictionInaccurate,
             call,
             occupancy

@@ -85,7 +85,7 @@ public class TimeTableHelperTest {
       .build();
 
     // Act
-    TimetableHelper.applyUpdates(startOfService, tripTimes, 0, false, false, estimatedCall, null);
+    TimetableHelper.applyUpdates(startOfService, tripTimes, 0, false, estimatedCall, null);
 
     // Assert
     assertStatuses(0, OccupancyStatus.MANY_SEATS_AVAILABLE, false, false, true);
@@ -105,7 +105,7 @@ public class TimeTableHelperTest {
       .build();
 
     // Act
-    TimetableHelper.applyUpdates(startOfService, tripTimes, 0, false, false, estimatedCall, null);
+    TimetableHelper.applyUpdates(startOfService, tripTimes, 0, false, estimatedCall, null);
 
     // Assert
 
@@ -128,7 +128,7 @@ public class TimeTableHelperTest {
       .build();
 
     // Act
-    TimetableHelper.applyUpdates(startOfService, tripTimes, 0, false, false, recordedCall, null);
+    TimetableHelper.applyUpdates(startOfService, tripTimes, 0, false, recordedCall, null);
 
     // Assert
 
@@ -150,7 +150,7 @@ public class TimeTableHelperTest {
       .build();
 
     // Act
-    TimetableHelper.applyUpdates(startOfService, tripTimes, 0, false, false, recordedCall, null);
+    TimetableHelper.applyUpdates(startOfService, tripTimes, 0, false, recordedCall, null);
 
     // Assert
     assertStatuses(0, OccupancyStatus.FULL, false, false, true);
@@ -171,7 +171,7 @@ public class TimeTableHelperTest {
       .build();
 
     // Act
-    TimetableHelper.applyUpdates(startOfService, tripTimes, 0, false, false, recordedCall, null);
+    TimetableHelper.applyUpdates(startOfService, tripTimes, 0, false, recordedCall, null);
 
     // Assert
     assertStatuses(0, OccupancyStatus.STANDING_ROOM_ONLY, false, true, false);
@@ -188,7 +188,6 @@ public class TimeTableHelperTest {
       startOfService,
       tripTimes,
       0,
-      false,
       true,
       recordedCall,
       OccupancyEnumeration.STANDING_AVAILABLE

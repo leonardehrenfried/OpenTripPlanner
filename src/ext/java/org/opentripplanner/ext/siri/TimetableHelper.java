@@ -54,7 +54,6 @@ public class TimetableHelper {
     ZonedDateTime departureDate,
     TripTimes tripTimes,
     int index,
-    boolean isLastStop,
     boolean isJourneyPredictionInaccurate,
     CallWrapper call,
     OccupancyEnumeration journeyOccupancy

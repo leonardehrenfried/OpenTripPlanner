@@ -199,7 +199,6 @@ class AddedTripBuilder {
         departureDate,
         updatedTripTimes,
         stopSequence,
-        stopSequence == (calls.size() - 1),
         isJourneyPredictionInaccurate,
         calls.get(stopSequence),
         occupancy
