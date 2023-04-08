@@ -662,6 +662,58 @@ class ModifiedTripBuilderTest {
     assertEquals(PickDrop.SCHEDULED, newPattern.getBoardType(2));
   }
 
+  /**
+   * The UK Siri profile doesn't require you to set arrival times for stops in the middle
+   * of the trip. Therefore we want to make sure that we use the departure time as a fallback.
+   */
+  @Test
+  void testMissingArrivalTime() {
+    final ZonedDateTime expectedDepartureTime = zonedDateTime(10, 9);
+    var result = new ModifiedTripBuilder(
+      TRIP_TIMES,
+      PATTERN,
+      SERVICE_DATE,
+      transitModel.getTimeZone(),
+      entityResolver,
+      List.of(
+        TestCall
+          .of()
+          .withStopPointRef(STOP_A_1.getId().getId())
+          .withAimedDepartureTime(zonedDateTime(10, 0))
+          .withExpectedDepartureTime(zonedDateTime(10, 1))
+          .build(),
+        TestCall
+          .of()
+          .withStopPointRef(STOP_B_1.getId().getId())
+          .withAimedDepartureTime(zonedDateTime(10, 12))
+          .withExpectedDepartureTime(expectedDepartureTime)
+          .build(),
+        TestCall
+          .of()
+          .withStopPointRef(STOP_C_1.getId().getId())
+          .withAimedArrivalTime(zonedDateTime(10, 20))
+          .withExpectedArrivalTime(zonedDateTime(10, 22))
+          .build()
+      ),
+      false,
+      null,
+      false
+    )
+      .build();
+
+    assertTrue(result.isSuccess(), "Update should be successful");
+    var timetable = result.successValue();
+
+    assertEquals(
+      expectedDepartureTime.toLocalTime(),
+      LocalTime.ofSecondOfDay(timetable.tripTimes().getArrivalTime(1))
+    );
+    assertEquals(
+      expectedDepartureTime.toLocalTime(),
+      LocalTime.ofSecondOfDay(timetable.tripTimes().getDepartureTime(1))
+    );
+  }
+
   private static ZonedDateTime zonedDateTime(int hour, int minute) {
     return ZonedDateTime.of(SERVICE_DATE, LocalTime.of(hour, minute), TIME_ZONE);
   }

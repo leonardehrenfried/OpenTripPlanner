@@ -78,30 +78,30 @@ public class TimetableHelper {
     int realtimeArrivalTime = getAvailableTime(
       departureDate,
       call::getActualArrivalTime,
-      call::getExpectedArrivalTime,
-      call::getActualDepartureTime,
-      call::getExpectedDepartureTime
+      call::getExpectedArrivalTime
     );
 
     int scheduledDepartureTime = tripTimes.getDepartureTime(index);
     int realtimeDepartureTime = getAvailableTime(
       departureDate,
       call::getActualDepartureTime,
-      call::getExpectedDepartureTime,
-      call::getActualArrivalTime,
-      call::getExpectedArrivalTime
+      call::getExpectedDepartureTime
     );
 
-    int[] possibleArrivalTimes = index == 0
-      ? new int[] { realtimeArrivalTime, realtimeDepartureTime, scheduledArrivalTime }
-      : new int[] { realtimeArrivalTime, scheduledArrivalTime };
+    int[] possibleArrivalTimes = new int[] {
+      realtimeArrivalTime,
+      realtimeDepartureTime,
+      scheduledArrivalTime,
+    };
     var arrivalTime = handleMissingRealtime(possibleArrivalTimes);
     int arrivalDelay = arrivalTime - scheduledArrivalTime;
     tripTimes.updateArrivalDelay(index, arrivalDelay);
 
-    int[] possibleDepartureTimes = isLastStop
-      ? new int[] { realtimeDepartureTime, realtimeArrivalTime, scheduledDepartureTime }
-      : new int[] { realtimeDepartureTime, scheduledDepartureTime };
+    int[] possibleDepartureTimes = new int[] {
+      realtimeDepartureTime,
+      realtimeArrivalTime,
+      scheduledDepartureTime,
+    };
     var departureTime = handleMissingRealtime(possibleDepartureTimes);
     int departureDelay = departureTime - scheduledDepartureTime;
     tripTimes.updateDepartureDelay(index, departureDelay);
