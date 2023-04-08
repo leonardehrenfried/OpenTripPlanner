@@ -20,7 +20,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 import javax.xml.stream.XMLStreamException;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.http.client.utils.URIBuilder;
 import org.opentripplanner.ext.siri.SiriTimetableSnapshotSource;
 import org.opentripplanner.framework.io.HttpUtils;
@@ -125,7 +124,6 @@ public class SiriAzureETUpdater extends AbstractAzureSiriUpdater {
 
       super.saveResultOnGraph.execute((graph, transitModel) -> {
         snapshotSource.applyEstimatedTimetable(
-          transitModel,
           fuzzyTripMatcher(),
           entityResolver(),
           feedId,
@@ -151,7 +149,6 @@ public class SiriAzureETUpdater extends AbstractAzureSiriUpdater {
         try {
           long t1 = System.currentTimeMillis();
           var result = snapshotSource.applyEstimatedTimetable(
-            transitModel,
             fuzzyTripMatcher(),
             entityResolver(),
             feedId,
