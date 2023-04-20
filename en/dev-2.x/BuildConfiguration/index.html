@@ -1,0 +1,2981 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.opentripplanner.org/dev-2.x/BuildConfiguration/">
+      
+      
+        <link rel="prev" href="../Configuration/">
+      
+      
+        <link rel="next" href="../BoardingLocations/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.5">
+    
+    
+      
+        <title>Build - OpenTripPlanner 2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7a7fce14.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#graph-build-configuration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenTripPlanner 2" class="md-header__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTripPlanner 2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Build
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenTripPlanner 2" class="md-nav__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    OpenTripPlanner 2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          About
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          About
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Product-Overview/" class="md-nav__link">
+        Product Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Governance/" class="md-nav__link">
+        Governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../History/" class="md-nav__link">
+        History
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Presentations/" class="md-nav__link">
+        Presentations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deployments/" class="md-nav__link">
+        Deployments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Visual-Identity/" class="md-nav__link">
+        Visual Identity
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Basic-Tutorial/" class="md-nav__link">
+        Basic Tutorial
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting-OTP/" class="md-nav__link">
+        Getting OTP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Container-Image/" class="md-nav__link">
+        Container Image
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../System-Requirements/" class="md-nav__link">
+        System Requirements and Suggestions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_3_5">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Configuration/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Build
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Build
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parameters-overview" class="md-nav__link">
+    Parameters Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-uris" class="md-nav__link">
+    Specifying URIs
+  </a>
+  
+    <nav class="md-nav" aria-label="Specifying URIs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-with-multiple-data-sources" class="md-nav__link">
+    Example With Multiple Data Sources
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openstreetmaposm-configuration" class="md-nav__link">
+    OpenStreetMap(OSM) configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenStreetMap(OSM) configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#osm-tag-mapping" class="md-nav__link">
+    OSM tag mapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-naming" class="md-nav__link">
+    Custom naming
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#elevation-data" class="md-nav__link">
+    Elevation data
+  </a>
+  
+    <nav class="md-nav" aria-label="Elevation data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#geoid-difference" class="md-nav__link">
+    Geoid Difference
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-raster-elevation-data" class="md-nav__link">
+    Other raster elevation data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elevation-unit-conversion" class="md-nav__link">
+    Elevation unit conversion
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#elevation-data-calculation-optimizations" class="md-nav__link">
+    Elevation Data Calculation Optimizations
+  </a>
+  
+    <nav class="md-nav" aria-label="Elevation Data Calculation Optimizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reusing-elevation-data-from-previous-builds" class="md-nav__link">
+    Reusing elevation data from previous builds
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameter-details" class="md-nav__link">
+    Parameter Details
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#build-config-example" class="md-nav__link">
+    Build Config Example
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BoardingLocations/" class="md-nav__link">
+        Boarding Locations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IslandPruning/" class="md-nav__link">
+        Street Graph Pruning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouterConfiguration/" class="md-nav__link">
+        Router
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Accessibility/" class="md-nav__link">
+        Accessibility
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouteRequest/" class="md-nav__link">
+        Route Request
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UpdaterConfig/" class="md-nav__link">
+        Realtime Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoutingModes/" class="md-nav__link">
+        Routing Modes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Preparing-OSM/" class="md-nav__link">
+        Preparing OSM Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Netex-Norway/" class="md-nav__link">
+        Netex and SIRI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Security/" class="md-nav__link">
+        Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting-Routing/" class="md-nav__link">
+        Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Version-Comparison/" class="md-nav__link">
+        Comparing OTP2 to OTP1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OTP2-MigrationGuide/" class="md-nav__link">
+        OTP2 Migration Guide
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Development
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Development
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Developers-Guide/" class="md-nav__link">
+        Developers' Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Interfaces-Data-Sources/" class="md-nav__link">
+        Interfaces and Data Sources
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        Localization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Bibliography/" class="md-nav__link">
+        Bibliography
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Codestyle/" class="md-nav__link">
+        Codestyle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        Sandbox Development
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ReleaseChecklist/" class="md-nav__link">
+        Release Checklist
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Sandbox
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Sandbox
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ActuatorAPI/" class="md-nav__link">
+        Actuator API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/transferanalyzer/" class="md-nav__link">
+        Direct Transfer Analyzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GoogleCloudStorage/" class="md-nav__link">
+        Google Cloud Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/LegacyGraphQLApi/" class="md-nav__link">
+        HSL Legacy GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TransmodelApi/" class="md-nav__link">
+        Transmodel(NeTEx) GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriUpdater/" class="md-nav__link">
+        SIRI Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriAzureUpdater/" class="md-nav__link">
+        SIRI Updater (Azure)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleRentalServiceDirectory/" class="md-nav__link">
+        Vehicle Rental Service Directory API support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SmooveBikeRental/" class="md-nav__link">
+        Smoove Bike Rental Updator Support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/MapboxVectorTilesApi/" class="md-nav__link">
+        Mapbox Vector Tiles API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Flex/" class="md-nav__link">
+        Flex Routing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ReportApi/" class="md-nav__link">
+        Report API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/InteractiveOtpMain/" class="md-nav__link">
+        Interactive OTP Launcher
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ParkAndRideApi/" class="md-nav__link">
+        Park and Ride API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/DataOverlay/" class="md-nav__link">
+        Data Overlay
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleParking/" class="md-nav__link">
+        Vehicle Parking Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleToStopHeuristics/" class="md-nav__link">
+        Vehicle-to-stop Heuristics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GeocoderAPI/" class="md-nav__link">
+        Geocoder API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TravelTime/" class="md-nav__link">
+        Travel Time Isochrones
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/IBIAccessibilityScore/" class="md-nav__link">
+        IBI Accessibility Score
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Fares/" class="md-nav__link">
+        Fares
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/RideHailing/" class="md-nav__link">
+        Ride Hailing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<!--
+  NOTE! Part of this document is generated. Make sure you edit the template, not the generated doc.
+
+   - Template directory is:  /doc-templates
+   - Generated directory is: /docs 
+-->
+
+<h1 id="graph-build-configuration">Graph Build Configuration</h1>
+<p>This table lists all the JSON properties that can be defined in a <code>build-config.json</code> file. These
+will be stored in the graph itself, and affect any server that subsequently loads that graph.
+Sections follow that describe particular settings in more depth.</p>
+<h2 id="parameters-overview">Parameters Overview</h2>
+<!-- PARAMETERS-TABLE BEGIN -->
+<!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
+
+<table>
+<thead>
+<tr>
+<th>Config Parameter</th>
+<th align="center">Type</th>
+<th>Summary</th>
+<th align="center">Req./Opt.</th>
+<th>Default Value</th>
+<th align="center">Since</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#areaVisibility">areaVisibility</a></td>
+<td align="center"><code>boolean</code></td>
+<td>Perform visibility calculations.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">1.5</td>
+</tr>
+<tr>
+<td>banDiscouragedBiking</td>
+<td align="center"><code>boolean</code></td>
+<td>Should biking be allowed on OSM ways tagged with <code>bicycle=discouraged</code></td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>banDiscouragedWalking</td>
+<td align="center"><code>boolean</code></td>
+<td>Should walking be allowed on OSM ways tagged with <code>foot=discouraged</code></td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#buildReportDir">buildReportDir</a></td>
+<td align="center"><code>uri</code></td>
+<td>URI to the directory where the graph build report should be written to.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#configVersion">configVersion</a></td>
+<td align="center"><code>string</code></td>
+<td>Deployment version of the <em>build-config.json</em>.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.1</td>
+</tr>
+<tr>
+<td><a href="#dataImportReport">dataImportReport</a></td>
+<td align="center"><code>boolean</code></td>
+<td>Generate nice HTML report of Graph errors/warnings</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#distanceBetweenElevationSamples">distanceBetweenElevationSamples</a></td>
+<td align="center"><code>double</code></td>
+<td>The distance between elevation samples in meters.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>10.0</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>embedRouterConfig</td>
+<td align="center"><code>boolean</code></td>
+<td>Embed the Router config in the graph, which allows it to be sent to a server fully configured over the wire.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>true</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>extraEdgesStopPlatformLink</td>
+<td align="center"><code>boolean</code></td>
+<td>Add extra edges when linking a stop to a platform, to prevent detours along the platform edge.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#graph">graph</a></td>
+<td align="center"><code>uri</code></td>
+<td>URI to the graph object file for reading and writing.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#gsCredentials">gsCredentials</a></td>
+<td align="center"><code>string</code></td>
+<td>Local file system path to Google Cloud Platform service accounts credentials file.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#includeEllipsoidToGeoidDifference">includeEllipsoidToGeoidDifference</a></td>
+<td align="center"><code>boolean</code></td>
+<td>Include the Ellipsoid to Geoid difference in the calculations of every point along every StreetWithElevationEdge.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>matchBusRoutesToStreets</td>
+<td align="center"><code>boolean</code></td>
+<td>Based on GTFS shape data, guess which OSM streets each bus runs on to improve stop linking.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">1.5</td>
+</tr>
+<tr>
+<td>maxAreaNodes</td>
+<td align="center"><code>integer</code></td>
+<td>Visibility calculations for an area will not be done if there are more nodes than this limit.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>500</code></td>
+<td align="center">2.1</td>
+</tr>
+<tr>
+<td><a href="#maxDataImportIssuesPerFile">maxDataImportIssuesPerFile</a></td>
+<td align="center"><code>integer</code></td>
+<td>When to split the import report.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>1000</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>maxElevationPropagationMeters</td>
+<td align="center"><code>integer</code></td>
+<td>The maximum distance to propagate elevation to vertices which have no elevation.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>2000</code></td>
+<td align="center">1.5</td>
+</tr>
+<tr>
+<td><a href="#maxStopToShapeSnapDistance">maxStopToShapeSnapDistance</a></td>
+<td align="center"><code>double</code></td>
+<td>Maximum distance between route shapes and their stops.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>150.0</code></td>
+<td align="center">2.1</td>
+</tr>
+<tr>
+<td>maxTransferDuration</td>
+<td align="center"><code>duration</code></td>
+<td>Transfers up to this duration with the default walk speed value will be pre-calculated and included in the Graph.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"PT30M"</code></td>
+<td align="center">2.1</td>
+</tr>
+<tr>
+<td><a href="#multiThreadElevationCalculations">multiThreadElevationCalculations</a></td>
+<td align="center"><code>boolean</code></td>
+<td>Configuring multi-threading during elevation calculations.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#osmCacheDataInMem">osmCacheDataInMem</a></td>
+<td align="center"><code>boolean</code></td>
+<td>If OSM data should be cached in memory during processing.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>platformEntriesLinking</td>
+<td align="center"><code>boolean</code></td>
+<td>Link unconnected entries to public transport platforms.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#readCachedElevations">readCachedElevations</a></td>
+<td align="center"><code>boolean</code></td>
+<td>Whether to read cached elevation data.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>true</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>staticBikeParkAndRide</td>
+<td align="center"><code>boolean</code></td>
+<td>Whether we should create bike P+R stations from OSM data.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">1.5</td>
+</tr>
+<tr>
+<td>staticParkAndRide</td>
+<td align="center"><code>boolean</code></td>
+<td>Whether we should create car P+R stations from OSM data.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>true</code></td>
+<td align="center">1.5</td>
+</tr>
+<tr>
+<td><a href="#streetGraph">streetGraph</a></td>
+<td align="center"><code>uri</code></td>
+<td>URI to the street graph object file for reading and writing.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#subwayAccessTime">subwayAccessTime</a></td>
+<td align="center"><code>double</code></td>
+<td>Minutes necessary to reach stops served by trips on routes of route_type=1 (subway) from the street.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>2.0</code></td>
+<td align="center">1.5</td>
+</tr>
+<tr>
+<td><a href="#transitModelTimeZone">transitModelTimeZone</a></td>
+<td align="center"><code>time-zone</code></td>
+<td>Time zone for the graph.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td><a href="#transitServiceEnd">transitServiceEnd</a></td>
+<td align="center"><code>duration</code></td>
+<td>Limit the import of transit services to the given end date.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"P3Y"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#transitServiceStart">transitServiceStart</a></td>
+<td align="center"><code>duration</code></td>
+<td>Limit the import of transit services to the given START date.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"-P1Y"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#writeCachedElevations">writeCachedElevations</a></td>
+<td align="center"><code>boolean</code></td>
+<td>Reusing elevation data from previous builds</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#boardingLocationTags">boardingLocationTags</a></td>
+<td align="center"><code>string[]</code></td>
+<td>What OSM tags should be looked on for the source of matching stops to platforms and stops.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td><a href="../sandbox/DataOverlay/">dataOverlay</a></td>
+<td align="center"><code>object</code></td>
+<td>Config for the DataOverlay Sandbox module</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td><a href="#dem">dem</a></td>
+<td align="center"><code>object[]</code></td>
+<td>Specify parameters for DEM extracts.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      <a href="#dem_0_elevationUnitMultiplier">elevationUnitMultiplier</a></td>
+<td align="center"><code>double</code></td>
+<td>Specify a multiplier to convert elevation units from source to meters. Overrides the value specified in <code>demDefaults</code>.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>1.0</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>      source</td>
+<td align="center"><code>uri</code></td>
+<td>The unique URI pointing to the data file.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>demDefaults</td>
+<td align="center"><code>object</code></td>
+<td>Default properties for DEM extracts.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   <a href="#demDefaults_elevationUnitMultiplier">elevationUnitMultiplier</a></td>
+<td align="center"><code>double</code></td>
+<td>Specify a multiplier to convert elevation units from source to meters.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>1.0</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td><a href="#elevationBucket">elevationBucket</a></td>
+<td align="center"><code>object</code></td>
+<td>Used to download NED elevation tiles from the given AWS S3 bucket.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">na</td>
+</tr>
+<tr>
+<td><a href="../sandbox/Fares/">fares</a></td>
+<td align="center"><code>object</code></td>
+<td>Fare configuration.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>gtfsDefaults</td>
+<td align="center"><code>object</code></td>
+<td>The gtfsDefaults section allows you to specify default properties for GTFS files.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   blockBasedInterlining</td>
+<td align="center"><code>boolean</code></td>
+<td>Whether to create stay-seated transfers in between two trips with the same block id.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>true</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   <a href="#gd_discardMinTransferTimes">discardMinTransferTimes</a></td>
+<td align="center"><code>boolean</code></td>
+<td>Should minimum transfer times in GTFS files be discarded.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   maxInterlineDistance</td>
+<td align="center"><code>integer</code></td>
+<td>Maximal distance between stops in meters that will connect consecutive trips that are made with same vehicle.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>200</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   removeRepeatedStops</td>
+<td align="center"><code>boolean</code></td>
+<td>Should consecutive identical stops be merged into one stop time entry.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>true</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   <a href="#gd_stationTransferPreference">stationTransferPreference</a></td>
+<td align="center"><code>enum</code></td>
+<td>Should there be some preference or aversion for transfers at stops that are part of a station.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"allowed"</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>islandPruning</td>
+<td align="center"><code>object</code></td>
+<td>Settings for fixing street graph connectivity errors</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   <a href="#islandPruning_adaptivePruningDistance">adaptivePruningDistance</a></td>
+<td align="center"><code>integer</code></td>
+<td>Search distance for analyzing islands in pruning.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>250</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   <a href="#islandPruning_adaptivePruningFactor">adaptivePruningFactor</a></td>
+<td align="center"><code>double</code></td>
+<td>Defines how much pruning thresholds grow maximally by distance.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>50.0</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   <a href="#islandPruning_islandWithStopsMaxSize">islandWithStopsMaxSize</a></td>
+<td align="center"><code>integer</code></td>
+<td>When a graph island with stops in it should be pruned.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>2</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   <a href="#islandPruning_islandWithoutStopsMaxSize">islandWithoutStopsMaxSize</a></td>
+<td align="center"><code>integer</code></td>
+<td>When a graph island without stops should be pruned.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>10</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td><a href="#localFileNamePatterns">localFileNamePatterns</a></td>
+<td align="center"><code>object</code></td>
+<td>Patterns for matching OTP file types in the base directory</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>   <a href="#lfp_dem">dem</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Pattern for matching elevation DEM files.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"(?i)\.tiff?$"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>   <a href="#lfp_gtfs">gtfs</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Patterns for matching GTFS zip-files or directories.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"(?i)gtfs"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>   <a href="#lfp_netex">netex</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Patterns for matching NeTEx zip files or directories.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"(?i)netex"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>   <a href="#lfp_osm">osm</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Pattern for matching Open Street Map input files.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"(?i)(\.pbf¦\.osm¦\.osm\.xml)$"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>netexDefaults</td>
+<td align="center"><code>object</code></td>
+<td>The netexDefaults section allows you to specify default properties for NeTEx files.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>   feedId</td>
+<td align="center"><code>string</code></td>
+<td>This field is used to identify the specific NeTEx feed. It is used instead of the feed_id field in GTFS file feed_info.txt.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"NETEX"</code></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>   <a href="#nd_groupFilePattern">groupFilePattern</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Pattern for matching group NeTEx files.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"(\w{3})-.*\.xml"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>   ignoreFareFrame</td>
+<td align="center"><code>boolean</code></td>
+<td>Ignore contents of the FareFrame</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   <a href="#nd_ignoreFilePattern">ignoreFilePattern</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Pattern for matching ignored files in a NeTEx bundle.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"$^"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>   noTransfersOnIsolatedStops</td>
+<td align="center"><code>boolean</code></td>
+<td>Whether we should allow transfers to and from StopPlaces marked with LimitedUse.ISOLATED</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>   <a href="#nd_sharedFilePattern">sharedFilePattern</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Pattern for matching shared NeTEx files in a NeTEx bundle.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"shared-data\.xml"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>   <a href="#nd_sharedGroupFilePattern">sharedGroupFilePattern</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Pattern for matching shared group NeTEx files in a NeTEx bundle.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"(\w{3})-.*-shared\.xml"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>   <a href="#nd_ferryIdsNotAllowedForBicycle">ferryIdsNotAllowedForBicycle</a></td>
+<td align="center"><code>string[]</code></td>
+<td>List ferries which do not allow bikes.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="#osm">osm</a></td>
+<td align="center"><code>object[]</code></td>
+<td>Configure properties for a given OpenStreetMap feed.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      <a href="#osm_0_osmTagMapping">osmTagMapping</a></td>
+<td align="center"><code>enum</code></td>
+<td>The named set of mapping rules applied when parsing OSM tags. Overrides the value specified in <code>osmDefaults</code>.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"default"</code></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      source</td>
+<td align="center"><code>uri</code></td>
+<td>The unique URI pointing to the data file.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      timeZone</td>
+<td align="center"><code>time-zone</code></td>
+<td>The timezone used to resolve opening hours in OSM data. Overrides the value specified in <code>osmDefaults</code>.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>osmDefaults</td>
+<td align="center"><code>object</code></td>
+<td>Default properties for OpenStreetMap feeds.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>   <a href="#od_osmTagMapping">osmTagMapping</a></td>
+<td align="center"><code>enum</code></td>
+<td>The named set of mapping rules applied when parsing OSM tags.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"default"</code></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>   timeZone</td>
+<td align="center"><code>time-zone</code></td>
+<td>The timezone used to resolve opening hours in OSM data.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>osmNaming</td>
+<td align="center"><code>object</code></td>
+<td>A custom OSM namer to use.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td><a href="../RouteRequest/">transferRequests</a></td>
+<td align="center"><code>object[]</code></td>
+<td>Routing requests to use for pre-calculating stop-to-stop transfers.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.1</td>
+</tr>
+<tr>
+<td><a href="#transitFeeds">transitFeeds</a></td>
+<td align="center"><code>object[]</code></td>
+<td>Scan for transit data files</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>   { object }</td>
+<td align="center"><code>object</code></td>
+<td>Nested object in array. The object type is determined by the parameters.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      type = "gtfs"</td>
+<td align="center"><code>enum</code></td>
+<td>The feed input format.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      blockBasedInterlining</td>
+<td align="center"><code>boolean</code></td>
+<td>Whether to create stay-seated transfers in between two trips with the same block id. Overrides the value specified in <code>gtfsDefaults</code>.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>true</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>      <a href="#tf_0_discardMinTransferTimes">discardMinTransferTimes</a></td>
+<td align="center"><code>boolean</code></td>
+<td>Should minimum transfer times in GTFS files be discarded. Overrides the value specified in <code>gtfsDefaults</code>.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>      feedId</td>
+<td align="center"><code>string</code></td>
+<td>The unique ID for this feed. This overrides any feed ID defined within the feed itself.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      maxInterlineDistance</td>
+<td align="center"><code>integer</code></td>
+<td>Maximal distance between stops in meters that will connect consecutive trips that are made with same vehicle. Overrides the value specified in <code>gtfsDefaults</code>.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>200</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>      removeRepeatedStops</td>
+<td align="center"><code>boolean</code></td>
+<td>Should consecutive identical stops be merged into one stop time entry. Overrides the value specified in <code>gtfsDefaults</code>.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>true</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>      source</td>
+<td align="center"><code>uri</code></td>
+<td>The unique URI pointing to the data file.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      <a href="#tf_0_stationTransferPreference">stationTransferPreference</a></td>
+<td align="center"><code>enum</code></td>
+<td>Should there be some preference or aversion for transfers at stops that are part of a station. Overrides the value specified in <code>gtfsDefaults</code>.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"allowed"</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>   { object }</td>
+<td align="center"><code>object</code></td>
+<td>Nested object in array. The object type is determined by the parameters.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      type = "netex"</td>
+<td align="center"><code>enum</code></td>
+<td>The feed input format.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      feedId</td>
+<td align="center"><code>string</code></td>
+<td>This field is used to identify the specific NeTEx feed. It is used instead of the feed_id field in GTFS file feed_info.txt.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      <a href="#tf_1_groupFilePattern">groupFilePattern</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Pattern for matching group NeTEx files.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"(\w{3})-.*\.xml"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>      ignoreFareFrame</td>
+<td align="center"><code>boolean</code></td>
+<td>Ignore contents of the FareFrame</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.3</td>
+</tr>
+<tr>
+<td>      <a href="#tf_1_ignoreFilePattern">ignoreFilePattern</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Pattern for matching ignored files in a NeTEx bundle.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"$^"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>      noTransfersOnIsolatedStops</td>
+<td align="center"><code>boolean</code></td>
+<td>Whether we should allow transfers to and from StopPlaces marked with LimitedUse.ISOLATED</td>
+<td align="center"><em>Optional</em></td>
+<td><code>false</code></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      <a href="#tf_1_sharedFilePattern">sharedFilePattern</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Pattern for matching shared NeTEx files in a NeTEx bundle.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"shared-data\.xml"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>      <a href="#tf_1_sharedGroupFilePattern">sharedGroupFilePattern</a></td>
+<td align="center"><code>regexp</code></td>
+<td>Pattern for matching shared group NeTEx files in a NeTEx bundle.</td>
+<td align="center"><em>Optional</em></td>
+<td><code>"(\w{3})-.*-shared\.xml"</code></td>
+<td align="center">2.0</td>
+</tr>
+<tr>
+<td>      source</td>
+<td align="center"><code>uri</code></td>
+<td>The unique URI pointing to the data file.</td>
+<td align="center"><em>Required</em></td>
+<td></td>
+<td align="center">2.2</td>
+</tr>
+<tr>
+<td>      <a href="#tf_1_ferryIdsNotAllowedForBicycle">ferryIdsNotAllowedForBicycle</a></td>
+<td align="center"><code>string[]</code></td>
+<td>List ferries which do not allow bikes.</td>
+<td align="center"><em>Optional</em></td>
+<td></td>
+<td align="center">2.0</td>
+</tr>
+</tbody>
+</table>
+<!-- PARAMETERS-TABLE END -->
+
+<h2 id="specifying-uris">Specifying URIs</h2>
+<p>As a general rule, references to data files are specified as absolute URIs and must start with the 
+protocol name.   </p>
+<p><strong>Example</strong></p>
+<p>Local files: <code>"file:///Users/kelvin/otp/streetGraph.obj"</code><br />
+HTTPS resources: <code>"https://download.geofabrik.de/europe/norway-latest.osm.pbf"</code><br />
+Google Cloud Storage files: <code>"gs://otp-test-bucket/a/b/graph.obj"</code>  </p>
+<p>Alternatively if a relative URI can be provided, it is interpreted as a path relative to the
+<a href="../Configuration/#Base-Directory">base directory</a>.</p>
+<p><strong>Example</strong></p>
+<p>File relative to the base directory (inside the base directory): <code>streetGraph.obj</code> <br />
+File relative to the base directory (outside the base directory): <code>../street-graphs/streetGraph.obj</code></p>
+<h3 id="example-with-multiple-data-sources">Example With Multiple Data Sources</h3>
+<p>For example, this configuration could be used to load GTFS and OSM inputs from Google Cloud Storage:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// build-config.json</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&quot;osm&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gs://bucket-name/streets.pbf&quot;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="nt">&quot;transitFeeds&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;netex&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gs://bucket-name/transit1.zip&quot;</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gtfs&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gs://bucket-name/transit2.zip&quot;</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">}</span>
+</code></pre></div>
+<p>The Google Storage system will inherit the permissions of the server it's running on within Google
+Cloud. It is also possible to supply credentials in this configuration file (see example below).</p>
+<p>Note that when files are specified with URIs in this configuration, the file types do not need to be
+inferred from the file names, so these GTFS files can have any names - there is no requirement that
+they have the letters "gtfs" in them.</p>
+<p>The default behavior of scanning the base directory for inputs is overridden independently for each
+file type. So in the above configuration, GTFS and OSM will be loaded from Google Cloud Storage, but
+OTP2 will still scan the base directory for all other types such as DEM files. Supplying an empty
+array for a particular file type will ensure that no inputs of that type are loaded, including by
+local directory scanning.</p>
+<h2 id="limit-transit-service-period">Limit the transit service period</h2>
+
+<p>The properties <code>transitServiceStart</code> and <code>transitServiceEnd</code> can be used to limit the service dates.
+This affects both GTFS service calendars and dates. The service calendar is reduced and dates
+outside the period are dropped. OTP2 will compute a transit schedule for every day for which it can
+find at least one trip running. On the other hand, OTP will waste resources if a service end date
+is <em>unbounded</em> or very large (<code>9999-12-31</code>). To avoid this, limit the OTP service period. Also, if
+you provide a service with multiple feeds they may have different service end dates. To avoid
+inconsistent results, the period can be limited, so all feeds have data for the entire period. The
+default is to use a period of 1 year before, and 3 years after the day the graph is built. Limiting
+the period will <em>not</em> improve the search performance, but OTP will build faster and load faster in
+most cases.</p>
+<p>The <code>transitServiceStart</code> and <code>transitServiceEnd</code> parameters are set using an absolute date
+like <code>2020-12-31</code> or a period like <code>P1Y6M5D</code> relative to the graph build date. Negative periods is
+used to specify dates in the past. The period is computed using the system time-zone, not the feed
+time-zone. Also, remember that the service day might be more than 24 hours. So be sure to include
+enough slack to account for the this. Setting the limits too wide have very little impact and is in
+general better than trying to be exact. The period and date format follow the ISO 8601 standard.</p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// build-config.json</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="c1">// Include 3 months of history</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">&quot;transitServiceStart&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-P3M&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="c1">// Include 1 year 6 month and 5 days of scheduled data in the future </span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">&quot;transitServiceEnd&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;P1Y6M5D&quot;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="transferring-within-stations">Transferring within stations</h2>
+
+<p>Subway systems tend to exist in their own layer of the city separate from the surface, though there
+are exceptions where tracks lie right below the street and transfers happen via the surface. In
+systems where the subway is quite deep and transfers happen via tunnels, the time required for an
+in-station transfer is often less than that for a surface transfer.</p>
+<p>One way to resolve this problem is by ensuring that the GTFS feed codes each platform as a separate
+stop, then micro-mapping stations in OSM. When OSM data contains a detailed description of walkways,
+stairs, and platforms within a station, GTFS stops can be linked to the nearest platform and
+transfers will happen via the OSM ways, which should yield very realistic transfer time
+expectations. This works particularly well in above-ground train stations where the layering of
+non-intersecting ways is less prevalent. See <a href="../BoardingLocations/">BoardingLocations</a> for more 
+details.</p>
+<p>An alternative approach is to use GTFS pathways to model entrances and platforms within stations.</p>
+<h2 id="openstreetmaposm-configuration">OpenStreetMap(OSM) configuration</h2>
+<p>It is possible to adjust how OSM data is interpreted by OpenTripPlanner when building the road part
+of the routing graph.</p>
+<h3 id="osm-tag-mapping">OSM tag mapping</h3>
+<p>OSM tags have different meanings in different countries, and how the roads in a particular country
+or region are tagged affects routing. As an example roads tagged with `highway=trunk are (mainly)
+walkable in Norway, but forbidden in some other countries. This might lead to OTP being unable to
+snap stops to these roads, or by giving you poor routing results for walking and biking. You can
+adjust which road types that are accessible by foot, car &amp; bicycle as well as speed limits,
+suitability for biking and walking. It's possible to define "safety" values for cycling and walking which are used in routing.</p>
+<p>To add your own OSM tag mapping have a look
+at <code>org.opentripplanner.graph_builder.module.osm.tagmapping.NorwayTagMapper</code>
+and <code>org.opentripplanner.graph_builder.module.osm.tagmapping.DefaultMapper</code> as examples. 
+If you choose to mainly rely on the default rules, make sure you add your own rules first before applying the default ones.
+The mechanism is that for any two identical tags, OTP will use the first one.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// build-config.json</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">&quot;osm&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gs://marduk-dev/osm/oslo_norway.osm-160816.pbf&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">&quot;osmTagMapping&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;norway&quot;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="custom-naming">Custom naming</h3>
+<p>You can define a custom naming scheme for elements drawn from OSM by defining an <code>osmNaming</code> field
+in <code>build-config.json</code>, such as:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// build-config.json</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">{</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;osmNaming&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;portland&quot;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
+</code></pre></div>
+<p>There is currently only one custom naming module called <code>portland</code> (which has no parameters).</p>
+<h2 id="elevation-data">Elevation data</h2>
+<p>OpenTripPlanner can "drape" the OSM street network over a digital elevation model (DEM). This allows
+OTP to draw an elevation profile for the on-street portion of itineraries, and helps provide better
+routing for bicyclists. It even helps avoid hills for walking itineraries. DEMs are usually supplied
+as rasters (regular grids of numbers) stored in image formats such as GeoTIFF.</p>
+<h3 id="geoid-difference">Geoid Difference</h3>
+<p>Some elevation data sets are relative to mean sea level. At a global scale sea level is represented
+as a surface called the geoid, which is irregular in shape due to local gravitational anomalies. On
+the other hand, GPS elevations are reported relative to the WGS84 spheroid, a perfectly smooth
+mathematical surface approximating the geoid. In cases where the two elevation definitions are
+mixed, it may be necessary to adjust elevation values to avoid confusing users with things like
+negative elevation values in places clearly above sea level.
+See <a href="https://github.com/opentripplanner/OpenTripPlanner/issues/2301">issue #2301</a>
+for detailed discussion of this.</p>
+<p>OTP allows you to adjust the elevation values reported in API responses in two ways. The first way
+is to store ellipsoid (GPS) elevation values internally, but apply a single geoid difference value
+in the OTP client where appropriate to display elevations above sea level. This ellipsoid to geoid
+difference is returned in each trip plan response in the
+<a href="https://github.com/opentripplanner/OpenTripPlanner/blob/dev-2.x/src/main/java/org/opentripplanner/api/resource/ElevationMetadata.java">ElevationMetadata</a>
+field. Using a single value can be sufficient for smaller OTP deployments, but might result in
+incorrect values at the edges of larger OTP deployments. If your OTP instance uses this, it is
+recommended to set a default request value in the <code>router-config.json</code> file as follows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// router-config.json</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="p">{</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">&quot;routingDefaults&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="nt">&quot;geoidElevation&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">   </span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">}</span>
+</code></pre></div>
+<p>The second way is to precompute these geoid difference values at a more granular level and store all
+elevations internally relative to the geoid (sea level). Elevations returned in the API responses
+will then not need to be adjusted to match end users' intuitive understanding of elevation. In order
+to speed up calculations, these geoid difference values are calculated and cached using only 2
+significant digits of GPS coordinates. This is more than enough detail for most regions of the world
+and should result in less than one meter of vertical error even in areas that have the largest geoid
+irregularities. To enable this, include the following in the <code>build-config.json</code> file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// build-config.json</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">{</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;includeEllipsoidToGeoidDifference&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
+</code></pre></div>
+<p>If the geoid difference values are precomputed, be careful to not set the routing resource value
+of <code>geoidElevation</code> to true in order to avoid having the graph-wide geoid added again to all
+elevation values in the relevant street edges in responses.</p>
+<h3 id="other-raster-elevation-data">Other raster elevation data</h3>
+<p>For other parts of the world you will need a GeoTIFF file containing the elevation data. These are
+often available from national geographic surveys, or you can always fall back on the worldwide
+<a href="http://www2.jpl.nasa.gov/srtm/">Space Shuttle Radar Topography Mission</a> (SRTM) data. This not
+particularly high resolution (roughly 30 meters horizontally) but it can give acceptable results.</p>
+<p>Simply place the elevation data file in the directory with the other graph builder inputs, alongside
+the GTFS and OSM data. Make sure the file has a <code>.tiff</code> or <code>.tif</code> extension, and the graph builder
+should detect its presence and apply the elevation data to the streets.</p>
+<p>OTP should automatically handle DEM GeoTIFFs in most common projections. You may want to check for
+elevation-related error messages during the graph build process to make sure OTP has properly
+discovered the projection. If you are using a DEM in unprojected coordinates make sure that the axis
+order is (longitude, latitude) rather than (latitude, longitude). Unfortunately there is no reliable
+standard for WGS84 axis order, so OTP uses the same axis order as the above-mentioned SRTM data, 
+which is also the default for the popular Proj4 library.</p>
+<p>DEM files(USGS DEM) is not supported by OTP, but can be converted to GeoTIFF with tools
+like <a href="http://www.gdal.org/">GDAL</a>. Use <code>gdal_merge.py -o merged.tiff *.dem</code> to merge a set of <code>dem</code>
+files into one <code>tif</code> file.</p>
+<p>See Interline <a href="https://github.com/interline-io/planetutils">PlanetUtils</a> for a set of scripts to
+download, merge, and resample 
+<a href="https://registry.opendata.aws/terrain-tiles/">Mapzen/Amazon Terrain Tiles</a>.</p>
+<h3 id="elevation-unit-conversion">Elevation unit conversion</h3>
+<p>By default, OTP expects the elevation data to use metres. However, by setting 
+<code>elevationUnitMultiplier</code> in <code>build-config.json</code>, it is possible to define a multiplier that 
+converts the elevation values from some other unit to metres.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// build-config.json</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="p">{</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;dem&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gs://otp-test-bucket/a/b/northpole.dem.tif&quot;</span><span class="p">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">      </span><span class="c1">// Correct conversion multiplier when source data uses decimetres instead of metres</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">      </span><span class="nt">&quot;elevationUnitMultiplier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="elevation-data-calculation-optimizations">Elevation Data Calculation Optimizations</h3>
+<p>Calculating elevations on all StreetEdges can take a dramatically long time. In a very large graph
+build for multiple Northeast US states, the time it took to download the elevation data and
+calculate all the elevations took roughly 1.5 hours.</p>
+<p>If you are using cloud computing for your OTP instances, it is recommended to create prebuilt images
+that contain the elevation data you need. This will save time because all the data won't need to be
+downloaded.</p>
+<p>However, the bulk of the time will still be spent calculating elevations for the street edges.
+Therefore, a further optimization can be done to calculate and save the elevation data during  a 
+graph build and then save it for future use.</p>
+<h4 id="reusing-elevation-data-from-previous-builds">Reusing elevation data from previous builds</h4>
+<p>In order to write out the precalculated elevation data, add this to your <code>build-config.json</code> file:</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// build-config.json</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="p">{</span><span class="w">  </span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;writeCachedElevations&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="p">}</span>
+</code></pre></div>
+See <a href="#writeCachedElevations">writeCachedElevations</a> for details.</p>
+<h2 id="parameter-details">Parameter Details</h2>
+<!-- PARAMETERS-DETAILS BEGIN -->
+<!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
+
+<h3 id="areaVisibility">areaVisibility</h3>
+
+<p><strong>Since version:</strong> <code>1.5</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code> <br />
+<strong>Path:</strong> / </p>
+<p>Perform visibility calculations.</p>
+<p>If this is <code>true</code> OTP attempts to calculate a path straight through an OSM area using the
+shortest way rather than around the edge of it. (These calculations can be time consuming).</p>
+<h3 id="buildReportDir">buildReportDir</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>uri</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>URI to the directory where the graph build report should be written to.</p>
+<p>The html report is written into this directory. If the directory exist, any existing files are deleted.
+If it does not exist, it is created.</p>
+<h3 id="configVersion">configVersion</h3>
+
+<p><strong>Since version:</strong> <code>2.1</code> ∙ <strong>Type:</strong> <code>string</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>Deployment version of the <em>build-config.json</em>.</p>
+<p>The config-version is a parameter which each OTP deployment may set to be able to query the
+OTP server and verify that it uses the correct version of the config. The version should be
+injected into the config in the (continuous) deployment pipeline. How this is done, is up to
+the deployment.</p>
+<p>The config-version has no effect on OTP, and is provided as is on the API. There is no syntax
+or format check on the version and it can be any string.</p>
+<p>Be aware that OTP uses the config embedded in the loaded graph if no new config is provided.</p>
+<h3 id="dataImportReport">dataImportReport</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code> <br />
+<strong>Path:</strong> / </p>
+<p>Generate nice HTML report of Graph errors/warnings</p>
+<p>The reports are stored in the same location as the graph.</p>
+<h3 id="distanceBetweenElevationSamples">distanceBetweenElevationSamples</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>double</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>10.0</code> <br />
+<strong>Path:</strong> / </p>
+<p>The distance between elevation samples in meters.</p>
+<p>The default is the approximate resolution of 1/3 arc-second NED data. This should not be smaller than the horizontal resolution of the height data used.</p>
+<h3 id="graph">graph</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>uri</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>URI to the graph object file for reading and writing.</p>
+<p>The file is created or overwritten if OTP saves the graph to the file.</p>
+<h3 id="gsCredentials">gsCredentials</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>string</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>Local file system path to Google Cloud Platform service accounts credentials file.</p>
+<p>The credentials is used to access GCS urls. When using GCS from outside of Google Cloud you
+need to provide a path the the service credentials. Environment variables in the path are
+resolved.</p>
+<p>This is a path to a file on the local file system, not an URI.</p>
+<h3 id="includeEllipsoidToGeoidDifference">includeEllipsoidToGeoidDifference</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code> <br />
+<strong>Path:</strong> / </p>
+<p>Include the Ellipsoid to Geoid difference in the calculations of every point along every StreetWithElevationEdge.</p>
+<p>When set to true (it is false by default), the elevation module will include the Ellipsoid to
+Geoid difference in the calculations of every point along every StreetWithElevationEdge in the
+graph.</p>
+<p>NOTE: if this is set to true for graph building, make sure to not set the value of
+<code>RoutingResource#geoidElevation</code> to true otherwise OTP will add this geoid value again to
+all of the elevation values in the street edges.</p>
+<h3 id="maxDataImportIssuesPerFile">maxDataImportIssuesPerFile</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>integer</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>1000</code> <br />
+<strong>Path:</strong> / </p>
+<p>When to split the import report.</p>
+<p>If the number of issues is larger then <code>maxDataImportIssuesPerFile</code>, then the files will
+  be split in multiple files. Since browsers have problems opening large HTML files.</p>
+<h3 id="maxStopToShapeSnapDistance">maxStopToShapeSnapDistance</h3>
+
+<p><strong>Since version:</strong> <code>2.1</code> ∙ <strong>Type:</strong> <code>double</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>150.0</code> <br />
+<strong>Path:</strong> / </p>
+<p>Maximum distance between route shapes and their stops.</p>
+<p>This field is used for mapping routes geometry shapes. It determines max distance between shape
+points and their stop sequence. If mapper cannot find any stops within this radius it will
+default to simple stop-to-stop geometry instead.</p>
+<h3 id="multiThreadElevationCalculations">multiThreadElevationCalculations</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code> <br />
+<strong>Path:</strong> / </p>
+<p>Configuring multi-threading during elevation calculations.</p>
+<p>For unknown reasons that seem to depend on data and machine settings, it might be faster
+  to use a single processor. If multi-threading is activated, parallel streams will be used
+  to calculate the elevations.</p>
+<h3 id="osmCacheDataInMem">osmCacheDataInMem</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code> <br />
+<strong>Path:</strong> / </p>
+<p>If OSM data should be cached in memory during processing.</p>
+<p>When loading OSM data, the input is streamed 3 times - one phase for processing RELATIONS, one
+for WAYS and last one for NODES. Instead of reading the data source 3 times it might be faster
+to cache the entire osm file im memory. The trade off is of course that OTP might use more
+memory while loading osm data. You can use this parameter to choose what is best for your
+deployment depending on your infrastructure. Set the parameter to <code>true</code> to cache the
+data, and to <code>false</code> to read the stream from the source each time.</p>
+<h3 id="readCachedElevations">readCachedElevations</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>true</code> <br />
+<strong>Path:</strong> / </p>
+<p>Whether to read cached elevation data.</p>
+<p>When set to true, the elevation module will attempt to read this file in
+order to reuse calculations of elevation data for various coordinate sequences instead of
+recalculating them all over again.</p>
+<h3 id="streetGraph">streetGraph</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>uri</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>URI to the street graph object file for reading and writing.</p>
+<p>The file is created or overwritten if OTP saves the graph to the file</p>
+<h3 id="subwayAccessTime">subwayAccessTime</h3>
+
+<p><strong>Since version:</strong> <code>1.5</code> ∙ <strong>Type:</strong> <code>double</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>2.0</code> <br />
+<strong>Path:</strong> / </p>
+<p>Minutes necessary to reach stops served by trips on routes of route_type=1 (subway) from the street.</p>
+<p>Note! The preferred way to do this is to update the OSM data.
+See <a href="#transferring-within-stations">Transferring within stations</a>.</p>
+<p>The ride locations for some modes of transport such as subways can be slow to reach from the street.
+When planning a trip, we need to allow additional time to reach these locations to properly inform
+the passenger. For example, this helps avoid suggesting short bus rides between two subway rides as
+a way to improve travel time. You can specify how long it takes to reach a subway platform.</p>
+<p>This setting does not generalize to other modes like airplanes because you often need much longer time
+to check in to a flight (2-3 hours for international flights) than to alight and exit the airport
+(perhaps 1 hour). Use <a href="../RouteRequest/#rd_boardSlackForMode"><code>boardSlackForMode</code></a> and
+<a href="../RouteRequest/#rd_alightSlackForMode"><code>alightSlackForMode</code></a> for this.</p>
+<h3 id="transitModelTimeZone">transitModelTimeZone</h3>
+
+<p><strong>Since version:</strong> <code>2.2</code> ∙ <strong>Type:</strong> <code>time-zone</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>Time zone for the graph.</p>
+<p>This is used to store the timetables in the transit model, and to interpret times in incoming requests.</p>
+<h3 id="transitServiceEnd">transitServiceEnd</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>duration</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"P3Y"</code> <br />
+<strong>Path:</strong> / </p>
+<p>Limit the import of transit services to the given end date.</p>
+<p>See <a href="#limit-transit-service-period">Limit the transit service period</a> for an introduction.</p>
+<p>The date is inclusive. If set, any transit service on a day AFTER the given date is dropped and
+will not be part of the graph. Use an absolute date or a period relative to the date the graph is
+build(BUILD_DAY).</p>
+<p>Use an empty string to make it unbounded.</p>
+<h3 id="transitServiceStart">transitServiceStart</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>duration</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"-P1Y"</code> <br />
+<strong>Path:</strong> / </p>
+<p>Limit the import of transit services to the given START date.</p>
+<p>See <a href="#limit-transit-service-period">Limit the transit service period</a> for an introduction.</p>
+<p>The date is inclusive. If set, any transit service on a day BEFORE the given date is dropped and
+will not be part of the graph. Use an absolute date or a period relative to the date the graph is
+build(BUILD_DAY).</p>
+<p>Use an empty string to make unbounded.</p>
+<h3 id="writeCachedElevations">writeCachedElevations</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code> <br />
+<strong>Path:</strong> / </p>
+<p>Reusing elevation data from previous builds</p>
+<p>When set to true, the elevation module will create a file cache for calculated elevation data.
+Subsequent graph builds can reuse the data in this file.</p>
+<p>After building the graph, a file called <code>cached_elevations.obj</code> will be written to the cache
+directory. By default, this file is not written during graph builds. There is also a graph build
+parameter called <code>readCachedElevations</code> which is set to <code>true</code> by default.</p>
+<p>In graph builds, the elevation module will attempt to read the <code>cached_elevations.obj</code> file from
+the cache directory. The cache directory defaults to <code>/var/otp/cache</code>, but this can be overridden
+via the CLI argument <code>--cache &lt;directory&gt;</code>. For the same graph build for multiple Northeast US
+states, the time it took with using this pre-downloaded and precalculated data became roughly 9
+minutes.</p>
+<p>The cached data is a lookup table where the coordinate sequences of respective street edges are
+used as keys for calculated data. It is assumed that all of the other input data except for the
+OpenStreetMap data remains the same between graph builds. Therefore, if the underlying elevation
+data is changed, or different configuration values for <code>elevationUnitMultiplier</code> or
+<code>includeEllipsoidToGeoidDifference</code> are used, then this data becomes invalid and all elevation data
+should be recalculated. Over time, various edits to OpenStreetMap will cause this cached data to
+become stale and not include new OSM ways. Therefore, periodic update of this cached data is
+recommended.</p>
+<h3 id="boardingLocationTags">boardingLocationTags</h3>
+
+<p><strong>Since version:</strong> <code>2.2</code> ∙ <strong>Type:</strong> <code>string[]</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>What OSM tags should be looked on for the source of matching stops to platforms and stops.</p>
+<p><a href="../BoardingLocations/">Detailed documentation</a></p>
+<h3 id="dem">dem</h3>
+
+<p><strong>Since version:</strong> <code>2.2</code> ∙ <strong>Type:</strong> <code>object[]</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>Specify parameters for DEM extracts.</p>
+<p>The dem section allows you to override the default behavior of scanning for elevation
+files in the <a href="../Configuration/#Base-Directory">base directory</a>. You can specify data
+located outside the local filesystem (including cloud storage services) or at various
+different locations around the local filesystem.</p>
+<p>If not specified OTP will fall back to auto-detection based on the directory provided on
+the command line.</p>
+<h3 id="dem_0_elevationUnitMultiplier">elevationUnitMultiplier</h3>
+
+<p><strong>Since version:</strong> <code>2.3</code> ∙ <strong>Type:</strong> <code>double</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>1.0</code> <br />
+<strong>Path:</strong> /dem/[0] </p>
+<p>Specify a multiplier to convert elevation units from source to meters. Overrides the value specified in <code>demDefaults</code>.</p>
+<p>Unit conversion multiplier for elevation values. No conversion needed if the elevation
+values are defined in meters in the source data. If, for example, decimetres are used
+in the source data, this should be set to 0.1.</p>
+<h3 id="demDefaults_elevationUnitMultiplier">elevationUnitMultiplier</h3>
+
+<p><strong>Since version:</strong> <code>2.3</code> ∙ <strong>Type:</strong> <code>double</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>1.0</code> <br />
+<strong>Path:</strong> /demDefaults </p>
+<p>Specify a multiplier to convert elevation units from source to meters.</p>
+<p>Unit conversion multiplier for elevation values. No conversion needed if the elevation
+values are defined in meters in the source data. If, for example, decimetres are used
+in the source data, this should be set to 0.1.</p>
+<h3 id="elevationBucket">elevationBucket</h3>
+
+<p><strong>Since version:</strong> <code>na</code> ∙ <strong>Type:</strong> <code>object</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>Used to download NED elevation tiles from the given AWS S3 bucket.</p>
+<p>In the United States, a high resolution <a href="http://ned.usgs.gov/">National Elevation Dataset</a> is
+available for the entire territory. It used to be possible for OTP to download NED tiles on the fly
+from a rather complex USGS SOAP service. This process was somewhat unreliable and would greatly slow
+down the graph building process. In any case the service has since been replaced. But the USGS would
+also deliver the whole dataset in bulk if you
+<a href="https://web.archive.org/web/20150811051917/http://ned.usgs.gov:80/faq.html#DATA">sent them a hard drive</a>.
+We did this many years back and uploaded the entire data set to Amazon AWS S3. OpenTripPlanner
+contains another module that can automatically fetch data in this format from any Amazon S3 copy of
+the bulk data.</p>
+<p>This <code>ned13</code> bucket is still available on S3 under a "requester pays" policy. As long as you specify
+valid AWS account credentials you should be able to download tiles, and any bandwidth costs will be
+billed to your AWS account.</p>
+<p>Once the tiles are downloaded for a particular geographic area, OTP will keep them in local cache
+for the next graph build operation. You should add the <code>--cache &lt;directory&gt;</code> command line parameter
+to specify your NED tile cache location.</p>
+<h3 id="gd_discardMinTransferTimes">discardMinTransferTimes</h3>
+
+<p><strong>Since version:</strong> <code>2.3</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code> <br />
+<strong>Path:</strong> /gtfsDefaults </p>
+<p>Should minimum transfer times in GTFS files be discarded.</p>
+<p>This is useful eg. when the minimum transfer time is only set for ticketing purposes,
+but we want to calculate the transfers always from OSM data.</p>
+<h3 id="gd_stationTransferPreference">stationTransferPreference</h3>
+
+<p><strong>Since version:</strong> <code>2.3</code> ∙ <strong>Type:</strong> <code>enum</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"allowed"</code> <br />
+<strong>Path:</strong> /gtfsDefaults <br />
+<strong>Enum values:</strong> <code>discouraged</code> | <code>allowed</code> | <code>recommended</code> | <code>preferred</code></p>
+<p>Should there be some preference or aversion for transfers at stops that are part of a station.</p>
+<p>This parameter sets the generic level of preference. What is the actual cost can be changed
+with the <code>stopTransferCost</code> parameter in the router configuration.</p>
+<h3 id="islandPruning_adaptivePruningDistance">adaptivePruningDistance</h3>
+
+<p><strong>Since version:</strong> <code>2.3</code> ∙ <strong>Type:</strong> <code>integer</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>250</code> <br />
+<strong>Path:</strong> /islandPruning </p>
+<p>Search distance for analyzing islands in pruning.</p>
+<p>The distance after which disconnected sub graph is considered as real island in pruning heuristics.</p>
+<h3 id="islandPruning_adaptivePruningFactor">adaptivePruningFactor</h3>
+
+<p><strong>Since version:</strong> <code>2.3</code> ∙ <strong>Type:</strong> <code>double</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>50.0</code> <br />
+<strong>Path:</strong> /islandPruning </p>
+<p>Defines how much pruning thresholds grow maximally by distance.</p>
+<p>Expands the pruning thresholds as the distance of an island from the rest of the graph gets smaller.
+Even fairly large disconnected sub graphs should be removed if they are badly entangled with other graph.</p>
+<h3 id="islandPruning_islandWithStopsMaxSize">islandWithStopsMaxSize</h3>
+
+<p><strong>Since version:</strong> <code>2.3</code> ∙ <strong>Type:</strong> <code>integer</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>2</code> <br />
+<strong>Path:</strong> /islandPruning </p>
+<p>When a graph island with stops in it should be pruned.</p>
+<p>This field indicates the pruning threshold for islands with stops. Any such island under this
+edge count will be pruned.</p>
+<h3 id="islandPruning_islandWithoutStopsMaxSize">islandWithoutStopsMaxSize</h3>
+
+<p><strong>Since version:</strong> <code>2.3</code> ∙ <strong>Type:</strong> <code>integer</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>10</code> <br />
+<strong>Path:</strong> /islandPruning </p>
+<p>When a graph island without stops should be pruned.</p>
+<p>This field indicates the pruning threshold for islands without stops. Any such island under
+this edge count will be pruned.</p>
+<h3 id="localFileNamePatterns">localFileNamePatterns</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>object</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>Patterns for matching OTP file types in the base directory</p>
+<p>When scanning the base directory for inputs, each file's name is checked against patterns to
+detect what kind of file it is.</p>
+<p>OTP1 used to peek inside ZIP files and read the CSV tables to guess if a ZIP was indeed GTFS. Now
+that we support remote input files (cloud storage or arbitrary URLs) not all data sources allow
+seeking within files to guess what they are. Therefore, like all other file types GTFS is now
+detected from a filename pattern. It is not sufficient to look for the <code>.zip</code> extension because
+Netex data is also often supplied in a ZIP file.</p>
+<h3 id="lfp_dem">dem</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"(?i)\.tiff?$"</code> <br />
+<strong>Path:</strong> /localFileNamePatterns </p>
+<p>Pattern for matching elevation DEM files.</p>
+<p>If the filename contains the given pattern it is
+considered a match. Any legal Java Regular expression is allowed.</p>
+<h3 id="lfp_gtfs">gtfs</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"(?i)gtfs"</code> <br />
+<strong>Path:</strong> /localFileNamePatterns </p>
+<p>Patterns for matching GTFS zip-files or directories.</p>
+<p>If the filename contains the given pattern it is considered a match.
+Any legal Java Regular expression is allowed.</p>
+<h3 id="lfp_netex">netex</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"(?i)netex"</code> <br />
+<strong>Path:</strong> /localFileNamePatterns </p>
+<p>Patterns for matching NeTEx zip files or directories.</p>
+<p>If the filename contains the given
+pattern it is considered a match. Any legal Java Regular expression is allowed.</p>
+<h3 id="lfp_osm">osm</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"(?i)(\.pbf|\.osm|\.osm\.xml)$"</code> <br />
+<strong>Path:</strong> /localFileNamePatterns </p>
+<p>Pattern for matching Open Street Map input files.</p>
+<p>If the filename contains the given pattern
+it is considered a match. Any legal Java Regular expression is allowed.</p>
+<h3 id="nd_groupFilePattern">groupFilePattern</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"(\w{3})-.*\.xml"</code> <br />
+<strong>Path:</strong> /netexDefaults </p>
+<p>Pattern for matching group NeTEx files.</p>
+<p>This field is used to match <em>group files</em> in the module file(zip file entries).
+<em>group files</em> are loaded right the after <em>shared group files</em> are loaded.
+Files are grouped together by the first group pattern in the regular expression.
+The pattern <code>"(\w{3})-.*\.xml"</code> matches <code>"RUT-Line-208-Hagalia-Nevlunghavn.xml"</code>
+with group <code>"RUT"</code>.</p>
+<h3 id="nd_ignoreFilePattern">ignoreFilePattern</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"$^"</code> <br />
+<strong>Path:</strong> /netexDefaults </p>
+<p>Pattern for matching ignored files in a NeTEx bundle.</p>
+<p>This field is used to exclude matching <em>files</em> in the module file(zip file entries).
+The <em>ignored</em> files are <em>not</em> loaded.</p>
+<h3 id="nd_sharedFilePattern">sharedFilePattern</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"shared-data\.xml"</code> <br />
+<strong>Path:</strong> /netexDefaults </p>
+<p>Pattern for matching shared NeTEx files in a NeTEx bundle.</p>
+<p>This field is used to match <em>shared files</em>(zip file entries) in the module file. Shared
+files are loaded first. Then the rest of the files are grouped and loaded.</p>
+<p>The pattern <code>"shared-data.xml"</code> matches <code>"shared-data.xml"</code></p>
+<p>File names are matched in the following order - and treated accordingly to the first match:</p>
+<ul>
+<li><code>ignoreFilePattern</code></li>
+<li><code>sharedFilePattern</code></li>
+<li><code>sharedGroupFilePattern</code></li>
+<li><code>groupFilePattern</code></li>
+</ul>
+<h3 id="nd_sharedGroupFilePattern">sharedGroupFilePattern</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"(\w{3})-.*-shared\.xml"</code> <br />
+<strong>Path:</strong> /netexDefaults </p>
+<p>Pattern for matching shared group NeTEx files in a NeTEx bundle.</p>
+<p>This field is used to match <em>shared group files</em> in the module file(zip file entries).
+Typically this is used to group all files from one agency together.</p>
+<p><em>Shared group files</em> are loaded after shared files, but before the matching group
+files. Each <em>group</em> of files are loaded as a unit, followed by next group.</p>
+<p>Files are grouped together by the first group pattern in the regular expression.</p>
+<p>The pattern <code>"(\w{3})-.*-shared\.xml"</code> matches <code>"RUT-shared.xml"</code> with group <code>"RUT"</code>.</p>
+<h3 id="nd_ferryIdsNotAllowedForBicycle">ferryIdsNotAllowedForBicycle</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>string[]</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> /netexDefaults </p>
+<p>List ferries which do not allow bikes.</p>
+<p>Bicycles are allowed on most ferries however the Nordic profile doesn't contain a place
+where bicycle conveyance can be defined.</p>
+<p>For this reason we allow bicycles on ferries by default and allow to override the rare
+case where this is not the case.</p>
+<h3 id="osm">osm</h3>
+
+<p><strong>Since version:</strong> <code>2.2</code> ∙ <strong>Type:</strong> <code>object[]</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>Configure properties for a given OpenStreetMap feed.</p>
+<p>The osm section of build-config.json allows you to override the default behavior of scanning
+for OpenStreetMap files in the base directory. You can specify data located outside the
+local filesystem (including cloud storage services) or at various different locations around
+the local filesystem.</p>
+<h3 id="osm_0_osmTagMapping">osmTagMapping</h3>
+
+<p><strong>Since version:</strong> <code>2.2</code> ∙ <strong>Type:</strong> <code>enum</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"default"</code> <br />
+<strong>Path:</strong> /osm/[0] <br />
+<strong>Enum values:</strong> <code>default</code> | <code>norway</code> | <code>uk</code> | <code>finland</code> | <code>germany</code> | <code>atlanta</code> | <code>houston</code> | <code>portland</code></p>
+<p>The named set of mapping rules applied when parsing OSM tags. Overrides the value specified in <code>osmDefaults</code>.</p>
+<h3 id="od_osmTagMapping">osmTagMapping</h3>
+
+<p><strong>Since version:</strong> <code>2.2</code> ∙ <strong>Type:</strong> <code>enum</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"default"</code> <br />
+<strong>Path:</strong> /osmDefaults <br />
+<strong>Enum values:</strong> <code>default</code> | <code>norway</code> | <code>uk</code> | <code>finland</code> | <code>germany</code> | <code>atlanta</code> | <code>houston</code> | <code>portland</code></p>
+<p>The named set of mapping rules applied when parsing OSM tags.</p>
+<h3 id="transitFeeds">transitFeeds</h3>
+
+<p><strong>Since version:</strong> <code>2.2</code> ∙ <strong>Type:</strong> <code>object[]</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> / </p>
+<p>Scan for transit data files</p>
+<p>The transitFeeds section of <code>build-config.json</code> allows you to override the default behavior
+of scanning for transit data files in the <a href="../Configuration/#Base-Directory">base directory</a>.
+You can specify data located outside the local filesystem (including cloud storage services)
+or at various different locations around the local filesystem.</p>
+<p>When a feed of a particular type (<code>netex</code> or <code>gtfs</code>) is specified in the transitFeeds
+section, auto-scanning in the base directory for this feed type will be disabled.</p>
+<h3 id="tf_0_discardMinTransferTimes">discardMinTransferTimes</h3>
+
+<p><strong>Since version:</strong> <code>2.3</code> ∙ <strong>Type:</strong> <code>boolean</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>false</code> <br />
+<strong>Path:</strong> /transitFeeds/[0] </p>
+<p>Should minimum transfer times in GTFS files be discarded. Overrides the value specified in <code>gtfsDefaults</code>.</p>
+<p>This is useful eg. when the minimum transfer time is only set for ticketing purposes,
+but we want to calculate the transfers always from OSM data.</p>
+<h3 id="tf_0_stationTransferPreference">stationTransferPreference</h3>
+
+<p><strong>Since version:</strong> <code>2.3</code> ∙ <strong>Type:</strong> <code>enum</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"allowed"</code> <br />
+<strong>Path:</strong> /transitFeeds/[0] <br />
+<strong>Enum values:</strong> <code>discouraged</code> | <code>allowed</code> | <code>recommended</code> | <code>preferred</code></p>
+<p>Should there be some preference or aversion for transfers at stops that are part of a station. Overrides the value specified in <code>gtfsDefaults</code>.</p>
+<p>This parameter sets the generic level of preference. What is the actual cost can be changed
+with the <code>stopTransferCost</code> parameter in the router configuration.</p>
+<h3 id="tf_1_groupFilePattern">groupFilePattern</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"(\w{3})-.*\.xml"</code> <br />
+<strong>Path:</strong> /transitFeeds/[1] </p>
+<p>Pattern for matching group NeTEx files.</p>
+<p>This field is used to match <em>group files</em> in the module file(zip file entries).
+<em>group files</em> are loaded right the after <em>shared group files</em> are loaded.
+Files are grouped together by the first group pattern in the regular expression.
+The pattern <code>"(\w{3})-.*\.xml"</code> matches <code>"RUT-Line-208-Hagalia-Nevlunghavn.xml"</code>
+with group <code>"RUT"</code>.</p>
+<h3 id="tf_1_ignoreFilePattern">ignoreFilePattern</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"$^"</code> <br />
+<strong>Path:</strong> /transitFeeds/[1] </p>
+<p>Pattern for matching ignored files in a NeTEx bundle.</p>
+<p>This field is used to exclude matching <em>files</em> in the module file(zip file entries).
+The <em>ignored</em> files are <em>not</em> loaded.</p>
+<h3 id="tf_1_sharedFilePattern">sharedFilePattern</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"shared-data\.xml"</code> <br />
+<strong>Path:</strong> /transitFeeds/[1] </p>
+<p>Pattern for matching shared NeTEx files in a NeTEx bundle.</p>
+<p>This field is used to match <em>shared files</em>(zip file entries) in the module file. Shared
+files are loaded first. Then the rest of the files are grouped and loaded.</p>
+<p>The pattern <code>"shared-data.xml"</code> matches <code>"shared-data.xml"</code></p>
+<p>File names are matched in the following order - and treated accordingly to the first match:</p>
+<ul>
+<li><code>ignoreFilePattern</code></li>
+<li><code>sharedFilePattern</code></li>
+<li><code>sharedGroupFilePattern</code></li>
+<li><code>groupFilePattern</code></li>
+</ul>
+<h3 id="tf_1_sharedGroupFilePattern">sharedGroupFilePattern</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>regexp</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> ∙ <strong>Default value:</strong> <code>"(\w{3})-.*-shared\.xml"</code> <br />
+<strong>Path:</strong> /transitFeeds/[1] </p>
+<p>Pattern for matching shared group NeTEx files in a NeTEx bundle.</p>
+<p>This field is used to match <em>shared group files</em> in the module file(zip file entries).
+Typically this is used to group all files from one agency together.</p>
+<p><em>Shared group files</em> are loaded after shared files, but before the matching group
+files. Each <em>group</em> of files are loaded as a unit, followed by next group.</p>
+<p>Files are grouped together by the first group pattern in the regular expression.</p>
+<p>The pattern <code>"(\w{3})-.*-shared\.xml"</code> matches <code>"RUT-shared.xml"</code> with group <code>"RUT"</code>.</p>
+<h3 id="tf_1_ferryIdsNotAllowedForBicycle">ferryIdsNotAllowedForBicycle</h3>
+
+<p><strong>Since version:</strong> <code>2.0</code> ∙ <strong>Type:</strong> <code>string[]</code> ∙ <strong>Cardinality:</strong> <code>Optional</code> <br />
+<strong>Path:</strong> /transitFeeds/[1] </p>
+<p>List ferries which do not allow bikes.</p>
+<p>Bicycles are allowed on most ferries however the Nordic profile doesn't contain a place
+where bicycle conveyance can be defined.</p>
+<p>For this reason we allow bicycles on ferries by default and allow to override the rare
+case where this is not the case.</p>
+<!-- PARAMETERS-DETAILS END -->
+
+<h2 id="build-config-example">Build Config Example</h2>
+<!-- JSON-EXAMPLE BEGIN -->
+<!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
+
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">// build-config.json</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="p">{</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">&quot;transitServiceStart&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;-P3M&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">&quot;transitServiceEnd&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;P1Y&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="nt">&quot;osmCacheDataInMem&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="nt">&quot;localFileNamePatterns&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="nt">&quot;osm&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(i?)\\.osm\\.pbf$&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="nt">&quot;dem&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(i?)\\.dem\\.tiff?$&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="nt">&quot;gtfs&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(?i)gtfs&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="nt">&quot;netex&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(?i)netex&quot;</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">  </span><span class="nt">&quot;osmDefaults&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="nt">&quot;timeZone&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Europe/Rome&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">    </span><span class="nt">&quot;osmTagMapping&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;default&quot;</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">  </span><span class="nt">&quot;osm&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gs://my-bucket/otp-work-dir/norway.osm.pbf&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">      </span><span class="nt">&quot;timeZone&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Europe/Oslo&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">      </span><span class="nt">&quot;osmTagMapping&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;norway&quot;</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">  </span><span class="nt">&quot;demDefaults&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">    </span><span class="nt">&quot;elevationUnitMultiplier&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">  </span><span class="nt">&quot;dem&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gs://my-bucket/otp-work-dir/norway.dem.tiff&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">      </span><span class="nt">&quot;elevationUnitMultiplier&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mf">2.5</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="w">  </span><span class="nt">&quot;netexDefaults&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="w">    </span><span class="nt">&quot;feedId&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EN&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="w">    </span><span class="nt">&quot;sharedFilePattern&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;_stops.xml&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="w">    </span><span class="nt">&quot;sharedGroupFilePattern&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;_(\\w{3})_shared_data.xml&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="w">    </span><span class="nt">&quot;groupFilePattern&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(\\w{3})_.*\\.xml&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a><span class="w">    </span><span class="nt">&quot;ignoreFilePattern&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(temp|tmp)&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a><span class="w">    </span><span class="nt">&quot;ferryIdsNotAllowedForBicycle&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a><span class="w">      </span><span class="s2">&quot;RUT:B107&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a><span class="w">      </span><span class="s2">&quot;RUT:B209&quot;</span>
+<a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a><span class="w">  </span><span class="nt">&quot;gtfsDefaults&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a><span class="w">    </span><span class="nt">&quot;stationTransferPreference&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;recommended&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-45" name="__codelineno-8-45" href="#__codelineno-8-45"></a><span class="w">    </span><span class="nt">&quot;removeRepeatedStops&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-8-46" name="__codelineno-8-46" href="#__codelineno-8-46"></a><span class="w">    </span><span class="nt">&quot;discardMinTransferTimes&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-8-47" name="__codelineno-8-47" href="#__codelineno-8-47"></a><span class="w">    </span><span class="nt">&quot;blockBasedInterlining&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-8-48" name="__codelineno-8-48" href="#__codelineno-8-48"></a><span class="w">    </span><span class="nt">&quot;maxInterlineDistance&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">200</span>
+<a id="__codelineno-8-49" name="__codelineno-8-49" href="#__codelineno-8-49"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-8-50" name="__codelineno-8-50" href="#__codelineno-8-50"></a><span class="w">  </span><span class="nt">&quot;islandPruning&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-51" name="__codelineno-8-51" href="#__codelineno-8-51"></a><span class="w">    </span><span class="nt">&quot;islandWithStopsMaxSize&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-8-52" name="__codelineno-8-52" href="#__codelineno-8-52"></a><span class="w">    </span><span class="nt">&quot;islandWithoutStopsMaxSize&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<a id="__codelineno-8-53" name="__codelineno-8-53" href="#__codelineno-8-53"></a><span class="w">    </span><span class="nt">&quot;adaptivePruningFactor&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mf">50.0</span><span class="p">,</span>
+<a id="__codelineno-8-54" name="__codelineno-8-54" href="#__codelineno-8-54"></a><span class="w">    </span><span class="nt">&quot;adaptivePruningDistance&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">250</span>
+<a id="__codelineno-8-55" name="__codelineno-8-55" href="#__codelineno-8-55"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-8-56" name="__codelineno-8-56" href="#__codelineno-8-56"></a><span class="w">  </span><span class="nt">&quot;transitFeeds&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-8-57" name="__codelineno-8-57" href="#__codelineno-8-57"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-8-58" name="__codelineno-8-58" href="#__codelineno-8-58"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gtfs&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-59" name="__codelineno-8-59" href="#__codelineno-8-59"></a><span class="w">      </span><span class="nt">&quot;feedId&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SE&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-60" name="__codelineno-8-60" href="#__codelineno-8-60"></a><span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gs://BUCKET/OTP_GCS_WORK_DIR/sweeden-gtfs.obj&quot;</span>
+<a id="__codelineno-8-61" name="__codelineno-8-61" href="#__codelineno-8-61"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-8-62" name="__codelineno-8-62" href="#__codelineno-8-62"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-8-63" name="__codelineno-8-63" href="#__codelineno-8-63"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;netex&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-64" name="__codelineno-8-64" href="#__codelineno-8-64"></a><span class="w">      </span><span class="nt">&quot;feedId&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NO&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-65" name="__codelineno-8-65" href="#__codelineno-8-65"></a><span class="w">      </span><span class="nt">&quot;source&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;gs://BUCKET/OTP_GCS_WORK_DIR/norway-netex.obj&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-66" name="__codelineno-8-66" href="#__codelineno-8-66"></a><span class="w">      </span><span class="nt">&quot;sharedFilePattern&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;_stops.xml&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-67" name="__codelineno-8-67" href="#__codelineno-8-67"></a><span class="w">      </span><span class="nt">&quot;sharedGroupFilePattern&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;_(\\w{3})_shared_data.xml&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-68" name="__codelineno-8-68" href="#__codelineno-8-68"></a><span class="w">      </span><span class="nt">&quot;groupFilePattern&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(\\w{3})_.*\\.xml&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-69" name="__codelineno-8-69" href="#__codelineno-8-69"></a><span class="w">      </span><span class="nt">&quot;ignoreFilePattern&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;(temp|tmp)&quot;</span>
+<a id="__codelineno-8-70" name="__codelineno-8-70" href="#__codelineno-8-70"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-71" name="__codelineno-8-71" href="#__codelineno-8-71"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-8-72" name="__codelineno-8-72" href="#__codelineno-8-72"></a><span class="w">  </span><span class="nt">&quot;transferRequests&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-8-73" name="__codelineno-8-73" href="#__codelineno-8-73"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-8-74" name="__codelineno-8-74" href="#__codelineno-8-74"></a><span class="w">      </span><span class="nt">&quot;modes&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WALK&quot;</span>
+<a id="__codelineno-8-75" name="__codelineno-8-75" href="#__codelineno-8-75"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-8-76" name="__codelineno-8-76" href="#__codelineno-8-76"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-8-77" name="__codelineno-8-77" href="#__codelineno-8-77"></a><span class="w">      </span><span class="nt">&quot;modes&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WALK&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-78" name="__codelineno-8-78" href="#__codelineno-8-78"></a><span class="w">      </span><span class="nt">&quot;wheelchairAccessibility&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-79" name="__codelineno-8-79" href="#__codelineno-8-79"></a><span class="w">        </span><span class="nt">&quot;enabled&quot;</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-8-80" name="__codelineno-8-80" href="#__codelineno-8-80"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-8-81" name="__codelineno-8-81" href="#__codelineno-8-81"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-82" name="__codelineno-8-82" href="#__codelineno-8-82"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-8-83" name="__codelineno-8-83" href="#__codelineno-8-83"></a><span class="p">}</span>
+</code></pre></div>
+<!-- JSON-EXAMPLE END -->
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["toc.integrate", "content.code.copy", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.407015b8.min.js"></script>
+      
+    
+  </body>
+</html>

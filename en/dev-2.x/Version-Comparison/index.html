@@ -1,0 +1,1647 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.opentripplanner.org/dev-2.x/Version-Comparison/">
+      
+      
+        <link rel="prev" href="../Troubleshooting-Routing/">
+      
+      
+        <link rel="next" href="../OTP2-MigrationGuide/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.5">
+    
+    
+      
+        <title>Comparing OTP2 to OTP1 - OpenTripPlanner 2</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7a7fce14.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#comparing-otp2-and-otp1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="OpenTripPlanner 2" class="md-header__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenTripPlanner 2
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Comparing OTP2 to OTP1
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OpenTripPlanner 2" class="md-nav__button md-logo" aria-label="OpenTripPlanner 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    OpenTripPlanner 2
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/opentripplanner/OpenTripPlanner" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          About
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          About
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Product-Overview/" class="md-nav__link">
+        Product Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Governance/" class="md-nav__link">
+        Governance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../History/" class="md-nav__link">
+        History
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Presentations/" class="md-nav__link">
+        Presentations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Deployments/" class="md-nav__link">
+        Deployments
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Visual-Identity/" class="md-nav__link">
+        Visual Identity
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Usage
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Basic-Tutorial/" class="md-nav__link">
+        Basic Tutorial
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting-OTP/" class="md-nav__link">
+        Getting OTP
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Container-Image/" class="md-nav__link">
+        Container Image
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../System-Requirements/" class="md-nav__link">
+        System Requirements and Suggestions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_5">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Configuration/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BuildConfiguration/" class="md-nav__link">
+        Build
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BoardingLocations/" class="md-nav__link">
+        Boarding Locations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IslandPruning/" class="md-nav__link">
+        Street Graph Pruning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouterConfiguration/" class="md-nav__link">
+        Router
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Accessibility/" class="md-nav__link">
+        Accessibility
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RouteRequest/" class="md-nav__link">
+        Route Request
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UpdaterConfig/" class="md-nav__link">
+        Realtime Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RoutingModes/" class="md-nav__link">
+        Routing Modes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Logging/" class="md-nav__link">
+        Logging
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Preparing-OSM/" class="md-nav__link">
+        Preparing OSM Data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Netex-Norway/" class="md-nav__link">
+        Netex and SIRI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Security/" class="md-nav__link">
+        Security
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Troubleshooting-Routing/" class="md-nav__link">
+        Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Comparing OTP2 to OTP1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Comparing OTP2 to OTP1
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    Summary
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#otp2-use-cases" class="md-nav__link">
+    OTP2 Use Cases
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-between-otp1-and-otp2" class="md-nav__link">
+    Choosing between OTP1 and OTP2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#high-level-feature-comparison" class="md-nav__link">
+    High-level feature comparison
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commentary-on-otp1-features-removed-from-otp2" class="md-nav__link">
+    Commentary on OTP1 features removed from OTP2
+  </a>
+  
+    <nav class="md-nav" aria-label="Commentary on OTP1 features removed from OTP2">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analysis" class="md-nav__link">
+    Analysis
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#routers-api-and-hot-reloading" class="md-nav__link">
+    Routers API and Hot Reloading
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#routing-request-parameters" class="md-nav__link">
+    Routing request parameters
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#otp-trip-planning-and-transit-index-apis" class="md-nav__link">
+    OTP Trip planning and Transit index APIs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-characteristics-added-in-otp2" class="md-nav__link">
+    Additional characteristics added in OTP2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-features-removed-from-otp2" class="md-nav__link">
+    Other features removed from OTP2
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OTP2-MigrationGuide/" class="md-nav__link">
+        OTP2 Migration Guide
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Development
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Development
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Developers-Guide/" class="md-nav__link">
+        Developers' Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Interfaces-Data-Sources/" class="md-nav__link">
+        Interfaces and Data Sources
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Localization/" class="md-nav__link">
+        Localization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Bibliography/" class="md-nav__link">
+        Bibliography
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Codestyle/" class="md-nav__link">
+        Codestyle
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        Sandbox Development
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ReleaseChecklist/" class="md-nav__link">
+        Release Checklist
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Sandbox
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Sandbox
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SandboxExtension/" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ActuatorAPI/" class="md-nav__link">
+        Actuator API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/transferanalyzer/" class="md-nav__link">
+        Direct Transfer Analyzer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GoogleCloudStorage/" class="md-nav__link">
+        Google Cloud Storage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/LegacyGraphQLApi/" class="md-nav__link">
+        HSL Legacy GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TransmodelApi/" class="md-nav__link">
+        Transmodel(NeTEx) GraphQL API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriUpdater/" class="md-nav__link">
+        SIRI Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SiriAzureUpdater/" class="md-nav__link">
+        SIRI Updater (Azure)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleRentalServiceDirectory/" class="md-nav__link">
+        Vehicle Rental Service Directory API support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/SmooveBikeRental/" class="md-nav__link">
+        Smoove Bike Rental Updator Support
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/MapboxVectorTilesApi/" class="md-nav__link">
+        Mapbox Vector Tiles API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Flex/" class="md-nav__link">
+        Flex Routing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ReportApi/" class="md-nav__link">
+        Report API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/InteractiveOtpMain/" class="md-nav__link">
+        Interactive OTP Launcher
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/ParkAndRideApi/" class="md-nav__link">
+        Park and Ride API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/DataOverlay/" class="md-nav__link">
+        Data Overlay
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleParking/" class="md-nav__link">
+        Vehicle Parking Updaters
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/VehicleToStopHeuristics/" class="md-nav__link">
+        Vehicle-to-stop Heuristics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/GeocoderAPI/" class="md-nav__link">
+        Geocoder API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/TravelTime/" class="md-nav__link">
+        Travel Time Isochrones
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/IBIAccessibilityScore/" class="md-nav__link">
+        IBI Accessibility Score
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/Fares/" class="md-nav__link">
+        Fares
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sandbox/RideHailing/" class="md-nav__link">
+        Ride Hailing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="comparing-otp2-and-otp1">Comparing OTP2 and OTP1</h1>
+<h2 id="summary">Summary</h2>
+<p>OpenTripPlanner has been under development since 2009, leading up to a 1.0 release in 2016. Research
+and development on higher performance routing has been ongoing since 2013-2014, and work on the
+second major release referred to as OTP2 officially began in 2018. As of Q3 2020, a release
+candidate of OTP2 is available and in limited production use. This page explains key differences
+between the two versions (referred to as OTP1 and OTP2) to help you decide which one to use.</p>
+<p>OTP1 has existed for over a decade and is in widespread use. It aims to do many things for many
+people: it provides passenger-facing itinerary services over APIs, but also serves as a network
+analysis toolkit for urban planning and research. Though OTP1 is widely used and gets the job done,
+its transit routing approach is obsolete. We have long recognized that more resource-efficient
+approaches were possible. Reasonable response times and scaling to larger data sets have been
+achieved through a series of complex incremental interventions that became difficult to maintain.
+OTP1 has also accumulated large amounts of experimental code and specialized tools, which can be
+useful in a research or consulting setting but complicate long-term maintenance.</p>
+<p>OTP2 is brand new and still in testing, though based on code and ideas in heavy use for over five
+years. It offers much better performance in larger transportation networks and geographic areas, and
+a wider variety of alternative itineraries. OTP2's public transit routing component has been
+completely rewritten, and is now distinct from bike, walk, and motor vehicle routing. Non-transit
+routing remains identical to OTP1, benefiting from years of adaptations to nuances of OpenStreetMap
+data and end-user walking and biking preferences. Unlike OTP1, OTP2 is completely focused on
+passenger-facing itinerary services. The innovations in OTP2 have already been applied to planning,
+research, and analysis work for several years through Conveyal's R5 project, which informed and
+inspired the OTP2 transit routing system.</p>
+<p>OTP2 will not supersede OTP1 immediately for all use cases. In some situations there are legitimate
+reasons to continue using OTP1, or even for new OpenTripPlanner users to adopt OTP1 instead of OTP2.
+As development work continues over 2021 and additional 2.x releases are made, we expect this gap to
+close and OTP2 (in combination with other projects) may eventually fully replace OTP1, but this
+process is expected to take a few years.</p>
+<h2 id="otp2-use-cases">OTP2 Use Cases</h2>
+<p>The benefits of OTP2 will be most evident in large or dense networks spanning multiple cities:
+entire countries (Netherlands, Switzerland, Norway), US states, metropolitan regions and
+cross-border conurbations (e.g. NYC metro area). Although the scale of trip planners is sometimes
+limited by the geographic extent of administrative structures (national rail or bus operators or
+ticketing agencies), OTP2 should be capable of handling even larger networks, and we do for example
+regularly test on a unified Nordic trip planner in hopes that such systems will materialize over
+time as more territories adopt OTP.</p>
+<p>OTP2 development has been driven by adoption of open source routing software in Northern Europe.
+Importantly for deployments in Europe, OTP2 introduces support for EU-standard Netex and SIRI data
+sources in addition to GTFS. The Nordic profile of Netex understood by OTP2 uses the same schema as
+the EU profile, and generalization to the EU profile should be feasible once it is standardized.</p>
+<h2 id="choosing-between-otp1-and-otp2">Choosing between OTP1 and OTP2</h2>
+<p>Much development effort has gone into OTP2, and most OTP development effort will continue to focus
+on OTP2 after its release. OTP2 is much more efficient than OTP1 for certain common use cases,
+providing faster responses for a larger number of simultaneous users over larger geographic areas
+and more complex transportation networks.</p>
+<p>However, this does not mean that all users of OpenTripPlanner should switch to OTP2, or that all new
+users will want to start with OTP2. As of fall 2020, OTP1 remains much more widely used than OTP2,
+and most importantly OTP2 has a smaller feature set than OTP1. That is to say, OTP2 can do less
+things than OTP1, but it does them much more efficiently and tries to cover the most common use
+cases for large-scale OTP deployments.</p>
+<p>When in doubt, new users are advised to try out OTP2 and switch to OTP1 if they need features that
+are not available in OTP2. If some feature you need is missing from OTP2, you can also create a new
+issue or comment on an existing one on GitHub, letting us know why it is important to you. New
+features can be added to the OTP2 if there is sufficient demand and development resources to
+maintain them.</p>
+<h2 id="high-level-feature-comparison">High-level feature comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>OTP1</th>
+<th>OTP2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OSM street data</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>GTFS transit data</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Netex transit data</td>
+<td>no</td>
+<td>yes<br>(Nordic profile)</td>
+</tr>
+<tr>
+<td>GTFS-Realtime</td>
+<td>yes<br>(streaming, polling, incremental)</td>
+<td>yes<br>(streaming, polling, incremental)</td>
+</tr>
+<tr>
+<td>SIRI Realtime</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Elevation data</td>
+<td>TIFF and NED</td>
+<td>TIFF and NED</td>
+</tr>
+<tr>
+<td>One-to-many routing,<br> isochrones and scripting</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Java version</td>
+<td>8+</td>
+<td>11+</td>
+</tr>
+<tr>
+<td>Multiple regions per server</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Hot reloading of graphs</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Street (OSM) routing algorithm</td>
+<td>Generalized cost A*</td>
+<td>Generalized cost A*</td>
+</tr>
+<tr>
+<td>Transit routing algorithm</td>
+<td>Generalized cost A*</td>
+<td>Multi-criteria range-RAPTOR</td>
+</tr>
+<tr>
+<td>Search segmentation</td>
+<td>Single search through access, transit, egress</td>
+<td>Access/egress separate from transit search</td>
+</tr>
+<tr>
+<td>Goal direction</td>
+<td>Upper bound search backward from destination,<br> over streets and transit, interleaved with forward search</td>
+<td>Upper bound search backward from destination <br> on transit only, before forward search begins</td>
+</tr>
+<tr>
+<td>Alternative itineraries</td>
+<td>"Trip banning",<br> N lowest generalized costs</td>
+<td>True Pareto-optimal results</td>
+</tr>
+<tr>
+<td>Departure/arrival time</td>
+<td>Single departure or arrival time only</td>
+<td>Every minute in a window up to several days long</td>
+</tr>
+<tr>
+<td>API Paging</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Timetable View</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Plugin Sandbox Extensions</td>
+<td>no</td>
+<td>yes (<a href="../SandboxExtension/">See extensions</a>)</td>
+</tr>
+<tr>
+<td>Data storage</td>
+<td>local, S3 (elevation only)</td>
+<td>extensible with local, ZIP,<br>and Google Cloud plugins, S3 available</td>
+</tr>
+<tr>
+<td>Transfer Priority</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>REST API format</td>
+<td>XML, JSON</td>
+<td>JSON only</td>
+</tr>
+</tbody>
+</table>
+<h2 id="commentary-on-otp1-features-removed-from-otp2">Commentary on OTP1 features removed from OTP2</h2>
+<p>OTP2 brings significant improvements in speed and scalability, but does not retain all features of
+OTP1. We have chosen to prioritize long-term maintainability, so only those features that are "
+owned" by a team of professional developers will be carried over to OTP2.</p>
+<p>Features that have been removed to simplify the code base and improve maintainability may be removed
+permanently. Other missing features are still priorities for the organization leading OTP2
+development (Entur) but have not yet been adapted to the new transit routing system, and will be
+added in upcoming releases. Some features have been removed to reflect separation of concerns:
+following principles of modular design they should be handled outside OTP, or are already covered by
+other projects where they are more actively developed.</p>
+<h3 id="analysis">Analysis</h3>
+<p>Many OpenTripPlanner contributors have been primarily interested in transportation and urban
+planning use cases. We consider these use cases quite important. This has been a major area of
+application for OpenTripPlanner and has helped popularize cumulative opportunities accessibility
+metrics. For example, the University of Minnesota Accessibility Observatory used OpenTripPlanner
+for <a href="http://access.umn.edu/research/america/">Access Across America</a>. Nonetheless, the analysis code
+in OTP1 is essentially an unmaintained and unsupported early prototype for later projects,
+specifically Conveyal's R5 (and the Conveyal Analysis system built upon it). OTP1 seems to have
+gained popularity for analysis uses due to the existence of documentation and an active user
+community, but has significant technical shortcomings. One of these is simply speed: OTP1 can be
+orders of magnitude slower (and more memory-intensive) than the approaches exemplified in R5. The
+other is the requirement to search at a single specific time. Travel times and especially wait times
+on scheduled transit vary greatly depending on when you depart. Accounting for variation over a time
+window requires repeated independent searches at each possible departure time, which is very
+inefficient. R5 is highly optimized to capture variations in travel time across time windows and
+account for uncertainty in waiting times on frequency-based routes.</p>
+<p>Due to its similarity to the R5 approach, OTP2's transit router would not have these same problems.
+Nonetheless, we have decided not to port the OTP1 analysis features over to OTP2 since it would
+broaden the focus away from passenger information and draw finite attention away from existing
+projects like R5 and Conveyal Analysis.</p>
+<p>Accordingly, we have made an effort to clean up and augment OTP1 analysis documentation for
+researchers who will continue to need it. It should remain possible for people to continue using
+OTP1 if they prefer. If you would instead like to apply the innovations present in OTP2, we
+recommend looking into R5 or Conveyal Analysis.</p>
+<h3 id="routers-api-and-hot-reloading">Routers API and Hot Reloading</h3>
+<p>Via it's Routers API, OTP1 allows loading data and serving APIs for multiple separate geographic
+areas. This is functionally equivalent to running more than one OTP server with separate data sets.
+This system also allows reloading transportation network data when it changes, or even pushing new
+data over a network connection.</p>
+<p>These were all adaptations to the very different IT environment that existed earlier in OTP history.
+These days, containerization and on-demand cloud servers have become ubiquitous, and most users
+solve these problems in totally different ways - by provisioning and starting up entirely new
+virtual servers, then switching a load balancer over to those new servers. Because the Routers API
+is complex and exposes potentially damaging functionality over the network, it has been removed from
+OTP2 to simplify the code base and make it easier to reason about security.</p>
+<h3 id="routing-request-parameters">Routing request parameters</h3>
+<p>Less parameters are available on the OTP2 REST API than in OTP1. Often there is no practical loss of
+functionality, just a different way of expressing things due to the new routing algorithms. A
+summary of parameters that have been removed and their replacements can be found in the migration
+guide <a href="../OTP2-MigrationGuide/">OTP2-MigrationGuide</a>.</p>
+<h2 id="otp-trip-planning-and-transit-index-apis">OTP Trip planning and Transit index APIs</h2>
+<p>OTP1 have two APIs for trip planning, the REST API and an obsolete GraphQL API(early version of the
+Digitransit GraphQL API). OTP2 still support the REST API and it is very similar in functionality
+compared with the OTP1 version. In the future we would like to create a new official OTP API using
+GraphQL replacing the REST API. We will probably support the REST API for a long time to allow
+everyone to migrate to the new GraphQL API. Today, OTP2 comes with two Sandbox extension APIs:</p>
+<ul>
+<li><a href="../sandbox/LegacyGraphQLApi/">HSL Legacy GraphQL API</a> - HSL's GraphQL API used by the Digitransit
+  project.</li>
+<li><a href="../sandbox/TransmodelApi/">Transmodel API</a> - Entur´s Transmodel API</li>
+</ul>
+<p>The plan is to merge the two APIs above, clean it up and make it the new official API. The HSL API
+uses GTFS terminology, while the Entur API is Transmodel(NeTEx) based. Both APIs are similar in
+semantics/structure and provide the same functionality. The plan is to merge these to APIs into one
+new official OTP2 API. We will then deprecate the REST API, Transmodel API and the HSL API. The new
+API will be available in a GTFS and a Transmodel "translated" version.</p>
+<h2 id="additional-characteristics-added-in-otp2">Additional characteristics added in OTP2</h2>
+<p><strong>Sandbox Extensions</strong> OTP2's Sandbox system allows for plugins, proprietary extensions, and
+experimental feature development with less overhead. It forces OTP2 to become more extensible, while
+reducing process overhead when developing non-core features.</p>
+<p><strong>Cloud support</strong> In OTP1 all data access (config, input data, and graph output) is by direct access
+to the local filesystem. The only exception is elevation data, which can be loaded from AWS S3 as
+well. In OTP2, all data access is through an abstraction layer. This can be configured to support
+individual local files, zip files, and Google Cloud Storage. The new data access treats directories
+and zip files as “equal”, and this functionality is used to read the contents of GTFS and NeTEx
+archives. Other data sources can be supported by writing plugins. Entur has written a plugin for AWS
+S3 which has not been merged. If requested they can provide this code for AWS S3.</p>
+<p><strong>Library upgrades</strong> We have adapted OTP2 to run on Java 11+ and moved to newer versions of some
+dependencies such as GraphQL and One Bus Away.</p>
+<p><strong>Bugfixes</strong> At least bug issues have been resolved in OTP2. Critical fixes have been backported to
+OTP1. See https://github.com/issues?q=is%3Aclosed+is%3Aissue+label%3AOTP2+label%3Abug</p>
+<h2 id="other-features-removed-from-otp2">Other features removed from OTP2</h2>
+<p><strong>AlertPatch</strong> GTFS-RT Service Alerts will no longer affect routing (e.g. cancel trips). A GTFS-RT
+Trip Updates feed should be used for this purpose.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["toc.integrate", "content.code.copy", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.407015b8.min.js"></script>
+      
+    
+  </body>
+</html>
