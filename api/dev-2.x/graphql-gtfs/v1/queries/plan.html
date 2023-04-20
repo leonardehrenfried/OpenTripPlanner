@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content="Magidoc" />
+    <meta
+      name="generator-url"
+      content="https://github.com/magidoc-org/magidoc"
+    />
+
+    <meta http-equiv="content-security-policy" content="">
+		<link href="../_app/immutable/assets/_layout.0b8e2206.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/_commonjsHelpers.43b693e1.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/ChevronDown.1a5af1df.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/FieldDetails.c7cbfd6e.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/PreviousNextPage.4a5fa1bb.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/ArgsList.957ebbf5.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/DirectiveTag.771fbf22.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.c0342ff7.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.836bd93a.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons.4b02f718.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.5213817d.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/paths.5c662560.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/control.e7f5239e.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.b019684f.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/_layout.svelte.18675906.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/_commonjsHelpers.f9c16f81.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/ChevronDown.7c572881.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/prism-json.106361a3.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/model.d648221a.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/pages.4b8b985b.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/Button.bdd64a41.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/stores.e66edf0c.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/queries-_query_-page.svelte.1342ceb6.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/FieldDetails.1aa44232.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/PreviousNextPage.512d10d8.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/ArgsList.f99b222a.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/DirectiveTag.13028ffd.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/queries-_query_-page.ts.12ea3bd8.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index.b1f5b21f.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/_page.73fa34b8.js"><title>Query - plan</title><!-- HEAD_svelte-k1ybol_START --><meta name="keywords" content="graphql,api,documentation,OTP GTFS GraphQL API v1"><meta name="description" content="OTP GTFS GraphQL API v1's GraphQL documentation"><meta name="og:title" content="OTP GTFS GraphQL API v1"><meta name="og:type" content="article"><meta name="og:image" content="https://raw.githubusercontent.com/magidoc-org/magidoc/main/logo/logo_horizontal.png"><meta name="og:site_name" content="OTP GTFS GraphQL API v1"><meta name="og:description" content="OTP GTFS GraphQL API v1's GraphQL documentation"><!-- HEAD_svelte-k1ybol_END --><!-- HEAD_svelte-19yffit_START --><!-- HEAD_svelte-19yffit_END -->
+  </head>
+  <body>
+    <div style="display: contents">
+
+
+
+
+
+
+
+
+<header aria-label="" class="bx--header">
+  
+  <a href="/api/dev-2.x/graphql-gtfs/v1" class="bx--header__name">
+    <div slot="platform" class="header-logo-wrapper svelte-qat78g"><img src="https://raw.githubusercontent.com/magidoc-org/magidoc/main/logo/logo_horizontal.png" alt="Magidoc"></div></a>
+  <div class="bx--header__global"><button type="button" label="Search" class="bx--header__action ">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" preserveAspectRatio="xMidYMid meet" width="20" height="20" aria-hidden><path d="M29,27.5859l-7.5521-7.5521a11.0177,11.0177,0,1,0-1.4141,1.4141L27.5859,29ZM4,13a9,9,0,1,1,9,9A9.01,9.01,0,0,1,4,13Z"></path></svg>
+  </button>
+    
+    </div></header>
+
+
+
+
+
+  <div style="false" class="bx--side-nav__overlay"></div>
+<nav aria-hidden class="bx--side-nav__navigation bx--side-nav bx--side-nav--ux  bx--side-nav--collapsed "><ul class="bx--side-nav__items"><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/introduction" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Introduction</span></a></li>
+        <li class="bx--side-nav__item"><button type="button" aria-expanded class="bx--side-nav__submenu">
+    <span class="bx--side-nav__submenu-title">Queries</span>
+    <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" preserveAspectRatio="xMidYMid meet" width="16" height="16" aria-hidden><path d="M16 22L6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"></path></svg></div></button>
+  
+  <ul role="menu" style="max-height: none" class="bx--side-nav__menu"><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/agencies" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">agencies</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/agency" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">agency</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/alerts" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">alerts</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/bikePark" class="deprecated bx--side-nav__link"><span class="bx--side-nav__link-text">bikePark</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/bikeParks" class="deprecated bx--side-nav__link"><span class="bx--side-nav__link-text">bikeParks</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/bikeRentalStation" class="deprecated bx--side-nav__link"><span class="bx--side-nav__link-text">bikeRentalStation</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/bikeRentalStations" class="deprecated bx--side-nav__link"><span class="bx--side-nav__link-text">bikeRentalStations</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/cancelledTripTimes" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">cancelledTripTimes</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/carPark" class="deprecated bx--side-nav__link"><span class="bx--side-nav__link-text">carPark</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/carParks" class="deprecated bx--side-nav__link"><span class="bx--side-nav__link-text">carParks</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/cluster" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">cluster</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/clusters" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">clusters</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/departureRow" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">departureRow</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/feeds" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">feeds</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/fuzzyTrip" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">fuzzyTrip</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/nearest" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">nearest</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/node" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">node</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/pattern" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">pattern</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/patterns" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">patterns</span></a></li><li class="bx--side-nav__menu-item"><a aria-current="page" href="/api/dev-2.x/graphql-gtfs/v1/queries/plan" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">plan</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/rentalVehicle" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">rentalVehicle</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/rentalVehicles" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">rentalVehicles</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/route" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">route</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/routes" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">routes</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/serviceTimeRange" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">serviceTimeRange</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/station" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">station</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/stations" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">stations</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/stop" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">stop</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/stops" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">stops</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/stopsByBbox" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">stopsByBbox</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/stopsByRadius" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">stopsByRadius</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/ticketTypes" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">ticketTypes</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/trip" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">trip</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/trips" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">trips</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/vehicleParking" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">vehicleParking</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/vehicleParkings" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">vehicleParkings</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/vehicleRentalStation" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">vehicleRentalStation</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/vehicleRentalStations" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">vehicleRentalStations</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/queries/viewer" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">viewer</span></a></li>
+        </ul></li>
+        <li class="bx--side-nav__item"><button type="button" aria-expanded class="bx--side-nav__submenu">
+    <span class="bx--side-nav__submenu-title">Types</span>
+    <div class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" preserveAspectRatio="xMidYMid meet" width="16" height="16" aria-hidden><path d="M16 22L6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"></path></svg></div></button>
+  
+  <ul role="menu" style="max-height: none" class="bx--side-nav__menu"><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/AbsoluteDirection" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">AbsoluteDirection</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Agency" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Agency</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/AgencyAlertType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">AgencyAlertType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Alert" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Alert</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/AlertCauseType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">AlertCauseType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/AlertEffectType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">AlertEffectType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/AlertEntity" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">AlertEntity</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/AlertSeverityLevelType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">AlertSeverityLevelType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/BikePark" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">BikePark</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/BikeRentalStation" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">BikeRentalStation</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/BikeRentalStationUris" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">BikeRentalStationUris</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/BikesAllowed" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">BikesAllowed</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/BookingInfo" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">BookingInfo</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/BookingTime" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">BookingTime</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Boolean</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/CarPark" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">CarPark</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Cluster" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Cluster</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/ContactInfo" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">ContactInfo</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Coordinates" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Coordinates</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Currency" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Currency</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/DepartureRow" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">DepartureRow</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Duration" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Duration</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Feed" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Feed</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/FeedAlertType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">FeedAlertType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/FilterPlaceType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">FilterPlaceType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Float</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/FormFactor" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">FormFactor</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/GeoJson" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">GeoJson</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Geometry" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Geometry</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/ID" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">ID</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/InputBanned" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">InputBanned</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/InputCoordinates" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">InputCoordinates</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/InputField" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">InputField</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/InputFilters" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">InputFilters</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/InputModeWeight" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">InputModeWeight</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/InputPreferred" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">InputPreferred</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/InputTriangle" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">InputTriangle</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/InputUnpreferred" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">InputUnpreferred</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Int</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Itinerary" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Itinerary</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Leg" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Leg</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/LocalTimeSpan" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">LocalTimeSpan</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/LocalTimeSpanDate" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">LocalTimeSpanDate</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/LocationType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">LocationType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Long" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Long</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Mode" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Mode</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Money" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Money</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Node" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Node</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/OpeningHours" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">OpeningHours</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/OptimizeType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">OptimizeType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/PageInfo" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">PageInfo</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/ParkingFilter" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">ParkingFilter</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/ParkingFilterOperation" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">ParkingFilterOperation</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Pattern" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Pattern</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/PatternAlertType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">PatternAlertType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/PickupDropoffType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">PickupDropoffType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Place" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Place</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/PlaceInterface" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">PlaceInterface</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Plan" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Plan</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Polyline" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Polyline</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/PropulsionType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">PropulsionType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Qualifier" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Qualifier</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/QueryType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">QueryType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/RealtimeState" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">RealtimeState</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/RelativeDirection" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">RelativeDirection</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/RentalVehicle" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">RentalVehicle</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/RentalVehicleType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">RentalVehicleType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/RideHailingEstimate" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">RideHailingEstimate</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/RideHailingProvider" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">RideHailingProvider</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Route" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Route</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/RouteAlertType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">RouteAlertType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/RouteType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">RouteType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/RoutingError" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">RoutingError</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/RoutingErrorCode" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">RoutingErrorCode</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Stop" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Stop</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/StopAlertType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">StopAlertType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/StopGeometries" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">StopGeometries</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/StopOnRoute" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">StopOnRoute</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/StopOnTrip" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">StopOnTrip</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/StopRelationship" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">StopRelationship</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Stoptime" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Stoptime</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/StoptimesInPattern" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">StoptimesInPattern</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">String</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/SystemNotice" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">SystemNotice</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/TicketType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">TicketType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/TransitMode" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">TransitMode</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/TranslatedString" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">TranslatedString</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/TransportMode" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">TransportMode</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Trip" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Trip</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/TripAlertType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">TripAlertType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/Unknown" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">Unknown</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/VehicleParking" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">VehicleParking</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/VehicleParkingInput" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">VehicleParkingInput</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/VehicleParkingSpaces" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">VehicleParkingSpaces</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/VehicleParkingState" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">VehicleParkingState</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/VehiclePosition" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">VehiclePosition</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/VehicleRentalStation" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">VehicleRentalStation</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/VehicleRentalUris" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">VehicleRentalUris</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/VehicleStopStatus" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">VehicleStopStatus</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/VertexType" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">VertexType</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/WheelchairBoarding" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">WheelchairBoarding</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/debugOutput" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">debugOutput</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/elevationProfileComponent" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">elevationProfileComponent</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/fare" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">fare</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/fareComponent" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">fareComponent</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/placeAtDistance" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">placeAtDistance</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/placeAtDistanceConnection" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">placeAtDistanceConnection</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/placeAtDistanceEdge" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">placeAtDistanceEdge</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/serviceTimeRange" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">serviceTimeRange</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/step" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">step</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/stopAtDistance" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">stopAtDistance</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/stopAtDistanceConnection" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">stopAtDistanceConnection</span></a></li><li class="bx--side-nav__menu-item"><a href="/api/dev-2.x/graphql-gtfs/v1/types/stopAtDistanceEdge" class=" bx--side-nav__link"><span class="bx--side-nav__link-text">stopAtDistanceEdge</span></a></li>
+        </ul></li></ul></nav>
+
+<main id="main-content" style="margin-left: 0; undefined" class="bx--content"><div class="bx--grid"><div class="bx--row"><div class="bx--col">
+
+<section>
+
+  <div class="parent svelte-1jlumb"><h1 id="title" class="header header-base svelte-1jlumb">plan
+<div id="ccs-0.buzxdzf02vs" class="bx--tag         bx--tag--green     ">
+    <span>Query</span></div>
+
+    </h1>
+  
+</div>
+
+  <p class="md-paragraph svelte-uzcm98">Plans an itinerary from point A to point B based on the given arguments
+</p>
+
+  <div class="parent svelte-1jlumb"><h2 id="arguments" class="header header-base svelte-1jlumb">Arguments</h2>
+  <h2 class="header-base header-hashtag svelte-1jlumb"><a href="#arguments" class="hashtag svelte-1jlumb">#</a></h2>
+</div>
+    
+<div role="table" class="bx--structured-list  bx--structured-list--condensed ">
+<div role="rowgroup" class="bx--structured-list-tbody">
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">date</span>
+            
+            
+<div id="ccs-0.8qslb6ui3w" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Date of departure or arrival in format YYYY-MM-DD. Default value: current date
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">time</span>
+            
+            
+<div id="ccs-0.761s9mt37sa" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Time of departure or arrival in format hh:mm:ss. Default value: current time
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">from</span>
+            
+            
+<div id="ccs-0.8ni7kpv227q" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/InputCoordinates" class="bx--link     ">InputCoordinates
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">The geographical location where the itinerary begins.
+Use either this argument or <code class="code-span svelte-1292o4f">fromPlace
+</code>, but not both.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">to</span>
+            
+            
+<div id="ccs-0.mtapg62ue9s" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/InputCoordinates" class="bx--link     ">InputCoordinates
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">The geographical location where the itinerary ends.
+Use either this argument or <code class="code-span svelte-1292o4f">toPlace
+</code>, but not both.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">fromPlace</span>
+            
+            
+<div id="ccs-0.uljh0awokf" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">The place where the itinerary begins in format <code class="code-span svelte-1292o4f">name::place
+</code>, where <code class="code-span svelte-1292o4f">place
+</code>
+is either a lat,lng pair (e.g. <code class="code-span svelte-1292o4f">Pasila::60.199041,24.932928
+</code>) or a stop id
+(e.g. <code class="code-span svelte-1292o4f">Pasila::HSL:1000202
+</code>).
+Use either this argument or <code class="code-span svelte-1292o4f">from
+</code>, but not both.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">toPlace</span>
+            
+            
+<div id="ccs-0.czc8cs642tt" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">The place where the itinerary ends in format <code class="code-span svelte-1292o4f">name::place
+</code>, where <code class="code-span svelte-1292o4f">place
+</code> is
+either a lat,lng pair (e.g. <code class="code-span svelte-1292o4f">Pasila::60.199041,24.932928
+</code>) or a stop id
+(e.g. <code class="code-span svelte-1292o4f">Pasila::HSL:1000202
+</code>).
+Use either this argument or <code class="code-span svelte-1292o4f">to
+</code>, but not both.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">wheelchair</span>
+            
+            
+<div id="ccs-0.8dgv0hk249" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class="bx--link     ">Boolean
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Whether the itinerary must be wheelchair accessible. Default value: false
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">numItineraries</span>
+            <span>=</span>
+              <span>3</span>
+            
+<div id="ccs-0.45md01cflvp" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">The maximum number of itineraries to return. Default value: 3.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">searchWindow</span>
+            
+            
+<div id="ccs-0.h94il7iri37" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Long" class="bx--link     ">Long
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">The length of the search-window in seconds. This parameter is optional.
+</p>
+
+<p class="md-paragraph svelte-uzcm98">The search-window is defined as the duration between the earliest-departure-time(EDT) and
+the latest-departure-time(LDT). OTP will search for all itineraries in this departure
+window. If <code class="code-span svelte-1292o4f">arriveBy=true
+</code> the <code class="code-span svelte-1292o4f">dateTime
+</code> parameter is the latest-arrival-time, so OTP
+will dynamically calculate the EDT. Using a short search-window is faster than using a
+longer one, but the search duration is not linear. Using a \"too\" short search-window will
+waste resources server side, while using a search-window that is too long will be slow.
+</p>
+
+<p class="md-paragraph svelte-uzcm98">OTP will dynamically calculate a reasonable value for the search-window, if not provided.
+The calculation comes with a significant overhead (10-20% extra). Whether you should use the
+dynamic calculated value or pass in a value depends on your use-case. For a travel planner
+in a small geographical area, with a dense network of public transportation, a fixed value
+between 40 minutes and 2 hours makes sense. To find the appropriate search-window, adjust
+it so that the number of itineraries on average is around the wanted <code class="code-span svelte-1292o4f">numItineraries
+</code>. Make
+sure you set the <code class="code-span svelte-1292o4f">numItineraries
+</code> to a high number while testing. For a country wide area
+like Norway, using the dynamic search-window is the best.
+</p>
+
+<p class="md-paragraph svelte-uzcm98">When paginating, the search-window is calculated using the <code class="code-span svelte-1292o4f">numItineraries
+</code> in the original
+search together with statistics from the search for the last page. This behaviour is
+configured server side, and can not be overridden from the client.
+</p>
+
+<p class="md-paragraph svelte-uzcm98">The search-window used is returned to the response metadata as <code class="code-span svelte-1292o4f">searchWindowUsed
+</code> for
+debugging purposes.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">pageCursor</span>
+            
+            
+<div id="ccs-0.8htbae882ot" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Use the cursor to get the next or previous page of results.
+The next page is a set of itineraries departing after the last itinerary in this result and
+the previous page is a set of itineraries departing before the first itinerary.
+This is only usable when public transportation mode(s) are included in the query.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">maxWalkDistance</span>
+            
+            
+<div id="ccs-0.y81ini2oap" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+<div id="ccs-0.nmiboz6yc9h" class="bx--tag   bx--tag--red           ">
+    <span>
+
+<span class="bx--tooltip--definition bx--tooltip--a11y"><button type="button" aria-describedby="ccs-0.f3ldf9j8168" class="bx--tooltip--a11y bx--tooltip__trigger bx--tooltip__trigger--definition bx--tooltip--hidden   bx--tooltip--bottom  bx--tooltip--align-center">Deprecated</button>
+  <div role="tooltip" id="ccs-0.f3ldf9j8168" class="bx--assistive-text">Does nothing. Use walkReluctance instead.</div></span></span></div>
+            </p>
+          <p class="md-paragraph svelte-uzcm98">The maximum distance (in meters) the user is willing to walk per walking
+section. If the only transport mode allowed is <code class="code-span svelte-1292o4f">WALK
+</code>, then the value of
+this argument is ignored.
+Default: 2000m
+Maximum value: 15000m
+<strong>Note:</strong> If this argument has a relatively small value and only some
+transport modes are allowed (e.g. <code class="code-span svelte-1292o4f">WALK
+</code> and <code class="code-span svelte-1292o4f">RAIL
+</code>), it is possible to get
+an itinerary which has (useless) back and forth public transport legs to
+avoid walking too long distances.
+</p>
+
+<p class="md-paragraph svelte-uzcm98">DEPRECATED - Use walkReluctance instead
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">maxPreTransitTime</span>
+            
+            
+<div id="ccs-0.vxdnazru6tj" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">The maximum time (in seconds) of pre-transit travel when using
+drive-to-transit (park and ride or kiss and ride). Default value: 1800.
+</p>
+
+<p class="md-paragraph svelte-uzcm98">DEPRECATED - Use walkReluctance or future reluctance parameters for other modes
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">carParkCarLegWeight</span>
+            
+            
+<div id="ccs-0.jrkiixacvj" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">How expensive it is to drive a car when car&amp;parking, increase this value to
+make car driving legs shorter. Default value: 1.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">itineraryFiltering</span>
+            
+            
+<div id="ccs-0.qmkkc2voqcl" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">How easily bad itineraries are filtered from results. Value 0 (default)
+disables filtering. Itineraries are filtered if they are worse than another
+one in some respect (e.g. more walking) by more than the percentage of
+filtering level, which is calculated by dividing 100% by the value of this
+argument (e.g. <code class="code-span svelte-1292o4f">itineraryFiltering = 0.5
+</code> → 200% worse itineraries are filtered).
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">bikeReluctance</span>
+            
+            
+<div id="ccs-0.esqh6mj8rel" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">A multiplier for how bad biking is, compared to being in transit for equal
+lengths of time. Default value: 2.0
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">bikeWalkingReluctance</span>
+            
+            
+<div id="ccs-0.bkiic2mjnch" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">A multiplier for how bad walking with a bike is, compared to being in transit for equal
+lengths of time. Default value: 5.0
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">carReluctance</span>
+            
+            
+<div id="ccs-0.rc1azkwxipa" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">A multiplier for how bad driving is, compared to being in transit for equal
+lengths of time. Default value: 3.0
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">walkReluctance</span>
+            
+            
+<div id="ccs-0.za69xljh0kk" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">A multiplier for how bad walking is, compared to being in transit for equal
+lengths of time. Empirically, values between 2 and 4 seem to correspond
+well to the concept of not wanting to walk too much without asking for
+totally ridiculous itineraries, but this observation should in no way be
+taken as scientific or definitive. Your mileage may vary. See
+
+<a href="https://github.com/opentripplanner/OpenTripPlanner/issues/4090" class="bx--link     ">https://github.com/opentripplanner/OpenTripPlanner/issues/4090
+    </a> for impact on
+performance with high values. Default value: 2.0
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">walkOnStreetReluctance</span>
+            
+            
+<div id="ccs-0.w7pyrqpyn3k" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+<div id="ccs-0.bf8ula9khbj" class="bx--tag   bx--tag--red           ">
+    <span>
+
+<span class="bx--tooltip--definition bx--tooltip--a11y"><button type="button" aria-describedby="ccs-0.jk7rf61ckpf" class="bx--tooltip--a11y bx--tooltip__trigger bx--tooltip__trigger--definition bx--tooltip--hidden   bx--tooltip--bottom  bx--tooltip--align-center">Deprecated</button>
+  <div role="tooltip" id="ccs-0.jk7rf61ckpf" class="bx--assistive-text">Use walkSafetyFactor instead</div></span></span></div>
+            </p>
+          <p class="md-paragraph svelte-uzcm98">How much more reluctant is the user to walk on streets with car traffic allowed. Default value: 1.0
+</p>
+
+<p class="md-paragraph svelte-uzcm98">Deprecated, use walkSafetyFactor instead.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">waitReluctance</span>
+            
+            
+<div id="ccs-0.ylwwf7a8gvf" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">How much worse is waiting for a transit vehicle than being on a transit
+vehicle, as a multiplier. The default value treats wait and on-vehicle time
+as the same. It may be tempting to set this higher than walkReluctance (as
+studies often find this kind of preferences among riders) but the planner
+will take this literally and walk down a transit line to avoid waiting at a
+stop. This used to be set less than 1 (0.95) which would make waiting
+offboard preferable to waiting onboard in an interlined trip. That is also
+undesirable. If we only tried the shortest possible transfer at each stop to
+neighboring stop patterns, this problem could disappear. Default value: 1.0.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">waitAtBeginningFactor</span>
+            
+            
+<div id="ccs-0.7ai6z18i95l" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+<div id="ccs-0.oio1ayldwr7" class="bx--tag   bx--tag--red           ">
+    <span>
+
+<span class="bx--tooltip--definition bx--tooltip--a11y"><button type="button" aria-describedby="ccs-0.yjil5x69g9o" class="bx--tooltip--a11y bx--tooltip__trigger bx--tooltip__trigger--definition bx--tooltip--hidden   bx--tooltip--bottom  bx--tooltip--align-center">Deprecated</button>
+  <div role="tooltip" id="ccs-0.yjil5x69g9o" class="bx--assistive-text">Removed in OTP 2</div></span></span></div>
+            </p>
+          <p class="md-paragraph svelte-uzcm98">How much less bad is waiting at the beginning of the trip (replaces
+<code class="code-span svelte-1292o4f">waitReluctance
+</code> on the first boarding). Default value: 0.4
+</p>
+
+<p class="md-paragraph svelte-uzcm98">Deprecated, not used, the timetable-view replaces this functionality.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">walkSpeed</span>
+            
+            
+<div id="ccs-0.3mycvdcirne" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Max walk speed along streets, in meters per second. Default value: 1.33
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">bikeSpeed</span>
+            
+            
+<div id="ccs-0.mtog4s3aqt" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Max bike speed along streets, in meters per second. Default value: 5.0
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">bikeSwitchTime</span>
+            
+            
+<div id="ccs-0.xep32zxw94a" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Time to get on and off your own bike, in seconds. Default value: 0
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">bikeSwitchCost</span>
+            
+            
+<div id="ccs-0.bt24qr39by4" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Cost of getting on and off your own bike. Unit: seconds. Default value: 0
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">optimize</span>
+            
+            
+<div id="ccs-0.wn3kqrqs98e" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/OptimizeType" class="bx--link     ">OptimizeType
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Optimization type for bicycling legs, e.g. prefer flat terrain. Default value: <code class="code-span svelte-1292o4f">QUICK
+</code>
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">triangle</span>
+            
+            
+<div id="ccs-0.swenvviwsa9" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/InputTriangle" class="bx--link     ">InputTriangle
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Triangle optimization parameters for bicycling legs. Only effective when <code class="code-span svelte-1292o4f">optimize
+</code> is set to <strong>TRIANGLE</strong>.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">arriveBy</span>
+            
+            
+<div id="ccs-0.zwkvkkxnti8" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class="bx--link     ">Boolean
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Whether the itinerary should depart at the specified time (false), or arrive
+to the destination at the specified time (true). Default value: false.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">intermediatePlaces</span>
+            
+            
+<div id="ccs-0.divqycb9dyf" class="bx--tag      bx--tag--blue        ">
+    <span>[
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/InputCoordinates" class="bx--link     ">InputCoordinates
+    </a>]</span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">An ordered list of intermediate locations to be visited.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">preferred</span>
+            
+            
+<div id="ccs-0.fmcbs2ief6" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/InputPreferred" class="bx--link     ">InputPreferred
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">List of routes and agencies which are given higher preference when planning the itinerary
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">unpreferred</span>
+            
+            
+<div id="ccs-0.d4qb2gjc83" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/InputUnpreferred" class="bx--link     ">InputUnpreferred
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">List of routes and agencies which are given lower preference when planning the itinerary
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">walkBoardCost</span>
+            
+            
+<div id="ccs-0.nbladfegtu" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">This prevents unnecessary transfers by adding a cost for boarding a vehicle. Unit: seconds. Default value: 600
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">bikeBoardCost</span>
+            
+            
+<div id="ccs-0.n7a1mfml1si" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Separate cost for boarding a vehicle with a bicycle, which is more difficult
+than on foot. Unit: seconds. Default value: 600
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">banned</span>
+            
+            
+<div id="ccs-0.r0005fs7w9" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/InputBanned" class="bx--link     ">InputBanned
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">List of routes, trips, agencies and stops which are not used in the itinerary
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">transferPenalty</span>
+            
+            
+<div id="ccs-0.juzc3ajmsm" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">An extra penalty added on transfers (i.e. all boardings except the first
+one). Not to be confused with bikeBoardCost and walkBoardCost, which are the
+cost of boarding a vehicle with and without a bicycle. The boardCosts are
+used to model the 'usual' perceived cost of using a transit vehicle, and the
+transferPenalty is used when a user requests even less transfers. In the
+latter case, we don't actually optimize for fewest transfers, as this can
+lead to absurd results. Consider a trip in New York from Grand Army Plaza
+(the one in Brooklyn) to Kalustyan's at noon. The true lowest transfers
+route is to wait until midnight, when the 4 train runs local the whole way.
+The actual fastest route is the 2/3 to the 4/5 at Nevins to the 6 at Union
+Square, which takes half an hour. Even someone optimizing for fewest
+transfers doesn't want to wait until midnight. Maybe they would be willing
+to walk to 7th Ave and take the Q to Union Square, then transfer to the 6.
+If this takes less than optimize_transfer_penalty seconds, then that's what
+we'll return. Default value: 0.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">batch</span>
+            
+            
+<div id="ccs-0.0960uywpcu2" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class="bx--link     ">Boolean
+    </a></span></div>
+            
+<div id="ccs-0.cvea4mhtgkr" class="bx--tag   bx--tag--red           ">
+    <span>
+
+<span class="bx--tooltip--definition bx--tooltip--a11y"><button type="button" aria-describedby="ccs-0.mh8f18n3cvn" class="bx--tooltip--a11y bx--tooltip__trigger bx--tooltip__trigger--definition bx--tooltip--hidden   bx--tooltip--bottom  bx--tooltip--align-center">Deprecated</button>
+  <div role="tooltip" id="ccs-0.mh8f18n3cvn" class="bx--assistive-text">Removed in OTP 2</div></span></span></div>
+            </p>
+          <p class="md-paragraph svelte-uzcm98">This argument has no use for itinerary planning and will be removed later.
+<del>When true, do not use goal direction or stop at the target, build a full SPT. Default value: false.</del>
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">transportModes</span>
+            
+            
+<div id="ccs-0.3nh6r9or4pl" class="bx--tag      bx--tag--blue        ">
+    <span>[
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/TransportMode" class="bx--link     ">TransportMode
+    </a>]</span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">List of transportation modes that the user is willing to use. Default: <code class="code-span svelte-1292o4f">["WALK","TRANSIT"]
+</code>
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">modeWeight</span>
+            
+            
+<div id="ccs-0.ceelaonxpve" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/InputModeWeight" class="bx--link     ">InputModeWeight
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">The weight multipliers for transit modes. WALK, BICYCLE, CAR, TRANSIT and LEG_SWITCH are not included.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">debugItineraryFilter</span>
+            
+            
+<div id="ccs-0.qih0z7qjq39" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class="bx--link     ">Boolean
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Debug the itinerary-filter-chain. The filters will mark itineraries as deleted, but does NOT delete them when this is enabled.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">allowBikeRental</span>
+            
+            
+<div id="ccs-0.ctf1m7zt6o7" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class="bx--link     ">Boolean
+    </a></span></div>
+            
+<div id="ccs-0.6adinp05jsn" class="bx--tag   bx--tag--red           ">
+    <span>
+
+<span class="bx--tooltip--definition bx--tooltip--a11y"><button type="button" aria-describedby="ccs-0.1nd4o71atim" class="bx--tooltip--a11y bx--tooltip__trigger bx--tooltip__trigger--definition bx--tooltip--hidden   bx--tooltip--bottom  bx--tooltip--align-center">Deprecated</button>
+  <div role="tooltip" id="ccs-0.1nd4o71atim" class="bx--assistive-text">Rental is specified by modes</div></span></span></div>
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Is bike rental allowed? Default value: false
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">allowKeepingRentedBicycleAtDestination</span>
+            
+            
+<div id="ccs-0.j3ie2vcpsoc" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class="bx--link     ">Boolean
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Whether arriving at the destination with a rented (station) bicycle is allowed without
+dropping it off. Default: false.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">keepingRentedBicycleAtDestinationCost</span>
+            
+            
+<div id="ccs-0.ec37f3f437r" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">The cost of arriving at the destination with the rented bicycle, to discourage doing so.
+Default value: 0.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">boardSlack</span>
+            
+            
+<div id="ccs-0.fc2fqwkqj69" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Invariant: <code class="code-span svelte-1292o4f">boardSlack + alightSlack &lt;= transferSlack
+</code>. Default value: 0
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">alightSlack</span>
+            
+            
+<div id="ccs-0.ej6oucabt2p" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Invariant: <code class="code-span svelte-1292o4f">boardSlack + alightSlack &lt;= transferSlack
+</code>. Default value: 0
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">minTransferTime</span>
+            
+            
+<div id="ccs-0.iwfyxll0rxp" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">A global minimum transfer time (in seconds) that specifies the minimum
+amount of time that must pass between exiting one transit vehicle and
+boarding another. This time is in addition to time it might take to walk
+between transit stops. Default value: 0
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">nonpreferredTransferPenalty</span>
+            
+            
+<div id="ccs-0.8751sb5fals" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Penalty (in seconds) for using a non-preferred transfer. Default value: 180
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">maxTransfers</span>
+            
+            
+<div id="ccs-0.lhxei1kq23" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Maximum number of transfers. Default value: 2
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">startTransitStopId</span>
+            
+            
+<div id="ccs-0.dw2xj7f70pr" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">This argument has currently no effect on which itineraries are returned. Use
+argument <code class="code-span svelte-1292o4f">fromPlace
+</code> to start the itinerary from a specific stop.
+<del>A transit stop that this trip must start from</del>
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">startTransitTripId</span>
+            
+            
+<div id="ccs-0.8jlfry8ya9u" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">ID of the trip on which the itinerary starts. This argument can be used to
+plan itineraries when the user is already onboard a vehicle. When using this
+argument, arguments <code class="code-span svelte-1292o4f">time
+</code> and <code class="code-span svelte-1292o4f">from
+</code> should be set based on a vehicle
+position message received from the vehicle running the specified trip.
+<strong>Note:</strong> this argument only takes into account the route and estimated
+travel time of the trip (and therefore arguments <code class="code-span svelte-1292o4f">time
+</code> and <code class="code-span svelte-1292o4f">from
+</code> must be
+used correctly to get meaningful itineraries).
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">claimInitialWait</span>
+            
+            
+<div id="ccs-0.a22m9sh7sqd" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Long" class="bx--link     ">Long
+    </a></span></div>
+            
+<div id="ccs-0.ykzv5okrdbj" class="bx--tag   bx--tag--red           ">
+    <span>
+
+<span class="bx--tooltip--definition bx--tooltip--a11y"><button type="button" aria-describedby="ccs-0.ui86e5dpgd" class="bx--tooltip--a11y bx--tooltip__trigger bx--tooltip__trigger--definition bx--tooltip--hidden   bx--tooltip--bottom  bx--tooltip--align-center">Deprecated</button>
+  <div role="tooltip" id="ccs-0.ui86e5dpgd" class="bx--assistive-text">Removed in OTP 2</div></span></span></div>
+            </p>
+          <p class="md-paragraph svelte-uzcm98">No effect on itinerary planning, adjust argument <code class="code-span svelte-1292o4f">time
+</code> instead to get later departures.
+<del>The maximum wait time in seconds the user is willing to delay trip start. Only effective in Analyst.</del>
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">reverseOptimizeOnTheFly</span>
+            
+            
+<div id="ccs-0.8rm25l7jmku" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class="bx--link     ">Boolean
+    </a></span></div>
+            
+<div id="ccs-0.xjkrk07pjt" class="bx--tag   bx--tag--red           ">
+    <span>
+
+<span class="bx--tooltip--definition bx--tooltip--a11y"><button type="button" aria-describedby="ccs-0.sompg36cjrj" class="bx--tooltip--a11y bx--tooltip__trigger bx--tooltip__trigger--definition bx--tooltip--hidden   bx--tooltip--bottom  bx--tooltip--align-center">Deprecated</button>
+  <div role="tooltip" id="ccs-0.sompg36cjrj" class="bx--assistive-text">Removed in OTP 2</div></span></span></div>
+            </p>
+          <p class="md-paragraph svelte-uzcm98"><strong>Consider this argument experimental</strong> – setting this argument to true
+causes timeouts and unoptimal routes in many cases.
+When true, reverse optimize (find alternative transportation mode, which
+still arrives to the destination in time) this search on the fly after
+processing each transit leg, rather than reverse-optimizing the entire path
+when it's done. Default value: false.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">omitCanceled</span>
+            <span>=</span>
+              <span>true</span>
+            
+<div id="ccs-0.js1bxqu3q4p" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class="bx--link     ">Boolean
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">When false, return itineraries using canceled trips. Default value: true.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">ignoreRealtimeUpdates</span>
+            
+            
+<div id="ccs-0.pfkwiqjlgxq" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class="bx--link     ">Boolean
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">When true, realtime updates are ignored during this search. Default value: false
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">disableRemainingWeightHeuristic</span>
+            
+            
+<div id="ccs-0.71s0yoiyhe5" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class="bx--link     ">Boolean
+    </a></span></div>
+            
+<div id="ccs-0.imbq8i7a5za" class="bx--tag   bx--tag--red           ">
+    <span>
+
+<span class="bx--tooltip--definition bx--tooltip--a11y"><button type="button" aria-describedby="ccs-0.68pre63ay1e" class="bx--tooltip--a11y bx--tooltip__trigger bx--tooltip__trigger--definition bx--tooltip--hidden   bx--tooltip--bottom  bx--tooltip--align-center">Deprecated</button>
+  <div role="tooltip" id="ccs-0.68pre63ay1e" class="bx--assistive-text">Removed in OTP 2.2</div></span></span></div>
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Only useful for testing and troubleshooting.
+<del>If true, the remaining weight heuristic is disabled. Currently only
+implemented for the long distance path service. Default value: false.</del>
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">locale</span>
+            
+            
+<div id="ccs-0.rwwx755ygya" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Two-letter language code (ISO 639-1) used for returned text.
+<strong>Note:</strong> only part of the data has translations available and names of
+stops and POIs are returned in their default language. Due to missing
+translations, it is sometimes possible that returned text uses a mixture of two languages.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">allowedTicketTypes</span>
+            
+            
+<div id="ccs-0.uj7plckr8ia" class="bx--tag      bx--tag--blue        ">
+    <span>[
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a>]</span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">List of ticket types that are allowed to be used in itineraries.
+See <code class="code-span svelte-1292o4f">ticketTypes
+</code> query for list of possible ticket types.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">heuristicStepsPerMainStep</span>
+            
+            
+<div id="ccs-0.y9jqwaxc0y" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Int" class="bx--link     ">Int
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Tuning parameter for the search algorithm, mainly useful for testing.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">compactLegsByReversedSearch</span>
+            
+            
+<div id="ccs-0.t5z1cskj2qm" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Boolean" class="bx--link     ">Boolean
+    </a></span></div>
+            
+<div id="ccs-0.7fjwan7vs17" class="bx--tag   bx--tag--red           ">
+    <span>
+
+<span class="bx--tooltip--definition bx--tooltip--a11y"><button type="button" aria-describedby="ccs-0.89f73nmnbxi" class="bx--tooltip--a11y bx--tooltip__trigger bx--tooltip__trigger--definition bx--tooltip--hidden   bx--tooltip--bottom  bx--tooltip--align-center">Deprecated</button>
+  <div role="tooltip" id="ccs-0.89f73nmnbxi" class="bx--assistive-text">Removed in OTP 2</div></span></span></div>
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Whether legs should be compacted by performing a reversed search.
+<strong>Experimental argument, will be removed!</strong>
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">allowedBikeRentalNetworks</span>
+            
+            
+<div id="ccs-0.iplnxj9ze8q" class="bx--tag      bx--tag--blue        ">
+    <span>[
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a>]</span></div>
+            
+<div id="ccs-0.d2dh4xj425b" class="bx--tag   bx--tag--red           ">
+    <span>
+
+<span class="bx--tooltip--definition bx--tooltip--a11y"><button type="button" aria-describedby="ccs-0.o72pyun6e9" class="bx--tooltip--a11y bx--tooltip__trigger bx--tooltip__trigger--definition bx--tooltip--hidden   bx--tooltip--bottom  bx--tooltip--align-center">Deprecated</button>
+  <div role="tooltip" id="ccs-0.o72pyun6e9" class="bx--assistive-text">Use allowedVehicleRentalNetworks instead</div></span></span></div>
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Which vehicle rental networks can be used. By default, all networks are allowed.
+</p>
+
+<p class="md-paragraph svelte-uzcm98">Deprecated: Use <code class="code-span svelte-1292o4f">allowedVehicleRentalNetworks
+</code> instead.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">allowedVehicleRentalNetworks</span>
+            
+            
+<div id="ccs-0.b7c2bdd3qeo" class="bx--tag      bx--tag--blue        ">
+    <span>[
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a>]</span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Which vehicle rental networks can be used. By default, all networks are allowed.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">bannedVehicleRentalNetworks</span>
+            
+            
+<div id="ccs-0.8iu534uijgd" class="bx--tag      bx--tag--blue        ">
+    <span>[
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/String" class="bx--link     ">String
+    </a>]</span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Which vehicle rental networks cannot be used. By default, all networks are allowed.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">walkSafetyFactor</span>
+            
+            
+<div id="ccs-0.ggt7xn3p5sm" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Float" class="bx--link     ">Float
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Factor for how much the walk safety is considered in routing. Value should be between 0 and 1.
+If the value is set to be 0, safety is ignored. Default is 1.0.
+</p>
+        </div>
+      </div>
+<div role="row" class="bx--structured-list-row ">
+<div role="cell" class=" bx--structured-list-td "><p class="arg-name-section svelte-9cf7d2"><span style="font-weight: bold">parking</span>
+            
+            
+<div id="ccs-0.zf6visuar4" class="bx--tag      bx--tag--blue        ">
+    <span>
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/VehicleParkingInput" class="bx--link     ">VehicleParkingInput
+    </a></span></div>
+            
+            </p>
+          <p class="md-paragraph svelte-uzcm98">Preferences for vehicle parking
+</p>
+        </div>
+      </div></div></div>
+
+  <div class="parent svelte-1jlumb"><h2 id="response" class="header header-base svelte-1jlumb">Response</h2>
+  <h2 class="header-base header-hashtag svelte-1jlumb"><a href="#response" class="hashtag svelte-1jlumb">#</a></h2>
+</div>
+    <p>Returns 
+<a href="/api/dev-2.x/graphql-gtfs/v1/types/Plan" class="bx--link     ">Plan
+    </a>.
+    </p>
+
+  <div class="parent svelte-1jlumb"><h4 id="example" class="header header-base svelte-1jlumb">Example</h4>
+  <h4 class="header-base header-hashtag svelte-1jlumb"><a href="#example" class="hashtag svelte-1jlumb">#</a></h4>
+</div>
+  <div role="navigation" class="bx--tabs "><div role="listbox" tabindex="0" aria-label="listbox" class="bx--tabs-trigger"><a tabindex="-1" href="#" class="bx--tabs-trigger-text"></a>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" preserveAspectRatio="xMidYMid meet" width="16" height="16" aria-hidden="true" role="img"><title>Show menu options</title><path d="M16 22L6 12 7.4 10.6 16 19.2 24.6 10.6 26 12z"></path></svg></div>
+  
+  <ul role="tablist" class="bx--tabs__nav bx--tabs__nav--hidden">
+<li tabindex="-1" role="presentation" class="bx--tabs__nav-item  "><a role="tab" tabindex="0" aria-selected="false" aria-disabled="false" id="ccs-0.w5l0r880u2" href="#" style="width: auto" class="bx--tabs__nav-link">Query</a></li>
+  
+<li tabindex="-1" role="presentation" class="bx--tabs__nav-item  "><a role="tab" tabindex="0" aria-selected="false" aria-disabled="false" id="ccs-0.iriuyawyv7m" href="#" style="width: auto" class="bx--tabs__nav-link">Variables</a></li>
+  
+<li tabindex="-1" role="presentation" class="bx--tabs__nav-item  "><a role="tab" tabindex="0" aria-selected="false" aria-disabled="false" id="ccs-0.fz4vayetcs" href="#" style="width: auto" class="bx--tabs__nav-link">Response</a></li></ul></div>
+<div role="tabpanel" aria-labelledby="ccs-0.w5l0r880u2" aria-hidden id="ccs-0.8jmm842i2dp" style="padding:0" class="bx--tab-content"><div class="wrapper svelte-1gk78cu"><div class="code-section svelte-1gk78cu"><div class="prism--hide-copy-button"><pre class="code-container" style="--min-height: 12rem; --max-height: 20rem;">    <code></code>
+  </pre>
+</div></div>
+  <div class="button-bar svelte-1gk78cu">
+<button type="button" tabindex="0" aria-pressed="false" class="bx--btn true bx--btn--field bx--btn--ghost bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--btn--icon-only--left bx--tooltip--align-center"><span class="bx--assistive-text">Copy query</span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" preserveAspectRatio="xMidYMid meet" width="16" height="16" aria-hidden="true" role="img" class="bx--btn__icon" style="margin-left: 0" aria-label="Copy query"><path d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z"></path><path d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"></path></svg></button>
+    
+<button type="button" tabindex="0" aria-pressed="false" class="bx--btn true bx--btn--field bx--btn--ghost bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--btn--icon-only--left bx--tooltip--align-center"><span class="bx--assistive-text">Never null fields</span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" preserveAspectRatio="xMidYMid meet" width="16" height="16" aria-hidden="true" role="img" class="bx--btn__icon" style="margin-left: 0" aria-label="Never null fields"><path fill="none" d="M9 16H23V18H9z" data-icon-path="inner-path"></path><path fill="none" d="M9 10H23V12H9z"></path><path d="M26,2H6A2.0023,2.0023,0,0,0,4,4V17a10.9814,10.9814,0,0,0,5.8242,9.707L16,30l6.1758-3.293A10.9814,10.9814,0,0,0,28,17V4A2.0023,2.0023,0,0,0,26,2ZM23,18H9V16H23Zm0-6H9V10H23Z"></path></svg></button>
+    
+<button type="button" tabindex="0" aria-pressed="false" class="bx--btn true bx--btn--field bx--btn--ghost bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--btn--icon-only--left bx--tooltip--align-center"><span class="bx--assistive-text">Increase query depth</span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" preserveAspectRatio="xMidYMid meet" width="16" height="16" aria-hidden="true" role="img" class="bx--btn__icon" style="margin-left: 0" aria-label="Increase query depth"><path d="M17 15L17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z"></path></svg></button>
+    <p style="text-align:center">3</p>
+    
+<button type="button" tabindex="0" aria-pressed="false" class="bx--btn true bx--btn--field bx--btn--ghost bx--btn--icon-only bx--tooltip__trigger bx--tooltip--a11y bx--btn--icon-only--left bx--tooltip--align-center"><span class="bx--assistive-text">Decrease query depth</span>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" preserveAspectRatio="xMidYMid meet" width="16" height="16" aria-hidden="true" role="img" class="bx--btn__icon" style="margin-left: 0" aria-label="Decrease query depth"><path d="M8 15H24V17H8z"></path></svg></button></div>
+</div></div>
+    <div role="tabpanel" aria-labelledby="ccs-0.iriuyawyv7m" aria-hidden id="ccs-0.w6v52tqt52" style="padding:0" class="bx--tab-content"></div>
+    <div role="tabpanel" aria-labelledby="ccs-0.fz4vayetcs" aria-hidden id="ccs-0.mfl9xncol1" style="padding:0" class="bx--tab-content"></div>
+  </section>
+
+<hr class="footer-hr svelte-19tre3a">
+
+<div class="wrapper svelte-19tre3a"><div class="previous direction-wrapper svelte-19tre3a"><div class="direction svelte-19tre3a"><strong>Previous
+
+          </strong></div>
+      <a href="/api/dev-2.x/graphql-gtfs/v1/queries/patterns" class="title svelte-19tre3a"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" preserveAspectRatio="xMidYMid meet" width="20" height="20" aria-hidden class="previous-next-arrow"><path d="M14 26L15.41 24.59 7.83 17 28 17 28 15 7.83 15 15.41 7.41 14 6 4 16 14 26z"></path></svg></span>
+        <p>patterns</p></a></div>
+
+  <div class="next direction-wrapper svelte-19tre3a"><div class="direction svelte-19tre3a"><strong>Next
+          </strong></div>
+      <a href="/api/dev-2.x/graphql-gtfs/v1/queries/rentalVehicle" class="title svelte-19tre3a"><p>rentalVehicle</p>
+        <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="currentColor" preserveAspectRatio="xMidYMid meet" width="20" height="20" aria-hidden class="previous-next-arrow"><path d="M18 6L16.57 7.393 24.15 15 4 15 4 17 24.15 17 16.57 24.573 18 26 28 16 18 6z"></path></svg></span></a></div>
+</div></div></div></div></main>
+
+
+			
+			<script>
+				{
+					__sveltekit_z93yk7 = {
+						assets: "/api/dev-2.x/graphql-gtfs/v1",
+						base: new URL("..", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("../_app/immutable/entry/start.c0342ff7.js"),
+						import("../_app/immutable/entry/app.b019684f.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 6],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+  </body>
+</html>
