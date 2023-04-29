@@ -4,6 +4,7 @@ import com.conveyal.kryo.TIntArrayListSerializer;
 import com.conveyal.kryo.TIntIntHashMapSerializer;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.ExternalizableSerializer;
+import com.esotericsoftware.kryo.serializers.ImmutableCollectionsSerializers;
 import com.esotericsoftware.kryo.util.DefaultInstantiatorStrategy;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.HashMultimap;
@@ -12,9 +13,6 @@ import de.javakaffee.kryoserializers.guava.HashMultimapSerializer;
 import gnu.trove.impl.hash.TPrimitiveHash;
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntIntHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import org.objenesis.strategy.SerializingInstantiatorStrategy;
 import org.opentripplanner.kryo.BuildConfigSerializer;
 import org.opentripplanner.kryo.RouterConfigSerializer;
@@ -47,16 +45,7 @@ public final class KryoBuilder {
     kryo.register(TIntArrayList.class, new TIntArrayListSerializer());
     kryo.register(TIntIntHashMap.class, new TIntIntHashMapSerializer());
 
-    // Add support for the package local java.util.ImmutableCollections.
-    // Not supported properly in the current com.conveyal:kryo-tools:1.4.0.
-    // This provide support for List.of, Set.of, Map.of and Collectors.toUnmodifiable(Set|List|Map)
-    kryo.register(List.of().getClass(), new JavaImmutableListSerializer());
-    kryo.register(List.of(1).getClass(), new JavaImmutableListSerializer());
-    kryo.register(Set.of().getClass(), new JavaImmutableSetSerializer());
-    kryo.register(Set.of(1).getClass(), new JavaImmutableSetSerializer());
-    kryo.register(Map.of().getClass(), new JavaImmutableMapSerializer());
-    kryo.register(Map.of(1, 1).getClass(), new JavaImmutableMapSerializer());
-
+    ImmutableCollectionsSerializers.registerSerializers(kryo);
     kryo.register(HashMultimap.class, new HashMultimapSerializer());
     kryo.register(ArrayListMultimap.class, new ArrayListMultimapSerializer());
 
