@@ -25,7 +25,7 @@ import org.opentripplanner.framework.geometry.GeometryUtils;
 import org.opentripplanner.framework.geometry.SphericalDistanceLibrary;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
-import org.opentripplanner.graph_builder.services.osm.EdgeNamer;
+import org.opentripplanner.graph_builder.module.osm.naming.EdgeNamer;
 import org.opentripplanner.openstreetmap.model.OSMNode;
 import org.opentripplanner.openstreetmap.model.OSMRelation;
 import org.opentripplanner.openstreetmap.model.OSMRelationMember;

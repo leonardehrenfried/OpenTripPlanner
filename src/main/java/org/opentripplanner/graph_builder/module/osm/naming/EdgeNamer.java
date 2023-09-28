@@ -1,10 +1,8 @@
-package org.opentripplanner.graph_builder.services.osm;
+package org.opentripplanner.graph_builder.module.osm.naming;
 
 import javax.annotation.Nonnull;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.framework.i18n.NonLocalizedString;
-import org.opentripplanner.graph_builder.module.osm.naming.DefaultNamer;
-import org.opentripplanner.graph_builder.module.osm.naming.PortlandCustomNamer;
 import org.opentripplanner.openstreetmap.model.OSMWithTags;
 import org.opentripplanner.standalone.config.framework.json.NodeAdapter;
 import org.opentripplanner.standalone.config.framework.json.OtpVersion;

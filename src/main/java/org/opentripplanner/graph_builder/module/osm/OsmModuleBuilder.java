@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Set;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.graph_builder.module.osm.naming.DefaultNamer;
+import org.opentripplanner.graph_builder.module.osm.naming.EdgeNamer;
 import org.opentripplanner.graph_builder.module.osm.parameters.OsmProcessingParameters;
-import org.opentripplanner.graph_builder.services.osm.EdgeNamer;
 import org.opentripplanner.openstreetmap.OsmProvider;
 import org.opentripplanner.routing.graph.Graph;
 
