@@ -29,6 +29,7 @@ import org.opentripplanner.transit.model.site.RegularStop;
 import org.opentripplanner.transit.model.timetable.Trip;
 import org.opentripplanner.transit.model.timetable.TripOnServiceDate;
 import org.opentripplanner.transit.model.timetable.TripTimes;
+import org.opentripplanner.transit.model.timetable.TripTimesFactory;
 import org.rutebanken.netex.model.DatedServiceJourney;
 import org.rutebanken.netex.model.DatedServiceJourneyRefStructure;
 import org.rutebanken.netex.model.DestinationDisplay;
@@ -365,7 +366,11 @@ class TripPatternMapper {
           trip.getId()
         );
       } else {
-        TripTimes tripTimes = new TripTimes(trip, result.tripStopTimes.get(trip), deduplicator);
+        TripTimes tripTimes = TripTimesFactory.tripTimes(
+          trip,
+          result.tripStopTimes.get(trip),
+          deduplicator
+        );
         tripPattern.add(tripTimes);
       }
     }

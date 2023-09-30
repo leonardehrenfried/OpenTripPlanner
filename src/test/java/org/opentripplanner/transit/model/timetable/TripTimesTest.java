@@ -52,7 +52,7 @@ class TripTimesTest {
       stopTimes.add(stopTime);
     }
 
-    return new TripTimes(trip, stopTimes, new Deduplicator());
+    return TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
   }
 
   @Nested
@@ -69,7 +69,7 @@ class TripTimesTest {
       Trip trip = TransitModelForTest.trip("TRIP").build();
       Collection<StopTime> stopTimes = List.of(EMPTY_STOPPOINT, EMPTY_STOPPOINT, EMPTY_STOPPOINT);
 
-      TripTimes tripTimes = new TripTimes(trip, stopTimes, new Deduplicator());
+      TripTimes tripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
 
       I18NString headsignFirstStop = tripTimes.getHeadsign(0);
       assertNull(headsignFirstStop);
@@ -80,7 +80,7 @@ class TripTimesTest {
       Trip trip = TransitModelForTest.trip("TRIP").withHeadsign(DIRECTION).build();
       Collection<StopTime> stopTimes = List.of(EMPTY_STOPPOINT, EMPTY_STOPPOINT, EMPTY_STOPPOINT);
 
-      TripTimes tripTimes = new TripTimes(trip, stopTimes, new Deduplicator());
+      TripTimes tripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
 
       I18NString headsignFirstStop = tripTimes.getHeadsign(0);
       assertEquals(DIRECTION, headsignFirstStop);
@@ -97,7 +97,7 @@ class TripTimesTest {
         stopWithHeadsign
       );
 
-      TripTimes tripTimes = new TripTimes(trip, stopTimes, new Deduplicator());
+      TripTimes tripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
 
       I18NString headsignFirstStop = tripTimes.getHeadsign(0);
       assertEquals(STOP_TEST_DIRECTION, headsignFirstStop);
@@ -114,7 +114,7 @@ class TripTimesTest {
         stopWithHeadsign
       );
 
-      TripTimes tripTimes = new TripTimes(trip, stopTimes, new Deduplicator());
+      TripTimes tripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
 
       I18NString headsignFirstStop = tripTimes.getHeadsign(0);
       assertEquals(DIRECTION, headsignFirstStop);
@@ -127,7 +127,7 @@ class TripTimesTest {
       stopWithHeadsign.setStopHeadsign(STOP_TEST_DIRECTION);
       Collection<StopTime> stopTimes = List.of(stopWithHeadsign, EMPTY_STOPPOINT, EMPTY_STOPPOINT);
 
-      TripTimes tripTimes = new TripTimes(trip, stopTimes, new Deduplicator());
+      TripTimes tripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
 
       I18NString headsignFirstStop = tripTimes.getHeadsign(0);
       assertEquals(STOP_TEST_DIRECTION, headsignFirstStop);
@@ -139,7 +139,7 @@ class TripTimesTest {
 
   @Test
   public void testStopUpdate() {
-    TripTimes updatedTripTimesA = new TripTimes(createInitialTripTimes());
+    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
 
     updatedTripTimesA.updateArrivalTime(3, 190);
     updatedTripTimesA.updateDepartureTime(3, 190);
@@ -154,7 +154,7 @@ class TripTimesTest {
 
   @Test
   public void testPassedUpdate() {
-    TripTimes updatedTripTimesA = new TripTimes(createInitialTripTimes());
+    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
 
     updatedTripTimesA.updateDepartureTime(0, 30);
 
@@ -164,7 +164,7 @@ class TripTimesTest {
 
   @Test
   public void testNegativeDwellTime() {
-    TripTimes updatedTripTimesA = new TripTimes(createInitialTripTimes());
+    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
 
     updatedTripTimesA.updateArrivalTime(1, 60);
     updatedTripTimesA.updateDepartureTime(1, 59);
@@ -177,7 +177,7 @@ class TripTimesTest {
 
   @Test
   public void testNegativeHopTime() {
-    TripTimes updatedTripTimesB = new TripTimes(createInitialTripTimes());
+    TripTimes updatedTripTimesB = createInitialTripTimes().copyOfScheduledTimes();
 
     updatedTripTimesB.updateDepartureTime(6, 421);
     updatedTripTimesB.updateArrivalTime(7, 420);
@@ -190,7 +190,7 @@ class TripTimesTest {
 
   @Test
   public void testNonIncreasingUpdateCrossingMidnight() {
-    TripTimes updatedTripTimesA = new TripTimes(createInitialTripTimes());
+    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
 
     updatedTripTimesA.updateArrivalTime(0, -300); //"Yesterday"
     updatedTripTimesA.updateDepartureTime(0, 50);
@@ -200,7 +200,7 @@ class TripTimesTest {
 
   @Test
   public void testDelay() {
-    TripTimes updatedTripTimesA = new TripTimes(createInitialTripTimes());
+    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
     updatedTripTimesA.updateDepartureDelay(0, 10);
     updatedTripTimesA.updateArrivalDelay(6, 13);
 
@@ -210,14 +210,14 @@ class TripTimesTest {
 
   @Test
   public void testCancel() {
-    TripTimes updatedTripTimesA = new TripTimes(createInitialTripTimes());
+    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
     updatedTripTimesA.cancelTrip();
     assertEquals(RealTimeState.CANCELED, updatedTripTimesA.getRealTimeState());
   }
 
   @Test
   public void testNoData() {
-    TripTimes updatedTripTimesA = new TripTimes(createInitialTripTimes());
+    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
     updatedTripTimesA.setNoData(1);
     assertFalse(updatedTripTimesA.isNoDataStop(0));
     assertTrue(updatedTripTimesA.isNoDataStop(1));
@@ -278,9 +278,9 @@ class TripTimesTest {
     stopTimes.add(stopTime1);
     stopTimes.add(stopTime2);
 
-    TripTimes differingTripTimes = new TripTimes(trip, stopTimes, new Deduplicator());
+    TripTimes differingTripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
 
-    TripTimes updatedTripTimesA = new TripTimes(differingTripTimes);
+    TripTimes updatedTripTimesA = differingTripTimes.copyOfScheduledTimes();
 
     updatedTripTimesA.updateArrivalTime(1, 89);
     updatedTripTimesA.updateDepartureTime(1, 98);

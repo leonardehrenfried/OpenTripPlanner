@@ -19,6 +19,7 @@ import org.opentripplanner.routing.algorithm.raptoradapter.transit.TripPatternFo
 import org.opentripplanner.transit.model._data.TransitModelForTest;
 import org.opentripplanner.transit.model.framework.Deduplicator;
 import org.opentripplanner.transit.model.timetable.TripTimes;
+import org.opentripplanner.transit.model.timetable.TripTimesFactory;
 
 public class TripPatternForDateMapperTest {
 
@@ -35,7 +36,7 @@ public class TripPatternForDateMapperTest {
     var pattern = TransitModelForTest.pattern(BUS).build();
     timetable = new Timetable(pattern);
     var trip = TransitModelForTest.trip("1").build();
-    var tripTimes = new TripTimes(
+    var tripTimes = TripTimesFactory.tripTimes(
       trip,
       TransitModelForTest.stopTimesEvery5Minutes(5, trip, PlanTestConstants.T11_00),
       new Deduplicator()
