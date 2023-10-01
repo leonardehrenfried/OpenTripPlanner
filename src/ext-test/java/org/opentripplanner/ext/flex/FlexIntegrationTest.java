@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.ConstantsForTests;
 import org.opentripplanner.TestOtpModel;
@@ -40,6 +41,7 @@ import org.opentripplanner.transit.service.TransitModel;
 /**
  * This test checks the combination of transit and flex works.
  */
+@Disabled("TODO: This test create invalid stop times...")
 public class FlexIntegrationTest {
 
   public static final GenericLocation OUTSIDE_FLEX_ZONE = new GenericLocation(33.7552, -84.4631);

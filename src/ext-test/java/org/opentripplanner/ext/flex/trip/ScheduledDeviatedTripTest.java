@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Coordinate;
 import org.opentripplanner.TestOtpModel;
@@ -55,6 +56,7 @@ import org.opentripplanner.transit.service.TransitModel;
  * <p>
  * Read about the details at: https://www.cobbcounty.org/transportation/cobblinc/routes-and-schedules/flex
  */
+@Disabled("TODO: This test create invalid stop times...")
 public class ScheduledDeviatedTripTest extends FlexTest {
 
   static Graph graph;

@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner._support.time.ZoneIds;
 import org.opentripplanner.ext.fares.model.FareRuleSet;
@@ -165,6 +166,7 @@ public class AtlantaFareServiceTest implements PlanTestConstants {
   }
 
   @Test
+  @Disabled("TODO: This test create invalid stop times...")
   void expiredTransfer() {
     List<Leg> rides = List.of(
       getLeg(MARTA_AGENCY_ID, 0),

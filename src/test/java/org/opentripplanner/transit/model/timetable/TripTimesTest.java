@@ -8,7 +8,6 @@ import static org.opentripplanner.transit.model._data.TransitModelForTest.id;
 import static org.opentripplanner.transit.model.timetable.ValidationError.ErrorCode.NEGATIVE_DWELL_TIME;
 import static org.opentripplanner.transit.model.timetable.ValidationError.ErrorCode.NEGATIVE_HOP_TIME;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
@@ -25,7 +24,7 @@ class TripTimesTest {
 
   private static final String TRIP_ID = "testTripId";
 
-  private static final List<FeedScopedId> stops = List.of(
+  private static final List<FeedScopedId> stopIds = List.of(
     id("A"),
     id("B"),
     id("C"),
@@ -41,10 +40,10 @@ class TripTimesTest {
 
     List<StopTime> stopTimes = new LinkedList<>();
 
-    for (int i = 0; i < stops.size(); ++i) {
+    for (int i = 0; i < stopIds.size(); ++i) {
       StopTime stopTime = new StopTime();
 
-      RegularStop stop = TransitModelForTest.stopForTest(stops.get(i).getId(), 0.0, 0.0);
+      RegularStop stop = TransitModelForTest.stopForTest(stopIds.get(i).getId(), 0.0, 0.0);
       stopTime.setStop(stop);
       stopTime.setArrivalTime(i * 60);
       stopTime.setDepartureTime(i * 60);
@@ -67,7 +66,7 @@ class TripTimesTest {
     @Test
     void shouldHandleBothNullScenario() {
       Trip trip = TransitModelForTest.trip("TRIP").build();
-      Collection<StopTime> stopTimes = List.of(EMPTY_STOPPOINT, EMPTY_STOPPOINT, EMPTY_STOPPOINT);
+      List<StopTime> stopTimes = List.of(EMPTY_STOPPOINT, EMPTY_STOPPOINT, EMPTY_STOPPOINT);
 
       TripTimes tripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
 
@@ -78,7 +77,7 @@ class TripTimesTest {
     @Test
     void shouldHandleTripOnlyHeadSignScenario() {
       Trip trip = TransitModelForTest.trip("TRIP").withHeadsign(DIRECTION).build();
-      Collection<StopTime> stopTimes = List.of(EMPTY_STOPPOINT, EMPTY_STOPPOINT, EMPTY_STOPPOINT);
+      List<StopTime> stopTimes = List.of(EMPTY_STOPPOINT, EMPTY_STOPPOINT, EMPTY_STOPPOINT);
 
       TripTimes tripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
 
@@ -91,11 +90,7 @@ class TripTimesTest {
       Trip trip = TransitModelForTest.trip("TRIP").build();
       StopTime stopWithHeadsign = new StopTime();
       stopWithHeadsign.setStopHeadsign(STOP_TEST_DIRECTION);
-      Collection<StopTime> stopTimes = List.of(
-        stopWithHeadsign,
-        stopWithHeadsign,
-        stopWithHeadsign
-      );
+      List<StopTime> stopTimes = List.of(stopWithHeadsign, stopWithHeadsign, stopWithHeadsign);
 
       TripTimes tripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
 
@@ -108,11 +103,7 @@ class TripTimesTest {
       Trip trip = TransitModelForTest.trip("TRIP").withHeadsign(DIRECTION).build();
       StopTime stopWithHeadsign = new StopTime();
       stopWithHeadsign.setStopHeadsign(DIRECTION);
-      Collection<StopTime> stopTimes = List.of(
-        stopWithHeadsign,
-        stopWithHeadsign,
-        stopWithHeadsign
-      );
+      List<StopTime> stopTimes = List.of(stopWithHeadsign, stopWithHeadsign, stopWithHeadsign);
 
       TripTimes tripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
 
@@ -125,7 +116,7 @@ class TripTimesTest {
       Trip trip = TransitModelForTest.trip("TRIP").withHeadsign(DIRECTION).build();
       StopTime stopWithHeadsign = new StopTime();
       stopWithHeadsign.setStopHeadsign(STOP_TEST_DIRECTION);
-      Collection<StopTime> stopTimes = List.of(stopWithHeadsign, EMPTY_STOPPOINT, EMPTY_STOPPOINT);
+      List<StopTime> stopTimes = List.of(stopWithHeadsign, EMPTY_STOPPOINT, EMPTY_STOPPOINT);
 
       TripTimes tripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
 
@@ -248,46 +239,29 @@ class TripTimesTest {
   }
 
   @Test
-  public void testApply() {
-    Trip trip = TransitModelForTest.trip(TRIP_ID).build();
+  public void validateNegativeDwellTime() {
+    var tt = createInitialTripTimes();
+    var updatedTt = tt.copyOfScheduledTimes();
 
-    List<StopTime> stopTimes = new LinkedList<>();
+    updatedTt.updateArrivalTime(2, 69);
+    updatedTt.updateDepartureTime(2, 68);
 
-    StopTime stopTime0 = new StopTime();
-    StopTime stopTime1 = new StopTime();
-    StopTime stopTime2 = new StopTime();
-
-    RegularStop stop0 = TransitModelForTest.stopForTest(stops.get(0).getId(), 0.0, 0.0);
-    RegularStop stop1 = TransitModelForTest.stopForTest(stops.get(1).getId(), 0.0, 0.0);
-    RegularStop stop2 = TransitModelForTest.stopForTest(stops.get(2).getId(), 0.0, 0.0);
-
-    stopTime0.setStop(stop0);
-    stopTime0.setDepartureTime(0);
-    stopTime0.setStopSequence(0);
-
-    stopTime1.setStop(stop1);
-    stopTime1.setArrivalTime(30);
-    stopTime1.setDepartureTime(60);
-    stopTime1.setStopSequence(1);
-
-    stopTime2.setStop(stop2);
-    stopTime2.setArrivalTime(90);
-    stopTime2.setStopSequence(2);
-
-    stopTimes.add(stopTime0);
-    stopTimes.add(stopTime1);
-    stopTimes.add(stopTime2);
-
-    TripTimes differingTripTimes = TripTimesFactory.tripTimes(trip, stopTimes, new Deduplicator());
-
-    TripTimes updatedTripTimesA = differingTripTimes.copyOfScheduledTimes();
-
-    updatedTripTimesA.updateArrivalTime(1, 89);
-    updatedTripTimesA.updateDepartureTime(1, 98);
-
-    var validationResult = updatedTripTimesA.validateNonIncreasingTimes();
+    var validationResult = updatedTt.validateNonIncreasingTimes();
     assertTrue(validationResult.isPresent());
     assertEquals(2, validationResult.get().stopIndex());
     assertEquals(NEGATIVE_DWELL_TIME, validationResult.get().code());
+  }
+
+  @Test
+  public void validateNegativeHopTime() {
+    var tt = createInitialTripTimes();
+    var updatedTt = tt.copyOfScheduledTimes();
+
+    updatedTt.updateArrivalTime(2, 59);
+
+    var validationResult = updatedTt.validateNonIncreasingTimes();
+    assertTrue(validationResult.isPresent());
+    assertEquals(2, validationResult.get().stopIndex());
+    assertEquals(NEGATIVE_HOP_TIME, validationResult.get().code());
   }
 }
