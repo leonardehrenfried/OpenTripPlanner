@@ -3,10 +3,11 @@ package org.opentripplanner.transit.model.timetable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.opentripplanner.transit.model._data.TransitModelForTest.id;
-import static org.opentripplanner.transit.model.timetable.ValidationError.ErrorCode.NEGATIVE_DWELL_TIME;
-import static org.opentripplanner.transit.model.timetable.ValidationError.ErrorCode.NEGATIVE_HOP_TIME;
+import static org.opentripplanner.transit.model.timetable.TimetableValidationError.ErrorCode.NEGATIVE_DWELL_TIME;
+import static org.opentripplanner.transit.model.timetable.TimetableValidationError.ErrorCode.NEGATIVE_HOP_TIME;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.framework.i18n.NonLocalizedString;
 import org.opentripplanner.model.StopTime;
 import org.opentripplanner.transit.model._data.TransitModelForTest;
+import org.opentripplanner.transit.model.framework.DataValidationException;
 import org.opentripplanner.transit.model.framework.Deduplicator;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.transit.model.site.RegularStop;
@@ -154,39 +156,13 @@ class TripTimesTest {
   }
 
   @Test
-  public void testNegativeDwellTime() {
-    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
-
-    updatedTripTimesA.updateArrivalTime(1, 60);
-    updatedTripTimesA.updateDepartureTime(1, 59);
-
-    var error = updatedTripTimesA.validateNonIncreasingTimes();
-    assertTrue(error.isPresent());
-    assertEquals(1, error.get().stopIndex());
-    assertEquals(NEGATIVE_DWELL_TIME, error.get().code());
-  }
-
-  @Test
-  public void testNegativeHopTime() {
-    TripTimes updatedTripTimesB = createInitialTripTimes().copyOfScheduledTimes();
-
-    updatedTripTimesB.updateDepartureTime(6, 421);
-    updatedTripTimesB.updateArrivalTime(7, 420);
-
-    var error = updatedTripTimesB.validateNonIncreasingTimes();
-    assertTrue(error.isPresent());
-    assertEquals(7, error.get().stopIndex());
-    assertEquals(NEGATIVE_HOP_TIME, error.get().code());
-  }
-
-  @Test
   public void testNonIncreasingUpdateCrossingMidnight() {
     TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
 
     updatedTripTimesA.updateArrivalTime(0, -300); //"Yesterday"
     updatedTripTimesA.updateDepartureTime(0, 50);
 
-    assertTrue(updatedTripTimesA.validateNonIncreasingTimes().isEmpty());
+    updatedTripTimesA.validateNonIncreasingTimes();
   }
 
   @Test
@@ -240,28 +216,37 @@ class TripTimesTest {
 
   @Test
   public void validateNegativeDwellTime() {
+    var expMsg = "NEGATIVE_DWELL_TIME for stop position 3 in trip Trip{F:testTripId RRtestTripId}.";
     var tt = createInitialTripTimes();
     var updatedTt = tt.copyOfScheduledTimes();
 
-    updatedTt.updateArrivalTime(2, 69);
-    updatedTt.updateDepartureTime(2, 68);
+    updatedTt.updateArrivalTime(3, 69);
+    updatedTt.updateDepartureTime(3, 68);
 
-    var validationResult = updatedTt.validateNonIncreasingTimes();
-    assertTrue(validationResult.isPresent());
-    assertEquals(2, validationResult.get().stopIndex());
-    assertEquals(NEGATIVE_DWELL_TIME, validationResult.get().code());
+    var ex = assertThrows(DataValidationException.class, updatedTt::validateNonIncreasingTimes);
+    var error = (TimetableValidationError) ex.error();
+
+    assertEquals(3, error.stopIndex());
+    assertEquals(NEGATIVE_DWELL_TIME, error.code());
+    assertEquals(expMsg, error.message());
+    assertEquals(expMsg, ex.getMessage());
   }
 
   @Test
   public void validateNegativeHopTime() {
+    var expMsg = "NEGATIVE_HOP_TIME for stop position 2 in trip Trip{F:testTripId RRtestTripId}.";
     var tt = createInitialTripTimes();
     var updatedTt = tt.copyOfScheduledTimes();
 
-    updatedTt.updateArrivalTime(2, 59);
+    updatedTt.updateDepartureTime(1, 100);
+    updatedTt.updateArrivalTime(2, 99);
 
-    var validationResult = updatedTt.validateNonIncreasingTimes();
-    assertTrue(validationResult.isPresent());
-    assertEquals(2, validationResult.get().stopIndex());
-    assertEquals(NEGATIVE_HOP_TIME, validationResult.get().code());
+    var ex = assertThrows(DataValidationException.class, updatedTt::validateNonIncreasingTimes);
+    var error = (TimetableValidationError) ex.error();
+
+    assertEquals(2, error.stopIndex());
+    assertEquals(NEGATIVE_HOP_TIME, error.code());
+    assertEquals(expMsg, error.message());
+    assertEquals(expMsg, ex.getMessage());
   }
 }

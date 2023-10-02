@@ -1,19 +1,19 @@
 package org.opentripplanner.transit.model.timetable;
 
-import static org.opentripplanner.transit.model.timetable.ValidationError.ErrorCode.NEGATIVE_DWELL_TIME;
-import static org.opentripplanner.transit.model.timetable.ValidationError.ErrorCode.NEGATIVE_HOP_TIME;
+import static org.opentripplanner.transit.model.timetable.TimetableValidationError.ErrorCode.NEGATIVE_DWELL_TIME;
+import static org.opentripplanner.transit.model.timetable.TimetableValidationError.ErrorCode.NEGATIVE_HOP_TIME;
 
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.function.IntUnaryOperator;
 import javax.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.model.BookingInfo;
 import org.opentripplanner.transit.model.basic.Accessibility;
+import org.opentripplanner.transit.model.framework.DataValidationException;
 
 /**
  * A TripTimes represents the arrival and departure times for a single trip in an Timetable. It is
@@ -32,13 +32,6 @@ public final class TripTimes implements Serializable, Comparable<TripTimes> {
   private I18NString[] headsigns;
   private OccupancyStatus[] occupancyStatus;
   private Accessibility wheelchairAccessibility;
-
-  private TripTimes(final TripTimes original, int timeShiftDelta) {
-    this(
-      original,
-      original.scheduledTripTimes.copyOfNoDuplication().plusTimeShift(timeShiftDelta).build()
-    );
-  }
 
   TripTimes(ScheduledTripTimes scheduledTripTimes) {
     this(
@@ -277,9 +270,9 @@ public final class TripTimes implements Serializable, Comparable<TripTimes> {
    * negative running or dwell times. We really don't want those being used in routing. This method
    * checks that all times are increasing.
    *
-   * @return empty if times were found to be increasing, stop index of the first error otherwise
+   * @throws org.opentripplanner.transit.model.framework.DataValidationException of the first error found.
    */
-  public Optional<ValidationError> validateNonIncreasingTimes() {
+  public void validateNonIncreasingTimes() {
     final int nStops = arrivalTimes.length;
     int prevDep = -9_999_999;
     for (int s = 0; s < nStops; s++) {
@@ -287,14 +280,17 @@ public final class TripTimes implements Serializable, Comparable<TripTimes> {
       final int dep = getDepartureTime(s);
 
       if (dep < arr) {
-        return Optional.of(new ValidationError(NEGATIVE_DWELL_TIME, s));
+        throw new DataValidationException(
+          new TimetableValidationError(NEGATIVE_DWELL_TIME, s, getTrip())
+        );
       }
       if (prevDep > arr) {
-        return Optional.of(new ValidationError(NEGATIVE_HOP_TIME, s));
+        throw new DataValidationException(
+          new TimetableValidationError(NEGATIVE_HOP_TIME, s, getTrip())
+        );
       }
       prevDep = dep;
     }
-    return Optional.empty();
   }
 
   /** Cancel this entire trip */
