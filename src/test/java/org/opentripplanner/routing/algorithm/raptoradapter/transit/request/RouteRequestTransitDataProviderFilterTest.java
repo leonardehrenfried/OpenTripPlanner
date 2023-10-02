@@ -39,6 +39,7 @@ import org.opentripplanner.transit.model.network.RoutingTripPattern;
 import org.opentripplanner.transit.model.network.StopPattern;
 import org.opentripplanner.transit.model.network.TripPattern;
 import org.opentripplanner.transit.model.site.RegularStop;
+import org.opentripplanner.transit.model.timetable.RealTimeTripTimes;
 import org.opentripplanner.transit.model.timetable.Trip;
 import org.opentripplanner.transit.model.timetable.TripAlteration;
 import org.opentripplanner.transit.model.timetable.TripBuilder;
@@ -514,7 +515,7 @@ class RouteRequestTransitDataProviderFilterTest {
 
   @Test
   void keepRealTimeAccessibleTrip() {
-    TripTimes realTimeWheelchairAccessibleTrip = createTestTripTimes(
+    RealTimeTripTimes realTimeWheelchairAccessibleTrip = createTestTripTimes(
       TRIP_ID,
       ROUTE,
       BikeAccess.NOT_ALLOWED,
@@ -617,7 +618,7 @@ class RouteRequestTransitDataProviderFilterTest {
       TripAlteration.PLANNED
     );
 
-    TripTimes tripTimesWithCancellation = createTestTripTimes(
+    RealTimeTripTimes tripTimesWithCancellation = createTestTripTimes(
       TRIP_ID,
       ROUTE,
       BikeAccess.NOT_ALLOWED,
@@ -861,7 +862,7 @@ class RouteRequestTransitDataProviderFilterTest {
     );
   }
 
-  private TripTimes createTestTripTimes(
+  private RealTimeTripTimes createTestTripTimes(
     FeedScopedId tripId,
     Route route,
     BikeAccess bikeAccess,

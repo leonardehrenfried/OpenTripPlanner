@@ -22,7 +22,7 @@ import org.opentripplanner.transit.model.framework.Deduplicator;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.transit.model.site.RegularStop;
 
-class TripTimesTest {
+class RealTimeTripTimesTest {
 
   private static final String TRIP_ID = "testTripId";
 
@@ -132,7 +132,7 @@ class TripTimesTest {
 
   @Test
   public void testStopUpdate() {
-    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
+    RealTimeTripTimes updatedTripTimesA = createInitialTripTimes().copyScheduledTimes();
 
     updatedTripTimesA.updateArrivalTime(3, 190);
     updatedTripTimesA.updateDepartureTime(3, 190);
@@ -147,7 +147,7 @@ class TripTimesTest {
 
   @Test
   public void testPassedUpdate() {
-    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
+    RealTimeTripTimes updatedTripTimesA = createInitialTripTimes().copyScheduledTimes();
 
     updatedTripTimesA.updateDepartureTime(0, 30);
 
@@ -157,7 +157,7 @@ class TripTimesTest {
 
   @Test
   public void testNonIncreasingUpdateCrossingMidnight() {
-    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
+    RealTimeTripTimes updatedTripTimesA = createInitialTripTimes().copyScheduledTimes();
 
     updatedTripTimesA.updateArrivalTime(0, -300); //"Yesterday"
     updatedTripTimesA.updateDepartureTime(0, 50);
@@ -167,7 +167,7 @@ class TripTimesTest {
 
   @Test
   public void testDelay() {
-    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
+    RealTimeTripTimes updatedTripTimesA = createInitialTripTimes().copyScheduledTimes();
     updatedTripTimesA.updateDepartureDelay(0, 10);
     updatedTripTimesA.updateArrivalDelay(6, 13);
 
@@ -177,14 +177,14 @@ class TripTimesTest {
 
   @Test
   public void testCancel() {
-    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
+    RealTimeTripTimes updatedTripTimesA = createInitialTripTimes().copyScheduledTimes();
     updatedTripTimesA.cancelTrip();
     assertEquals(RealTimeState.CANCELED, updatedTripTimesA.getRealTimeState());
   }
 
   @Test
   public void testNoData() {
-    TripTimes updatedTripTimesA = createInitialTripTimes().copyOfScheduledTimes();
+    RealTimeTripTimes updatedTripTimesA = createInitialTripTimes().copyScheduledTimes();
     updatedTripTimesA.setNoData(1);
     assertFalse(updatedTripTimesA.isNoDataStop(0));
     assertTrue(updatedTripTimesA.isNoDataStop(1));
@@ -218,7 +218,7 @@ class TripTimesTest {
   public void validateNegativeDwellTime() {
     var expMsg = "NEGATIVE_DWELL_TIME for stop position 3 in trip Trip{F:testTripId RRtestTripId}.";
     var tt = createInitialTripTimes();
-    var updatedTt = tt.copyOfScheduledTimes();
+    var updatedTt = tt.copyScheduledTimes();
 
     updatedTt.updateArrivalTime(3, 69);
     updatedTt.updateDepartureTime(3, 68);
@@ -236,7 +236,7 @@ class TripTimesTest {
   public void validateNegativeHopTime() {
     var expMsg = "NEGATIVE_HOP_TIME for stop position 2 in trip Trip{F:testTripId RRtestTripId}.";
     var tt = createInitialTripTimes();
-    var updatedTt = tt.copyOfScheduledTimes();
+    var updatedTt = tt.copyScheduledTimes();
 
     updatedTt.updateDepartureTime(1, 100);
     updatedTt.updateArrivalTime(2, 99);
