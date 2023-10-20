@@ -10,17 +10,23 @@ import org.opentripplanner.model.plan.Itinerary;
 import org.opentripplanner.routing.algorithm.raptoradapter.router.AdditionalSearchDays;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.api.request.StreetMode;
+import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.routing.graphfinder.NearbyStop;
 import org.opentripplanner.standalone.api.OtpServerRequestContext;
 import org.opentripplanner.street.search.TemporaryVerticesContainer;
+import org.opentripplanner.transit.service.TransitService;
 
 public class DirectFlexRouter {
 
-  public static List<Itinerary> route(
-    OtpServerRequestContext serverContext,
-    RouteRequest request,
-    AdditionalSearchDays additionalSearchDays
-  ) {
+  private final OtpServerRequestContext serverContext;
+  private final TransitService transitService;
+
+  public DirectFlexRouter(OtpServerRequestContext serverContext, TransitService transitService) {
+    this.serverContext = serverContext;
+    this.transitService = transitService;
+  }
+
+  public List<Itinerary> route(RouteRequest request, AdditionalSearchDays additionalSearchDays) {
     if (!StreetMode.FLEXIBLE.equals(request.journey().direct().mode())) {
       return Collections.emptyList();
     }
@@ -37,7 +43,7 @@ public class DirectFlexRouter {
       Collection<NearbyStop> accessStops = AccessEgressRouter.streetSearch(
         request,
         temporaryVertices,
-        serverContext.transitService(),
+        transitService,
         request.journey().direct(),
         serverContext.dataOverlayContext(request),
         false,
@@ -47,7 +53,7 @@ public class DirectFlexRouter {
       Collection<NearbyStop> egressStops = AccessEgressRouter.streetSearch(
         request,
         temporaryVertices,
-        serverContext.transitService(),
+        transitService,
         request.journey().direct(),
         serverContext.dataOverlayContext(request),
         true,
@@ -57,7 +63,7 @@ public class DirectFlexRouter {
 
       FlexRouter flexRouter = new FlexRouter(
         serverContext.graph(),
-        serverContext.transitService(),
+        transitService,
         serverContext.flexConfig(),
         request.dateTime(),
         request.arriveBy(),

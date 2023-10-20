@@ -20,6 +20,7 @@ import org.opentripplanner.transit.model.framework.Deduplicator;
 import org.opentripplanner.transit.service.StopModel;
 import org.opentripplanner.transit.service.TransitModel;
 
+// TODO: Using inheritance here is wrong, make this a utility class.
 public abstract class FlexTest {
 
   private static final ResourceLoader RES = ResourceLoader.of(FlexTest.class);
@@ -53,11 +54,11 @@ public abstract class FlexTest {
       graph,
       new ServiceDateInterval(LocalDate.of(2021, 1, 1), LocalDate.of(2022, 1, 1))
     );
-    OTPFeature.enableFeatures(Map.of(OTPFeature.FlexRouting, true));
-    module.buildGraph();
-    transitModel.index();
-    graph.index(transitModel.getStopModel());
-    OTPFeature.enableFeatures(Map.of(OTPFeature.FlexRouting, false));
+    OTPFeature.FlexRouting.testOn(() -> {
+      module.buildGraph();
+      transitModel.index();
+      graph.index(transitModel.getStopModel());
+    });
     assertTrue(transitModel.hasFlexTrips());
     return new TestOtpModel(graph, transitModel);
   }

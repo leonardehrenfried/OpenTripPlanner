@@ -58,9 +58,8 @@ public class TransitSnapshotTest extends SnapshotTestBase {
     -122.64699
   );
 
-  @BeforeAll
-  public static void beforeClass() {
-    loadGraphBeforeClass(false);
+  public TransitSnapshotTest() {
+    super(false);
   }
 
   @Test

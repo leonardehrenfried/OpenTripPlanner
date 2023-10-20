@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import org.opentripplanner.TestServerContext;
+import org.opentripplanner.TestServerContextBuilder;
 import org.opentripplanner.datastore.OtpDataStore;
 import org.opentripplanner.framework.application.OtpAppException;
 import org.opentripplanner.model.plan.Itinerary;
@@ -30,8 +30,8 @@ import org.opentripplanner.standalone.config.BuildConfig;
 import org.opentripplanner.standalone.config.ConfigModel;
 import org.opentripplanner.standalone.config.OtpConfigLoader;
 import org.opentripplanner.standalone.server.DefaultServerRequestContext;
-import org.opentripplanner.transit.service.DefaultTransitService;
 import org.opentripplanner.transit.service.TransitModel;
+import org.opentripplanner.transit.service.TransitService;
 import org.opentripplanner.transit.speed_test.model.SpeedTestProfile;
 import org.opentripplanner.transit.speed_test.model.testcase.CsvFileSupport;
 import org.opentripplanner.transit.speed_test.model.testcase.ExpectedResults;
@@ -76,6 +76,7 @@ public class SpeedTest {
   ) {
     this.opts = opts;
     this.config = config;
+    var ctxBuilder = TestServerContextBuilder.of().withGraph(graph).withTransitModel(transitModel);
     this.transitModel = transitModel;
 
     this.tcIO =
@@ -90,7 +91,7 @@ public class SpeedTest {
     this.testCaseDefinitions = tcIO.readTestCaseDefinitions();
     this.expectedResultsByTcId = tcIO.readExpectedResults();
 
-    var transitService = new DefaultTransitService(transitModel);
+    TransitService transitService = ctxBuilder.transitService();
 
     UpdaterConfigurator.configure(
       graph,
@@ -109,13 +110,13 @@ public class SpeedTest {
         config.request,
         new RaptorConfig<>(config.transitRoutingParams),
         graph,
-        new DefaultTransitService(transitModel),
+        transitService,
         timer.getRegistry(),
         List::of,
-        TestServerContext.createWorldEnvelopeService(),
-        TestServerContext.createRealtimeVehicleService(transitService),
-        TestServerContext.createVehicleRentalService(),
-        TestServerContext.createEmissionsService(),
+        ctxBuilder.createWorldEnvelopeService(),
+        ctxBuilder.createRealtimeVehicleService(),
+        ctxBuilder.createVehicleRentalService(),
+        ctxBuilder.createEmissionsService(),
         config.flexConfig,
         List.of(),
         null,

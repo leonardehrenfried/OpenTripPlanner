@@ -37,7 +37,9 @@ import org.opentripplanner.inspector.vector.geofencing.GeofencingZonesLayerBuild
 import org.opentripplanner.inspector.vector.stop.StopLayerBuilder;
 import org.opentripplanner.inspector.vector.vertex.VertexLayerBuilder;
 import org.opentripplanner.model.FeedInfo;
+import org.opentripplanner.model.transfer.TransferService;
 import org.opentripplanner.standalone.api.OtpServerRequestContext;
+import org.opentripplanner.transit.service.TransitService;
 
 /**
  * Slippy map vector tile API for rendering various graph information for inspection/debugging
@@ -63,10 +65,12 @@ public class GraphInspectorVectorTileResource {
   );
 
   private final OtpServerRequestContext serverContext;
+  private final TransitService transitService;
   private final String ignoreRouterId;
 
   public GraphInspectorVectorTileResource(
     @Context OtpServerRequestContext serverContext,
+    @Context TransitService transitService,
     /**
      * @deprecated The support for multiple routers are removed from OTP2.
      * See https://github.com/opentripplanner/OpenTripPlanner/issues/2760
@@ -74,6 +78,7 @@ public class GraphInspectorVectorTileResource {
     @Deprecated @PathParam("ignoreRouterId") String ignoreRouterId
   ) {
     this.serverContext = serverContext;
+    this.transitService = transitService;
     this.ignoreRouterId = ignoreRouterId;
   }
 
@@ -95,7 +100,8 @@ public class GraphInspectorVectorTileResource {
       Arrays.asList(requestedLayers.split(",")),
       DEBUG_LAYERS,
       GraphInspectorVectorTileResource::createLayerBuilder,
-      serverContext
+      serverContext,
+      transitService
     );
   }
 
@@ -171,18 +177,19 @@ public class GraphInspectorVectorTileResource {
   private static LayerBuilder<?> createLayerBuilder(
     LayerParameters<LayerType> layerParameters,
     Locale locale,
-    OtpServerRequestContext context
+    OtpServerRequestContext context,
+    TransitService transitService
   ) {
     return switch (layerParameters.type()) {
       case RegularStop -> new StopLayerBuilder<>(
         layerParameters,
         locale,
-        e -> context.transitService().findRegularStop(e)
+        transitService::findRegularStop
       );
       case AreaStop -> new StopLayerBuilder<>(
         layerParameters,
         locale,
-        e -> context.transitService().findAreaStops(e)
+        transitService::findAreaStops
       );
       case GeofencingZones -> new GeofencingZonesLayerBuilder(context.graph(), layerParameters);
       case Edge -> new EdgeLayerBuilder(context.graph(), layerParameters);

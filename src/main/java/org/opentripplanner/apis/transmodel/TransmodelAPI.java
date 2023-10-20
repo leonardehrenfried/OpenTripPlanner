@@ -24,9 +24,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import org.opentripplanner.apis.transmodel.mapping.TransitIdMapper;
 import org.opentripplanner.apis.transmodel.support.GqlUtil;
+import org.opentripplanner.model.transfer.TransferService;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.standalone.api.OtpServerRequestContext;
 import org.opentripplanner.transit.service.TransitModel;
+import org.opentripplanner.transit.service.TransitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,11 +46,13 @@ public class TransmodelAPI {
   private static Collection<String> tracingHeaderTags;
 
   private final OtpServerRequestContext serverContext;
+  private final TransitService transitService;
   private final TransmodelGraph index;
   private final ObjectMapper deserializer = new ObjectMapper();
 
   public TransmodelAPI(
     @Context OtpServerRequestContext serverContext,
+    @Context TransitService transitService,
     /**
      * @deprecated The support for multiple routers are removed from OTP2.
      * See https://github.com/opentripplanner/OpenTripPlanner/issues/2760
@@ -56,6 +60,7 @@ public class TransmodelAPI {
     @Deprecated @PathParam("ignoreRouterId") String ignoreRouterId
   ) {
     this.serverContext = serverContext;
+    this.transitService = transitService;
     this.index = new TransmodelGraph(schema);
   }
 
@@ -122,6 +127,7 @@ public class TransmodelAPI {
     return index.executeGraphQL(
       query,
       serverContext,
+      transitService,
       variables,
       operationName,
       maxResolves,
@@ -140,6 +146,7 @@ public class TransmodelAPI {
     return index.executeGraphQL(
       query,
       serverContext,
+      transitService,
       null,
       null,
       maxResolves,

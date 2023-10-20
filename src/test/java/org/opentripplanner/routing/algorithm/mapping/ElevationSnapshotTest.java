@@ -51,10 +51,13 @@ public class ElevationSnapshotTest extends SnapshotTestBase {
 
   static GenericLocation p4 = new GenericLocation("Sulzer Pump (P4)", null, 45.54549, -122.69659);
 
+  public ElevationSnapshotTest() {
+    super(true);
+  }
+
   @BeforeAll
   public static void beforeClass() {
     Locale.setDefault(Locale.US);
-    loadGraphBeforeClass(true);
   }
 
   @AfterAll
@@ -152,10 +155,5 @@ public class ElevationSnapshotTest extends SnapshotTestBase {
     request.setTo(p1);
 
     expectArriveByToMatchDepartAtAndSnapshot(request);
-  }
-
-  @Override
-  protected TestOtpModel getGraph() {
-    return ConstantsForTests.getInstance().getCachedPortlandGraphWithElevation();
   }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Predicate;
+import org.checkerframework.checker.units.qual.C;
 import org.glassfish.grizzly.http.server.Request;
 import org.opentripplanner.apis.support.TileJson;
 import org.opentripplanner.ext.vectortiles.layers.stations.StationsLayerBuilder;
@@ -29,16 +30,19 @@ import org.opentripplanner.inspector.vector.LayerBuilder;
 import org.opentripplanner.inspector.vector.LayerParameters;
 import org.opentripplanner.inspector.vector.VectorTileResponseFactory;
 import org.opentripplanner.standalone.api.OtpServerRequestContext;
+import org.opentripplanner.transit.service.TransitService;
 
 @Path("/routers/{ignoreRouterId}/vectorTiles")
 public class VectorTilesResource {
 
   private final OtpServerRequestContext serverContext;
+  private final TransitService transitService;
   private final String ignoreRouterId;
   private final Locale locale;
 
   public VectorTilesResource(
     @Context OtpServerRequestContext serverContext,
+    @Context TransitService transitService,
     @Context Request grizzlyRequest,
     /**
      * @deprecated The support for multiple routers are removed from OTP2.
@@ -48,6 +52,7 @@ public class VectorTilesResource {
   ) {
     this.locale = grizzlyRequest.getLocale();
     this.serverContext = serverContext;
+    this.transitService = transitService;
     this.ignoreRouterId = ignoreRouterId;
   }
 
@@ -68,7 +73,8 @@ public class VectorTilesResource {
       Arrays.asList(requestedLayers.split(",")),
       serverContext.vectorTileLayers().layers(),
       VectorTilesResource::crateLayerBuilder,
-      serverContext
+      serverContext,
+      transitService
     );
   }
 
@@ -81,11 +87,10 @@ public class VectorTilesResource {
     @PathParam("layers") String requestedLayers
   ) {
     var envelope = serverContext.worldEnvelopeService().envelope().orElseThrow();
-    var feedInfos = serverContext
-      .transitService()
+    var feedInfos = transitService
       .getFeedIds()
       .stream()
-      .map(serverContext.transitService()::getFeedInfo)
+      .map(transitService::getFeedInfo)
       .filter(Predicate.not(Objects::isNull))
       .toList();
 
@@ -103,11 +108,12 @@ public class VectorTilesResource {
   private static LayerBuilder<?> crateLayerBuilder(
     LayerParameters<LayerType> layerParameters,
     Locale locale,
-    OtpServerRequestContext context
+    OtpServerRequestContext context,
+    TransitService transitService
   ) {
     return switch (layerParameters.type()) {
-      case Stop -> new StopsLayerBuilder(context.transitService(), layerParameters, locale);
-      case Station -> new StationsLayerBuilder(context.transitService(), layerParameters, locale);
+      case Stop -> new StopsLayerBuilder(transitService, layerParameters, locale);
+      case Station -> new StationsLayerBuilder(transitService, layerParameters, locale);
       case VehicleRental -> new VehicleRentalPlacesLayerBuilder(
         context.vehicleRentalService(),
         layerParameters,
