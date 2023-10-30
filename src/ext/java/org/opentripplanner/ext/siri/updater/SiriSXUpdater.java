@@ -126,24 +126,22 @@ public class SiriSXUpdater extends PollingGraphUpdater implements TransitAlertPr
   private Optional<Siri> getUpdates() {
     long t1 = System.currentTimeMillis();
     try {
-      Optional<Siri> siri = siriHttpLoader.fetchSXFeed(requestorRef);
-      if (siri.isEmpty()) {
-        return Optional.empty();
-      }
+      return siriHttpLoader
+        .fetchSXFeed(requestorRef)
+        .flatMap(siri -> {
+          ServiceDelivery serviceDelivery = siri.getServiceDelivery();
+          if (serviceDelivery == null) {
+            throw new RuntimeException("Failed to get serviceDelivery " + url);
+          }
 
-      ServiceDelivery serviceDelivery = siri.get().getServiceDelivery();
-      if (serviceDelivery == null) {
-        throw new RuntimeException("Failed to get serviceDelivery " + url);
-      }
-
-      ZonedDateTime responseTimestamp = serviceDelivery.getResponseTimestamp();
-      if (responseTimestamp.isBefore(lastTimestamp)) {
-        LOG.info("Ignoring feed with an old timestamp.");
-        return Optional.empty();
-      }
-
-      lastTimestamp = responseTimestamp;
-      return siri;
+          ZonedDateTime responseTimestamp = serviceDelivery.getResponseTimestamp();
+          if (responseTimestamp.isBefore(lastTimestamp)) {
+            LOG.info("Ignoring feed with an old timestamp.");
+            return Optional.empty();
+          }
+          lastTimestamp = responseTimestamp;
+          return Optional.of(siri);
+        });
     } catch (OtpHttpClientException e) {
       LOG.info(
         "Retryable exception while reading SIRI feed from {} after {} ms",
@@ -157,8 +155,8 @@ public class SiriSXUpdater extends PollingGraphUpdater implements TransitAlertPr
         url,
         (System.currentTimeMillis() - t1)
       );
+      return Optional.empty();
     }
-    return Optional.empty();
   }
 
   /**
