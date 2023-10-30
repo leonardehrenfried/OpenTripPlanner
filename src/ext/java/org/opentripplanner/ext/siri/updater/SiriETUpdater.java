@@ -87,34 +87,38 @@ public class SiriETUpdater extends PollingGraphUpdater {
    */
   @Override
   public void runPolling() {
-    boolean moreData = false;
+    boolean moreData;
     do {
-      var updates = updateSource.getUpdates();
-      if (updates.isPresent()) {
-        boolean fullDataset = updateSource.getFullDatasetValueOfLastUpdates();
-        ServiceDelivery serviceDelivery = updates.get().getServiceDelivery();
-        moreData = Boolean.TRUE.equals(serviceDelivery.isMoreData());
-        // Mark this updater as primed after last page of updates. Copy moreData into a final
-        // primitive, because the object moreData persists across iterations.
-        final boolean markPrimed = !moreData;
-        List<EstimatedTimetableDeliveryStructure> etds = serviceDelivery.getEstimatedTimetableDeliveries();
-        if (etds != null) {
-          saveResultOnGraph.execute((graph, transitModel) -> {
-            var result = snapshotSource.applyEstimatedTimetable(
-              fuzzyTripMatcher,
-              entityResolver,
-              feedId,
-              fullDataset,
-              etds
-            );
-            ResultLogger.logUpdateResult(feedId, "siri-et", result);
-            recordMetrics.accept(result);
-            if (markPrimed) {
-              primed = true;
+      moreData =
+        updateSource
+          .getUpdates()
+          .map(updates -> {
+            boolean fullDataset = updateSource.getFullDatasetValueOfLastUpdates();
+            ServiceDelivery serviceDelivery = updates.getServiceDelivery();
+            var hasMore = Boolean.TRUE.equals(serviceDelivery.isMoreData());
+            // Mark this updater as primed after last page of updates. Copy moreData into a final
+            // primitive, because the object moreData persists across iterations.
+            final boolean markPrimed = !hasMore;
+            List<EstimatedTimetableDeliveryStructure> etds = serviceDelivery.getEstimatedTimetableDeliveries();
+            if (etds != null) {
+              saveResultOnGraph.execute((graph, transitModel) -> {
+                var result = snapshotSource.applyEstimatedTimetable(
+                  fuzzyTripMatcher,
+                  entityResolver,
+                  feedId,
+                  fullDataset,
+                  etds
+                );
+                ResultLogger.logUpdateResult(feedId, "siri-et", result);
+                recordMetrics.accept(result);
+                if (markPrimed) {
+                  primed = true;
+                }
+              });
             }
-          });
-        }
-      }
+            return hasMore;
+          })
+          .orElse(false);
     } while (moreData);
   }
 
