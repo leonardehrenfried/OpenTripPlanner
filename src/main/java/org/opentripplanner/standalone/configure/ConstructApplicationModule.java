@@ -2,6 +2,7 @@ package org.opentripplanner.standalone.configure;
 
 import dagger.Module;
 import dagger.Provides;
+import dagger.internal.Provider;
 import io.micrometer.core.instrument.Metrics;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -19,10 +20,9 @@ import org.opentripplanner.service.worldenvelope.WorldEnvelopeService;
 import org.opentripplanner.standalone.api.OtpServerRequestContext;
 import org.opentripplanner.standalone.config.RouterConfig;
 import org.opentripplanner.standalone.server.DefaultServerRequestContext;
-import org.opentripplanner.transit.service.TransitService;
 import org.opentripplanner.visualizer.GraphVisualizer;
 
-@Module
+@Module(subcomponents = RequestScopedComponent.class)
 public class ConstructApplicationModule {
 
   @Provides
@@ -30,7 +30,6 @@ public class ConstructApplicationModule {
     RouterConfig routerConfig,
     RaptorConfig<TripSchedule> raptorConfig,
     Graph graph,
-    TransitService transitService,
     WorldEnvelopeService worldEnvelopeService,
     RealtimeVehicleService realtimeVehicleService,
     VehicleRentalService vehicleRentalService,
@@ -38,7 +37,8 @@ public class ConstructApplicationModule {
     @Nullable StopConsolidationService stopConsolidationService,
     @Nullable TraverseVisitor<?, ?> traverseVisitor,
     EmissionsService emissionsService,
-    LauncherRequestDecorator launcherRequestDecorator
+    LauncherRequestDecorator launcherRequestDecorator,
+    Provider<RequestScopedComponent.Builder> requestComponentProvider
   ) {
     var defaultRequest = launcherRequestDecorator.intercept(routerConfig.routingRequestDefaults());
 
@@ -47,7 +47,7 @@ public class ConstructApplicationModule {
       defaultRequest,
       raptorConfig,
       graph,
-      transitService,
+      requestComponentProvider.get().build().transitService(),
       Metrics.globalRegistry,
       routerConfig.vectorTileLayers(),
       worldEnvelopeService,

@@ -29,7 +29,6 @@ import org.opentripplanner.standalone.api.OtpServerRequestContext;
 import org.opentripplanner.standalone.config.ConfigModel;
 import org.opentripplanner.standalone.config.configure.ConfigModule;
 import org.opentripplanner.standalone.server.MetricsLogging;
-import org.opentripplanner.transit.configure.TransitModule;
 import org.opentripplanner.transit.service.TransitModel;
 import org.opentripplanner.transit.service.TransitService;
 import org.opentripplanner.visualizer.GraphVisualizer;
@@ -41,7 +40,6 @@ import org.opentripplanner.visualizer.GraphVisualizer;
 @Component(
   modules = {
     ConfigModule.class,
-    TransitModule.class,
     WorldEnvelopeServiceModule.class,
     RealtimeVehicleServiceModule.class,
     RealtimeVehicleRepositoryModule.class,
