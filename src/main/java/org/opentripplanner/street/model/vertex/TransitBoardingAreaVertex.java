@@ -7,8 +7,6 @@ import org.opentripplanner.transit.model.site.StationElement;
 
 public class TransitBoardingAreaVertex extends StationElementVertex {
 
-  private final boolean wheelchairAccessible;
-
   private final BoardingArea boardingArea;
 
   /**
@@ -22,12 +20,6 @@ public class TransitBoardingAreaVertex extends StationElementVertex {
       boardingArea.getName()
     );
     this.boardingArea = boardingArea;
-    this.wheelchairAccessible =
-      boardingArea.getWheelchairAccessibility() != Accessibility.NOT_POSSIBLE;
-  }
-
-  public boolean isWheelchairAccessible() {
-    return wheelchairAccessible;
   }
 
   @Nonnull

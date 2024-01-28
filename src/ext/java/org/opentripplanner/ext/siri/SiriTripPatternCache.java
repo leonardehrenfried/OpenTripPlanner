@@ -6,14 +6,12 @@ import com.google.common.collect.Multimaps;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import javax.annotation.Nonnull;
 import org.opentripplanner.transit.model.network.StopPattern;
 import org.opentripplanner.transit.model.network.TripPattern;
 import org.opentripplanner.transit.model.network.TripPatternBuilder;
-import org.opentripplanner.transit.model.site.RegularStop;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.transit.model.timetable.Trip;
 import org.slf4j.Logger;
@@ -156,16 +154,6 @@ public class SiriTripPatternCache {
     updatedTripPatternsForTripCache.put(tripServiceDateKey, tripPattern);
 
     return tripPattern;
-  }
-
-  /**
-   * Returns any new TripPatterns added by real time information for a given stop.
-   *
-   * @param stop the stop
-   * @return list of TripPatterns created by real time sources for the stop.
-   */
-  public List<TripPattern> getAddedTripPatternsForStop(RegularStop stop) {
-    return patternsForStop.get(stop);
   }
 }
 

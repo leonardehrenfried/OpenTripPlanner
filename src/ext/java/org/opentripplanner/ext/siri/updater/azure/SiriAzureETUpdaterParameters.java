@@ -10,10 +10,6 @@ public class SiriAzureETUpdaterParameters
 
   private LocalDate fromDateTime;
 
-  public SiriAzureETUpdaterParameters() {
-    super("siri-azure-et-updater");
-  }
-
   public LocalDate getFromDateTime() {
     return fromDateTime;
   }

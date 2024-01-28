@@ -24,7 +24,6 @@ import org.opentripplanner.transit.service.TransitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.org.siri.siri20.EstimatedVehicleJourney;
-import uk.org.siri.siri20.MonitoredVehicleJourneyStructure;
 import uk.org.siri.siri20.VehicleModesEnumeration;
 
 /**
@@ -67,32 +66,6 @@ public class SiriFuzzyTripMatcher {
   private SiriFuzzyTripMatcher(TransitService transitService) {
     this.transitService = transitService;
     initCache(this.transitService);
-  }
-
-  /**
-   * Matches VehicleActivity to a set of possible Trips based on tripId
-   */
-  public Trip match(
-    MonitoredVehicleJourneyStructure monitoredVehicleJourney,
-    EntityResolver entityResolver
-  ) {
-    if (monitoredVehicleJourney.getDestinationRef() != null) {
-      String destinationRef = monitoredVehicleJourney.getDestinationRef().getValue();
-      ZonedDateTime arrivalTime = monitoredVehicleJourney.getDestinationAimedArrivalTime();
-
-      if (arrivalTime != null) {
-        Set<Trip> trips = getMatchingTripsOnStopOrSiblings(
-          destinationRef,
-          arrivalTime,
-          entityResolver
-        );
-        if (trips.isEmpty()) {
-          return null;
-        }
-        return getTripForJourney(trips, monitoredVehicleJourney);
-      }
-    }
-    return null;
   }
 
   /**
@@ -329,56 +302,5 @@ public class SiriFuzzyTripMatcher {
     } else {
       return possibleTrips.iterator().next();
     }
-  }
-
-  /**
-   * Finds the correct trip based on OTP-ServiceDate and SIRI-DepartureTime
-   */
-  private Trip getTripForJourney(
-    Set<Trip> trips,
-    MonitoredVehicleJourneyStructure monitoredVehicleJourney
-  ) {
-    ZonedDateTime date = monitoredVehicleJourney.getOriginAimedDepartureTime();
-    if (date == null) {
-      //If no date is set - assume Realtime-data is reported for 'today'.
-      date = ZonedDateTime.now();
-    }
-    LocalDate serviceDate = date.toLocalDate();
-
-    List<Trip> results = new ArrayList<>();
-    for (Trip trip : trips) {
-      Set<LocalDate> serviceDatesForServiceId = transitService
-        .getCalendarService()
-        .getServiceDatesForServiceId(trip.getServiceId());
-
-      for (LocalDate next : serviceDatesForServiceId) {
-        if (next.equals(serviceDate)) {
-          results.add(trip);
-        }
-      }
-    }
-
-    if (results.size() == 1) {
-      return results.get(0);
-    } else if (results.size() > 1) {
-      // Multiple possible matches - check if lineRef/routeId matches
-      if (
-        monitoredVehicleJourney.getLineRef() != null &&
-        monitoredVehicleJourney.getLineRef().getValue() != null
-      ) {
-        String lineRef = monitoredVehicleJourney.getLineRef().getValue();
-        for (Trip trip : results) {
-          if (lineRef.equals(trip.getRoute().getId().getId())) {
-            // Return first trip where the lineRef matches routeId
-            return trip;
-          }
-        }
-      }
-
-      // Line does not match any routeId - return first result.
-      return results.get(0);
-    }
-
-    return null;
   }
 }

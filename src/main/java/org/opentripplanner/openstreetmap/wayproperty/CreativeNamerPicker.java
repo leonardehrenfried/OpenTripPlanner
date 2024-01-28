@@ -13,11 +13,6 @@ public class CreativeNamerPicker {
   public OsmSpecifier specifier;
   public CreativeNamer namer;
 
-  public CreativeNamerPicker() {
-    specifier = null;
-    namer = null;
-  }
-
   public CreativeNamerPicker(OsmSpecifier specifier, CreativeNamer namer) {
     this.specifier = specifier;
     this.namer = namer;

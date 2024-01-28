@@ -103,10 +103,6 @@ public class GqlUtil {
     return environment.containsArgument(name) && environment.getArgument(name) != null;
   }
 
-  public static <T> List<T> listOfNullSafe(T element) {
-    return element == null ? List.of() : List.of(element);
-  }
-
   /**
    * Helper method to support the deprecated 'lang' argument.
    */

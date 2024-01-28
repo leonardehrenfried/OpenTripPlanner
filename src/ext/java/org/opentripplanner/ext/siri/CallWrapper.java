@@ -17,14 +17,6 @@ import uk.org.siri.siri20.RecordedCall;
  * it possible to iterate over both of the types at once.
  */
 public interface CallWrapper {
-  static CallWrapper of(EstimatedCall estimatedCall) {
-    return new EstimatedCallWrapper(estimatedCall);
-  }
-
-  static CallWrapper of(RecordedCall recordedCall) {
-    return new RecordedCallWrapper(recordedCall);
-  }
-
   static List<CallWrapper> of(EstimatedVehicleJourney estimatedVehicleJourney) {
     List<CallWrapper> result = new ArrayList<>();
 

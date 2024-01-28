@@ -7,10 +7,6 @@ public class SiriAzureSXUpdaterParameters extends SiriAzureUpdaterParameters {
   private LocalDate fromDateTime;
   private LocalDate toDateTime;
 
-  public SiriAzureSXUpdaterParameters() {
-    super("siri-azure-sx-updater");
-  }
-
   public LocalDate getFromDateTime() {
     return fromDateTime;
   }

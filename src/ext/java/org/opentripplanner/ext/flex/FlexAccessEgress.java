@@ -39,10 +39,6 @@ public final class FlexAccessEgress {
     return stop;
   }
 
-  public FlexTrip trip() {
-    return trip;
-  }
-
   public State lastState() {
     return lastState;
   }

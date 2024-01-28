@@ -21,10 +21,6 @@ public class RemoveFilter implements ItineraryListFilter {
     this.flagger = flagger;
   }
 
-  public String name() {
-    return flagger.name();
-  }
-
   @Override
   public List<Itinerary> filter(List<Itinerary> itineraries) {
     List<Itinerary> filterInput;

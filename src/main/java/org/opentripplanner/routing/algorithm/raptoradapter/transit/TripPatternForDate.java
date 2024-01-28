@@ -118,10 +118,6 @@ public class TripPatternForDate implements Comparable<TripPatternForDate> {
     return tripPattern;
   }
 
-  public int stopIndex(int i) {
-    return this.tripPattern.stopIndex(i);
-  }
-
   public TripTimes getTripTimes(int i) {
     return tripTimes[i];
   }

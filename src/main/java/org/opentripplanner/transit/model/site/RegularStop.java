@@ -130,11 +130,6 @@ public final class RegularStop
     return fareZones;
   }
 
-  @Nonnull
-  public Collection<BoardingArea> getBoardingAreas() {
-    return boardingAreas;
-  }
-
   @Override
   @Nonnull
   public RegularStopBuilder copy() {

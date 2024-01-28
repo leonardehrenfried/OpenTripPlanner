@@ -51,10 +51,6 @@ class DataSourceRootView {
     return panel;
   }
 
-  Dimension minWidth(Dimension d, int minWidth) {
-    return new Dimension(Math.max(minWidth, d.width), d.height);
-  }
-
   private void onSelectSource() {
     JFileChooser chooser = new JFileChooser(new File(fileTxt.getText()));
     chooser.setBackground(ViewUtils.BACKGROUND);

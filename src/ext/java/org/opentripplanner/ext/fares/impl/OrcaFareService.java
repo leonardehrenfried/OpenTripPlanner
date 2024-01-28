@@ -173,15 +173,6 @@ public class OrcaFareService extends DefaultFareService {
     };
   }
 
-  private static String routeLongNameFallBack(Route route) {
-    var longName = route.getLongName();
-    if (longName == null) {
-      return "";
-    } else {
-      return longName.toString();
-    }
-  }
-
   public OrcaFareService(Collection<FareRuleSet> regularFareRules) {
     addFareRules(FareType.regular, regularFareRules);
     addFareRules(FareType.senior, regularFareRules);

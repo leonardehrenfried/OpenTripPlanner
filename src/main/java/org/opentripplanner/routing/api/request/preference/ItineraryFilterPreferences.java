@@ -136,10 +136,6 @@ public final class ItineraryFilterPreferences {
     return removeTransitWithHigherCostThanBestOnStreetOnly;
   }
 
-  public boolean removeTransitIfWalkingIsBetter() {
-    return removeTransitIfWalkingIsBetter;
-  }
-
   @Override
   public String toString() {
     return ToStringBuilder

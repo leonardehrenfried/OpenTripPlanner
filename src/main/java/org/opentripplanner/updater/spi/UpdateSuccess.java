@@ -17,12 +17,6 @@ public record UpdateSuccess(List<WarningType> warnings) {
   public static UpdateSuccess noWarnings() {
     return new UpdateSuccess(List.of());
   }
-  /**
-   * Create an instance with the provided warnings.
-   */
-  public static UpdateSuccess ofWarnings(WarningType... warnings) {
-    return new UpdateSuccess(Arrays.asList(warnings));
-  }
 
   /**
    * Return a copy of the instance with the provided warnings added.

@@ -23,13 +23,6 @@ public enum TransitMode implements DocumentedEnum<TransitMode> {
   CARPOOL,
   TAXI;
 
-  private static final Set<TransitMode> ON_STREET_MODES = EnumSet.of(
-    COACH,
-    BUS,
-    TROLLEYBUS,
-    CARPOOL,
-    TAXI
-  );
   private static final Set<TransitMode> NO_AIRPLANE_MODES = EnumSet.complementOf(
     EnumSet.of(AIRPLANE)
   );
@@ -48,10 +41,6 @@ public enum TransitMode implements DocumentedEnum<TransitMode> {
    */
   public static TransitMode[] modesConsideredTransitByUsers() {
     return NO_CARPOOL_MODES.toArray(TransitMode[]::new);
-  }
-
-  public boolean onStreet() {
-    return ON_STREET_MODES.contains(this);
   }
 
   @Override

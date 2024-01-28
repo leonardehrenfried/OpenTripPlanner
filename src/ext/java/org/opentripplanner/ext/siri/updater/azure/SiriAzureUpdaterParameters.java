@@ -3,7 +3,6 @@ package org.opentripplanner.ext.siri.updater.azure;
 public abstract class SiriAzureUpdaterParameters {
 
   private String configRef;
-  private String type;
   private String serviceBusUrl;
   private String topicName;
   private String dataInitializationUrl;
@@ -12,20 +11,12 @@ public abstract class SiriAzureUpdaterParameters {
 
   private boolean fuzzyTripMatching;
 
-  public SiriAzureUpdaterParameters(String type) {
-    this.type = type;
-  }
-
   public String configRef() {
     return configRef;
   }
 
   public void setConfigRef(String configRef) {
     this.configRef = configRef;
-  }
-
-  public String getType() {
-    return type;
   }
 
   public String getServiceBusUrl() {

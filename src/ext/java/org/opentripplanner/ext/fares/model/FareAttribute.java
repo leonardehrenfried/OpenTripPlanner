@@ -40,10 +40,6 @@ public final class FareAttribute
     return agency;
   }
 
-  public void setAgency(FeedScopedId agency) {
-    this.agency = agency;
-  }
-
   public Money getPrice() {
     return price;
   }

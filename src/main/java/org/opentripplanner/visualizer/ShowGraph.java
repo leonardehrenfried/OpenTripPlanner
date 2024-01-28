@@ -367,22 +367,6 @@ public class ShowGraph extends PApplet implements MouseWheelListener {
     edgeIndex.build();
   }
 
-  /**
-   * Set the Vertex selector to newSelector, and store the old selector on the stack of selectors
-   */
-  public void pushSelector(VertexSelectionListener newSelector) {
-    selectors.add(selector);
-    selector = newSelector;
-  }
-
-  /**
-   * Restore the previous vertexSelector
-   */
-  public void popSelector() {
-    selector = selectors.get(selectors.size() - 1);
-    selectors.remove(selectors.size() - 1);
-  }
-
   public void highlightCoordinate(Coordinate c) {
     double xd = 0, yd = 0;
     while (!modelBounds.contains(c)) {
@@ -704,22 +688,6 @@ public class ShowGraph extends PApplet implements MouseWheelListener {
     simpleSPT.draw();
 
     return true;
-  }
-
-  private void colorOverlappingBranches(LinkedBlockingQueue<SPTNode> queue) {
-    HashMap<Vertex, Integer> stateHeight = new HashMap<>();
-
-    for (SPTNode node : queue) {
-      Integer height = stateHeight.get(node.state.getVertex());
-      if (height == null) {
-        height = 0;
-      } else {
-        height += 1;
-      }
-      stateHeight.put(node.state.getVertex(), height);
-
-      node.setHeight(height);
-    }
   }
 
   private void drawNewEdges() {

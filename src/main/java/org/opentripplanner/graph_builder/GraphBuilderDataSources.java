@@ -104,10 +104,6 @@ public class GraphBuilderDataSources {
     return inputData.containsKey(type);
   }
 
-  public Iterable<DataSource> get(FileType type) {
-    return inputData.get(type);
-  }
-
   public Iterable<ConfiguredDataSource<OsmExtractParameters>> getOsmConfiguredDatasource() {
     return inputData
       .get(OSM)

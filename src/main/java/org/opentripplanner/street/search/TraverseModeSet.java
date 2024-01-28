@@ -33,10 +33,6 @@ public class TraverseModeSet implements Cloneable, Serializable {
     }
   }
 
-  public TraverseModeSet(Collection<TraverseMode> modeList) {
-    this(modeList.toArray(new TraverseMode[0]));
-  }
-
   /**
    * Returns a mode set containing all modes.
    */
@@ -62,14 +58,6 @@ public class TraverseModeSet implements Cloneable, Serializable {
     return (modes & MODE_WALK) != 0;
   }
 
-  public void setWalk(boolean walk) {
-    if (walk) {
-      modes |= MODE_WALK;
-    } else {
-      modes &= ~MODE_WALK;
-    }
-  }
-
   public boolean getCar() {
     return (modes & MODE_CAR) != 0;
   }
@@ -92,19 +80,8 @@ public class TraverseModeSet implements Cloneable, Serializable {
     return modeList;
   }
 
-  public boolean isValid() {
-    return modes != 0;
-  }
-
   public boolean contains(TraverseMode mode) {
     return (modes & getMaskForMode(mode)) != 0;
-  }
-
-  /**
-   * Clear the mode set so that no modes are included.
-   */
-  public void clear() {
-    modes = 0;
   }
 
   public int hashCode() {

@@ -62,13 +62,6 @@ public class ZipFileDataSource
     return content.stream().filter(it -> it.name().equals(name)).findFirst().orElse(null);
   }
 
-  /**
-   * @return the internal zip file if still open. {@code null} is return if the file is closed.
-   */
-  ZipFile zipFile() {
-    return zipFile;
-  }
-
   @Override
   public InputStream entryStream(ZipEntry entry) {
     try {

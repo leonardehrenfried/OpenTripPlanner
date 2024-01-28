@@ -22,10 +22,6 @@ public class IndexVariable implements Serializable {
     return name;
   }
 
-  public String getDisplayName() {
-    return displayName;
-  }
-
   public String getVariable() {
     return variable;
   }

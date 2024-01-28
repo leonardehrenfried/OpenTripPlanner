@@ -112,11 +112,4 @@ public final class CoordinateArrayListSequence implements CoordinateSequence, Cl
     coordinates.addAll(Arrays.asList(newCoordinates).subList(start, end));
   }
 
-  public void add(Coordinate newCoordinate) {
-    coordinates.add(newCoordinate);
-  }
-
-  public void clear() {
-    coordinates = new ArrayList<>();
-  }
 }

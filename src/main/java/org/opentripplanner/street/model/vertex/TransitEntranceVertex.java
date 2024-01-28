@@ -29,10 +29,6 @@ public class TransitEntranceVertex extends StationElementVertex {
     return wheelchairAccessibility;
   }
 
-  public Entrance getEntrance() {
-    return this.entrance;
-  }
-
   @Nonnull
   @Override
   public StationElement getStationElement() {

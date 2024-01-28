@@ -1,7 +1,5 @@
 package org.opentripplanner.astar.model;
 
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multiset;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -77,37 +75,6 @@ public class ShortestPathTree<
       return null;
     } else {
       return new GraphPath<>(s);
-    }
-  }
-
-  /** Print out a summary of the number of states and vertices. */
-  public void dump() {
-    Multiset<Integer> histogram = HashMultiset.create();
-    int statesCount = 0;
-    int maxSize = 0;
-    for (Map.Entry<Vertex, List<State>> kv : stateSets.entrySet()) {
-      List<State> states = kv.getValue();
-      int size = states.size();
-      histogram.add(size);
-      statesCount += size;
-      if (size > maxSize) {
-        maxSize = size;
-      }
-    }
-    LOG.info(
-      "SPT: vertices: " +
-      stateSets.size() +
-      " states: total: " +
-      statesCount +
-      " per vertex max: " +
-      maxSize +
-      " avg: " +
-      (statesCount * 1.0 / stateSets.size())
-    );
-    List<Integer> nStates = new ArrayList<>(histogram.elementSet());
-    Collections.sort(nStates);
-    for (Integer nState : nStates) {
-      LOG.info("{} states: {} vertices.", nState, histogram.count(nState));
     }
   }
 

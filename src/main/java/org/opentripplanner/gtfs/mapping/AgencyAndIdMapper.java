@@ -10,13 +10,4 @@ public class AgencyAndIdMapper {
   public static FeedScopedId mapAgencyAndId(AgencyAndId id) {
     return id == null ? null : new FeedScopedId(id.getAgencyId(), id.getId());
   }
-
-  /**
-   * Returns the id part of the {@link AgencyAndId} if its non-null. Otherwise, returns null.
-   */
-  public static String mapNullableId(AgencyAndId id) {
-    if (id != null) {
-      return id.getId();
-    } else return null;
-  }
 }

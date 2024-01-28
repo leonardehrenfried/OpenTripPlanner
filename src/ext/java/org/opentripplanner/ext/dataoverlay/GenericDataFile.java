@@ -104,14 +104,6 @@ public class GenericDataFile {
     return netcdfDataForVariable;
   }
 
-  public boolean isValid() {
-    return error == null;
-  }
-
-  public String getError() {
-    return error;
-  }
-
   public Array getTimeArray() {
     return timeArray;
   }

@@ -25,14 +25,6 @@ public class TransitPathwayNodeVertex extends StationElementVertex {
     this.wheelchairEntrance = node.getWheelchairAccessibility() != Accessibility.NOT_POSSIBLE;
   }
 
-  public boolean isWheelchairEntrance() {
-    return wheelchairEntrance;
-  }
-
-  public PathwayNode getNode() {
-    return this.node;
-  }
-
   @Nonnull
   @Override
   public StationElement getStationElement() {

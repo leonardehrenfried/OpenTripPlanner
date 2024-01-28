@@ -86,16 +86,8 @@ public class NodeAdapter {
     return contextPath;
   }
 
-  public String source() {
-    return source;
-  }
-
   public boolean isNonEmptyArray() {
     return json.isArray() && json.size() > 0;
-  }
-
-  public boolean isObject() {
-    return json.isObject() && json.size() > 0;
   }
 
   public List<NodeInfo> parametersSorted() {
