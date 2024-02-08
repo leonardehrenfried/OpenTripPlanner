@@ -1,84 +1,96 @@
 package org.opentripplanner.routing.api.request;
 
+import static org.opentripplanner.routing.api.request.Feature.ACCESS;
+import static org.opentripplanner.routing.api.request.Feature.CYCLING;
+import static org.opentripplanner.routing.api.request.Feature.DRIVING;
+import static org.opentripplanner.routing.api.request.Feature.EGRESS;
+import static org.opentripplanner.routing.api.request.Feature.PARKING;
+import static org.opentripplanner.routing.api.request.Feature.PICKUP;
+import static org.opentripplanner.routing.api.request.Feature.RENTING;
+import static org.opentripplanner.routing.api.request.Feature.SCOOTER;
+import static org.opentripplanner.routing.api.request.Feature.TRANSFER;
+import static org.opentripplanner.routing.api.request.Feature.WALKING;
+
 import java.util.EnumSet;
 import java.util.Set;
 import org.opentripplanner.framework.doc.DocumentedEnum;
+
+enum Feature {
+  ACCESS,
+  EGRESS,
+  TRANSFER,
+  WALKING,
+  CYCLING,
+  DRIVING,
+  SCOOTER,
+  RENTING,
+  PARKING,
+  PICKUP,
+}
 
 public enum StreetMode implements DocumentedEnum<StreetMode> {
   /**
    * No street mode is set. This option is used if we do not want street routing at all in this part
    * of the search.
    */
-  NOT_SET(Feature.ACCESS, Feature.TRANSFER, Feature.EGRESS),
+  NOT_SET(ACCESS, TRANSFER, EGRESS),
   /**
    * Walk only
    */
-  WALK(Feature.ACCESS, Feature.TRANSFER, Feature.EGRESS, Feature.WALKING),
+  WALK(ACCESS, TRANSFER, EGRESS, WALKING),
   /**
    * Bike only
    */
-  BIKE(Feature.ACCESS, Feature.TRANSFER, Feature.EGRESS, Feature.CYCLING),
+  BIKE(ACCESS, TRANSFER, EGRESS, CYCLING),
   /**
    * Bike to a bike parking area, then walk the rest of the way.
    * <p>
    * Direct mode and access mode only.
    */
-  BIKE_TO_PARK(Feature.ACCESS, Feature.WALKING, Feature.CYCLING, Feature.PARKING),
+  BIKE_TO_PARK(ACCESS, WALKING, CYCLING, PARKING),
   /**
    * Walk to a bike rental point, bike to a bike rental drop-off point, and walk the rest of the
    * way. This can include bike rental at fixed locations or free-floating services.
    */
-  BIKE_RENTAL(Feature.ACCESS, Feature.EGRESS, Feature.WALKING, Feature.CYCLING, Feature.RENTING),
+  BIKE_RENTAL(ACCESS, EGRESS, WALKING, CYCLING, RENTING),
   /**
    * Walk to a scooter rental point, ride a scooter to a scooter rental drop-off point, and walk the
    * rest of the way. This can include scooter rental at fixed locations or free-floating services.
    */
-  SCOOTER_RENTAL(Feature.ACCESS, Feature.EGRESS, Feature.WALKING, Feature.SCOOTER, Feature.RENTING),
+  SCOOTER_RENTAL(ACCESS, EGRESS, WALKING, SCOOTER, RENTING),
   /**
    * Car only
    * <p>
    * Direct mode only.
    */
-  CAR(Feature.ACCESS, Feature.DRIVING),
+  CAR(ACCESS, DRIVING),
   /**
    * Start in the car, drive to a parking area, and walk the rest of the way.
    * <p>
    * Direct mode and access mode only.
    */
-  CAR_TO_PARK(Feature.ACCESS, Feature.WALKING, Feature.DRIVING, Feature.PARKING),
+  CAR_TO_PARK(ACCESS, WALKING, DRIVING, PARKING),
   /**
    * Walk to a pickup point along the road, drive to a drop-off point along the road, and walk the
    * rest of the way. This can include various taxi-services or kiss & ride.
    */
-  CAR_PICKUP(Feature.ACCESS, Feature.EGRESS, Feature.WALKING, Feature.DRIVING, Feature.PICKUP),
+  CAR_PICKUP(ACCESS, EGRESS, WALKING, DRIVING, PICKUP),
   /**
    * Walk to a car rental point, drive to a car rental drop-off point and walk the rest of the way.
    * This can include car rental at fixed locations or free-floating services.
    */
-  CAR_RENTAL(Feature.ACCESS, Feature.EGRESS, Feature.WALKING, Feature.DRIVING, Feature.RENTING),
+  CAR_RENTAL(ACCESS, EGRESS, WALKING, DRIVING, RENTING),
 
   /**
    * Using a car hailing app like Uber or Lyft to get to a train station or all the way to the destination.
    */
-  CAR_HAILING(Feature.ACCESS, Feature.EGRESS, Feature.DRIVING, Feature.PICKUP),
+  CAR_HAILING(ACCESS, EGRESS, DRIVING, PICKUP),
 
   /**
    * Encompasses all types of on-demand and flexible transportation.
    */
-  FLEXIBLE(Feature.ACCESS, Feature.EGRESS, Feature.WALKING);
+  FLEXIBLE(ACCESS, EGRESS, WALKING);
 
-  private enum Feature {
-    ACCESS,
-    EGRESS,
-    TRANSFER,
-    WALKING,
-    CYCLING,
-    DRIVING,
-    SCOOTER,
-    RENTING,
-    PARKING,
-    PICKUP,
-  }
 
   private final Set<Feature> features;
 
@@ -87,43 +99,43 @@ public enum StreetMode implements DocumentedEnum<StreetMode> {
   }
 
   public boolean accessAllowed() {
-    return features.contains(Feature.ACCESS);
+    return features.contains(ACCESS);
   }
 
   public boolean transferAllowed() {
-    return features.contains(Feature.TRANSFER);
+    return features.contains(TRANSFER);
   }
 
   public boolean egressAllowed() {
-    return features.contains(Feature.EGRESS);
+    return features.contains(EGRESS);
   }
 
   public boolean includesWalking() {
-    return features.contains(Feature.WALKING);
+    return features.contains(WALKING);
   }
 
   public boolean includesBiking() {
-    return features.contains(Feature.CYCLING);
+    return features.contains(CYCLING);
   }
 
   public boolean includesDriving() {
-    return features.contains(Feature.DRIVING);
+    return features.contains(DRIVING);
   }
 
   public boolean includesScooter() {
-    return features.contains(Feature.SCOOTER);
+    return features.contains(SCOOTER);
   }
 
   public boolean includesRenting() {
-    return features.contains(Feature.RENTING);
+    return features.contains(RENTING);
   }
 
   public boolean includesParking() {
-    return features.contains(Feature.PARKING);
+    return features.contains(PARKING);
   }
 
   public boolean includesPickup() {
-    return features.contains(Feature.PICKUP);
+    return features.contains(PICKUP);
   }
 
   @Override
