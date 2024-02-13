@@ -142,9 +142,9 @@ public class DefaultAccessEgress implements RaptorAccessEgress {
     IntUnaryOperator calculateFirstPossibleDeparture
   ) {
     int dt = penalty().timeInSeconds();
-    int actual = requestedDepartureTime + dt;
+    int actual = requestedDepartureTime - dt;
     int adjusted = calculateFirstPossibleDeparture.applyAsInt(actual);
-    return ifNotSet(adjusted, v -> v - dt);
+    return ifNotSet(adjusted, v -> v + dt);
   }
 
   /**
