@@ -217,4 +217,13 @@ public class WayTestData {
     way.addTag("usage", "tourism");
     return way;
   }
+
+  public static OSMWithTags oneWayLivingStreet() {
+    // https://www.openstreetmap.org/way/89300522
+    var way = new OSMWithTags();
+    way.addTag("highway", "living_street");
+    way.addTag("cycleway", "opposite");
+    way.addTag("oneway", "yes");
+    return way;
+  }
 }

@@ -18,7 +18,7 @@ public class DefaultMapperTest {
 
   private WayPropertySet wps;
   private OsmTagMapper mapper;
-  float epsilon = 0.01f;
+  private final float DELTA = 0.01f;
 
   @BeforeEach
   public void setup() {
@@ -38,33 +38,33 @@ public class DefaultMapperTest {
 
     way = new OSMWithTags();
     way.addTag("maxspeed", "60");
-    assertTrue(within(kmhAsMs(60), wps.getCarSpeedForWay(way, false), epsilon));
-    assertTrue(within(kmhAsMs(60), wps.getCarSpeedForWay(way, true), epsilon));
+    assertTrue(within(kmhAsMs(60), wps.getCarSpeedForWay(way, false), DELTA));
+    assertTrue(within(kmhAsMs(60), wps.getCarSpeedForWay(way, true), DELTA));
 
     way = new OSMWithTags();
     way.addTag("maxspeed:forward", "80");
     way.addTag("maxspeed:backward", "20");
     way.addTag("maxspeed", "40");
-    assertTrue(within(kmhAsMs(80), wps.getCarSpeedForWay(way, false), epsilon));
-    assertTrue(within(kmhAsMs(20), wps.getCarSpeedForWay(way, true), epsilon));
+    assertTrue(within(kmhAsMs(80), wps.getCarSpeedForWay(way, false), DELTA));
+    assertTrue(within(kmhAsMs(20), wps.getCarSpeedForWay(way, true), DELTA));
 
     way = new OSMWithTags();
     way.addTag("maxspeed", "40");
     way.addTag("maxspeed:lanes", "60|80|40");
-    assertTrue(within(kmhAsMs(80), wps.getCarSpeedForWay(way, false), epsilon));
-    assertTrue(within(kmhAsMs(80), wps.getCarSpeedForWay(way, true), epsilon));
+    assertTrue(within(kmhAsMs(80), wps.getCarSpeedForWay(way, false), DELTA));
+    assertTrue(within(kmhAsMs(80), wps.getCarSpeedForWay(way, true), DELTA));
 
     way = new OSMWithTags();
     way.addTag("maxspeed", "20");
     way.addTag("maxspeed:motorcar", "80");
-    assertTrue(within(kmhAsMs(80), wps.getCarSpeedForWay(way, false), epsilon));
-    assertTrue(within(kmhAsMs(80), wps.getCarSpeedForWay(way, true), epsilon));
+    assertTrue(within(kmhAsMs(80), wps.getCarSpeedForWay(way, false), DELTA));
+    assertTrue(within(kmhAsMs(80), wps.getCarSpeedForWay(way, true), DELTA));
 
     // test with english units
     way = new OSMWithTags();
     way.addTag("maxspeed", "35 mph");
-    assertTrue(within(kmhAsMs(35 * 1.609f), wps.getCarSpeedForWay(way, false), epsilon));
-    assertTrue(within(kmhAsMs(35 * 1.609f), wps.getCarSpeedForWay(way, true), epsilon));
+    assertTrue(within(kmhAsMs(35 * 1.609f), wps.getCarSpeedForWay(way, false), DELTA));
+    assertTrue(within(kmhAsMs(35 * 1.609f), wps.getCarSpeedForWay(way, true), DELTA));
 
     // test with no maxspeed tags
     wps = new WayPropertySet();
@@ -76,28 +76,28 @@ public class DefaultMapperTest {
     way = new OSMWithTags();
 
     // test default speeds
-    assertTrue(within(kmhAsMs(25), wps.getCarSpeedForWay(way, false), epsilon));
-    assertTrue(within(kmhAsMs(25), wps.getCarSpeedForWay(way, true), epsilon));
+    assertTrue(within(kmhAsMs(25), wps.getCarSpeedForWay(way, false), DELTA));
+    assertTrue(within(kmhAsMs(25), wps.getCarSpeedForWay(way, true), DELTA));
 
     way.addTag("highway", "tertiary");
-    assertTrue(within(kmhAsMs(35), wps.getCarSpeedForWay(way, false), epsilon));
-    assertTrue(within(kmhAsMs(35), wps.getCarSpeedForWay(way, true), epsilon));
+    assertTrue(within(kmhAsMs(35), wps.getCarSpeedForWay(way, false), DELTA));
+    assertTrue(within(kmhAsMs(35), wps.getCarSpeedForWay(way, true), DELTA));
 
     way = new OSMWithTags();
     way.addTag("surface", "gravel");
-    assertTrue(within(kmhAsMs(10), wps.getCarSpeedForWay(way, false), epsilon));
-    assertTrue(within(kmhAsMs(10), wps.getCarSpeedForWay(way, true), epsilon));
+    assertTrue(within(kmhAsMs(10), wps.getCarSpeedForWay(way, false), DELTA));
+    assertTrue(within(kmhAsMs(10), wps.getCarSpeedForWay(way, true), DELTA));
 
     way = new OSMWithTags();
     way.addTag("highway", "motorway");
-    assertTrue(within(kmhAsMs(100), wps.getCarSpeedForWay(way, false), epsilon));
-    assertTrue(within(kmhAsMs(100), wps.getCarSpeedForWay(way, true), epsilon));
+    assertTrue(within(kmhAsMs(100), wps.getCarSpeedForWay(way, false), DELTA));
+    assertTrue(within(kmhAsMs(100), wps.getCarSpeedForWay(way, true), DELTA));
 
     // make sure that 0-speed ways can't exist
     way = new OSMWithTags();
     way.addTag("maxspeed", "0");
-    assertTrue(within(kmhAsMs(25), wps.getCarSpeedForWay(way, false), epsilon));
-    assertTrue(within(kmhAsMs(25), wps.getCarSpeedForWay(way, true), epsilon));
+    assertTrue(within(kmhAsMs(25), wps.getCarSpeedForWay(way, false), DELTA));
+    assertTrue(within(kmhAsMs(25), wps.getCarSpeedForWay(way, true), DELTA));
 
     assertSpeed(1.3889, "5");
     assertSpeed(1.3889, "5 kmh");
@@ -144,7 +144,7 @@ public class DefaultMapperTest {
     var discouraged = WayTestData.southeastLaBonitaWay().addTag("bicycle", "discouraged");
     var discouragedProps = wps.getDataForWay(discouraged);
     assertEquals(ALL, discouragedProps.getPermission());
-    assertEquals(2.94, discouragedProps.bicycleSafety().forward(), epsilon);
+    assertEquals(2.94, discouragedProps.bicycleSafety().forward(), DELTA);
   }
 
   @Test
@@ -170,30 +170,36 @@ public class DefaultMapperTest {
     var useSidepath = WayTestData.southeastLaBonitaWay().addTag("bicycle", "use_sidepath");
     var useSidepathProps = wps.getDataForWay(useSidepath);
     assertEquals(ALL, useSidepathProps.getPermission());
-    assertEquals(4.9, useSidepathProps.bicycleSafety().forward(), epsilon);
+    assertEquals(4.9, useSidepathProps.bicycleSafety().forward(), DELTA);
 
     var useSidepathForward = WayTestData
       .southeastLaBonitaWay()
       .addTag("bicycle:forward", "use_sidepath");
     var useSidepathForwardProps = wps.getDataForWay(useSidepathForward);
     assertEquals(ALL, useSidepathForwardProps.getPermission());
-    assertEquals(4.9, useSidepathForwardProps.bicycleSafety().forward(), epsilon);
-    assertEquals(0.98, useSidepathForwardProps.bicycleSafety().back(), epsilon);
+    assertEquals(4.9, useSidepathForwardProps.bicycleSafety().forward(), DELTA);
+    assertEquals(0.98, useSidepathForwardProps.bicycleSafety().back(), DELTA);
 
     var useSidepathBackward = WayTestData
       .southeastLaBonitaWay()
       .addTag("bicycle:backward", "use_sidepath");
     var useSidepathBackwardProps = wps.getDataForWay(useSidepathBackward);
     assertEquals(ALL, useSidepathBackwardProps.getPermission());
-    assertEquals(0.98, useSidepathBackwardProps.bicycleSafety().forward(), epsilon);
-    assertEquals(4.9, useSidepathBackwardProps.bicycleSafety().back(), epsilon);
+    assertEquals(0.98, useSidepathBackwardProps.bicycleSafety().forward(), DELTA);
+    assertEquals(4.9, useSidepathBackwardProps.bicycleSafety().back(), DELTA);
+  }
+
+  @Test
+  void cyclewayOpposite() {
+    var street = WayTestData.oneWayLivingStreet();
+    assertEquals(wps.getDataForWay(street).getPermission(), ALL);
   }
 
   /**
    * Test that two values are within epsilon of each other.
    */
-  private boolean within(float val1, float val2, float epsilon) {
-    return (Math.abs(val1 - val2) < epsilon);
+  private boolean within(float val1, float val2, float delta) {
+    return (Math.abs(val1 - val2) < delta);
   }
 
   /**
@@ -217,6 +223,6 @@ public class DefaultMapperTest {
   }
 
   private void assertSpeed(double v, String s) {
-    assertEquals(v, wps.getMetersSecondFromSpeed(s), epsilon);
+    assertEquals(v, wps.getMetersSecondFromSpeed(s), DELTA);
   }
 }

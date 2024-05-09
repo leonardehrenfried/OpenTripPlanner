@@ -359,10 +359,7 @@ class DefaultMapper implements OsmTagMapper {
     );
 
     /* cycleway=opposite */
-    props.setProperties(
-      "highway=*;cycleway=opposite",
-      withModes(PEDESTRIAN_AND_BICYCLE).bicycleSafety(1, 1.4)
-    );
+    props.setProperties("highway=*;cycleway=opposite", withModes(ALL).bicycleSafety(1, 1.4));
     props.setProperties("highway=service;cycleway=opposite", withModes(ALL).bicycleSafety(1.1));
     props.setProperties(
       "highway=residential;cycleway=opposite",
