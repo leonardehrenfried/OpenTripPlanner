@@ -20,10 +20,7 @@ export function ItineraryLegDetails({ leg, isLast }: { leg: Leg; isLast: boolean
         <b>{leg.mode}</b>{' '}
         {leg.line && (
           <>
-            <ItineraryGraphiQLLineLink
-              legId={leg.line?.id}
-              legName={leg.line.publicCode + ' ' + leg.toEstimatedCall?.destinationDisplay?.frontText}
-            />
+            <ItineraryGraphiQLLineLink leg={leg} />
             , <ItineraryGraphiQLAuthorityLink legId={leg.authority?.id} legName={leg.authority?.name} />
           </>
         )}{' '}
