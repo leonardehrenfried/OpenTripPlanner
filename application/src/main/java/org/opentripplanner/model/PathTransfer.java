@@ -1,8 +1,10 @@
 package org.opentripplanner.model;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 import org.opentripplanner.model.transfer.ConstrainedTransfer;
 import org.opentripplanner.routing.api.request.StreetMode;
 import org.opentripplanner.street.model.edge.Edge;
@@ -28,7 +30,7 @@ public class PathTransfer implements Serializable {
 
   private final List<Edge> edges;
 
-  private final EnumSet<StreetMode> modes;
+  private final Set<StreetMode> modes;
 
   public PathTransfer(
     StopLocation from,
@@ -41,7 +43,7 @@ public class PathTransfer implements Serializable {
     this.to = to;
     this.distanceMeters = distanceMeters;
     this.edges = edges;
-    this.modes = modes;
+    this.modes = Collections.unmodifiableSet(modes);
   }
 
   public String getName() {
@@ -56,8 +58,8 @@ public class PathTransfer implements Serializable {
     return edges;
   }
 
-  public EnumSet<StreetMode> getModes() {
-    return EnumSet.copyOf(modes);
+  public Set<StreetMode> getModes() {
+    return modes;
   }
 
   public PathTransfer withAddedMode(StreetMode mode) {
