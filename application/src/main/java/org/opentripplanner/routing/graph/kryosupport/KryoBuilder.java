@@ -12,6 +12,9 @@ import de.javakaffee.kryoserializers.guava.HashMultimapSerializer;
 import gnu.trove.impl.hash.TPrimitiveHash;
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.map.hash.TIntIntHashMap;
+import java.time.DayOfWeek;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -20,8 +23,10 @@ import org.objenesis.strategy.SerializingInstantiatorStrategy;
 import org.opentripplanner.kryo.BuildConfigSerializer;
 import org.opentripplanner.kryo.RouterConfigSerializer;
 import org.opentripplanner.kryo.UnmodifiableCollectionsSerializer;
+import org.opentripplanner.routing.api.request.StreetMode;
 import org.opentripplanner.standalone.config.BuildConfig;
 import org.opentripplanner.standalone.config.RouterConfig;
+import org.opentripplanner.street.search.TraverseMode;
 
 public final class KryoBuilder {
 
@@ -71,6 +76,8 @@ public final class KryoBuilder {
     // The default strategy requires every class you serialize, even in your dependencies, to have a zero-arg
     // constructor (which can be private). The setInstantiatorStrategy method completely replaces that default
     // strategy. The nesting below specifies the Java approach as a fallback strategy to the default strategy.
+
+    kryo.register(Collections.unmodifiableSet(EnumSet.of(StreetMode.BIKE)).getClass(), new JavaImmutableEnumSetSerializer());
     kryo.setInstantiatorStrategy(
       new DefaultInstantiatorStrategy(new SerializingInstantiatorStrategy())
     );
