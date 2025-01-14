@@ -16,6 +16,9 @@ import org.opentripplanner.utils.tostring.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.org.siri.siri21.FacilityConditionStructure;
+import uk.org.siri.siri21.FacilityMonitoringDeliveryStructure;
+import uk.org.siri.siri21.FacilityRef;
+import uk.org.siri.siri21.FacilityStatusEnumeration;
 
 /**
  * Parses SIRI 2.1 XML data into parking availability updates. The data needs to conform to the
