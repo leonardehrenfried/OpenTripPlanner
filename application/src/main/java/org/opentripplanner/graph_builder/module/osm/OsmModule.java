@@ -20,6 +20,7 @@ import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.graph_builder.model.GraphBuilderModule;
 import org.opentripplanner.graph_builder.module.osm.parameters.OsmProcessingParameters;
 import org.opentripplanner.osm.OsmProvider;
+import org.opentripplanner.osm.DefaultOsmProvider;
 import org.opentripplanner.osm.model.OsmLevel;
 import org.opentripplanner.osm.model.OsmNode;
 import org.opentripplanner.osm.model.OsmWay;
@@ -112,7 +113,7 @@ public class OsmModule implements GraphBuilderModule {
 
   @Override
   public void buildGraph() {
-    for (OsmProvider provider : providers) {
+    for (var provider : providers) {
       LOG.info("Gathering OSM from provider: {}", provider);
       LOG.info(
         "Using OSM way configuration from {}.",
@@ -130,7 +131,7 @@ public class OsmModule implements GraphBuilderModule {
 
   @Override
   public void checkInputs() {
-    for (OsmProvider provider : providers) {
+    for (var provider : providers) {
       provider.checkInputs();
     }
   }
@@ -613,7 +614,7 @@ public class OsmModule implements GraphBuilderModule {
 
   private float getMaxCarSpeed() {
     float maxSpeed = 0f;
-    for (OsmProvider provider : providers) {
+    for (var provider : providers) {
       var carSpeed = provider.getOsmTagMapper().getMaxUsedCarSpeed(provider.getWayPropertySet());
       if (carSpeed > maxSpeed) {
         maxSpeed = carSpeed;
