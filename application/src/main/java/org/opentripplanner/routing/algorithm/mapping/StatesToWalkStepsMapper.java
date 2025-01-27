@@ -35,7 +35,7 @@ import org.opentripplanner.transit.model.site.Entrance;
 /**
  * Process a list of states into a list of walking/driving instructions for a street leg.
  */
-public class StatesToWalkStepsMapper {
+class StatesToWalkStepsMapper {
 
   /**
    * Tolerance for how many meters can be between two consecutive turns will be merged into a singe
@@ -70,7 +70,7 @@ public class StatesToWalkStepsMapper {
    * @param previousStep the last walking step of a non-transit leg that immediately precedes this
    *                     one or null, if first leg
    */
-  public StatesToWalkStepsMapper(
+  StatesToWalkStepsMapper(
     List<State> states,
     WalkStep previousStep,
     StreetNotesService streetNotesService,
@@ -82,7 +82,15 @@ public class StatesToWalkStepsMapper {
     this.ellipsoidToGeoidDifference = ellipsoidToGeoidDifference;
   }
 
-  public static String getNormalizedName(String streetName) {
+  public List<WalkStep> generateWalkSteps() {
+    for (int i = 0; i < states.size() - 1; i++) {
+      processState(states.get(i), states.get(i + 1));
+    }
+
+    return steps.stream().map(WalkStepBuilder::build).toList();
+  }
+
+  private static String getNormalizedName(@Nullable String streetName) {
     if (streetName == null) {
       return null; //Avoid null reference exceptions with pathways which don't have names
     }
@@ -91,14 +99,6 @@ public class StatesToWalkStepsMapper {
       return streetName.substring(0, idx - 1);
     }
     return streetName;
-  }
-
-  public List<WalkStep> generateWalkSteps() {
-    for (int i = 0; i < states.size() - 1; i++) {
-      processState(states.get(i), states.get(i + 1));
-    }
-
-    return steps.stream().map(WalkStepBuilder::build).toList();
   }
 
   /**
