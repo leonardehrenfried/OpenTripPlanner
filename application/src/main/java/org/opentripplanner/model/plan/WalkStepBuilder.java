@@ -10,6 +10,7 @@ import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.note.StreetNote;
 import org.opentripplanner.transit.model.site.Entrance;
+import org.opentripplanner.transit.model.site.Stairs;
 import org.opentripplanner.utils.lang.DoubleUtils;
 import org.opentripplanner.utils.lang.IntUtils;
 
@@ -26,6 +27,7 @@ public class WalkStepBuilder {
   private RelativeDirection relativeDirection;
   private ElevationProfile elevationProfile;
   private String exit;
+  private Stairs stairs;
   private Entrance entrance;
   private boolean stayOn = false;
   /**
@@ -154,6 +156,11 @@ public class WalkStepBuilder {
     return nameIsDerived;
   }
 
+  public WalkStepBuilder withStairs(@Nullable Stairs stairs) {
+    this.stairs = stairs;
+    return this;
+  }
+
   public RelativeDirection relativeDirection() {
     return relativeDirection;
   }
@@ -167,6 +174,7 @@ public class WalkStepBuilder {
       streetNotes,
       exit,
       entrance,
+      stairs,
       elevationProfile,
       nameIsDerived,
       walkingBike,
@@ -177,4 +185,5 @@ public class WalkStepBuilder {
       edges
     );
   }
+
 }

@@ -5,6 +5,7 @@ import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.TypeResolver;
 import org.opentripplanner.transit.model.site.Entrance;
+import org.opentripplanner.transit.model.site.Stairs;
 
 public class StepFeatureTypeResolver implements TypeResolver {
 
@@ -15,6 +16,9 @@ public class StepFeatureTypeResolver implements TypeResolver {
 
     if (o instanceof Entrance) {
       return schema.getObjectType("Entrance");
+    }
+    else if (o instanceof Stairs) {
+      return schema.getObjectType("Stairs");
     }
     return null;
   }

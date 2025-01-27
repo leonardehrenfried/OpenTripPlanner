@@ -98,6 +98,7 @@ import org.opentripplanner.transit.model.network.TripPattern;
 import org.opentripplanner.transit.model.organization.Agency;
 import org.opentripplanner.transit.model.site.Entrance;
 import org.opentripplanner.transit.model.site.RegularStop;
+import org.opentripplanner.transit.model.site.Stairs;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.transit.model.timetable.RealTimeTripTimes;
 import org.opentripplanner.transit.model.timetable.TripTimesFactory;
@@ -261,25 +262,9 @@ class GraphQLIntegrationTest {
     var snapshot = timetableSnapshot.commit();
     timetableRepository.initTimetableSnapshotProvider(() -> snapshot);
 
-    var step1 = walkStep("street")
-      .withRelativeDirection(RelativeDirection.DEPART)
-      .withAbsoluteDirection(20)
-      .build();
-    var step2 = walkStep("elevator").withRelativeDirection(RelativeDirection.ELEVATOR).build();
-    FeedScopedId entranceId = new FeedScopedId("osm", "123");
-    Entrance entrance = Entrance
-      .of(entranceId)
-      .withCoordinate(new WgsCoordinate(60, 80))
-      .withCode("A")
-      .withWheelchairAccessibility(Accessibility.POSSIBLE)
-      .build();
-    var step3 = walkStep("entrance")
-      .withRelativeDirection(RelativeDirection.ENTER_OR_EXIT_STATION)
-      .withEntrance(entrance)
-      .build();
-
+    var steps = buildWalkSteps();
     Itinerary i1 = newItinerary(A, T11_00)
-      .walk(20, B, List.of(step1, step2, step3))
+      .walk(20, B, steps)
       .bus(busRoute, 122, T11_01, T11_15, C)
       .rail(439, T11_30, T11_50, D)
       .carHail(D10m, E)
@@ -367,6 +352,33 @@ class GraphQLIntegrationTest {
         finder,
         new RouteRequest()
       );
+  }
+
+  private static List<WalkStep> buildWalkSteps() {
+    var step1 = walkStep("street")
+      .withRelativeDirection(RelativeDirection.DEPART)
+      .withAbsoluteDirection(20)
+      .build();
+    var step2 = walkStep("elevator").withRelativeDirection(RelativeDirection.ELEVATOR).build();
+    FeedScopedId entranceId = new FeedScopedId("osm", "123");
+    Entrance entrance = Entrance
+      .of(entranceId)
+      .withCoordinate(new WgsCoordinate(60, 80))
+      .withCode("A")
+      .withWheelchairAccessibility(Accessibility.POSSIBLE)
+      .build();
+    var step3 = walkStep("entrance")
+      .withRelativeDirection(RelativeDirection.ENTER_OR_EXIT_STATION)
+      .withEntrance(entrance)
+      .build();
+
+    var step4 = walkStep("stairs")
+      .withRelativeDirection(RelativeDirection.RIGHT)
+      .withStairs(new Stairs(I18NString.of("stairs")))
+      .build();
+
+    final List<WalkStep> step5 = List.of(step1, step2, step3, step4);
+    return step5;
   }
 
   private static BikeAccess bikesAllowed(TransitMode m) {

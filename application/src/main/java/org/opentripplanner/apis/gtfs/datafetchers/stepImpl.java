@@ -55,7 +55,18 @@ public class stepImpl implements GraphQLDataFetchers.GraphQLStep {
 
   @Override
   public DataFetcher<Object> feature() {
-    return environment -> getSource(environment).entrance().orElse(null);
+    return environment -> {
+      var step = getSource(environment);
+      if(step.entrance().isPresent()){
+        return step.entrance().get();
+      }
+      else if(step.stairs().isPresent()){
+        return step.stairs().get();
+      }
+      else {
+        return null;
+      }
+    };
   }
 
   @Override

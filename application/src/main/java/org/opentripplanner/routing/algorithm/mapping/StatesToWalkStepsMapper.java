@@ -31,6 +31,7 @@ import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.TraverseMode;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.transit.model.site.Entrance;
+import org.opentripplanner.transit.model.site.Stairs;
 
 /**
  * Process a list of states into a list of walking/driving instructions for a street leg.
@@ -299,6 +300,9 @@ class StatesToWalkStepsMapper {
       distance += edge.getDistanceMeters();
     }
 
+    if(edge instanceof StreetEdge se && se.isStairs()) {
+      current.withStairs(new Stairs(se.getName()));
+    }
     // increment the total length for this step
     current
       .addDistance(edge.getDistanceMeters())
@@ -555,7 +559,7 @@ class StatesToWalkStepsMapper {
     RelativeDirection direction,
     Edge edge,
     @Nullable Entrance entrance
-  ) {
+    ) {
     addStep(
       createWalkStep(forwardState, backState)
         .withDirectionText(name)

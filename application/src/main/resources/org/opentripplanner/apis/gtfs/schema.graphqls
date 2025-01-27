@@ -83,7 +83,11 @@ union CallStopLocation = Stop
 union RentalPlace = RentalVehicle | VehicleRentalStation
 
 "A feature for a step"
-union StepFeature = Entrance
+union StepFeature = Entrance | Stairs
+
+type Stairs {
+    name: String
+}
 
 union StopPosition = PositionAtStop | PositionBetweenStops
 

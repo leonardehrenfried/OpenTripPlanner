@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import javax.annotation.Nullable;
 import org.opentripplanner.framework.geometry.WgsCoordinate;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.note.StreetNote;
 import org.opentripplanner.transit.model.site.Entrance;
+import org.opentripplanner.transit.model.site.Stairs;
 import org.opentripplanner.utils.lang.DoubleUtils;
 import org.opentripplanner.utils.tostring.ToStringBuilder;
 
@@ -46,6 +48,7 @@ public final class WalkStep {
 
   private final String highwayExit;
   private final Entrance entrance;
+  private final Stairs stairs;
   private final ElevationProfile elevationProfile;
   private final boolean stayOn;
 
@@ -58,7 +61,8 @@ public final class WalkStep {
     I18NString directionText,
     Set<StreetNote> streetNotes,
     String highwayExit,
-    Entrance entrance,
+    @Nullable Entrance entrance,
+    @Nullable Stairs stairs,
     ElevationProfile elevationProfile,
     boolean nameIsDerived,
     boolean walkingBike,
@@ -80,6 +84,7 @@ public final class WalkStep {
     this.area = area;
     this.highwayExit = highwayExit;
     this.entrance = entrance;
+    this.stairs = stairs;
     this.elevationProfile = elevationProfile;
     this.stayOn = stayOn;
     this.edges = List.copyOf(Objects.requireNonNull(edges));
@@ -139,6 +144,13 @@ public final class WalkStep {
    */
   public Optional<Entrance> entrance() {
     return Optional.ofNullable(entrance);
+  }
+
+  /**
+   * Get information about set of stairs.
+   */
+  public Optional<Stairs> stairs() {
+    return Optional.ofNullable(stairs);
   }
 
   /**
