@@ -32,6 +32,15 @@
                       "entranceId": "osm:123",
                       "wheelchairAccessible": "POSSIBLE"
                     }
+                  },
+                  {
+                    "streetName": "stairs",
+                    "area": false,
+                    "relativeDirection": "RIGHT",
+                    "absoluteDirection": null,
+                    "feature": {
+                      "__typename": "Stairs"
+                    }
                   }
                 ]
               },

@@ -14,5 +14,4 @@ public final class Stairs {
   public Stairs(I18NString name) {
     this.name = name;
   }
-
 }

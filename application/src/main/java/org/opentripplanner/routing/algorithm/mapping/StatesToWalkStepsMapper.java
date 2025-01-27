@@ -300,7 +300,7 @@ class StatesToWalkStepsMapper {
       distance += edge.getDistanceMeters();
     }
 
-    if(edge instanceof StreetEdge se && se.isStairs()) {
+    if (edge instanceof StreetEdge se && se.isStairs()) {
       current.withStairs(new Stairs(se.getName()));
     }
     // increment the total length for this step
@@ -559,7 +559,7 @@ class StatesToWalkStepsMapper {
     RelativeDirection direction,
     Edge edge,
     @Nullable Entrance entrance
-    ) {
+  ) {
     addStep(
       createWalkStep(forwardState, backState)
         .withDirectionText(name)

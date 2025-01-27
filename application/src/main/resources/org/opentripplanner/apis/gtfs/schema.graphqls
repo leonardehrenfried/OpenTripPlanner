@@ -85,10 +85,6 @@ union RentalPlace = RentalVehicle | VehicleRentalStation
 "A feature for a step"
 union StepFeature = Entrance | Stairs
 
-type Stairs {
-    name: String
-}
-
 union StopPosition = PositionAtStop | PositionBetweenStops
 
 "A public transport agency"
@@ -2082,6 +2078,10 @@ type RoutingError {
   description: String!
   "An enum describing the field which should be changed, in order for the search to succeed"
   inputField: InputField
+}
+
+type Stairs {
+  name: String
 }
 
 """
