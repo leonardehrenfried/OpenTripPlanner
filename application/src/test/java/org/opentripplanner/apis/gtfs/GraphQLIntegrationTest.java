@@ -98,7 +98,7 @@ import org.opentripplanner.transit.model.network.TripPattern;
 import org.opentripplanner.transit.model.organization.Agency;
 import org.opentripplanner.transit.model.site.Entrance;
 import org.opentripplanner.transit.model.site.RegularStop;
-import org.opentripplanner.transit.model.site.Stairs;
+import org.opentripplanner.model.plan.Stairs;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.transit.model.timetable.RealTimeTripTimes;
 import org.opentripplanner.transit.model.timetable.TripTimesFactory;

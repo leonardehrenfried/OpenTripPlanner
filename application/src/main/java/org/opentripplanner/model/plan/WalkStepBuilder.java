@@ -10,7 +10,6 @@ import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.note.StreetNote;
 import org.opentripplanner.transit.model.site.Entrance;
-import org.opentripplanner.transit.model.site.Stairs;
 import org.opentripplanner.utils.lang.DoubleUtils;
 import org.opentripplanner.utils.lang.IntUtils;
 

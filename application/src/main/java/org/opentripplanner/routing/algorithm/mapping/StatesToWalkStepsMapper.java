@@ -31,7 +31,7 @@ import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.TraverseMode;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.transit.model.site.Entrance;
-import org.opentripplanner.transit.model.site.Stairs;
+import org.opentripplanner.model.plan.Stairs;
 
 /**
  * Process a list of states into a list of walking/driving instructions for a street leg.
@@ -301,7 +301,8 @@ class StatesToWalkStepsMapper {
     }
 
     if (edge instanceof StreetEdge se && se.isStairs()) {
-      current.withStairs(new Stairs(se.getName()));
+      var stairs = extractStairs(se);
+      current.withStairs(stairs);
     }
     // increment the total length for this step
     current
@@ -310,6 +311,17 @@ class StatesToWalkStepsMapper {
     lastAngle = DirectionUtils.getLastAngle(geom);
 
     current.addEdge(edge);
+  }
+
+  private static Stairs extractStairs(StreetEdge se) {
+    Stairs stairs;
+    if(se.nameIsDerived()) {
+      stairs = new Stairs(null);
+    }
+    else {
+      stairs = new Stairs(se.getName());
+    }
+    return stairs;
   }
 
   private static RelativeDirection relativeDirectionForTransitLink(StreetTransitEntranceLink link) {
