@@ -15,6 +15,7 @@ import org.opentripplanner.framework.geometry.WgsCoordinate;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.model.plan.ElevationProfile;
 import org.opentripplanner.model.plan.RelativeDirection;
+import org.opentripplanner.model.plan.Stairs;
 import org.opentripplanner.model.plan.WalkStep;
 import org.opentripplanner.model.plan.WalkStepBuilder;
 import org.opentripplanner.routing.services.notes.StreetNotesService;
@@ -31,7 +32,6 @@ import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.TraverseMode;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.transit.model.site.Entrance;
-import org.opentripplanner.model.plan.Stairs;
 
 /**
  * Process a list of states into a list of walking/driving instructions for a street leg.
@@ -315,10 +315,9 @@ class StatesToWalkStepsMapper {
 
   private static Stairs extractStairs(StreetEdge se) {
     Stairs stairs;
-    if(se.nameIsDerived()) {
+    if (se.nameIsDerived()) {
       stairs = new Stairs(null);
-    }
-    else {
+    } else {
       stairs = new Stairs(se.getName());
     }
     return stairs;

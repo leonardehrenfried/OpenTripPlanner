@@ -1035,6 +1035,10 @@ public class GraphQLDataFetchers {
     public DataFetcher<GraphQLInputField> inputField();
   }
 
+  public interface GraphQLStairs {
+    public DataFetcher<String> name();
+  }
+
   /** A feature for a step */
   public interface GraphQLStepFeature extends TypeResolver {}
 

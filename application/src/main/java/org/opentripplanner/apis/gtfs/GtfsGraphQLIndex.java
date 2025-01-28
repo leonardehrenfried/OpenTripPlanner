@@ -65,6 +65,7 @@ import org.opentripplanner.apis.gtfs.datafetchers.RideHailingEstimateImpl;
 import org.opentripplanner.apis.gtfs.datafetchers.RouteImpl;
 import org.opentripplanner.apis.gtfs.datafetchers.RouteTypeImpl;
 import org.opentripplanner.apis.gtfs.datafetchers.RoutingErrorImpl;
+import org.opentripplanner.apis.gtfs.datafetchers.StairsImpl;
 import org.opentripplanner.apis.gtfs.datafetchers.StepFeatureTypeResolver;
 import org.opentripplanner.apis.gtfs.datafetchers.StopCallImpl;
 import org.opentripplanner.apis.gtfs.datafetchers.StopGeometriesImpl;
@@ -199,6 +200,7 @@ class GtfsGraphQLIndex {
         .type(typeWiring.build(RealTimeEstimateImpl.class))
         .type(typeWiring.build(EstimatedTimeImpl.class))
         .type(typeWiring.build(EntranceImpl.class))
+        .type(typeWiring.build(StairsImpl.class))
         .build();
       SchemaGenerator schemaGenerator = new SchemaGenerator();
       return schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring);

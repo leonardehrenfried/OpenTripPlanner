@@ -6,8 +6,8 @@ import org.opentripplanner.framework.i18n.I18NString;
 
 /**
  * A set of stairs or steps that the passenger uses during a leg.
- * Note: in the future we want to add whether they are going up or down and the number of individual
- * steps.
+ * Note: this model is very small, almost useless at the moment but in the future we want to add
+ * whether they are going up or down and the number of individual steps.
  */
 public final class Stairs {
 
