@@ -174,7 +174,7 @@ public class StreetEdgeBuilder<B extends StreetEdgeBuilder<B>> {
     return instance();
   }
 
-  public B withBogusName(boolean hasBogusName) {
+  public B withNameIsDerived(boolean hasBogusName) {
     flags = BitSetUtils.set(flags, NAME_IS_DERIVED_FLAG_INDEX, hasBogusName);
     return instance();
   }

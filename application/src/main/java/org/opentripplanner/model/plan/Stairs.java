@@ -1,8 +1,10 @@
 package org.opentripplanner.model.plan;
 
+import java.util.Objects;
 import java.util.Optional;
 import javax.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
+import org.opentripplanner.utils.tostring.ToStringBuilder;
 
 /**
  * A set of stairs or steps that the passenger uses during a leg.
@@ -22,5 +24,24 @@ public final class Stairs {
    */
   public Optional<I18NString> name() {
     return Optional.ofNullable(name);
+  }
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.of(Stairs.class).addObj("name", name).toString();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Stairs stairs) {
+      return Objects.equals(this.name, stairs.name);
+    } else {
+      return false;
+    }
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name);
   }
 }

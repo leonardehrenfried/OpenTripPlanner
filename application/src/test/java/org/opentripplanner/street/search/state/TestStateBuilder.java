@@ -27,6 +27,7 @@ import org.opentripplanner.street.model.edge.ElevatorAlightEdge;
 import org.opentripplanner.street.model.edge.ElevatorBoardEdge;
 import org.opentripplanner.street.model.edge.ElevatorHopEdge;
 import org.opentripplanner.street.model.edge.PathwayEdge;
+import org.opentripplanner.street.model.edge.StreetEdge;
 import org.opentripplanner.street.model.edge.StreetTransitEntranceLink;
 import org.opentripplanner.street.model.edge.StreetTransitStopLink;
 import org.opentripplanner.street.model.vertex.ElevatorOffboardVertex;
@@ -273,6 +274,24 @@ public class TestStateBuilder {
       WALKWAY
     );
     currentState = edge.traverse(currentState)[0];
+    return this;
+  }
+
+  public TestStateBuilder stairs() {
+    count++;
+    var from = (StreetVertex) currentState.vertex;
+    var to = StreetModelForTest.intersectionVertex(count, count);
+    var edge = StreetModelForTest
+      .streetEdgeBuilder(from, to, 10, StreetTraversalPermission.PEDESTRIAN)
+      .withNameIsDerived(true)
+      .withStairs(true)
+      .buildAndConnect();
+
+    var states = edge.traverse(currentState);
+    if (states.length != 1) {
+      throw new IllegalStateException("Only single state transitions are supported.");
+    }
+    currentState = states[0];
     return this;
   }
 

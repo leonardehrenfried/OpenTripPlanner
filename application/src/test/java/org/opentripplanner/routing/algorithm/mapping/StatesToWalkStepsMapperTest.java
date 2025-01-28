@@ -2,14 +2,18 @@ package org.opentripplanner.routing.algorithm.mapping;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.opentripplanner.model.plan.RelativeDirection.CONTINUE;
 import static org.opentripplanner.model.plan.RelativeDirection.ENTER_STATION;
 import static org.opentripplanner.model.plan.RelativeDirection.EXIT_STATION;
 import static org.opentripplanner.model.plan.RelativeDirection.FOLLOW_SIGNS;
+import static org.opentripplanner.model.plan.RelativeDirection.HARD_LEFT;
+import static org.opentripplanner.model.plan.RelativeDirection.HARD_RIGHT;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.astar.model.GraphPath;
 import org.opentripplanner.model.plan.RelativeDirection;
+import org.opentripplanner.model.plan.Stairs;
 import org.opentripplanner.model.plan.WalkStep;
 import org.opentripplanner.routing.services.notes.StreetNotesService;
 import org.opentripplanner.street.search.state.TestStateBuilder;
@@ -69,6 +73,20 @@ class StatesToWalkStepsMapperTest {
     var step = walkSteps.get(1);
     assertEquals(FOLLOW_SIGNS, step.getRelativeDirection());
     assertEquals(sign, step.getDirectionText().toString());
+  }
+
+  @Test
+  void stairs() {
+    final TestStateBuilder builder = TestStateBuilder
+      .ofWalking()
+      .streetEdge()
+      .stairs()
+      .streetEdge();
+    var walkSteps = buildWalkSteps(builder);
+    assertEquals(3, walkSteps.size());
+    var step = walkSteps.get(1);
+    assertEquals(CONTINUE, step.getRelativeDirection());
+    assertEquals(new Stairs(null), step.stairs().get());
   }
 
   private static List<WalkStep> buildWalkSteps(TestStateBuilder builder) {
