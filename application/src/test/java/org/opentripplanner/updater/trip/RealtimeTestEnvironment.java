@@ -9,6 +9,10 @@ import java.time.LocalDate;
 import java.util.List;
 import org.opentripplanner.DateTimeHelper;
 import org.opentripplanner.model.TimetableSnapshot;
+import org.opentripplanner.routing.algorithm.raptoradapter.transit.RaptorTransitData;
+import org.opentripplanner.routing.algorithm.raptoradapter.transit.TransitTuningParameters;
+import org.opentripplanner.routing.algorithm.raptoradapter.transit.mappers.RaptorTransitDataMapper;
+import org.opentripplanner.routing.algorithm.raptoradapter.transit.mappers.RealTimeRaptorTransitDataUpdater;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.transit.model._data.TimetableRepositoryForTest;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
@@ -42,11 +46,21 @@ public final class RealtimeTestEnvironment implements RealtimeTestConstants {
 
   RealtimeTestEnvironment(TimetableRepository timetableRepository) {
     this.timetableRepository = timetableRepository;
-
     this.timetableRepository.index();
+
+    var raptorData = RaptorTransitDataMapper.map(
+      TransitTuningParameters.FOR_TEST,
+      timetableRepository
+    );
+    timetableRepository.setRaptorTransitData(raptorData);
+    timetableRepository.setRealtimeRaptorTransitData(
+      new RaptorTransitData(timetableRepository.getRaptorTransitData())
+    );
+    var raptorTransitDataUpdater = new RealTimeRaptorTransitDataUpdater(timetableRepository);
+
     this.snapshotManager =
       new TimetableSnapshotManager(
-        null,
+        raptorTransitDataUpdater,
         TimetableSnapshotParameters.PUBLISH_IMMEDIATELY,
         () -> SERVICE_DATE
       );

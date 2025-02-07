@@ -1,5 +1,6 @@
 package org.opentripplanner.updater.trip.moduletests.cancellation;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -47,6 +48,10 @@ public class CancellationDeletionTest implements RealtimeTestConstants {
       .build();
     var pattern1 = env.getPatternForTrip(TRIP_1_ID);
 
+    var transitLayer = env.timetableRepository.getRaptorTransitData();
+    var patternsForDate = transitLayer.getTripPatternsOnServiceDateCopy(SERVICE_DATE);
+    assertThat(patternsForDate).hasSize(1);
+
     final int tripIndex1 = pattern1.getScheduledTimetable().getTripIndex(id(TRIP_1_ID));
 
     var update = new TripUpdateBuilder(TRIP_1_ID, SERVICE_DATE, relationship, TIME_ZONE).build();
@@ -62,6 +67,10 @@ public class CancellationDeletionTest implements RealtimeTestConstants {
 
     assertEquals(state, tripTimes.getRealTimeState());
     assertTrue(tripTimes.isCanceledOrDeleted());
+
+    var realtimeTransitLayer = env.timetableRepository.getRealtimeRaptorTransitData();
+    var patternsOnDate = realtimeTransitLayer.getTripPatternsOnServiceDateCopy(SERVICE_DATE);
+    assertThat(patternsOnDate).hasSize(0);
   }
 
   /**

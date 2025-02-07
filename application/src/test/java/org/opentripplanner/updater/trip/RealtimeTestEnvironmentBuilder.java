@@ -91,6 +91,11 @@ public class RealtimeTestEnvironmentBuilder implements RealtimeTestConstants {
       .withScheduledTimeTableBuilder(builder -> builder.addTripTimes(tripTimes))
       .build();
 
+    timetableRepository
+      .getServiceCodes()
+      .put(SERVICE_ID, timetableRepository.getServiceCodes().size());
+    pattern.getScheduledTimetable().setServiceCodes(timetableRepository.getServiceCodes());
+
     timetableRepository.addTripPattern(pattern.getId(), pattern);
 
     return trip;
