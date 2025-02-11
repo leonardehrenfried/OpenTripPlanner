@@ -135,11 +135,11 @@ public class GraphInspectorVectorTileResource {
     // the stops are fast and the edges are relatively slow
     var stopsSource = new VectorSource(
       "stops",
-      tileJsonUrl(base, List.of(REGULAR_STOPS, AREA_STOPS, GROUP_STOPS))
+      zxyTilesUrl(base, List.of(REGULAR_STOPS, AREA_STOPS, GROUP_STOPS))
     );
     var streetSource = new VectorSource(
       "street",
-      tileJsonUrl(base, List.of(EDGES, GEOFENCING_ZONES, VERTICES))
+      zxyTilesUrl(base, List.of(EDGES, GEOFENCING_ZONES, VERTICES))
     );
 
     return DebugStyleSpec.build(
@@ -150,6 +150,18 @@ public class GraphInspectorVectorTileResource {
       VERTICES.toVectorSourceLayer(streetSource),
       serverContext.debugUiConfig().additionalBackgroundLayers()
     );
+  }
+
+  private String zxyTilesUrl(String base, List<LayerParameters<LayerType>> layers) {
+    final String allLayers = layers
+      .stream()
+      .map(LayerParameters::name)
+      .collect(Collectors.joining(","));
+    return "%s/otp/routers/%s/inspector/vectortile/%s/{z}/{x}/{y}.pbf".formatted(
+        base,
+        ignoreRouterId,
+        allLayers
+      );
   }
 
   private String tileJsonUrl(String base, List<LayerParameters<LayerType>> layers) {

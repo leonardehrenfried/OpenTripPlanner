@@ -115,32 +115,12 @@ public class DebugStyleSpec {
       .map(TileSource.class::cast)
       .toList();
 
-    List<TileSource> extraRasterSources = extraLayers
-      .stream()
-      .map(l ->
-        (TileSource) new RasterSource(
-          l.name(),
-          List.of(l.templateUrl()),
-          19,
-          l.tileSize(),
-          l.attribution()
-        )
-      )
-      .toList();
-    var allSources = ListUtils.combine(BACKGROUND_LAYERS, extraRasterSources, vectorSources);
+    var allSources = vectorSources;
     return new StyleSpec(
       "OTP Debug Tiles",
       allSources,
       ListUtils.combine(
-        backgroundLayers(extraRasterSources),
-        wheelchair(edges),
-        noThruTraffic(edges),
-        safety(edges),
-        traversalPermissions(edges),
-        edges(edges),
-        elevation(edges),
-        vertices(vertices),
-        stops(regularStops, areaStops, groupStops)
+        wheelchair(edges)
       )
     );
   }
@@ -426,24 +406,18 @@ public class DebugStyleSpec {
         .group(WHEELCHAIR_GROUP)
         .typeLine()
         .lineColor(DARK_GREEN)
-        .booleanFilter("wheelchairAccessible", true)
-        .lineWidth(LINE_WIDTH)
-        .lineOffset(LINE_OFFSET)
+        .lineWidth(5)
+        .lineOffset(5)
         .minZoom(6)
-        .maxZoom(MAX_ZOOM)
-        .intiallyHidden(),
+        .maxZoom(MAX_ZOOM),
       StyleBuilder
-        .ofId("wheelchair-inaccessible")
+        .ofId("edge-name")
+        .group(EDGES_GROUP)
+        .typeSymbol()
+        .lineText("name")
         .vectorSourceLayer(edges)
-        .group(WHEELCHAIR_GROUP)
-        .typeLine()
-        .lineColor(RED)
-        .booleanFilter("wheelchairAccessible", false)
-        .lineWidth(LINE_WIDTH)
-        .lineOffset(LINE_OFFSET)
-        .minZoom(6)
+        .minZoom(17)
         .maxZoom(MAX_ZOOM)
-        .intiallyHidden()
     );
   }
 

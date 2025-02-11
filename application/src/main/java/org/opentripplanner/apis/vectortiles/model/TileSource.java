@@ -1,5 +1,6 @@
 package org.opentripplanner.apis.vectortiles.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
 import org.opentripplanner.utils.lang.StringUtils;
@@ -18,7 +19,7 @@ public sealed interface TileSource {
   /**
    * Represents a vector tile source which is rendered into a map in the browser.
    */
-  record VectorSource(String id, String url) implements TileSource {
+  record VectorSource(String id, @JsonIgnore String url) implements TileSource {
     @Override
     public String type() {
       return "vector";
@@ -27,6 +28,21 @@ public sealed interface TileSource {
     @Override
     public String name() {
       return id;
+    }
+
+    @JsonSerialize
+    public int maxzoom() {
+      return 25;
+    }
+
+    @JsonSerialize
+    public int minzoom() {
+      return 8;
+    }
+
+    @JsonSerialize
+    public List<String> tiles() {
+      return List.of(url);
     }
   }
 

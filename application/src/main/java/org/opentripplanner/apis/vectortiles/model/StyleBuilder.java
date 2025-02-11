@@ -134,10 +134,9 @@ public class StyleBuilder {
     layout.put("symbol-placement", "line-center");
     layout.put("symbol-spacing", 1000);
     layout.put("text-field", "{%s}".formatted(name));
-    layout.put("text-font", List.of("KlokanTech Noto Sans Regular"));
+    layout.put("text-font", List.of("Noto Sans Regular"));
     layout.put(
-      "text-size",
-      new ZoomDependentNumber(List.of(new ZoomStop(10, 6), new ZoomStop(24, 12))).toJson()
+      "text-size", 12
     );
     layout.put("text-max-width", 100);
     layout.put("text-keep-upright", true);
@@ -230,9 +229,18 @@ public class StyleBuilder {
     paint.put("line-width", zoomStops.toJson());
     return this;
   }
+  public StyleBuilder lineWidth(int width) {
+    paint.put("line-width", width);
+    return this;
+  }
 
   public StyleBuilder lineOffset(ZoomDependentNumber zoomStops) {
     paint.put("line-offset", zoomStops.toJson());
+    return this;
+  }
+
+  public StyleBuilder lineOffset(int offset) {
+    paint.put("line-offset", offset);
     return this;
   }
 
