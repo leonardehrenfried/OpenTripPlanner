@@ -5,13 +5,10 @@ import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
-import static java.lang.Math.toDegrees;
 import static java.lang.Math.toRadians;
 
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.geom.Point;
 
 public abstract class SphericalDistanceLibrary {
 
@@ -26,6 +23,9 @@ public abstract class SphericalDistanceLibrary {
   // for delta lat/lon in given range
   public static final double MAX_ERR_INV = 0.999462;
 
+  /**
+   * Returns the distance between two coordinates in meters.
+   */
   public static double distance(Coordinate from, Coordinate to) {
     return distance(from.y, from.x, to.y, to.x);
   }
@@ -35,34 +35,6 @@ public abstract class SphericalDistanceLibrary {
    */
   public static double fastDistance(Coordinate from, Coordinate to) {
     return fastDistance(from.y, from.x, to.y, to.x);
-  }
-
-  /**
-   * @see SphericalDistanceLibrary#fastDistance(double, double, double, double)
-   */
-  public static double fastDistance(Coordinate from, Coordinate to, double cosLat) {
-    double dLat = toRadians(from.y - to.y);
-    double dLon = toRadians(from.x - to.x) * cosLat;
-    return RADIUS_OF_EARTH_IN_M * sqrt(dLat * dLat + dLon * dLon);
-  }
-
-  /**
-   * Compute an (approximated) distance between a point and a linestring expressed in standard
-   * geographical coordinates (lon, lat in degrees).
-   *
-   * @param point      The coordinates of the point (longitude, latitude degrees).
-   * @param lineString The set of points representing the polyline, in the same coordinate system.
-   * @return The (approximated) distance, in meters, between the point and the linestring.
-   */
-  public static double fastDistance(Coordinate point, LineString lineString) {
-    // Transform in equirectangular projection on sphere of radius 1,
-    // centered at point
-    double lat = toRadians(point.y);
-    double cosLat = cos(lat);
-    double lon = toRadians(point.x) * cosLat;
-    Point point2 = GeometryUtils.getGeometryFactory().createPoint(new Coordinate(lon, lat));
-    LineString lineString2 = equirectangularProject(lineString, cosLat);
-    return lineString2.distance(point2) * RADIUS_OF_EARTH_IN_M;
   }
 
   /**
@@ -82,30 +54,8 @@ public abstract class SphericalDistanceLibrary {
   }
 
   /**
-   * Compute the (approximated) length of a polyline
-   *
-   * @param lineString The polyline in (longitude, latitude degrees).
-   * @return The (approximated) length, in meters, of the linestring.
+   * Returns the distance between two coordinates in meters.
    */
-  public static double fastLength(LineString lineString) {
-    // Warn: do not use LineString.getCentroid() as it is broken
-    // for degenerated geometry (same first/last point).
-    Coordinate[] coordinates = lineString.getCoordinates();
-    double middleY = (coordinates[0].y + coordinates[coordinates.length - 1].y) / 2.0;
-    double cosLat = cos(toRadians(middleY));
-    return equirectangularProject(lineString, cosLat).getLength() * RADIUS_OF_EARTH_IN_M;
-  }
-
-  /**
-   * Compute the (approximated) length of a polyline, with known cos(lat).
-   *
-   * @param lineString The polyline in (longitude, latitude degrees).
-   * @return The (approximated) length, in meters, of the linestring.
-   */
-  public static double fastLength(LineString lineString, double cosLat) {
-    return equirectangularProject(lineString, cosLat).getLength() * RADIUS_OF_EARTH_IN_M;
-  }
-
   public static double distance(double lat1, double lon1, double lat2, double lon2) {
     return distance(lat1, lon1, lat2, lon2, RADIUS_OF_EARTH_IN_M);
   }
@@ -115,45 +65,12 @@ public abstract class SphericalDistanceLibrary {
    * Be careful, this is approximated and never checks for the validity of input cos(lat).
    */
   public static double fastDistance(double lat1, double lon1, double lat2, double lon2) {
-    return fastDistance(lat1, lon1, lat2, lon2, RADIUS_OF_EARTH_IN_M);
-  }
-
-  public static double distance(double lat1, double lon1, double lat2, double lon2, double radius) {
-    // http://en.wikipedia.org/wiki/Great-circle_distance
-    lat1 = toRadians(lat1); // Theta-s
-    lon1 = toRadians(lon1); // Lambda-s
-    lat2 = toRadians(lat2); // Theta-f
-    lon2 = toRadians(lon2); // Lambda-f
-
-    double deltaLon = lon2 - lon1;
-
-    double y = sqrt(
-      p2(cos(lat2) * sin(deltaLon)) +
-      p2(cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(deltaLon))
-    );
-    double x = sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(deltaLon);
-
-    return radius * atan2(y, x);
-  }
-
-  /**
-   * Approximated, fast and under-estimated equirectangular distance in meters between two points.
-   * Works only for small delta lat/lon, fall-back on exact distance if not the case. See:
-   * http://www.movable-type.co.uk/scripts/latlong.html
-   */
-  public static double fastDistance(
-    double lat1,
-    double lon1,
-    double lat2,
-    double lon2,
-    double radius
-  ) {
     if (abs(lat1 - lat2) > MAX_LAT_DELTA_DEG || abs(lon1 - lon2) > MAX_LON_DELTA_DEG) {
-      return distance(lat1, lon1, lat2, lon2, radius);
+      return distance(lat1, lon1, lat2, lon2, RADIUS_OF_EARTH_IN_M);
     }
     double dLat = toRadians(lat2 - lat1);
     double dLon = toRadians(lon2 - lon1) * cos(toRadians((lat1 + lat2) / 2));
-    return radius * sqrt(dLat * dLat + dLon * dLon) * MAX_ERR_INV;
+    return RADIUS_OF_EARTH_IN_M * sqrt(dLat * dLat + dLon * dLon) * MAX_ERR_INV;
   }
 
   /**
@@ -164,15 +81,6 @@ public abstract class SphericalDistanceLibrary {
    */
   public static double metersToDegrees(double distanceMeters) {
     return 360 * distanceMeters / (2 * Math.PI * RADIUS_OF_EARTH_IN_M);
-  }
-
-  /**
-   * @return the approximate number of meters for the given number of degrees latitude. If degrees
-   * longitude are supplied, this is an overestimate anywhere off the equator because meridians
-   * converge toward the poles.
-   */
-  public static double degreesLatitudeToMeters(double degreesLatitude) {
-    return (2 * Math.PI * RADIUS_OF_EARTH_IN_M) * degreesLatitude / 360;
   }
 
   /**
@@ -210,39 +118,22 @@ public abstract class SphericalDistanceLibrary {
     return coordinate.add(degreesLat, degreesLon);
   }
 
-  public static Envelope bounds(double lat, double lon, double latDistance, double lonDistance) {
-    double radiusOfEarth = RADIUS_OF_EARTH_IN_M;
+  private static double distance(double lat1, double lon1, double lat2, double lon2, double radius) {
+    // http://en.wikipedia.org/wiki/Great-circle_distance
+    lat1 = toRadians(lat1); // Theta-s
+    lon1 = toRadians(lon1); // Lambda-s
+    lat2 = toRadians(lat2); // Theta-f
+    lon2 = toRadians(lon2); // Lambda-f
 
-    double latRadians = toRadians(lat);
-    double lonRadians = toRadians(lon);
+    double deltaLon = lon2 - lon1;
 
-    double lonRadius = cos(latRadians) * radiusOfEarth;
+    double y = sqrt(
+      p2(cos(lat2) * sin(deltaLon)) +
+        p2(cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(deltaLon))
+    );
+    double x = sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(deltaLon);
 
-    double latOffset = latDistance / radiusOfEarth;
-    double lonOffset = lonDistance / lonRadius;
-
-    double latFrom = toDegrees(latRadians - latOffset);
-    double latTo = toDegrees(latRadians + latOffset);
-
-    double lonFrom = toDegrees(lonRadians - lonOffset);
-    double lonTo = toDegrees(lonRadians + lonOffset);
-
-    return new Envelope(new Coordinate(lonFrom, latFrom), new Coordinate(lonTo, latTo));
-  }
-
-  /**
-   * Equirectangular project a polyline.
-   *
-   * @param cosLat cos(lat) of the projection center point.
-   * @return The projected polyline. Coordinates in radians.
-   */
-  private static LineString equirectangularProject(LineString lineString, double cosLat) {
-    Coordinate[] coords = lineString.getCoordinates();
-    Coordinate[] coords2 = new Coordinate[coords.length];
-    for (int i = 0; i < coords.length; i++) {
-      coords2[i] = new Coordinate(toRadians(coords[i].x) * cosLat, toRadians(coords[i].y));
-    }
-    return GeometryUtils.getGeometryFactory().createLineString(coords2);
+    return radius * atan2(y, x);
   }
 
   private static double p2(double a) {
