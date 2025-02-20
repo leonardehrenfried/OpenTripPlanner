@@ -18,10 +18,8 @@ import org.opentripplanner.routing.algorithm.raptoradapter.transit.TripSchedule;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.mappers.RaptorTransitDataMapper;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.service.osminfo.OsmInfoGraphBuildRepository;
-import org.opentripplanner.service.realtimevehicles.RealtimeVehicleRepository;
 import org.opentripplanner.service.vehicleparking.VehicleParkingRepository;
 import org.opentripplanner.service.vehicleparking.VehicleParkingService;
-import org.opentripplanner.service.vehiclerental.VehicleRentalRepository;
 import org.opentripplanner.service.worldenvelope.WorldEnvelopeRepository;
 import org.opentripplanner.standalone.api.OtpServerRequestContext;
 import org.opentripplanner.standalone.config.BuildConfig;
@@ -36,8 +34,6 @@ import org.opentripplanner.street.model.StreetLimitationParameters;
 import org.opentripplanner.street.model.elevation.ElevationUtils;
 import org.opentripplanner.transit.service.TimetableRepository;
 import org.opentripplanner.updater.GraphUpdaterManager;
-import org.opentripplanner.updater.configure.UpdaterConfigurator;
-import org.opentripplanner.updater.trip.TimetableSnapshotManager;
 import org.opentripplanner.utils.logging.ProgressTracker;
 import org.opentripplanner.visualizer.GraphVisualizer;
 import org.slf4j.Logger;
@@ -174,17 +170,6 @@ public class ConstructApplication {
 
     createRaptorTransitData(timetableRepository(), routerConfig().transitTuningConfig());
 
-    /* Create updater modules from JSON config. */
-    var updaterManager = UpdaterConfigurator.configure(
-      graph(),
-      realtimeVehicleRepository(),
-      vehicleRentalRepository(),
-      vehicleParkingRepository(),
-      timetableRepository(),
-      snapshotManager(),
-      routerConfig().updaterConfig()
-    );
-
     initEllipsoidToGeoidDifference();
 
     initializeTransferCache(routerConfig().transitTuningConfig(), timetableRepository());
@@ -280,18 +265,6 @@ public class ConstructApplication {
 
   public StopConsolidationRepository stopConsolidationRepository() {
     return factory.stopConsolidationRepository();
-  }
-
-  public RealtimeVehicleRepository realtimeVehicleRepository() {
-    return factory.realtimeVehicleRepository();
-  }
-
-  public VehicleRentalRepository vehicleRentalRepository() {
-    return factory.vehicleRentalRepository();
-  }
-
-  private TimetableSnapshotManager snapshotManager() {
-    return factory.timetableSnapshotManager();
   }
 
   public VehicleParkingService vehicleParkingService() {

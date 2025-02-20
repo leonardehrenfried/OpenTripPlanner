@@ -95,9 +95,7 @@ public abstract class TransitModule {
     );
   }
 
-  @Provides
+  @Binds
   @Singleton
-  public static GraphUpdaterStatus updaterStatus(GraphUpdaterManager manager) {
-    return manager;
-  }
+  abstract GraphUpdaterStatus updaterStatus(GraphUpdaterManager manager);
 }
