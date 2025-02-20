@@ -185,11 +185,6 @@ class RealtimeResolverTest {
 
     return new DefaultTransitService(timetableRepository) {
       final TransitAlertService alertService = new TransitAlertServiceImpl(timetableRepository);
-
-      @Override
-      public TransitAlertService getTransitAlertService() {
-        return alertService;
-      }
     };
   }
 }

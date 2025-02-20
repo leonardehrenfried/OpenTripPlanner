@@ -150,8 +150,7 @@ public class JourneyPatternType {
           .dataFetcher(environment -> {
             TripPattern tripPattern = environment.getSource();
             return GqlUtil
-              .getTransitService(environment)
-              .getTransitAlertService()
+              .getAlertService(environment)
               .getDirectionAndRouteAlerts(
                 tripPattern.getDirection(),
                 tripPattern.getRoute().getId()

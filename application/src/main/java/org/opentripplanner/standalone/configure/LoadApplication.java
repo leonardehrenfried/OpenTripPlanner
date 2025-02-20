@@ -15,6 +15,7 @@ import org.opentripplanner.standalone.config.CommandLineParameters;
 import org.opentripplanner.standalone.config.ConfigModel;
 import org.opentripplanner.street.model.StreetLimitationParameters;
 import org.opentripplanner.transit.service.TimetableRepository;
+import org.opentripplanner.updater.GraphUpdaterManager;
 
 /**
  * This class is responsible for loading configuration and setting up the OTP data store.

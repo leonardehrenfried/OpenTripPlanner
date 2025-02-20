@@ -35,9 +35,6 @@ import org.opentripplanner.model.calendar.impl.CalendarServiceImpl;
 import org.opentripplanner.model.transfer.DefaultTransferService;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RaptorTransitData;
 import org.opentripplanner.routing.api.request.StreetMode;
-import org.opentripplanner.routing.impl.DelegatingTransitAlertServiceImpl;
-import org.opentripplanner.routing.impl.TransitAlertServiceImpl;
-import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.routing.util.ConcurrentPublished;
 import org.opentripplanner.transit.model.basic.Notice;
 import org.opentripplanner.transit.model.basic.TransitMode;
@@ -52,8 +49,6 @@ import org.opentripplanner.transit.model.site.GroupStop;
 import org.opentripplanner.transit.model.site.RegularStop;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.transit.model.timetable.TripOnServiceDate;
-import org.opentripplanner.updater.GraphUpdaterManager;
-import org.opentripplanner.updater.configure.UpdaterConfigurator;
 import org.opentripplanner.utils.lang.ObjectUtils;
 import org.opentripplanner.utils.time.ServiceDateUtils;
 import org.slf4j.Logger;
@@ -121,8 +116,6 @@ public class TimetableRepository implements Serializable {
   private ZoneId timeZone = null;
   private boolean timeZoneExplicitlySet = false;
 
-  private transient GraphUpdaterManager updaterManager = null;
-
   private boolean hasTransit = false;
 
   private boolean hasFrequencyService = false;
@@ -132,8 +125,6 @@ public class TimetableRepository implements Serializable {
   private final Map<FeedScopedId, TripOnServiceDate> tripOnServiceDates = new HashMap<>();
 
   private final Map<FeedScopedId, FlexTrip<?, ?>> flexTripsById = new HashMap<>();
-
-  private transient TransitAlertService transitAlertService;
 
   private final Map<FeedScopedId, RegularStop> stopsByScheduledStopPointRefs = new HashMap<>();
 
@@ -386,22 +377,6 @@ public class TimetableRepository implements Serializable {
     this.noticesByElement.putAll(noticesByElement);
   }
 
-  /**
-   * Returns the alert service or null if the @{code updaterManager} is not set yet.
-   */
-  @Nullable
-  public TransitAlertService getTransitAlertService() {
-    // during initialization we must return null, otherwise we would permanently store an empty
-    // DelegatingTransitAlertServiceImpl
-    // this is wrong on many levels and should be refactored.
-    if (updaterManager == null) {
-      return null;
-    } else if (transitAlertService == null) {
-      transitAlertService = new DelegatingTransitAlertServiceImpl(this);
-    }
-    return transitAlertService;
-  }
-
   public TripPattern getTripPatternForId(FeedScopedId id) {
     return tripPatternForId.get(id);
   }
@@ -481,16 +456,6 @@ public class TimetableRepository implements Serializable {
     return Collections.unmodifiableCollection(tripOnServiceDates.values());
   }
 
-  /**
-   * Manages all updaters of this graph. Is created by the GraphUpdaterConfigurator when there are
-   * graph updaters defined in the configuration.
-   *
-   * @see UpdaterConfigurator
-   */
-  public GraphUpdaterManager getUpdaterManager() {
-    return updaterManager;
-  }
-
   public Deduplicator getDeduplicator() {
     return deduplicator;
   }
@@ -527,10 +492,6 @@ public class TimetableRepository implements Serializable {
   public void addFlexTrip(FeedScopedId id, FlexTrip<?, ?> flexTrip) {
     invalidateIndex();
     flexTripsById.put(id, flexTrip);
-  }
-
-  public void setUpdaterManager(GraphUpdaterManager updaterManager) {
-    this.updaterManager = updaterManager;
   }
 
   public void addAllTransfersByStops(Multimap<StopLocation, PathTransfer> transfersByStop) {

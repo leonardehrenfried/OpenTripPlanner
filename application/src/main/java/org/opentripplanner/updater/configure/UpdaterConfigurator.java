@@ -72,7 +72,7 @@ public class UpdaterConfigurator {
     this.snapshotManager = snapshotManager;
   }
 
-  public static void configure(
+  public static GraphUpdaterManager configure(
     Graph graph,
     RealtimeVehicleRepository realtimeVehicleRepository,
     VehicleRentalRepository vehicleRentalRepository,
@@ -81,7 +81,7 @@ public class UpdaterConfigurator {
     TimetableSnapshotManager snapshotManager,
     UpdatersParameters updatersParameters
   ) {
-    new UpdaterConfigurator(
+    var configurator = new UpdaterConfigurator(
       graph,
       realtimeVehicleRepository,
       vehicleRentalRepository,
@@ -89,11 +89,11 @@ public class UpdaterConfigurator {
       timetableRepository,
       snapshotManager,
       updatersParameters
-    )
-      .configure();
+    );
+    return configurator.configure();
   }
 
-  private void configure() {
+  private GraphUpdaterManager configure() {
     List<GraphUpdater> updaters = new ArrayList<>();
 
     updaters.addAll(createUpdatersFromConfig());
@@ -119,14 +119,10 @@ public class UpdaterConfigurator {
     if (updaterManager.numberOfUpdaters() == 0) {
       updaterManager.stop();
     }
-    // Otherwise add it to the graph
-    else {
-      timetableRepository.setUpdaterManager(updaterManager);
-    }
+    return updaterManager;
   }
 
-  public static void shutdownGraph(TimetableRepository timetableRepository) {
-    GraphUpdaterManager updaterManager = timetableRepository.getUpdaterManager();
+  public static void shutdownGraph(GraphUpdaterManager updaterManager) {
     if (updaterManager != null) {
       updaterManager.stop();
     }

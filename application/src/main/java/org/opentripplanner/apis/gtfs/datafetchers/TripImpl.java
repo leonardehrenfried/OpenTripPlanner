@@ -54,7 +54,7 @@ public class TripImpl implements GraphQLDataFetchers.GraphQLTrip {
   @Override
   public DataFetcher<Iterable<TransitAlert>> alerts() {
     return environment -> {
-      TransitAlertService alertService = getTransitService(environment).getTransitAlertService();
+      TransitAlertService alertService = alertService(environment);
       var args = new GraphQLTypes.GraphQLTripAlertsArgs(environment.getArguments());
       List<GraphQLTypes.GraphQLTripAlertType> types = args.getGraphQLTypes();
       if (types != null) {
@@ -345,6 +345,10 @@ public class TripImpl implements GraphQLDataFetchers.GraphQLTrip {
 
   private TransitService getTransitService(DataFetchingEnvironment environment) {
     return environment.<GraphQLRequestContext>getContext().transitService();
+  }
+
+  private TransitAlertService alertService(DataFetchingEnvironment environment) {
+    return environment.<GraphQLRequestContext>getContext().alertService();
   }
 
   private RealtimeVehicleService getRealtimeVehiclesService(DataFetchingEnvironment environment) {

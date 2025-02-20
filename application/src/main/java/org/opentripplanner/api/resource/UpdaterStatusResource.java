@@ -34,7 +34,7 @@ public class UpdaterStatusResource {
   /** Return a list of all agencies in the graph. */
   @GET
   public Response getUpdaters() {
-    GraphUpdaterStatus updaterStatus = serverContext.transitService().getUpdaterStatus();
+    GraphUpdaterStatus updaterStatus = serverContext.updaterStatus();
     if (updaterStatus == null) {
       return Response.status(Response.Status.NOT_FOUND).entity("No updaters running.").build();
     }
@@ -48,7 +48,7 @@ public class UpdaterStatusResource {
   @GET
   @Path("/{updaterId}")
   public Response getUpdaters(@PathParam("updaterId") int updaterId) {
-    GraphUpdaterStatus updaterStatus = serverContext.transitService().getUpdaterStatus();
+    GraphUpdaterStatus updaterStatus = serverContext.updaterStatus();
     if (updaterStatus == null) {
       return Response.status(Response.Status.NOT_FOUND).entity("No updaters running.").build();
     }

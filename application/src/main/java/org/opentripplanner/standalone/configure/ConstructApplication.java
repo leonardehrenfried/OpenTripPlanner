@@ -35,6 +35,7 @@ import org.opentripplanner.standalone.server.OTPWebApplication;
 import org.opentripplanner.street.model.StreetLimitationParameters;
 import org.opentripplanner.street.model.elevation.ElevationUtils;
 import org.opentripplanner.transit.service.TimetableRepository;
+import org.opentripplanner.updater.GraphUpdaterManager;
 import org.opentripplanner.updater.configure.UpdaterConfigurator;
 import org.opentripplanner.updater.trip.TimetableSnapshotManager;
 import org.opentripplanner.utils.logging.ProgressTracker;
@@ -174,7 +175,7 @@ public class ConstructApplication {
     createRaptorTransitData(timetableRepository(), routerConfig().transitTuningConfig());
 
     /* Create updater modules from JSON config. */
-    UpdaterConfigurator.configure(
+    var updaterManager = UpdaterConfigurator.configure(
       graph(),
       realtimeVehicleRepository(),
       vehicleRentalRepository(),
@@ -263,6 +264,10 @@ public class ConstructApplication {
 
   public TimetableRepository timetableRepository() {
     return factory.timetableRepository();
+  }
+
+  public GraphUpdaterManager graphUpdaterManager() {
+    return factory.graphUpdaterManager();
   }
 
   public DataImportIssueSummary dataImportIssueSummary() {

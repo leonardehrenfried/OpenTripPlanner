@@ -5,6 +5,7 @@ import org.opentripplanner.routing.api.RoutingService;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.fares.FareService;
 import org.opentripplanner.routing.graphfinder.GraphFinder;
+import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.service.realtimevehicles.RealtimeVehicleService;
 import org.opentripplanner.service.vehicleparking.VehicleParkingService;
 import org.opentripplanner.service.vehiclerental.VehicleRentalService;
@@ -14,6 +15,7 @@ import org.opentripplanner.transit.service.TransitService;
 public record GraphQLRequestContext(
   RoutingService routingService,
   TransitService transitService,
+  TransitAlertService alertService,
   FareService fareService,
   VehicleRentalService vehicleRentalService,
   VehicleParkingService vehicleParkingService,
@@ -26,6 +28,7 @@ public record GraphQLRequestContext(
     return new GraphQLRequestContext(
       context.routingService(),
       context.transitService(),
+      context.alertService(),
       context.graph().getFareService(),
       context.vehicleRentalService(),
       context.vehicleParkingService(),

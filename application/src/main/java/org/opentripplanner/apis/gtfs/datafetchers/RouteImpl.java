@@ -37,7 +37,7 @@ public class RouteImpl implements GraphQLDataFetchers.GraphQLRoute {
   @Override
   public DataFetcher<Iterable<TransitAlert>> alerts() {
     return environment -> {
-      TransitAlertService alertService = getAlertService(environment);
+      TransitAlertService alertService = alertService(environment);
       var args = new GraphQLTypes.GraphQLRouteAlertsArgs(environment.getArguments());
       List<GraphQLTypes.GraphQLRouteAlertType> types = args.getGraphQLTypes();
       if (types != null) {
@@ -129,7 +129,7 @@ public class RouteImpl implements GraphQLDataFetchers.GraphQLRoute {
         });
         return alerts.stream().distinct().collect(Collectors.toList());
       } else {
-        return getAlertService(environment).getRouteAlerts(getSource(environment).getId());
+        return alertService(environment).getRouteAlerts(getSource(environment).getId());
       }
     };
   }
@@ -246,8 +246,8 @@ public class RouteImpl implements GraphQLDataFetchers.GraphQLRoute {
       .collect(Collectors.toSet());
   }
 
-  private TransitAlertService getAlertService(DataFetchingEnvironment environment) {
-    return getTransitService(environment).getTransitAlertService();
+  private TransitAlertService alertService(DataFetchingEnvironment environment) {
+    return environment.<GraphQLRequestContext>getContext().alertService();
   }
 
   private TransitService getTransitService(DataFetchingEnvironment environment) {

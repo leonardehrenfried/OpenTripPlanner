@@ -1,5 +1,6 @@
 package org.opentripplanner.apis.transmodel.model.framework;
 
+import static org.opentripplanner.apis.transmodel.support.GqlUtil.getAlertService;
 import static org.opentripplanner.apis.transmodel.support.GqlUtil.getTransitService;
 
 import graphql.Scalars;
@@ -83,9 +84,7 @@ public class AuthorityType {
           .description("Get all situations active for the authority.")
           .type(new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(ptSituationElementType))))
           .dataFetcher(environment ->
-            getTransitService(environment)
-              .getTransitAlertService()
-              .getAgencyAlerts(((Agency) environment.getSource()).getId())
+            getAlertService(environment).getAgencyAlerts(((Agency) environment.getSource()).getId())
           )
           .build()
       )

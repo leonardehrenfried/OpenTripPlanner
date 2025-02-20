@@ -16,6 +16,7 @@ import org.opentripplanner.ext.stopconsolidation.StopConsolidationService;
 import org.opentripplanner.raptor.configure.RaptorConfig;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.TripSchedule;
 import org.opentripplanner.routing.graph.Graph;
+import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.service.realtimevehicles.RealtimeVehicleService;
 import org.opentripplanner.service.vehicleparking.VehicleParkingService;
 import org.opentripplanner.service.vehiclerental.VehicleRentalService;
@@ -26,6 +27,7 @@ import org.opentripplanner.standalone.config.RouterConfig;
 import org.opentripplanner.standalone.server.DefaultServerRequestContext;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
 import org.opentripplanner.transit.service.TransitService;
+import org.opentripplanner.updater.GraphUpdaterStatus;
 import org.opentripplanner.visualizer.GraphVisualizer;
 
 @Module
@@ -36,7 +38,9 @@ public class ConstructApplicationModule {
     RouterConfig routerConfig,
     DebugUiConfig debugUiConfig,
     RaptorConfig<TripSchedule> raptorConfig,
+    GraphUpdaterStatus graphUpdaterStatus,
     Graph graph,
+    TransitAlertService transitAlertService,
     TransitService transitService,
     WorldEnvelopeService worldEnvelopeService,
     RealtimeVehicleService realtimeVehicleService,
@@ -62,12 +66,14 @@ public class ConstructApplicationModule {
       debugUiConfig,
       flexParameters,
       graph,
+      graphUpdaterStatus,
       Metrics.globalRegistry,
       raptorConfig,
       realtimeVehicleService,
       rideHailingServices,
       defaultRequest,
       streetLimitationParametersService,
+      transitAlertService,
       transitRoutingConfig,
       transitService,
       vectorTileConfig,

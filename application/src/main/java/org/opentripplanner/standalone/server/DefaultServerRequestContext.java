@@ -20,6 +20,7 @@ import org.opentripplanner.routing.api.RoutingService;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.routing.service.DefaultRoutingService;
+import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.service.realtimevehicles.RealtimeVehicleService;
 import org.opentripplanner.service.vehicleparking.VehicleParkingService;
 import org.opentripplanner.service.vehiclerental.VehicleRentalService;
@@ -31,6 +32,7 @@ import org.opentripplanner.standalone.config.routerconfig.TransitRoutingConfig;
 import org.opentripplanner.standalone.config.routerconfig.VectorTileConfig;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
 import org.opentripplanner.transit.service.TransitService;
+import org.opentripplanner.updater.GraphUpdaterStatus;
 
 @HttpRequestScoped
 public class DefaultServerRequestContext implements OtpServerRequestContext {
@@ -47,6 +49,7 @@ public class DefaultServerRequestContext implements OtpServerRequestContext {
   private final List<RideHailingService> rideHailingServices;
   private final RouteRequest routeRequestDefaults;
   private final StreetLimitationParametersService streetLimitationParametersService;
+  private final TransitAlertService alertService;
   private final TransitRoutingConfig transitRoutingConfig;
   private final TransitService transitService;
   private final VectorTileConfig vectorTileConfig;
@@ -74,6 +77,8 @@ public class DefaultServerRequestContext implements OtpServerRequestContext {
   @Nullable
   private final TraverseVisitor traverseVisitor;
 
+  private final GraphUpdaterStatus graphUpdaterStatus;
+
   /* Lazy initialized fields */
 
   private RouteRequest defaultRouteRequestWithTimeSet = null;
@@ -87,12 +92,14 @@ public class DefaultServerRequestContext implements OtpServerRequestContext {
     DebugUiConfig debugUiConfig,
     FlexParameters flexParameters,
     Graph graph,
+    GraphUpdaterStatus graphUpdaterStatus,
     MeterRegistry meterRegistry,
     RaptorConfig<TripSchedule> raptorConfig,
     RealtimeVehicleService realtimeVehicleService,
     List<RideHailingService> rideHailingServices,
     RouteRequest routeRequestDefaults,
     StreetLimitationParametersService streetLimitationParametersService,
+    TransitAlertService alertService,
     TransitRoutingConfig transitRoutingConfig,
     TransitService transitService,
     VectorTileConfig vectorTileConfig,
@@ -109,12 +116,14 @@ public class DefaultServerRequestContext implements OtpServerRequestContext {
     this.debugUiConfig = debugUiConfig;
     this.flexParameters = flexParameters;
     this.graph = graph;
+    this.graphUpdaterStatus = graphUpdaterStatus;
     this.meterRegistry = meterRegistry;
     this.raptorConfig = raptorConfig;
     this.realtimeVehicleService = realtimeVehicleService;
     this.rideHailingServices = rideHailingServices;
     this.routeRequestDefaults = routeRequestDefaults;
     this.streetLimitationParametersService = streetLimitationParametersService;
+    this.alertService = alertService;
     this.transitRoutingConfig = transitRoutingConfig;
     this.transitService = transitService;
     this.vectorTileConfig = vectorTileConfig;
@@ -156,6 +165,11 @@ public class DefaultServerRequestContext implements OtpServerRequestContext {
   @Override
   public Graph graph() {
     return graph;
+  }
+
+  @Override
+  public TransitAlertService alertService() {
+    return null;
   }
 
   @Override
@@ -232,6 +246,11 @@ public class DefaultServerRequestContext implements OtpServerRequestContext {
   @Override
   public FlexParameters flexParameters() {
     return flexParameters;
+  }
+
+  @Override
+  public GraphUpdaterStatus updaterStatus() {
+    return graphUpdaterStatus;
   }
 
   @Override

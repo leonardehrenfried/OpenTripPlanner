@@ -43,7 +43,7 @@ public class StopImpl implements GraphQLDataFetchers.GraphQLStop {
   @Override
   public DataFetcher<Iterable<TransitAlert>> alerts() {
     return environment -> {
-      TransitAlertService alertService = getTransitService(environment).getTransitAlertService();
+      TransitAlertService alertService = alertService(environment);
       var args = new GraphQLTypes.GraphQLStopAlertsArgs(environment.getArguments());
       List<GraphQLTypes.GraphQLStopAlertType> types = args.getGraphQLTypes();
       FeedScopedId id = getValue(environment, StopLocation::getId, AbstractTransitEntity::getId);
@@ -580,5 +580,9 @@ public class StopImpl implements GraphQLDataFetchers.GraphQLStop {
       return stationTFunction.apply((Station) source);
     }
     return null;
+  }
+
+  private TransitAlertService alertService(DataFetchingEnvironment environment) {
+    return environment.<GraphQLRequestContext>getContext().alertService();
   }
 }

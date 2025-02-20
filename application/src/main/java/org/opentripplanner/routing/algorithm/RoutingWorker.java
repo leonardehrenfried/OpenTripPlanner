@@ -181,6 +181,7 @@ public class RoutingWorker {
       routingErrors,
       debugTimingAggregator,
       serverContext.transitService(),
+      serverContext.alertService(),
       pagingService
     );
   }

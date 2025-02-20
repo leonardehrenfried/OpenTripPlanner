@@ -31,11 +31,11 @@ public class AlertMetrics implements MeterBinder {
 
   private static final Logger LOG = LoggerFactory.getLogger(AlertMetrics.class);
   private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-  private final Supplier<TransitAlertService> serviceSupplier;
+  private final TransitAlertService alertService;
   private MultiGauge statuses;
 
-  public AlertMetrics(Supplier<TransitAlertService> serviceSupplier) {
-    this.serviceSupplier = serviceSupplier;
+  public AlertMetrics(TransitAlertService alertService) {
+    this.alertService = alertService;
     scheduler.scheduleWithFixedDelay(this::recordMetrics, 0, 30, TimeUnit.SECONDS);
   }
 
@@ -57,9 +57,8 @@ public class AlertMetrics implements MeterBinder {
   void recordMetrics() {
     try {
       // during construction of the app the service can be null so we must check for this case.
-      var transitAlertService = serviceSupplier.get();
-      if (transitAlertService != null && statuses != null) {
-        var rows = summarizeAlerts(transitAlertService);
+      if (alertService != null && statuses != null) {
+        var rows = summarizeAlerts(alertService);
         statuses.register(rows, true);
       }
     } catch (Exception e) {

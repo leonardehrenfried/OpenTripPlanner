@@ -44,6 +44,7 @@ import org.opentripplanner.street.service.StreetLimitationParametersServiceModul
 import org.opentripplanner.transit.configure.TransitModule;
 import org.opentripplanner.transit.service.TimetableRepository;
 import org.opentripplanner.transit.service.TransitService;
+import org.opentripplanner.updater.GraphUpdaterManager;
 import org.opentripplanner.updater.trip.TimetableSnapshotManager;
 import org.opentripplanner.visualizer.GraphVisualizer;
 
@@ -113,6 +114,8 @@ public interface ConstructApplicationFactory {
 
   @Nullable
   LuceneIndex luceneIndex();
+
+  GraphUpdaterManager graphUpdaterManager();
 
   @Component.Builder
   interface Builder {

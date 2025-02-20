@@ -161,7 +161,7 @@ public class IndexAPI {
   ) {
     var alertMapper = new AlertMapper(null); // TODO: Add locale
     var id = new FeedScopedId(feedId, agencyId);
-    return alertMapper.mapToApi(transitService().getTransitAlertService().getAgencyAlerts(id));
+    return alertMapper.mapToApi(serverContext.alertService().getAgencyAlerts(id));
   }
 
   /** Return specific transit stop in the graph, by ID. */
@@ -332,7 +332,7 @@ public class IndexAPI {
   public Collection<ApiAlert> getAlertsForStop(@PathParam("stopId") String stopId) {
     var alertMapper = new AlertMapper(null); // TODO: Add locale
     var id = createId("stopId", stopId);
-    return alertMapper.mapToApi(transitService().getTransitAlertService().getStopAlerts(id));
+    return alertMapper.mapToApi(serverContext.alertService().getStopAlerts(id));
   }
 
   /** Return a list of all routes in the graph. */
@@ -408,7 +408,7 @@ public class IndexAPI {
   public Collection<ApiAlert> getAlertsForRoute(@PathParam("routeId") String routeId) {
     var alertMapper = new AlertMapper(null); // TODO: Add locale
     var id = createId("routeId", routeId);
-    return alertMapper.mapToApi(transitService().getTransitAlertService().getRouteAlerts(id));
+    return alertMapper.mapToApi(serverContext.alertService().getRouteAlerts(id));
   }
 
   // Not implemented, results would be too voluminous.
@@ -462,7 +462,7 @@ public class IndexAPI {
   public Collection<ApiAlert> getAlertsForTrip(@PathParam("tripId") String tripId) {
     var alertMapper = new AlertMapper(null); // TODO: Add locale
     var id = createId("tripId", tripId);
-    return alertMapper.mapToApi(transitService().getTransitAlertService().getTripAlerts(id, null));
+    return alertMapper.mapToApi(serverContext.alertService().getTripAlerts(id, null));
   }
 
   @GET
@@ -517,8 +517,8 @@ public class IndexAPI {
     var alertMapper = new AlertMapper(null); // TODO: Add locale
     var pattern = tripPattern(patternId);
     return alertMapper.mapToApi(
-      transitService()
-        .getTransitAlertService()
+      serverContext
+        .alertService()
         .getDirectionAndRouteAlerts(pattern.getDirection(), pattern.getRoute().getId())
     );
   }

@@ -68,8 +68,7 @@ public class RealtimeStopsLayerTest {
     var transitService = new DefaultTransitService(timetableRepository) {
       final TransitAlertService alertService = new TransitAlertServiceImpl(timetableRepository);
 
-      @Override
-      public TransitAlertService getTransitAlertService() {
+      private TransitAlertService getTransitAlertService() {
         return alertService;
       }
     };

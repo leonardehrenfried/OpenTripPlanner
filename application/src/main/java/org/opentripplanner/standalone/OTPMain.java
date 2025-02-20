@@ -17,7 +17,7 @@ import org.opentripplanner.standalone.config.ConfigModel;
 import org.opentripplanner.standalone.configure.ConstructApplication;
 import org.opentripplanner.standalone.configure.LoadApplication;
 import org.opentripplanner.standalone.server.GrizzlyServer;
-import org.opentripplanner.transit.service.TimetableRepository;
+import org.opentripplanner.updater.GraphUpdaterManager;
 import org.opentripplanner.updater.configure.UpdaterConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -207,7 +207,7 @@ public class OTPMain {
     if (params.doServe()) {
       GrizzlyServer grizzlyServer = app.createGrizzlyServer();
 
-      registerShutdownHookToGracefullyShutDownServer(app.timetableRepository(), app.raptorConfig());
+      registerShutdownHookToGracefullyShutDownServer(app.graphUpdaterManager(), app.raptorConfig());
 
       // Loop to restart server on uncaught fatal exceptions.
       while (true) {
@@ -234,14 +234,14 @@ public class OTPMain {
    * </ol>
    */
   private static void registerShutdownHookToGracefullyShutDownServer(
-    TimetableRepository timetableRepository,
+    GraphUpdaterManager graphUpdaterManager,
     RaptorConfig<?> raptorConfig
   ) {
     ApplicationShutdownSupport.addShutdownHook(
       "server-shutdown",
       () -> {
         LOG.info("OTP shutdown started...");
-        UpdaterConfigurator.shutdownGraph(timetableRepository);
+        UpdaterConfigurator.shutdownGraph(graphUpdaterManager);
         raptorConfig.shutdown();
         WeakCollectionCleaner.DEFAULT.exit();
         DeferredAuthorityFactory.exit();

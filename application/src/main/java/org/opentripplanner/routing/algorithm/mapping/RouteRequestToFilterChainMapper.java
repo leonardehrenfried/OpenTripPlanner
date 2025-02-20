@@ -84,10 +84,7 @@ public class RouteRequestToFilterChainMapper {
       .withRemoveTimeshiftedItinerariesWithSameRoutesAndStops(
         params.removeItinerariesWithSameRoutesAndStops()
       )
-      .withTransitAlerts(
-        context.transitService().getTransitAlertService(),
-        context.transitService()::findMultiModalStation
-      )
+      .withTransitAlerts(context.alertService(), context.transitService()::findMultiModalStation)
       .withSearchWindow(earliestDepartureTimeUsed, searchWindowUsed)
       .withPageCursorInputSubscriber(pageCursorInputSubscriber)
       .withRemoveWalkAllTheWayResults(removeWalkAllTheWayResults)

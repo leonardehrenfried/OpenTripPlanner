@@ -12,7 +12,9 @@ import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.transit.model.timetable.Direction;
 import org.opentripplanner.transit.service.TimetableRepository;
+import org.opentripplanner.updater.GraphUpdaterManager;
 import org.opentripplanner.updater.alert.TransitAlertProvider;
+import org.opentripplanner.updater.spi.GraphUpdater;
 
 /**
  * This class is used to combine alerts from multiple {@link TransitAlertService}s. Each
@@ -35,10 +37,9 @@ public class DelegatingTransitAlertServiceImpl implements TransitAlertService {
    * This implies that these instances are expected to remain in use indefinitely (not be replaced
    * with new instances or taken out of service over time).
    */
-  public DelegatingTransitAlertServiceImpl(TimetableRepository timetableRepository) {
-    if (timetableRepository.getUpdaterManager() != null) {
-      timetableRepository
-        .getUpdaterManager()
+  public DelegatingTransitAlertServiceImpl(GraphUpdaterManager updaterManager) {
+    if (updaterManager != null) {
+      updaterManager
         .getUpdaterList()
         .stream()
         .filter(TransitAlertProvider.class::isInstance)

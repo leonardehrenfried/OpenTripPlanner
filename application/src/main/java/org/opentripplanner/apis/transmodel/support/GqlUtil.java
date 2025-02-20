@@ -15,6 +15,7 @@ import org.opentripplanner.apis.transmodel.TransmodelRequestContext;
 import org.opentripplanner.apis.transmodel.mapping.TransitIdMapper;
 import org.opentripplanner.framework.graphql.GraphQLUtils;
 import org.opentripplanner.routing.graphfinder.GraphFinder;
+import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.service.vehicleparking.VehicleParkingService;
 import org.opentripplanner.service.vehiclerental.VehicleRentalService;
 import org.opentripplanner.transit.service.TransitService;
@@ -30,6 +31,10 @@ public class GqlUtil {
 
   public static TransitService getTransitService(DataFetchingEnvironment environment) {
     return ((TransmodelRequestContext) environment.getContext()).getTransitService();
+  }
+
+  public static TransitAlertService getAlertService(DataFetchingEnvironment environment) {
+    return ((TransmodelRequestContext) environment.getContext()).getServerContext().alertService();
   }
 
   public static VehicleRentalService getVehicleRentalService(DataFetchingEnvironment environment) {

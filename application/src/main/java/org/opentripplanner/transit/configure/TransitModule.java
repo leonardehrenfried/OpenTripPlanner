@@ -8,11 +8,22 @@ import java.time.LocalDate;
 import org.opentripplanner.model.TimetableSnapshot;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RaptorTransitData;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.mappers.RealTimeRaptorTransitDataUpdater;
+import org.opentripplanner.routing.graph.Graph;
+import org.opentripplanner.routing.impl.DelegatingTransitAlertServiceImpl;
+import org.opentripplanner.routing.services.TransitAlertService;
+import org.opentripplanner.service.realtimevehicles.RealtimeVehicleRepository;
+import org.opentripplanner.service.vehicleparking.VehicleParkingRepository;
+import org.opentripplanner.service.vehiclerental.VehicleRentalRepository;
 import org.opentripplanner.standalone.api.HttpRequestScoped;
 import org.opentripplanner.standalone.config.ConfigModel;
+import org.opentripplanner.standalone.config.RouterConfig;
 import org.opentripplanner.transit.service.DefaultTransitService;
 import org.opentripplanner.transit.service.TimetableRepository;
 import org.opentripplanner.transit.service.TransitService;
+import org.opentripplanner.updater.GraphUpdaterManager;
+import org.opentripplanner.updater.GraphUpdaterStatus;
+import org.opentripplanner.updater.UpdatersParameters;
+import org.opentripplanner.updater.configure.UpdaterConfigurator;
 import org.opentripplanner.updater.trip.TimetableSnapshotManager;
 
 @Module
@@ -54,5 +65,39 @@ public abstract class TransitModule {
   @Provides
   public static TimetableSnapshot timetableSnapshot(TimetableSnapshotManager manager) {
     return manager.getTimetableSnapshot();
+  }
+
+  @Provides
+  @Singleton
+  public static TransitAlertService transitAlertService(GraphUpdaterManager manager) {
+    return new DelegatingTransitAlertServiceImpl(manager);
+  }
+
+  @Provides
+  @Singleton
+  public static GraphUpdaterManager updaterManager(
+    Graph graph,
+    RealtimeVehicleRepository realtimeVehicleRepository,
+    VehicleRentalRepository vehicleRentalRepository,
+    VehicleParkingRepository vehicleParkingRepository,
+    TimetableRepository timetableRepository,
+    TimetableSnapshotManager timetableSnapshotManager,
+    RouterConfig routerConfig
+  ) {
+    return UpdaterConfigurator.configure(
+      graph,
+      realtimeVehicleRepository,
+      vehicleRentalRepository,
+      vehicleParkingRepository,
+      timetableRepository,
+      timetableSnapshotManager,
+      routerConfig.updaterConfig()
+    );
+  }
+
+  @Provides
+  @Singleton
+  public static GraphUpdaterStatus updaterStatus(GraphUpdaterManager manager) {
+    return manager;
   }
 }

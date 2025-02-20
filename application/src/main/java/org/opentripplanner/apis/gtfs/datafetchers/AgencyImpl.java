@@ -22,7 +22,7 @@ public class AgencyImpl implements GraphQLDataFetchers.GraphQLAgency {
   @Override
   public DataFetcher<Iterable<TransitAlert>> alerts() {
     return environment -> {
-      TransitAlertService alertService = getTransitService(environment).getTransitAlertService();
+      TransitAlertService alertService = alertService(environment);
       var args = new GraphQLTypes.GraphQLAgencyAlertsArgs(environment.getArguments());
       List<GraphQLTypes.GraphQLAgencyAlertType> types = args.getGraphQLTypes();
       if (types != null) {
@@ -115,6 +115,10 @@ public class AgencyImpl implements GraphQLDataFetchers.GraphQLAgency {
 
   private TransitService getTransitService(DataFetchingEnvironment environment) {
     return environment.<GraphQLRequestContext>getContext().transitService();
+  }
+
+  private TransitAlertService alertService(DataFetchingEnvironment environment) {
+    return environment.<GraphQLRequestContext>getContext().alertService();
   }
 
   private Agency getSource(DataFetchingEnvironment environment) {

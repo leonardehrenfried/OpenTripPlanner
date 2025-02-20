@@ -32,7 +32,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.glassfish.jersey.message.internal.OutboundJaxrsResponse;
@@ -51,7 +50,6 @@ import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.model.FeedInfo;
 import org.opentripplanner.model.RealTimeTripUpdate;
 import org.opentripplanner.model.TimetableSnapshot;
-import org.opentripplanner.model.TripTimeOnDate;
 import org.opentripplanner.model.calendar.CalendarServiceData;
 import org.opentripplanner.model.fare.FareMedium;
 import org.opentripplanner.model.fare.FareProduct;
@@ -325,11 +323,6 @@ class GraphQLIntegrationTest {
       @Override
       public List<TransitMode> findTransitModes(StopLocation stop) {
         return List.of(BUS, FERRY);
-      }
-
-      @Override
-      public TransitAlertService getTransitAlertService() {
-        return alertService;
       }
 
       @Override

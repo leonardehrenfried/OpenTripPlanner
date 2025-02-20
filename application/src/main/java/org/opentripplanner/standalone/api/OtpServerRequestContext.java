@@ -22,6 +22,7 @@ import org.opentripplanner.routing.api.RoutingService;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.routing.graphfinder.GraphFinder;
+import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.service.realtimevehicles.RealtimeVehicleService;
 import org.opentripplanner.service.vehicleparking.VehicleParkingService;
 import org.opentripplanner.service.vehiclerental.VehicleRentalService;
@@ -32,6 +33,7 @@ import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
 import org.opentripplanner.transit.service.TransitService;
+import org.opentripplanner.updater.GraphUpdaterStatus;
 
 /**
  * The purpose of this class is to give APIs (HTTP Resources) read-only access to the OTP internal
@@ -153,4 +155,8 @@ public interface OtpServerRequestContext {
 
   @Nullable
   GraphQLSchema schema();
+
+  GraphUpdaterStatus updaterStatus();
+
+  TransitAlertService alertService();
 }

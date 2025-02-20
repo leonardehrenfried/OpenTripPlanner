@@ -67,7 +67,7 @@ public class ActuatorAPI {
   @Path("/health")
   @Produces(MediaType.APPLICATION_JSON)
   public Response health(@Context OtpServerRequestContext serverContext) {
-    GraphUpdaterStatus updaterStatus = serverContext.transitService().getUpdaterStatus();
+    GraphUpdaterStatus updaterStatus = serverContext.updaterStatus();
     if (updaterStatus != null) {
       var listUnprimedUpdaters = updaterStatus.listUnprimedUpdaters();
 

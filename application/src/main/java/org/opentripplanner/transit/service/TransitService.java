@@ -22,7 +22,6 @@ import org.opentripplanner.model.TripTimeOnDate;
 import org.opentripplanner.model.calendar.CalendarService;
 import org.opentripplanner.model.transfer.TransferService;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RaptorTransitData;
-import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.routing.stoptimes.ArrivalDeparture;
 import org.opentripplanner.transit.api.request.FindRegularStopsByBoundingBoxRequest;
 import org.opentripplanner.transit.api.request.FindRoutesRequest;
@@ -49,7 +48,6 @@ import org.opentripplanner.transit.model.site.StopLocationsGroup;
 import org.opentripplanner.transit.model.timetable.Trip;
 import org.opentripplanner.transit.model.timetable.TripIdAndServiceDate;
 import org.opentripplanner.transit.model.timetable.TripOnServiceDate;
-import org.opentripplanner.updater.GraphUpdaterStatus;
 
 /**
  * TransitService is a read-only interface for retrieving public transport data. It provides a
@@ -276,8 +274,6 @@ public interface TransitService {
 
   ZoneId getTimeZone();
 
-  TransitAlertService getTransitAlertService();
-
   FlexIndex getFlexIndex();
 
   ZonedDateTime getTransitServiceEnds();
@@ -291,8 +287,6 @@ public interface TransitService {
   Collection<RegularStop> findRegularStopsByBoundingBox(Envelope envelope);
 
   Collection<AreaStop> findAreaStops(Envelope envelope);
-
-  GraphUpdaterStatus getUpdaterStatus();
 
   /**
    * For a {@link StopLocationsGroup} get all child stops and get their modes.

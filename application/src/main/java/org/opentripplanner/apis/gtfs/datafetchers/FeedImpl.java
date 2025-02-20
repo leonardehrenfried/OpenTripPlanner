@@ -26,7 +26,7 @@ public class FeedImpl implements GraphQLDataFetchers.GraphQLFeed {
   @Override
   public DataFetcher<Iterable<TransitAlert>> alerts() {
     return environment -> {
-      TransitAlertService alertService = getTransitService(environment).getTransitAlertService();
+      TransitAlertService alertService = alertService(environment);
       var args = new GraphQLTypes.GraphQLFeedAlertsArgs(environment.getArguments());
       List<GraphQLTypes.GraphQLFeedAlertType> types = args.getGraphQLTypes();
       if (types != null) {
@@ -87,6 +87,10 @@ public class FeedImpl implements GraphQLDataFetchers.GraphQLFeed {
 
   private TransitService getTransitService(DataFetchingEnvironment environment) {
     return environment.<GraphQLRequestContext>getContext().transitService();
+  }
+
+  private TransitAlertService alertService(DataFetchingEnvironment environment) {
+    return environment.<GraphQLRequestContext>getContext().alertService();
   }
 
   private String getSource(DataFetchingEnvironment environment) {

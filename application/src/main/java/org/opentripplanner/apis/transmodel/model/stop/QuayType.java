@@ -344,10 +344,7 @@ public class QuayType {
           .description("Get all situations active for the quay.")
           .type(new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(ptSituationElementType))))
           .dataFetcher(env ->
-            GqlUtil
-              .getTransitService(env)
-              .getTransitAlertService()
-              .getStopAlerts(((StopLocation) env.getSource()).getId())
+            GqlUtil.getAlertService(env).getStopAlerts(((StopLocation) env.getSource()).getId())
           )
           .build()
       )

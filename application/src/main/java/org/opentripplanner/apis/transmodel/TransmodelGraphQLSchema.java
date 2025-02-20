@@ -1505,10 +1505,7 @@ public class TransmodelGraphQLSchema {
               .build()
           )
           .dataFetcher(environment -> {
-            Collection<TransitAlert> alerts = GqlUtil
-              .getTransitService(environment)
-              .getTransitAlertService()
-              .getAllAlerts();
+            Collection<TransitAlert> alerts = GqlUtil.getAlertService(environment).getAllAlerts();
 
             Set<String> codespaces = new HashSet<>();
 
@@ -1566,8 +1563,7 @@ public class TransmodelGraphQLSchema {
               return null;
             }
             return GqlUtil
-              .getTransitService(environment)
-              .getTransitAlertService()
+              .getAlertService(environment)
               .getAlertById(mapIDToDomain(situationNumber));
           })
           .build()
@@ -1595,7 +1591,10 @@ public class TransmodelGraphQLSchema {
             if (ref == null) {
               return null;
             }
-            return ref.getLeg(GqlUtil.getTransitService(environment));
+            return ref.getLeg(
+              GqlUtil.getTransitService(environment),
+              GqlUtil.getAlertService(environment)
+            );
           })
           .build()
       )

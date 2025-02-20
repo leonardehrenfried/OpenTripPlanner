@@ -8,6 +8,7 @@ import org.opentripplanner.model.plan.LegConstructionSupport;
 import org.opentripplanner.model.plan.ScheduledTransitLeg;
 import org.opentripplanner.model.plan.ScheduledTransitLegBuilder;
 import org.opentripplanner.routing.algorithm.mapping.AlertToLegMapper;
+import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.transit.model.network.TripPattern;
 import org.opentripplanner.transit.model.site.StopLocation;
@@ -66,7 +67,10 @@ public record ScheduledTransitLegReference(
    */
   @Override
   @Nullable
-  public ScheduledTransitLeg getLeg(TransitService transitService) {
+  public ScheduledTransitLeg getLeg(
+    TransitService transitService,
+    TransitAlertService alertService
+  ) {
     Trip trip;
     TripOnServiceDate tripOnServiceDate = null;
 
@@ -178,7 +182,7 @@ public record ScheduledTransitLegReference(
       .build();
 
     return (ScheduledTransitLeg) new AlertToLegMapper(
-      transitService.getTransitAlertService(),
+      alertService,
       transitService::findMultiModalStation
     )
       .decorateWithAlerts(leg, false);

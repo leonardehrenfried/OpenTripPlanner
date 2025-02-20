@@ -122,7 +122,12 @@ public class VectorTilesResource {
     OtpServerRequestContext context
   ) {
     return switch (layerParameters.type()) {
-      case Stop -> new StopsLayerBuilder(context.transitService(), layerParameters, locale);
+      case Stop -> new StopsLayerBuilder(
+        context.transitService(),
+        context.alertService(),
+        layerParameters,
+        locale
+      );
       case Station -> new StationsLayerBuilder(context.transitService(), layerParameters, locale);
       case AreaStop -> new AreaStopsLayerBuilder(context.transitService(), layerParameters, locale);
       case VehicleRental -> new VehicleRentalPlacesLayerBuilder(

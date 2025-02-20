@@ -29,7 +29,6 @@ import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.transit.model.timetable.Trip;
 import org.opentripplanner.transit.model.timetable.TripIdAndServiceDate;
-import org.opentripplanner.transit.service.TransitService;
 
 public class EstimatedCallType {
 
@@ -333,7 +332,7 @@ public class EstimatedCallType {
           .type(new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(ptSituationElementType))))
           .description("Get all relevant situations for this EstimatedCall.")
           .dataFetcher(environment ->
-            getAllRelevantAlerts(environment.getSource(), GqlUtil.getTransitService(environment))
+            getAllRelevantAlerts(environment.getSource(), GqlUtil.getAlertService(environment))
           )
           .build()
       )
@@ -362,7 +361,7 @@ public class EstimatedCallType {
    */
   private static Collection<TransitAlert> getAllRelevantAlerts(
     TripTimeOnDate tripTimeOnDate,
-    TransitService transitService
+    TransitAlertService alertService
   ) {
     Trip trip = tripTimeOnDate.getTrip();
     FeedScopedId tripId = trip.getId();
@@ -373,7 +372,7 @@ public class EstimatedCallType {
 
     Collection<TransitAlert> allAlerts = new HashSet<>();
 
-    TransitAlertService alertPatchService = transitService.getTransitAlertService();
+    TransitAlertService alertPatchService = alertService;
 
     final LocalDate serviceDate = tripTimeOnDate.getServiceDay();
 

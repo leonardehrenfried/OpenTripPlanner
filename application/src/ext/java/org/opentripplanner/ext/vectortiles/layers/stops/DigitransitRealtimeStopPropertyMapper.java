@@ -10,6 +10,7 @@ import java.util.Locale;
 import org.opentripplanner.apis.support.mapping.PropertyMapper;
 import org.opentripplanner.framework.i18n.I18NStringMapper;
 import org.opentripplanner.inspector.vector.KeyValue;
+import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.routing.stoptimes.ArrivalDeparture;
 import org.opentripplanner.transit.model.site.RegularStop;
 import org.opentripplanner.transit.service.TransitService;
@@ -19,8 +20,14 @@ public class DigitransitRealtimeStopPropertyMapper extends PropertyMapper<Regula
 
   private final TransitService transitService;
   private final I18NStringMapper i18NStringMapper;
+  private final TransitAlertService alertService;
 
-  public DigitransitRealtimeStopPropertyMapper(TransitService transitService, Locale locale) {
+  public DigitransitRealtimeStopPropertyMapper(
+    TransitService transitService,
+    TransitAlertService alertService,
+    Locale locale
+  ) {
+    this.alertService = alertService;
     this.transitService = transitService;
     this.i18NStringMapper = new I18NStringMapper(locale);
   }
@@ -28,8 +35,7 @@ public class DigitransitRealtimeStopPropertyMapper extends PropertyMapper<Regula
   @Override
   protected Collection<KeyValue> map(RegularStop stop) {
     Instant currentTime = Instant.now();
-    boolean noServiceAlert = transitService
-      .getTransitAlertService()
+    boolean noServiceAlert = alertService
       .getStopAlerts(stop.getId())
       .stream()
       .anyMatch(alert -> alert.noServiceAt(currentTime));

@@ -12,6 +12,7 @@ import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.api.response.RoutingError;
 import org.opentripplanner.routing.api.response.RoutingResponse;
 import org.opentripplanner.routing.framework.DebugTimingAggregator;
+import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.service.paging.PagingService;
 import org.opentripplanner.transit.service.TransitService;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ public class RoutingResponseMapper {
     Set<RoutingError> routingErrors,
     DebugTimingAggregator debugTimingAggregator,
     TransitService transitService,
+    TransitAlertService alertService,
     PagingService pagingService
   ) {
     // Search is performed without realtime, but we still want to
@@ -35,7 +37,7 @@ public class RoutingResponseMapper {
     if (
       request.preferences().transit().ignoreRealtimeUpdates() && OTPFeature.RealtimeResolver.isOn()
     ) {
-      populateLegsWithRealtime(itineraries, transitService);
+      populateLegsWithRealtime(itineraries, transitService, alertService);
     }
 
     // Create response

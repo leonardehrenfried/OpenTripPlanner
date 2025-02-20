@@ -33,7 +33,6 @@ import org.opentripplanner.model.TripTimeOnDate;
 import org.opentripplanner.model.calendar.CalendarService;
 import org.opentripplanner.model.transfer.TransferService;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RaptorTransitData;
-import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.routing.stoptimes.ArrivalDeparture;
 import org.opentripplanner.routing.stoptimes.StopTimesHelper;
 import org.opentripplanner.transit.api.request.FindRegularStopsByBoundingBoxRequest;
@@ -68,11 +67,8 @@ import org.opentripplanner.transit.model.timetable.Trip;
 import org.opentripplanner.transit.model.timetable.TripIdAndServiceDate;
 import org.opentripplanner.transit.model.timetable.TripOnServiceDate;
 import org.opentripplanner.transit.model.timetable.TripTimes;
-import org.opentripplanner.updater.GraphUpdaterStatus;
 import org.opentripplanner.utils.collection.CollectionsView;
 import org.opentripplanner.utils.time.ServiceDateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of the Transit Service and Transit Editor Service.
@@ -82,7 +78,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultTransitService implements TransitEditorService {
 
-  private static final Logger LOG = LoggerFactory.getLogger(DefaultTransitService.class);
   private final TimetableRepository timetableRepository;
 
   private final TimetableRepositoryIndex timetableRepositoryIndex;
@@ -703,11 +698,6 @@ public class DefaultTransitService implements TransitEditorService {
   }
 
   @Override
-  public TransitAlertService getTransitAlertService() {
-    return this.timetableRepository.getTransitAlertService();
-  }
-
-  @Override
   public FlexIndex getFlexIndex() {
     return this.timetableRepositoryIndex.getFlexIndex();
   }
@@ -748,11 +738,6 @@ public class DefaultTransitService implements TransitEditorService {
   public Collection<AreaStop> findAreaStops(Envelope envelope) {
     OTPRequestTimeoutException.checkForTimeout();
     return timetableRepository.getSiteRepository().findAreaStops(envelope);
-  }
-
-  @Override
-  public GraphUpdaterStatus getUpdaterStatus() {
-    return timetableRepository.getUpdaterManager();
   }
 
   @Override

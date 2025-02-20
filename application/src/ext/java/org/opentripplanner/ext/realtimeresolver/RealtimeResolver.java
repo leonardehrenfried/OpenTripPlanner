@@ -6,6 +6,7 @@ import org.opentripplanner.model.plan.Itinerary;
 import org.opentripplanner.model.plan.Leg;
 import org.opentripplanner.model.plan.ScheduledTransitLeg;
 import org.opentripplanner.model.plan.ScheduledTransitLegBuilder;
+import org.opentripplanner.routing.services.TransitAlertService;
 import org.opentripplanner.transit.service.TransitService;
 
 public class RealtimeResolver {
@@ -15,7 +16,8 @@ public class RealtimeResolver {
    */
   public static void populateLegsWithRealtime(
     List<Itinerary> itineraries,
-    TransitService transitService
+    TransitService transitService,
+    TransitAlertService alertService
   ) {
     itineraries.forEach(it -> {
       if (it.isFlaggedForDeletion()) {
@@ -35,7 +37,7 @@ public class RealtimeResolver {
             return leg;
           }
 
-          var realTimeLeg = ref.getLeg(transitService);
+          var realTimeLeg = ref.getLeg(transitService, alertService);
           if (realTimeLeg != null) {
             return combineReferenceWithOriginal(
               realTimeLeg.asScheduledTransitLeg(),
