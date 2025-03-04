@@ -290,24 +290,18 @@
             </plugin>
 
             <plugin>
-                <groupId>com.hubspot.maven.plugins</groupId>
-                <artifactId>prettier-maven-plugin</artifactId>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.44.3</version>
                 <configuration>
-                    <skip>${plugin.prettier.skip}</skip>
-                    <prettierJavaVersion>2.0.0</prettierJavaVersion>
-                    <inputGlobs>
-                        <inputGlob>src/main/java/**/*.java</inputGlob>
-                        <inputGlob>src/test/java/**/*.java</inputGlob>
-                    </inputGlobs>
+                    <!-- define a language-specific format -->
+                    <java>
+                        <eclipse>
+                            <!-- Optional: Specify the Eclipse JDT version to use. -->
+                            <version>4.26</version>
+                        </eclipse>
+                    </java>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>${plugin.prettier.goal}</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
