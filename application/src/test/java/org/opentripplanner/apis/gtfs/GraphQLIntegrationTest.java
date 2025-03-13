@@ -32,7 +32,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 import org.glassfish.jersey.message.internal.OutboundJaxrsResponse;
@@ -41,7 +40,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.locationtech.jts.geom.Coordinate;
 import org.opentripplanner._support.text.I18NStrings;
 import org.opentripplanner._support.time.ZoneIds;
-import org.opentripplanner.ext.fares.FaresToItineraryMapper;
+import org.opentripplanner.ext.fares.ItineraryFaresDecorator;
 import org.opentripplanner.ext.fares.impl.DefaultFareService;
 import org.opentripplanner.framework.geometry.WgsCoordinate;
 import org.opentripplanner.framework.i18n.I18NString;
@@ -51,7 +50,6 @@ import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.model.FeedInfo;
 import org.opentripplanner.model.RealTimeTripUpdate;
 import org.opentripplanner.model.TimetableSnapshot;
-import org.opentripplanner.model.TripTimeOnDate;
 import org.opentripplanner.model.calendar.CalendarServiceData;
 import org.opentripplanner.model.fare.FareMedium;
 import org.opentripplanner.model.fare.FareProduct;
@@ -361,21 +359,24 @@ class GraphQLIntegrationTest {
       )
       .build();
 
-    Itinerary i1 = newItinerary(A, T11_00)
+    // TODO - Use itineraryBuilder() here not build() and compleate building the itinerary using
+    //        the ItineraryBuilder and not going back and forth between the Itinerary and the
+    //        builder.
+    var i1 = newItinerary(A, T11_00)
       .walk(20, B, List.of(step1, step2, step3))
       .bus(busRoute, 122, T11_01, T11_15, C)
       .rail(439, T11_30, T11_50, D)
       .carHail(D10m, E)
       .build();
 
-    add10MinuteDelay(i1);
+    i1 = add10MinuteDelay(i1);
 
-    var busLeg = i1.getTransitLeg(1);
-    var railLeg = (ScheduledTransitLeg) i1.getTransitLeg(2);
+    var busLeg = i1.transitLeg(1);
+    var railLeg = (ScheduledTransitLeg) i1.transitLeg(2);
     railLeg = railLeg.copy().withAlerts(Set.of(alert)).withAccessibilityScore(3f).build();
-    ArrayList<Leg> legs = new ArrayList<>(i1.getLegs());
+    ArrayList<Leg> legs = new ArrayList<>(i1.legs());
     legs.set(2, railLeg);
-    i1.setLegs(legs);
+    i1 = i1.copyOf().withLegs(ignore -> legs).build();
 
     var fares = new ItineraryFares();
 
@@ -385,15 +386,13 @@ class GraphQLIntegrationTest {
     var singleTicket = fareProduct("single-ticket");
     fares.addFareProduct(railLeg, singleTicket);
     fares.addFareProduct(busLeg, singleTicket);
-    i1.setFare(fares);
 
-    i1.setFare(fares);
-    FaresToItineraryMapper.addFaresToLegs(fares, i1);
+    i1 = ItineraryFaresDecorator.decorateItineraryWithFare(i1, fares);
 
-    i1.setAccessibilityScore(0.5f);
+    i1 = i1.copyOf().withAccessibilityScore(0.5f).build();
 
     var emissions = new Emissions(new Grams(123.0));
-    i1.setEmissionsPerPerson(emissions);
+    i1 = i1.copyOf().withEmissionsPerPerson(emissions).build();
 
     var alerts = ListUtils.combine(List.of(alert), getTransitAlert(entitySelector));
     transitService.getTransitAlertService().setAlerts(alerts);
@@ -456,18 +455,21 @@ class GraphQLIntegrationTest {
     }
   }
 
-  private static void add10MinuteDelay(Itinerary i1) {
-    i1.transformTransitLegs(tl -> {
-      if (tl instanceof ScheduledTransitLeg stl) {
-        var rtt = (RealTimeTripTimes) stl.getTripTimes();
+  private static Itinerary add10MinuteDelay(Itinerary i1) {
+    return i1
+      .copyOf()
+      .transformTransitLegs(tl -> {
+        if (tl instanceof ScheduledTransitLeg stl) {
+          var rtt = (RealTimeTripTimes) stl.getTripTimes();
 
-        for (var i = 0; i < rtt.getNumStops(); i++) {
-          rtt.updateArrivalTime(i, rtt.getArrivalTime(i) + TEN_MINUTES);
-          rtt.updateDepartureTime(i, rtt.getDepartureTime(i) + TEN_MINUTES);
+          for (var i = 0; i < rtt.getNumStops(); i++) {
+            rtt.updateArrivalTime(i, rtt.getArrivalTime(i) + TEN_MINUTES);
+            rtt.updateDepartureTime(i, rtt.getDepartureTime(i) + TEN_MINUTES);
+          }
         }
-      }
-      return tl;
-    });
+        return tl;
+      })
+      .build();
   }
 
   @FilePatternSource(
