@@ -4,10 +4,11 @@ import edu.colorado.cires.cmg.mvt.VectorTile;
 import jakarta.ws.rs.core.CacheControl;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Collectors;
-import org.apache.hc.core5.http.ContentType;
 import org.locationtech.jts.geom.Envelope;
 import org.opentripplanner.api.resource.WebMercatorTile;
 import org.opentripplanner.framework.io.HttpUtils;
@@ -33,20 +34,9 @@ public class VectorTileResponseFactory {
 
     int cacheMaxSeconds = Integer.MAX_VALUE;
 
-    var availableLayerNames = availableLayers
-      .stream()
-      .map(LayerParameters::name)
-      .collect(Collectors.toSet());
+    var availableLayerNames = context.vectorTileConfig().layerNames();
     if (!availableLayerNames.containsAll(requestedLayers)) {
-      return Response.status(Response.Status.NOT_FOUND)
-        .header(HttpHeaders.CONTENT_TYPE, HttpUtils.TEXT_PLAIN)
-        .entity(
-          "Could not find vector tile layer(s). Requested layers: %s. Available layers: %s.".formatted(
-              requestedLayers,
-              availableLayerNames
-            )
-        )
-        .build();
+      return layerMismatchResponse(requestedLayers, availableLayerNames);
     }
 
     for (LayerParameters<LayerType> layerParameters : availableLayers) {
@@ -70,6 +60,25 @@ public class VectorTileResponseFactory {
     return Response.status(Response.Status.OK)
       .cacheControl(cacheControl)
       .entity(mvtBuilder.build().toByteArray())
+      .build();
+  }
+
+  /**
+   * Returns an HTTP error indicating that the requested and available layers do not intersect. This
+   * helps when debugging the vector tile layer.
+   *
+   * @param requestedLayers the layers requested by the client
+   * @param availableLayers the layers available in the server
+   */
+  public static Response layerMismatchResponse(List<String> requestedLayers, Collection<String> availableLayers) {
+    return Response.status(Response.Status.NOT_FOUND)
+      .header(HttpHeaders.CONTENT_TYPE, HttpUtils.TEXT_PLAIN)
+      .entity(
+        "Could not find vector tile layer(s). Requested layers: %s. Available layers: %s.".formatted(
+          requestedLayers,
+          availableLayers
+        )
+      )
       .build();
   }
 

@@ -6,6 +6,7 @@ import org.glassfish.grizzly.http.server.Request;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.opentripplanner.TestServerContext;
+import org.opentripplanner.apis.support.TileJson;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.test.support.HttpForTest;
 import org.opentripplanner.transit.service.TimetableRepository;
@@ -22,7 +23,8 @@ class VectorTilesResourceTest {
       "default"
     );
     var req = HttpForTest.containerRequest();
-    var tileJson = resource.getTileJson(req.getUriInfo(), req, "layer1,layer2");
+    var resp = resource.getTileJson(req.getUriInfo(), req, "layer1,layer2");
+    var tileJson = (TileJson) resp.getEntity();
     assertEquals(
       "https://localhost:8080/otp/routers/default/vectorTiles/layer1,layer2/{z}/{x}/{y}.pbf",
       tileJson.tiles[0]

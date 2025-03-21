@@ -78,16 +78,20 @@ public class VectorTilesResource {
   @GET
   @Path("/{layers}/tilejson.json")
   @Produces(MediaType.APPLICATION_JSON)
-  public TileJson getTileJson(
+  public Response getTileJson(
     @Context UriInfo uri,
     @Context HttpHeaders headers,
     @PathParam("layers") String requestedLayers
   ) {
     var envelope = serverContext.worldEnvelopeService().envelope().orElseThrow();
 
-    List<String> rLayers = Arrays.asList(requestedLayers.split(","));
+    var rLayers = Arrays.asList(requestedLayers.split(","));
 
     var config = serverContext.vectorTileConfig();
+
+    if(!config.containsLayers(rLayers)){
+      return VectorTileResponseFactory.layerMismatchResponse(rLayers, config.layerNames());
+    }
     var url = config
       .basePath()
       .map(overrideBasePath ->
@@ -99,13 +103,15 @@ public class VectorTilesResource {
 
     int minZoom = config.minZoom(Set.copyOf(rLayers));
     int maxZoom = config.maxZoom(Set.copyOf(rLayers));
-    return config
+    var tilejson = config
       .attribution()
       .map(attr -> new TileJson(url, envelope, attr, minZoom, maxZoom))
       .orElseGet(() -> {
         var feedInfos = getFeedInfos();
         return new TileJson(url, envelope, feedInfos, minZoom, maxZoom);
       });
+
+    return Response.ok(tilejson).build();
   }
 
   private List<FeedInfo> getFeedInfos() {

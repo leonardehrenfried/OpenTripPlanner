@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import org.opentripplanner.ext.vectortiles.VectorTilesResource;
@@ -175,6 +176,18 @@ public class VectorTileConfig implements VectorTilesResource.LayersParameters<La
    */
   public int maxZoom(Set<String> requestedLayers) {
     return selectLayers(requestedLayers).mapToInt(LayerParameters::maxZoom).max().orElse(MAX_ZOOM);
+  }
+
+  /**
+   * Returns true if for all layers passed in there is a configured layer with the same name.
+   */
+  public boolean containsLayers(Collection<String> requestedLayers) {
+    final var availableLayers = layerNames();
+    return availableLayers.containsAll(requestedLayers);
+  }
+
+  public Set<String> layerNames() {
+    return layers.stream().map(LayerParameters::name).collect(Collectors.toSet());
   }
 
   private Stream<LayerParameters<LayerType>> selectLayers(Set<String> requestedLayers) {
