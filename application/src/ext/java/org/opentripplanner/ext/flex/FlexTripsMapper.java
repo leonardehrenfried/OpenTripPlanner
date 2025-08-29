@@ -32,7 +32,9 @@ public class FlexTripsMapper {
 
     for (Trip trip : stopTimesByTrip.keys()) {
       var stopTimes = stopTimesByTrip.get(trip);
-      if (UnscheduledTrip.isUnscheduledTrip(stopTimes)) {
+      if (stopTimes.stream().noneMatch(st -> st.hasFlexWindow() || st.hasFlexibleStop())) {
+        continue;
+      } else if (UnscheduledTrip.isUnscheduledTrip(stopTimes)) {
         var timePenalty = builder.getFlexTimePenalty().getOrDefault(trip, TimePenalty.NONE);
         result.add(
           UnscheduledTrip.of(trip.getId())
@@ -52,10 +54,7 @@ public class FlexTripsMapper {
           trip.getId()
         );
         // result.add(new ContinuousPickupDropOffTrip(trip, stopTimes));
-      } else if (
-        stopTimes.size() < 2 &&
-        stopTimes.stream().anyMatch(st -> st.hasFlexWindow() || st.hasFlexibleStop())
-      ) {
+      } else if (stopTimes.size() < 2) {
         store.add(
           "InvalidFlexTrip",
           "Trip %s defines only a single flex stop time, which is invalid: https://gtfs.org/documentation/schedule/examples/flex/",
