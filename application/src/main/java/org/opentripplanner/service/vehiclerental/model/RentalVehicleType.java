@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.mobilitydata.gbfs.v2_3.vehicle_types.GBFSVehicleType;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.street.model.RentalFormFactor;

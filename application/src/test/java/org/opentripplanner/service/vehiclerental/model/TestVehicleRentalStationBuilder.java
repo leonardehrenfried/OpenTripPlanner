@@ -98,7 +98,7 @@ public class TestVehicleRentalStationBuilder {
       .withId(
         new FeedScopedId(
           TestVehicleRentalStationBuilder.NETWORK_1,
-          String.format("%s-%s", rentalFormFactor.name(), propulsionType.name())
+          "%s-%s".formatted(rentalFormFactor.name(), propulsionType.name())
         )
       )
       .withName(I18NString.of(rentalFormFactor.name()))

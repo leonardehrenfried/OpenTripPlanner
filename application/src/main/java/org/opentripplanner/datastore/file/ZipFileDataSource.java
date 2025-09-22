@@ -109,10 +109,11 @@ public class ZipFileDataSource
       // See https://github.com/opentripplanner/OpenTripPlanner/pull/4835 for a
       // discussion on this.
       LOG.info(
-        "Failed to read {}: {}\n" +
-        "Retrying with cp437 charset just in case it was 'bad entry name'.\n" +
-        "Consider sticking to ASCII characters for file names.\n" +
-        "See https://github.com/opentripplanner/OpenTripPlanner/pull/4835 for a discussion on this.",
+        """
+        Failed to read {}: {}
+        Retrying with cp437 charset just in case it was 'bad entry name'.
+        Consider sticking to ASCII characters for file names.
+        See https://github.com/opentripplanner/OpenTripPlanner/pull/4835 for a discussion on this.""",
         path(),
         ze.getLocalizedMessage(),
         ze

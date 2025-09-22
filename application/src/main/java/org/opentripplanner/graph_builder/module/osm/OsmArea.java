@@ -132,7 +132,7 @@ class OsmArea {
     OsmWay firstWay = null;
     for (Long endpoint : waysByEndpoint.keySet()) {
       List<OsmWay> list = waysByEndpoint.get(endpoint);
-      firstWay = list.get(0);
+      firstWay = list.getFirst();
       TLongList nodeRefs = firstWay.getNodeRefs();
       partialRing.addAll(nodeRefs);
       firstEndpoint = nodeRefs.get(0);
@@ -227,7 +227,7 @@ class OsmArea {
         OsmWay firstWay = null;
         for (Long entry : waysByEndpoint.keySet()) {
           List<OsmWay> list = waysByEndpoint.get(entry);
-          firstWay = list.get(0);
+          firstWay = list.getFirst();
           nodeRefs = firstWay.getNodeRefs();
           newRing.addAll(nodeRefs);
           firstEndpoint = nodeRefs.get(0);

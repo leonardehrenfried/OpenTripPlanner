@@ -21,7 +21,7 @@ public class OsmRelation extends OsmEntity {
 
   @Override
   public String url() {
-    return String.format("https://www.openstreetmap.org/relation/%d", getId());
+    return "https://www.openstreetmap.org/relation/%d".formatted(getId());
   }
 
   public boolean isBicycleRoute() {

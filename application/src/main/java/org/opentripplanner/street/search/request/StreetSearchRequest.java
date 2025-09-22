@@ -2,7 +2,7 @@ package org.opentripplanner.street.search.request;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.opentripplanner.astar.spi.AStarRequest;

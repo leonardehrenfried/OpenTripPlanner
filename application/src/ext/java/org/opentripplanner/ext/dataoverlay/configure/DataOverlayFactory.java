@@ -1,7 +1,7 @@
 package org.opentripplanner.ext.dataoverlay.configure;
 
 import java.io.File;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.dataoverlay.EdgeUpdaterModule;
 import org.opentripplanner.ext.dataoverlay.GenericDataFile;
 import org.opentripplanner.ext.dataoverlay.configuration.DataOverlayConfig;

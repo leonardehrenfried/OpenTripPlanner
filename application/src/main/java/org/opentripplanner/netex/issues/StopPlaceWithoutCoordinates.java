@@ -14,6 +14,6 @@ public class StopPlaceWithoutCoordinates implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(FMT, stopPlaceId);
+    return FMT.formatted(stopPlaceId);
   }
 }

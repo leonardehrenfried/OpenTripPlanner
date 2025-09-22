@@ -11,6 +11,6 @@ public record BogusShapeDistanceTraveled(StopTime st) implements DataImportIssue
 
   @Override
   public String getMessage() {
-    return String.format(FMT, st);
+    return FMT.formatted(st);
   }
 }

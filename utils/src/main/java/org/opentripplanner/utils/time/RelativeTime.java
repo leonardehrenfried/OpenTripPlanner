@@ -78,12 +78,12 @@ class RelativeTime {
 
   private String timeStrCompact() {
     return time.getSecond() == 0
-      ? String.format("%d:%02d", time.getHour(), time.getMinute())
-      : String.format("%d:%02d:%02d", time.getHour(), time.getMinute(), time.getSecond());
+      ? "%d:%02d".formatted(time.getHour(), time.getMinute())
+      : "%d:%02d:%02d".formatted(time.getHour(), time.getMinute(), time.getSecond());
   }
 
   private String timeStrLong() {
-    return String.format("%02d:%02d:%02d", time.getHour(), time.getMinute(), time.getSecond());
+    return "%02d:%02d:%02d".formatted(time.getHour(), time.getMinute(), time.getSecond());
   }
 
   private String appendDays(String body) {

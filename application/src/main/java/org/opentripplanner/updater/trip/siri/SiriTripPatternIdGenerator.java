@@ -29,8 +29,7 @@ class SiriTripPatternIdGenerator {
     Direction direction = trip.getDirection();
     String directionId = direction == Direction.UNKNOWN ? "" : Integer.toString(direction.gtfsCode);
 
-    String id = String.format(
-      "%s:%s:%03d:RT",
+    String id = "%s:%s:%03d:RT".formatted(
       routeId.getId(),
       directionId,
       counter.incrementAndGet()

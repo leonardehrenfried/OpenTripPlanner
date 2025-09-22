@@ -1,6 +1,6 @@
 package org.opentripplanner.transit.api.request;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.Envelope;
 import org.opentripplanner.transit.model.site.RegularStop;
 

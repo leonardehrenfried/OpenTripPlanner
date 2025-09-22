@@ -255,7 +255,7 @@ public class TransferIndexGenerator {
     }
 
     int stopPosInPattern = point.getStopPositionInPattern();
-    var scheduledPattern = scheduledPatterns.get(0);
+    var scheduledPattern = scheduledPatterns.getFirst();
     int stopIndex = scheduledPattern.stopIndex(stopPosInPattern);
     var sourcePoint = createTransferPointForPattern(trip, stopIndex);
     TPoint scheduledPoint = new TPoint(scheduledPattern, sourcePoint, trip, stopPosInPattern);

@@ -1,7 +1,7 @@
 package org.opentripplanner.standalone.configure;
 
 import jakarta.ws.rs.core.Application;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.datastore.api.DataSource;
 import org.opentripplanner.ext.emission.EmissionRepository;
 import org.opentripplanner.ext.stopconsolidation.StopConsolidationRepository;

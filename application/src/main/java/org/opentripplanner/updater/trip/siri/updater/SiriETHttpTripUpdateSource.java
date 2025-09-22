@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.io.OtpHttpClientException;
 import org.opentripplanner.updater.spi.HttpHeaders;
 import org.opentripplanner.updater.support.siri.SiriLoader;

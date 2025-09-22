@@ -199,7 +199,7 @@ public class SplitEdgeTurnRestrictionsTest {
           }
         })
     );
-    Geometry geometry = itineraries.get(0).legs().get(0).legGeometry();
+    Geometry geometry = itineraries.getFirst().legs().getFirst().legGeometry();
     return EncodedPolyline.encode(geometry).points();
   }
 }

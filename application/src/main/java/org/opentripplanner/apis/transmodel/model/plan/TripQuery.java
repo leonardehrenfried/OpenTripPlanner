@@ -152,30 +152,32 @@ public class TripQuery {
         GraphQLArgument.newArgument()
           .name("timetableView")
           .description(
-            "Search for the best trip options within a time window. If `true` two " +
-            "TripPatterns are considered optimal if one is better on arrival time" +
-            "(earliest wins) and the other is better on departure time (latest wins)." +
-            "In combination with `arriveBy` this parameter cover the following 3 use " +
-            "cases:\n\n" +
-            "\n" +
-            "  - Traveler want to find the best alternative within a time window. Set " +
-            "    `timetableView=true` and `arriveBy=false`. This is the default, and if " +
-            "    the intention of the traveler is unknown it gives the best result, " +
-            "    because it includes the two next use-cases. This option also work well " +
-            "    with paging. Setting the `arriveBy=true`, covers the same use-case, but " +
-            "    the input time is interpreted as latest-arrival-time, and not " +
-            "    earliest-departure-time.\n" +
-            "\n" +
-            "  - Traveler want to find the best alternative with departure after a " +
-            "    specific time. For example: I am at the station now and want to get " +
-            "    home as quickly as possible. Set `timetableView=false` and " +
-            "    `arriveBy=false`. Do not support paging.\n" +
-            "\n" +
-            "  - Traveler want to find the best alternative with arrival before a" +
-            "    specific time. For example going to a meeting. Set `timetableView=false` " +
-            "    and `arriveBy=true`. Do not support paging.\n" +
-            "\n" +
-            "Default: `true`"
+            """
+            Search for the best trip options within a time window. If `true` two \
+            TripPatterns are considered optimal if one is better on arrival time\
+            (earliest wins) and the other is better on departure time (latest wins).\
+            In combination with `arriveBy` this parameter cover the following 3 use \
+            cases:
+            
+            
+              - Traveler want to find the best alternative within a time window. Set \
+                `timetableView=true` and `arriveBy=false`. This is the default, and if \
+                the intention of the traveler is unknown it gives the best result, \
+                because it includes the two next use-cases. This option also work well \
+                with paging. Setting the `arriveBy=true`, covers the same use-case, but \
+                the input time is interpreted as latest-arrival-time, and not \
+                earliest-departure-time.
+            
+              - Traveler want to find the best alternative with departure after a \
+                specific time. For example: I am at the station now and want to get \
+                home as quickly as possible. Set `timetableView=false` and \
+                `arriveBy=false`. Do not support paging.
+            
+              - Traveler want to find the best alternative with arrival before a\
+                specific time. For example going to a meeting. Set `timetableView=false` \
+                and `arriveBy=true`. Do not support paging.
+            
+            Default: `true`"""
           )
           .type(Scalars.GraphQLBoolean)
           .build()

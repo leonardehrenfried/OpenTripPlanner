@@ -69,12 +69,12 @@ public class QualifiedModeSet implements Serializable {
           "Multiple non-walk modes provided " + filteredModesWithoutWalk
         );
       } else if (filteredModesWithoutWalk.isEmpty()) {
-        requestMode = filteredModes.get(0);
+        requestMode = filteredModes.getFirst();
       } else {
-        requestMode = filteredModesWithoutWalk.get(0);
+        requestMode = filteredModesWithoutWalk.getFirst();
       }
     } else if (!filteredModes.isEmpty()) {
-      requestMode = filteredModes.get(0);
+      requestMode = filteredModes.getFirst();
     }
 
     if (requestMode != null) {

@@ -51,7 +51,7 @@ public class ServerConfigTest {
 
     assertEquals(Duration.ofSeconds(7), config.apiProcessingTimeout());
     assertFalse(config.traceParameters().isEmpty());
-    var traceParameters = config.traceParameters().get(0);
+    var traceParameters = config.traceParameters().getFirst();
     assertEquals("IN-ID", traceParameters.httpRequestHeader());
     assertEquals("OUT-ID", traceParameters.httpResponseHeader());
     assertEquals("LOG-ID", traceParameters.logKey());

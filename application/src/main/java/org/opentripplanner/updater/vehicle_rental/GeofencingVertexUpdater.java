@@ -67,7 +67,7 @@ class GeofencingVertexUpdater {
       // here we just take the boundary of the geometry since we want to add a "no pass through"
       // restriction to any edge intersecting it
 
-      var network = generalBusinessAreas.get(0).id().getFeedId();
+      var network = generalBusinessAreas.getFirst().id().getFeedId();
       var polygons = generalBusinessAreas
         .stream()
         .map(GeofencingZone::geometry)

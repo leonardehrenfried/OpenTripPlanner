@@ -164,7 +164,7 @@ public class TurnRestrictionModule implements GraphBuilderModule {
       processVertex(intersectionVertex, turnRestriction);
     } else {
       throw new IllegalStateException(
-        String.format("Vertex %s is not an IntersectionVertex", vertex)
+        "Vertex %s is not an IntersectionVertex".formatted(vertex)
       );
     }
   }

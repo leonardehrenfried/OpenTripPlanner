@@ -57,8 +57,7 @@ public record Result(
   /** Create a compact String representation of an itinerary. */
   @Override
   public String toString() {
-    return String.format(
-      "%d %s %d %dm %s %s -- %s",
+    return "%d %s %d %dm %s %s -- %s".formatted(
       nTransfers,
       durationAsStr(),
       cost,

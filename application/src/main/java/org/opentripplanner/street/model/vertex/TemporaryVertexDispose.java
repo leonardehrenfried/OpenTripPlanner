@@ -109,6 +109,6 @@ class TemporaryVertexDispose {
   }
 
   private Vertex next() {
-    return todo.remove(todo.size() - 1);
+    return todo.removeLast();
   }
 }

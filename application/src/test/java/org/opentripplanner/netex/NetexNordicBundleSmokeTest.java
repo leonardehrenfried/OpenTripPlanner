@@ -96,7 +96,7 @@ public class NetexNordicBundleSmokeTest {
 
   private void assertAgencies(Collection<Agency> agencies) {
     assertEquals(1, agencies.size());
-    Agency a = list(agencies).get(0);
+    Agency a = list(agencies).getFirst();
     assertEquals("RUT:Authority:RUT", a.getId().getId());
     assertEquals("RUT", a.getName());
     assertNull(a.getUrl());
@@ -119,7 +119,7 @@ public class NetexNordicBundleSmokeTest {
 
   private void assertOperators(Collection<Operator> operators) {
     assertEquals(1, operators.size());
-    Operator o = list(operators).get(0);
+    Operator o = list(operators).getFirst();
     assertEquals("RUT:Operator:130c", o.getId().getId());
     assertEquals("Ruter", o.getName());
     assertNull(o.getUrl());
@@ -220,7 +220,7 @@ public class NetexNordicBundleSmokeTest {
       list.size(),
       "Notice not found: " + key + " -> <Notice " + code + ", " + text + ">\n\t" + map
     );
-    Notice n = list.get(0);
+    Notice n = list.getFirst();
     assertTrue(n.getId().toString().startsWith("EN:RUT:Notice:"));
     assertEquals(code, n.publicCode());
     assertEquals(text, n.text());
@@ -238,7 +238,7 @@ public class NetexNordicBundleSmokeTest {
   private void assetServiceCalendar(CalendarServiceData cal) {
     ArrayList<FeedScopedId> sIds = new ArrayList<>(cal.getServiceIds());
     assertEquals(2, sIds.size());
-    FeedScopedId serviceId1 = sIds.get(0);
+    FeedScopedId serviceId1 = sIds.getFirst();
     FeedScopedId serviceId2 = sIds.get(1);
 
     List<LocalDate> dates1 = cal.getServiceDatesForServiceId(serviceId1);

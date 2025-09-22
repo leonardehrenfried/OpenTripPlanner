@@ -12,7 +12,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class JsonSupport {
 
@@ -59,7 +58,7 @@ public class JsonSupport {
       @SuppressWarnings("ConstantConditions")
       URI uri = ClassLoader.getSystemClassLoader().getResource(path).toURI();
 
-      return jsonNodeFromPath(Paths.get(uri));
+      return jsonNodeFromPath(Path.of(uri));
     } catch (URISyntaxException e) {
       throw new RuntimeException(e.getMessage(), e);
     }

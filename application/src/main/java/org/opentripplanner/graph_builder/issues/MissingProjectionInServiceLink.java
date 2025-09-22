@@ -8,6 +8,6 @@ public record MissingProjectionInServiceLink(String serviceLinkId) implements Da
 
   @Override
   public String getMessage() {
-    return String.format(FMT, serviceLinkId);
+    return FMT.formatted(serviceLinkId);
   }
 }

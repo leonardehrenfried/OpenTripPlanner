@@ -15,11 +15,11 @@ public record LevelAmbiguous(String layerName, OsmEntity entity) implements Data
 
   @Override
   public String getMessage() {
-    return String.format(FMT, layerName, entity.getId());
+    return FMT.formatted(layerName, entity.getId());
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(HTMLFMT, entity.url(), layerName, entity.getId());
+    return HTMLFMT.formatted(entity.url(), layerName, entity.getId());
   }
 }

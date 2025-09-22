@@ -74,7 +74,7 @@ class OsmConfigTest {
     );
 
     OsmExtractParametersList subject = OsmConfig.mapOsmConfig(nodeAdapter, "osm", defaults);
-    var osmExtractParameters = subject.parameters.get(0);
+    var osmExtractParameters = subject.parameters.getFirst();
 
     assertEquals("https://foo.bar/osm.pbf", osmExtractParameters.source().toString());
     assertEquals(OsmTagMapperSource.FINLAND, osmExtractParameters.osmTagMapper());
@@ -116,7 +116,7 @@ class OsmConfigTest {
     );
 
     OsmExtractParametersList subject = OsmConfig.mapOsmConfig(nodeAdapter, "osm", defaults);
-    var atlantaOsmExtractParameters = subject.parameters.get(0);
+    var atlantaOsmExtractParameters = subject.parameters.getFirst();
 
     assertEquals(
       "https://foo.bar/atlanta-osm.pbf",
@@ -160,7 +160,7 @@ class OsmConfigTest {
     );
 
     OsmExtractParametersList subject = OsmConfig.mapOsmConfig(nodeAdapter, "osm", defaults);
-    var atlantaOsmExtractParameters = subject.parameters.get(0);
+    var atlantaOsmExtractParameters = subject.parameters.getFirst();
 
     assertEquals(
       "https://foo.bar/atlanta-osm.pbf",

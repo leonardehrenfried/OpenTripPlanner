@@ -3,7 +3,7 @@ package org.opentripplanner.netex.mapping;
 import jakarta.xml.bind.JAXBElement;
 import java.util.Map;
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.NonLocalizedString;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.netex.index.api.ReadOnlyHierarchicalMap;

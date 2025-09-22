@@ -1,6 +1,6 @@
 package org.opentripplanner.model.transfer;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.network.Route;
 import org.opentripplanner.transit.model.timetable.Trip;
 

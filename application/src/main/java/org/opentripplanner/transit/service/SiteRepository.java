@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.Envelope;
 import org.opentripplanner.framework.geometry.WgsCoordinate;
 import org.opentripplanner.transit.model.framework.FeedScopedId;

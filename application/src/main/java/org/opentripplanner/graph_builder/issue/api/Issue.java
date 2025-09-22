@@ -32,7 +32,7 @@ public class Issue implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(message, arguments);
+    return message.formatted(arguments);
   }
 
   @Override

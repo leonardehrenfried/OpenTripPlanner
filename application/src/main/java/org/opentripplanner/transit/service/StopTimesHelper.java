@@ -210,7 +210,7 @@ class StopTimesHelper {
     if (!pq.isEmpty()) {
       StopTimesInPattern stopTimes = new StopTimesInPattern(pattern);
       while (!pq.isEmpty()) {
-        stopTimes.times.add(0, pq.poll());
+        stopTimes.times.addFirst(pq.poll());
       }
       result.add(stopTimes);
     }

@@ -94,7 +94,7 @@ class ItineraryListFilterChainTest implements PlanTestConstants {
       .bicycle(T11_05, T11_06, B)
       .rail(30, T11_16, T11_20, C)
       .build();
-    assertEquals(300, shortBikeToStop.legs().get(0).distanceMeters());
+    assertEquals(300, shortBikeToStop.legs().getFirst().distanceMeters());
     // should do nothing to non-bike trips but remove a bike+ride route that cycles only for one minute
     assertEquals(List.of(i1), chain.filter(List.of(i1, shortBikeToStop)));
   }
@@ -188,7 +188,7 @@ class ItineraryListFilterChainTest implements PlanTestConstants {
 
     final List<RoutingError> routingErrors = chain.getRoutingErrors();
     assertEquals(1, routingErrors.size());
-    assertEquals(RoutingErrorCode.WALKING_BETTER_THAN_TRANSIT, routingErrors.get(0).code);
+    assertEquals(RoutingErrorCode.WALKING_BETTER_THAN_TRANSIT, routingErrors.getFirst().code);
   }
 
   @Test
@@ -206,7 +206,7 @@ class ItineraryListFilterChainTest implements PlanTestConstants {
     assertEquals(1, routingErrors.size());
     assertEquals(
       RoutingErrorCode.NO_TRANSIT_CONNECTION_IN_SEARCH_WINDOW,
-      routingErrors.get(0).code
+      routingErrors.getFirst().code
     );
   }
 

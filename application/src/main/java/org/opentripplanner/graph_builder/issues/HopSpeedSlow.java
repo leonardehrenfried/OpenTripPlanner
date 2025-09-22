@@ -23,8 +23,7 @@ public record HopSpeedSlow(
   @Override
   public String getMessage() {
     double kph = metersPerSecond * 3.6;
-    return String.format(
-      FMT,
+    return FMT.formatted(
       kph,
       distance,
       trip.getRoute().getId(),

@@ -117,7 +117,7 @@ public class RaptorPathToItineraryMapperTest {
     assertEquals(1, itinerary.legs().size(), "The wrong number of legs was returned");
     assertEquals(
       RaptorCostConverter.toOtpDomainCost(transitLegCost + egressLegCost),
-      itinerary.legs().get(0).generalizedCost(),
+      itinerary.legs().getFirst().generalizedCost(),
       "Incorrect cost returned"
     );
   }

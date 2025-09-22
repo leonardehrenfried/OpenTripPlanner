@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.dataoverlay.routing.DataOverlayContext;
 import org.opentripplanner.framework.application.OTPRequestTimeoutException;
 import org.opentripplanner.graph_builder.module.nearbystops.StreetNearbyStopFinder;

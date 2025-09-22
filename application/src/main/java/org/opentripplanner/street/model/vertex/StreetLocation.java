@@ -52,8 +52,7 @@ public class StreetLocation extends StreetVertex {
   }
 
   public boolean equals(Object o) {
-    if (o instanceof StreetLocation) {
-      StreetLocation other = (StreetLocation) o;
+    if (o instanceof StreetLocation other) {
       return other.getCoordinate().equals(getCoordinate());
     }
     return false;

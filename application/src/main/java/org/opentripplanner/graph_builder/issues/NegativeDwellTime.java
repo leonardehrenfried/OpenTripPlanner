@@ -8,6 +8,6 @@ public record NegativeDwellTime(StopTime stop) implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(FMT, stop);
+    return FMT.formatted(stop);
   }
 }

@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +89,7 @@ public class NEDGridCoverageFactoryImpl implements ElevationGridCoverageFactory 
     }
     if (!cacheDirectory.canRead() || !cacheDirectory.canWrite()) {
       throw new RuntimeException(
-        String.format("Can't write and write NED cache at '%s'. Check permissions.", cacheDirectory)
+        "Can't write and write NED cache at '%s'. Check permissions.".formatted(cacheDirectory)
       );
     }
     boolean missingDatum = false;
@@ -182,7 +183,7 @@ public class NEDGridCoverageFactoryImpl implements ElevationGridCoverageFactory 
    */
   private void fetchDatum() throws Exception {
     LOG.info("Attempting to fetch datum files from OTP project web server...");
-    URL datumUrl = new URL("http://dev.opentripplanner.org/resources/datum.zip");
+    URL datumUrl = URI.create("http://dev.opentripplanner.org/resources/datum.zip").toURL();
     ZipInputStream zis = new ZipInputStream(datumUrl.openStream());
     /* Silly boilerplate because Java has no simple unzip-to-directory function. */
     for (ZipEntry entry = zis.getNextEntry(); entry != null; entry = zis.getNextEntry()) {

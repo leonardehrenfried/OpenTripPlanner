@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.Consumer;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.astar.spi.AStarEdge;
 import org.opentripplanner.framework.i18n.I18NString;
@@ -36,8 +36,7 @@ public abstract class Edge implements AStarEdge<State, Edge, Vertex>, Serializab
    */
   protected Edge(Vertex v1, Vertex v2) {
     if (v1 == null || v2 == null) {
-      String err = String.format(
-        "%s constructed with null vertex : %s %s",
+      String err = "%s constructed with null vertex : %s %s".formatted(
         this.getClass(),
         v1,
         v2

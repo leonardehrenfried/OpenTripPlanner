@@ -154,7 +154,7 @@ public class RealtimeVehicleMatcherTest {
 
     // ensure that gtfs-rt was matched to an OTP pattern correctly
     assertEquals(1, service.getRealtimeVehicles(pattern1).size());
-    var nextStop = service.getRealtimeVehicles(pattern1).get(0).stop();
+    var nextStop = service.getRealtimeVehicles(pattern1).getFirst().stop();
     assertEquals("F:stop-20", nextStop.get().stop().getId().toString());
   }
 
@@ -208,7 +208,7 @@ public class RealtimeVehicleMatcherTest {
     var realtimeVehicles = service.getRealtimeVehicles(pattern);
     assertEquals(1, realtimeVehicles.size());
 
-    var parsedVehicle = realtimeVehicles.get(0);
+    var parsedVehicle = realtimeVehicles.getFirst();
     assertEquals(tripId, parsedVehicle.trip().getId().getId());
     assertEquals(new WgsCoordinate(1, 1), parsedVehicle.coordinates().get());
     assertEquals(30, parsedVehicle.heading().get());

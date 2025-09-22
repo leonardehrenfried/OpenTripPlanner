@@ -82,7 +82,7 @@ class TripPatternMapperTest {
 
     assertEquals(1, r.tripPattern().getScheduledTimetable().getTripTimes().size());
 
-    TripTimes tripTimes = r.tripPattern().getScheduledTimetable().getTripTimes().get(0);
+    TripTimes tripTimes = r.tripPattern().getScheduledTimetable().getTripTimes().getFirst();
 
     assertEquals(4, tripTimes.getNumStops());
 

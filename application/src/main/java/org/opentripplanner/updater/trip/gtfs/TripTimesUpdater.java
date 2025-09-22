@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.model.PickDrop;
 import org.opentripplanner.model.StopTime;

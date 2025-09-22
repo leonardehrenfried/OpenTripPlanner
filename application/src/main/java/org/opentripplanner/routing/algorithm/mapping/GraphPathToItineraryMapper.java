@@ -128,7 +128,7 @@ public class GraphPathToItineraryMapper {
 
       List<WalkStep> walkSteps = leg.listWalkSteps();
       if (walkSteps.size() > 0) {
-        previousStep = walkSteps.get(walkSteps.size() - 1);
+        previousStep = walkSteps.getLast();
       } else {
         previousStep = null;
       }
@@ -304,16 +304,16 @@ public class GraphPathToItineraryMapper {
     //This gets nicer names instead of osm:node:id when changing mode of transport
     //Names are generated from all the streets in a corner, same as names in origin and destination
     //We use name in TemporaryStreetLocation since this name generation already happened when temporary location was generated
-    if (vertex instanceof StreetVertex && !(vertex instanceof TemporaryStreetLocation)) {
-      name = ((StreetVertex) vertex).getIntersectionName();
+    if (vertex instanceof StreetVertex streetVertex && !(vertex instanceof TemporaryStreetLocation)) {
+      name = streetVertex.getIntersectionName();
     }
 
-    if (vertex instanceof TransitStopVertex) {
-      return Place.forStop(((TransitStopVertex) vertex).getStop());
-    } else if (vertex instanceof VehicleRentalPlaceVertex) {
-      return Place.forVehicleRentalPlace((VehicleRentalPlaceVertex) vertex);
-    } else if (vertex instanceof VehicleParkingEntranceVertex) {
-      return Place.forVehicleParkingEntrance((VehicleParkingEntranceVertex) vertex, state);
+    if (vertex instanceof TransitStopVertex stopVertex) {
+      return Place.forStop(stopVertex.getStop());
+    } else if (vertex instanceof VehicleRentalPlaceVertex placeVertex) {
+      return Place.forVehicleRentalPlace(placeVertex);
+    } else if (vertex instanceof VehicleParkingEntranceVertex entranceVertex) {
+      return Place.forVehicleParkingEntrance(entranceVertex, state);
     } else {
       return Place.normal(vertex, name);
     }
@@ -323,7 +323,7 @@ public class GraphPathToItineraryMapper {
    * Generate a flex leg from the states belonging to the flex leg
    */
   private Leg generateFlexLeg(List<State> states) {
-    State fromState = states.get(0);
+    State fromState = states.getFirst();
     State toState = states.get(1);
     FlexTripEdge flexEdge = (FlexTripEdge) toState.backEdge;
     ZonedDateTime startTime = fromState.getTime().atZone(timeZone);
@@ -358,8 +358,8 @@ public class GraphPathToItineraryMapper {
       .map(State::getBackEdge)
       .toList();
 
-    State firstState = states.get(0);
-    State lastState = states.get(states.size() - 1);
+    State firstState = states.getFirst();
+    State lastState = states.getLast();
 
     double distanceMeters = edges.stream().mapToDouble(Edge::getDistanceMeters).sum();
 

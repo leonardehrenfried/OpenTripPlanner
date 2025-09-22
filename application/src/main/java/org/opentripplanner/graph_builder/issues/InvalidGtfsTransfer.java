@@ -8,6 +8,6 @@ public record InvalidGtfsTransfer(String reason, Transfer transfer) implements D
 
   @Override
   public String getMessage() {
-    return String.format(FMT, reason, transfer);
+    return FMT.formatted(reason, transfer);
   }
 }

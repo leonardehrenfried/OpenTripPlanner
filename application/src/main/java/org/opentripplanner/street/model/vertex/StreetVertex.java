@@ -49,9 +49,9 @@ public abstract class StreetVertex extends Vertex {
     List<I18NString> uniqueNames = new ArrayList<>(uniqueNameSet);
 
     if (uniqueNames.size() > 1) {
-      return new LocalizedString("corner", uniqueNames.get(0), uniqueNames.get(1));
+      return new LocalizedString("corner", uniqueNames.getFirst(), uniqueNames.get(1));
     } else if (uniqueNames.size() == 1) {
-      return uniqueNames.get(0);
+      return uniqueNames.getFirst();
     } else {
       return new LocalizedString("unnamedStreet");
     }
@@ -62,8 +62,8 @@ public abstract class StreetVertex extends Vertex {
       .stream()
       .anyMatch(
         edge ->
-          edge instanceof StreetEdge &&
-          ((StreetEdge) edge).getPermission().allows(TraverseMode.WALK)
+          edge instanceof StreetEdge se &&
+          se.getPermission().allows(TraverseMode.WALK)
       );
   }
 
@@ -75,7 +75,7 @@ public abstract class StreetVertex extends Vertex {
       .stream()
       .anyMatch(
         edge ->
-          edge instanceof StreetEdge && ((StreetEdge) edge).getPermission().allows(TraverseMode.CAR)
+          edge instanceof StreetEdge se && se.getPermission().allows(TraverseMode.CAR)
       );
   }
 

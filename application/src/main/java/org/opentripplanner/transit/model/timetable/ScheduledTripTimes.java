@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.error.OtpError;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.transit.model.basic.Accessibility;

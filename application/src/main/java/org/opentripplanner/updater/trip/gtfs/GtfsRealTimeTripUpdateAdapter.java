@@ -27,7 +27,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.framework.i18n.NonLocalizedString;
 import org.opentripplanner.gtfs.mapping.TransitModeMapper;

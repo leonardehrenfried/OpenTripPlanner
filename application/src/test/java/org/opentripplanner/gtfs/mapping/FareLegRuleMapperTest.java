@@ -68,7 +68,7 @@ class FareLegRuleMapperTest {
           var mappedRules = List.copyOf(ruleMapper.map(List.of(obaRule)));
           assertEquals(1, mappedRules.size());
 
-          var otpRule = mappedRules.get(0);
+          var otpRule = mappedRules.getFirst();
           assertEquals(otpRule.fareDistance(), tc.expectedDistance);
           assert (otpRule.fareProducts().size() == 1);
           assert (otpRule.fareProducts().contains(internalProduct));
@@ -115,7 +115,7 @@ class FareLegRuleMapperTest {
     var mappedRules = List.copyOf(ruleMapper.map(List.of(obaRule)));
     assertEquals(1, mappedRules.size());
 
-    var otpRule = mappedRules.get(0);
+    var otpRule = mappedRules.getFirst();
     assert (otpRule.fareProducts().size() == 2);
     assert (otpRule.fareProducts().contains(internalCashProduct));
     assert (otpRule.fareProducts().contains(internalCreditProduct));

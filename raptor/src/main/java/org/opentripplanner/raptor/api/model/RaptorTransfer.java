@@ -31,6 +31,6 @@ public interface RaptorTransfer {
   /** Call this from toString */
   default String asString() {
     String duration = DurationUtils.durationToStr(durationInSeconds());
-    return String.format("On-Street %s ~ %d", duration, stop());
+    return "On-Street %s ~ %d".formatted(duration, stop());
   }
 }

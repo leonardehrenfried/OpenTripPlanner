@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.raptor.api.model.RaptorStopNameResolver;
 import org.opentripplanner.raptor.api.model.RaptorTripSchedule;
 import org.opentripplanner.raptor.api.path.RaptorPath;
@@ -125,7 +125,7 @@ public class OptimizePathDomainService<T extends RaptorTripSchedule> {
   }
 
   private static <T> T last(List<T> list) {
-    return list.get(list.size() - 1);
+    return list.getLast();
   }
 
   private Set<OptimizedPathTail<T>> findBestTransferOption(

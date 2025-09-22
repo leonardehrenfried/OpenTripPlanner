@@ -2,7 +2,7 @@ package org.opentripplanner.gtfs.mapping;
 
 import java.util.Collection;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.fares.model.FareDistance;
 import org.opentripplanner.ext.fares.model.FareLegRule;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;

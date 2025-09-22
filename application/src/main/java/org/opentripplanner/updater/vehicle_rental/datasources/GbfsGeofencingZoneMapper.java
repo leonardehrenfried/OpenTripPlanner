@@ -4,7 +4,7 @@ import com.google.common.hash.Hashing;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.Geometry;
 import org.mobilitydata.gbfs.v2_3.geofencing_zones.GBFSFeature;
 import org.mobilitydata.gbfs.v2_3.geofencing_zones.GBFSGeofencingZones;
@@ -57,8 +57,8 @@ class GbfsGeofencingZoneMapper {
     if (!StringUtils.hasValue(name)) {
       name = fallbackId(g);
     }
-    var dropOffBanned = !f.getProperties().getRules().get(0).getRideAllowed();
-    var passThroughBanned = !f.getProperties().getRules().get(0).getRideThroughAllowed();
+    var dropOffBanned = !f.getProperties().getRules().getFirst().getRideAllowed();
+    var passThroughBanned = !f.getProperties().getRules().getFirst().getRideThroughAllowed();
     return new GeofencingZone(
       new FeedScopedId(systemId, name),
       I18NString.of(name),

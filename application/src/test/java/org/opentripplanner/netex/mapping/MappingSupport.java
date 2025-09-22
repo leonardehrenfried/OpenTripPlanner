@@ -39,7 +39,7 @@ public class MappingSupport {
   @SuppressWarnings("unchecked")
   public static <T extends VersionOfObjectRefStructure> T createRef(String id, Class<T> clazz) {
     try {
-      return (T) clazz.newInstance().withRef(id);
+      return (T) clazz.getDeclaredConstructor().newInstance().withRef(id);
     } catch (Exception e) {
       throw new RuntimeException(e.getLocalizedMessage(), e);
     }

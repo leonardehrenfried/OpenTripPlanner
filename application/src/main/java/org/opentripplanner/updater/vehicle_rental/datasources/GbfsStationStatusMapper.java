@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.mobilitydata.gbfs.v2_3.station_status.GBFSStation;
 import org.mobilitydata.gbfs.v2_3.station_status.GBFSVehicleTypesAvailable;
 import org.opentripplanner.service.vehiclerental.model.RentalVehicleType;

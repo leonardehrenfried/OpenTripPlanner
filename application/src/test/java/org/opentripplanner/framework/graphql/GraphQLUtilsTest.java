@@ -103,7 +103,7 @@ class GraphQLUtilsTest {
 
     // Wildcard locale from env should not override locale from local context if it's defined
 
-    var wildcardLocale = new Locale("*");
+    var wildcardLocale = Locale.of("*");
 
     var envWithWildcardLocale = DataFetchingEnvironmentImpl.newDataFetchingEnvironment(
       executionContext

@@ -17,11 +17,11 @@ public record FloorNumberUnknownGuessedFromAltitude(
 
   @Override
   public String getMessage() {
-    return String.format(FMT, entity.getId(), layer, floorNumber);
+    return FMT.formatted(entity.getId(), layer, floorNumber);
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(HTMLFMT, entity.url(), entity.getId(), layer, floorNumber);
+    return HTMLFMT.formatted(entity.url(), entity.getId(), layer, floorNumber);
   }
 }

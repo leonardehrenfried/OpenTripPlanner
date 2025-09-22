@@ -68,7 +68,7 @@ class DemConfigTest {
     );
 
     DemExtractParametersList subject = DemConfig.mapDemConfig(nodeAdapter, "dem", defaults);
-    var demExtractParameters = subject.demExtracts().get(0);
+    var demExtractParameters = subject.demExtracts().getFirst();
 
     assertEquals("https://foo.bar/dem.tif", demExtractParameters.source().toString());
     assertEquals(0.1, demExtractParameters.elevationUnitMultiplier());
@@ -106,7 +106,7 @@ class DemConfigTest {
     );
 
     DemExtractParametersList subject = DemConfig.mapDemConfig(nodeAdapter, "dem", defaults);
-    var atlantaDemExtractParameters = subject.demExtracts().get(0);
+    var atlantaDemExtractParameters = subject.demExtracts().getFirst();
 
     assertEquals(
       "https://foo.bar/atlanta-dem.tif",
@@ -147,7 +147,7 @@ class DemConfigTest {
     );
 
     DemExtractParametersList subject = DemConfig.mapDemConfig(nodeAdapter, "dem", defaults);
-    var atlantaDemExtractParameters = subject.demExtracts().get(0);
+    var atlantaDemExtractParameters = subject.demExtracts().getFirst();
 
     assertEquals(
       "https://foo.bar/atlanta-dem.tif",

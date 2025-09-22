@@ -78,8 +78,8 @@ class ViaLocationMapperTest {
     var secondVia = result.get(1);
 
     assertThat(secondVia.coordinates()).hasSize(1);
-    assertEquals(SECOND_LAT, secondVia.coordinates().get(0).latitude());
-    assertEquals(SECOND_LON, secondVia.coordinates().get(0).longitude());
+    assertEquals(SECOND_LAT, secondVia.coordinates().getFirst().latitude());
+    assertEquals(SECOND_LON, secondVia.coordinates().getFirst().longitude());
     assertFalse(secondVia.isPassThroughLocation());
 
     var thirdVia = result.get(2);
@@ -88,8 +88,8 @@ class ViaLocationMapperTest {
     assertEquals(MIN_WAIT_TIME_THIRD, thirdVia.minimumWaitTime());
     assertEquals(EXPECTED_IDS_AS_STRING_THIRD, thirdVia.stopLocationIds().toString());
     assertThat(thirdVia.coordinates()).hasSize(1);
-    assertEquals(THIRD_LAT, thirdVia.coordinates().get(0).latitude());
-    assertEquals(THIRD_LON, thirdVia.coordinates().get(0).longitude());
+    assertEquals(THIRD_LAT, thirdVia.coordinates().getFirst().latitude());
+    assertEquals(THIRD_LON, thirdVia.coordinates().getFirst().longitude());
     assertFalse(thirdVia.isPassThroughLocation());
 
     assertEquals(

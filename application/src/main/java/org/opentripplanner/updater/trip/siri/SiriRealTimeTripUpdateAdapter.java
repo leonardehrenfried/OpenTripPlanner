@@ -12,7 +12,7 @@ import static org.opentripplanner.updater.trip.UpdateIncrementality.FULL_DATASET
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.RealTimeTripUpdate;
 import org.opentripplanner.model.Timetable;
 import org.opentripplanner.transit.model.framework.DataValidationException;

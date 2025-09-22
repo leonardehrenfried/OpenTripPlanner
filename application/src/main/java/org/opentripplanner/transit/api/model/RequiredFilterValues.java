@@ -1,7 +1,7 @@
 package org.opentripplanner.transit.api.model;
 
 import java.util.Collection;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * {@link RequiredFilterValues} is a subclass of {@link FilterValues} that requires at least one

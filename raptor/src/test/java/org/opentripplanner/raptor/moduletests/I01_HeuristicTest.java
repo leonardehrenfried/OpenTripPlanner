@@ -136,8 +136,7 @@ public class I01_HeuristicTest implements RaptorTestConstants {
     for (int i = 0; i < expected.length; i++) {
       assertTrue(
         expected[i] >= actual[i],
-        String.format(
-          "Value %d is greater than %d for index %d in %s",
+        "Value %d is greater than %d for index %d in %s".formatted(
           actual[i],
           expected[i],
           i,

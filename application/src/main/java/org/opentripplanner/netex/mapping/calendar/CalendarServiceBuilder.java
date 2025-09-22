@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.calendar.ServiceCalendar;
 import org.opentripplanner.model.calendar.ServiceCalendarDate;
 import org.opentripplanner.model.calendar.ServiceDateInterval;
@@ -78,6 +78,6 @@ public class CalendarServiceBuilder {
    * of code adding dates to the calendar.
    */
   FeedScopedId createServiceId() {
-    return scopedIdFactory.createId(String.format("S%06d", ++counter));
+    return scopedIdFactory.createId("S%06d".formatted(++counter));
   }
 }

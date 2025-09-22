@@ -115,7 +115,7 @@ public class CompactLineStringUtilsTest {
     StringBuilder sb = new StringBuilder();
     sb.append("[");
     for (int i = 0; i < data.length; i++) {
-      sb.append(String.format("%02X", data[i] & 0xFF));
+      sb.append("%02X".formatted(data[i] & 0xFF));
       if (i < data.length - 1) sb.append(",");
     }
     sb.append("]");

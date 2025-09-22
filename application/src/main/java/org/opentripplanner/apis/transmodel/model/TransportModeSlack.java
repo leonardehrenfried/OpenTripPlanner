@@ -90,7 +90,7 @@ public class TransportModeSlack {
   }
 
   public static String slackByGroupDescription(String name) {
-    return String.format("List of %s for a given set of modes.", name);
+    return "List of %s for a given set of modes.".formatted(name);
   }
 
   public static String slackByGroupDescription(
@@ -147,8 +147,7 @@ public class TransportModeSlack {
   }
 
   private static String defaultDescription(String groupName) {
-    return String.format(
-      "This is the default value used, if not overridden by the '%s'.",
+    return "This is the default value used, if not overridden by the '%s'.".formatted(
       groupName
     );
   }

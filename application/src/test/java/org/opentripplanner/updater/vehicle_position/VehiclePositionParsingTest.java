@@ -18,7 +18,7 @@ public class VehiclePositionParsingTest {
 
     assertEquals(627, positions.size());
 
-    var first = positions.get(0);
+    var first = positions.getFirst();
     assertEquals("49195152", first.getTrip().getTripId());
   }
 
@@ -31,7 +31,7 @@ public class VehiclePositionParsingTest {
 
     assertEquals(570, positions.size());
 
-    var first = positions.get(0);
+    var first = positions.getFirst();
     assertEquals("49195157", first.getTrip().getTripId());
   }
 

@@ -428,8 +428,8 @@ public class OsmDatabase {
           Point p = null;
           if (intersection.isEmpty()) {
             continue;
-          } else if (intersection instanceof Point) {
-            p = (Point) intersection;
+          } else if (intersection instanceof Point point) {
+            p = point;
           } else {
             /*
              * This should never happen (intersection between two lines should be a

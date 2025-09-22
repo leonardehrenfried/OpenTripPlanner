@@ -28,8 +28,7 @@ public class Egress extends AbstractStopArrival {
 
   @Override
   public String toString() {
-    return String.format(
-      "Egress { round: %d, stop: %d, arrival-time: %s $%d }",
+    return "Egress { round: %d, stop: %d, arrival-time: %s $%d }".formatted(
       round(),
       stop(),
       TimeUtils.timeToStrCompact(arrivalTime()),

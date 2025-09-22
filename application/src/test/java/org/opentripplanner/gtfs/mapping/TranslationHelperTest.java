@@ -17,8 +17,8 @@ import org.opentripplanner.framework.i18n.I18NString;
 public class TranslationHelperTest {
 
   private static final String LANGUAGE_FEED = "fi";
-  private static final Locale LOCALE_FEED = new Locale(LANGUAGE_FEED);
-  private static final Locale LOCALE_SV = new Locale("sv");
+  private static final Locale LOCALE_FEED = Locale.of(LANGUAGE_FEED);
+  private static final Locale LOCALE_SV = Locale.of("sv");
 
   private static final Collection<Translation> ALL_TRANSLATIONS = new ArrayList<>();
   private static final Collection<FeedInfo> FEED_INFOS = new ArrayList<>();

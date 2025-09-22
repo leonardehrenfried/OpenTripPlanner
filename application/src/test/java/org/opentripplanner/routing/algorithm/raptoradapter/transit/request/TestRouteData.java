@@ -122,12 +122,12 @@ public class TestRouteData {
   }
 
   public TestRouteData firstTrip() {
-    this.currentTrip = trips.get(0);
+    this.currentTrip = trips.getFirst();
     return this;
   }
 
   public TestRouteData lastTrip() {
-    this.currentTrip = trips.get(trips.size() - 1);
+    this.currentTrip = trips.getLast();
     return this;
   }
 

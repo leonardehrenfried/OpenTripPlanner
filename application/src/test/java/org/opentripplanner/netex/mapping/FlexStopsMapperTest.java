@@ -183,7 +183,7 @@ class FlexStopsMapperTest {
     var area = (FlexibleArea) flexibleStopPlace
       .getAreas()
       .getFlexibleAreaOrFlexibleAreaRefOrHailAndRideArea()
-      .get(0);
+      .getFirst();
     area.withKeyList(KEY_LIST_UNRESTRICTED_PUBLIC_TRANSPORT_AREAS);
     assertGroupStopMapping(flexibleStopPlace);
   }

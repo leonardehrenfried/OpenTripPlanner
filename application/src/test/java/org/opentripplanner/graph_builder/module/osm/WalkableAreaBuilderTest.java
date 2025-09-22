@@ -96,7 +96,7 @@ public class WalkableAreaBuilderTest {
       .distinct()
       .toList();
     assertEquals(1, areas.size());
-    assertFalse(areas.get(0).getAreas().isEmpty());
+    assertFalse(areas.getFirst().getAreas().isEmpty());
   }
 
   @Test
@@ -113,7 +113,7 @@ public class WalkableAreaBuilderTest {
       .distinct()
       .toList();
     assertEquals(1, areas.size());
-    assertFalse(areas.get(0).getAreas().isEmpty());
+    assertFalse(areas.getFirst().getAreas().isEmpty());
   }
 
   // test that entrance node in a stop area relation does not link across different levels and layers
@@ -220,7 +220,7 @@ public class WalkableAreaBuilderTest {
       .distinct()
       .toList();
     assertEquals(1, areas.size());
-    assertFalse(areas.get(0).getAreas().isEmpty());
+    assertFalse(areas.getFirst().getAreas().isEmpty());
   }
 
   private static boolean hasNodeId(AreaEdge a, long nodeId) {

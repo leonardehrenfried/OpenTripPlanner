@@ -146,9 +146,9 @@ public class CompareIntArrays {
   }
 
   private void addResult(int i, int u, int v) {
-    hh += String.format("%8d ", i);
-    aValues += String.format("%8s ", toStr(u));
-    bValues += String.format("%8s ", toStr(v));
+    hh += "%8d ".formatted(i);
+    aValues += "%8s ".formatted(toStr(u));
+    bValues += "%8s ".formatted(toStr(v));
   }
 
   private String toStr(int v) {
@@ -159,12 +159,11 @@ public class CompareIntArrays {
     int w = Math.max(4, Math.max(aName.length(), bName.length()));
     String f = "%-" + w + "s  %s%n";
     String result = label + '\n';
-    result += String.format(f, "Stop", hh);
-    result += String.format(f, aName, aValues);
-    result += String.format(f, bName, bValues);
+    result += f.formatted("Stop", hh);
+    result += f.formatted(aName, aValues);
+    result += f.formatted(bName, bValues);
     if (diffTot() != 0) {
-      result += String.format(
-        "Number of diffs: %d of %d, %s better: %d and not reached: %d, %s better: %d and not reached: %d.%n",
+      result += "Number of diffs: %d of %d, %s better: %d and not reached: %d, %s better: %d and not reached: %d.%n".formatted(
         diffTot(),
         size,
         aName,

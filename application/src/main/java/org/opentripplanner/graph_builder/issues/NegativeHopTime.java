@@ -10,6 +10,6 @@ public record NegativeHopTime(StopTime st0, StopTime st1) implements DataImportI
 
   @Override
   public String getMessage() {
-    return String.format(FMT, st0, st1);
+    return FMT.formatted(st0, st1);
   }
 }

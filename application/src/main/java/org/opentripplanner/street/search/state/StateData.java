@@ -123,7 +123,7 @@ public class StateData implements Cloneable {
         "Unable to create only a single state for %s".formatted(request)
       );
     }
-    return baseCaseDatas.get(0);
+    return baseCaseDatas.getFirst();
   }
 
   private static List<StateData> getInitialStateDatas(

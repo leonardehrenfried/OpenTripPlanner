@@ -228,7 +228,7 @@ class RealtimeVehiclePatternMatcher {
           .filter(stop -> stop.getId().getId().equals(vehiclePosition.getStopId()))
           .toList();
         if (matchedStops.size() == 1) {
-          newVehicle.withStop(matchedStops.get(0));
+          newVehicle.withStop(matchedStops.getFirst());
         } else {
           LOG.warn(
             "Stop ID {} is not in trip {}. Not setting stopRelationship.",

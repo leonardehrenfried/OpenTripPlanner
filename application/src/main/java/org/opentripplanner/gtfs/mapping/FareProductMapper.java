@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Currency;
 import java.util.HashSet;
 import java.util.Set;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.fare.FareMedium;
 import org.opentripplanner.model.fare.FareProduct;
 import org.opentripplanner.model.fare.RiderCategory;

@@ -55,7 +55,7 @@ public class WordList {
       case 1:
         return words.getFirst();
       default:
-        var buf = new StringBuilder(words.get(0));
+        var buf = new StringBuilder(words.getFirst());
         for (int i = 1; i < words.size() - 1; i++) {
           buf.append(", ").append(words.get(i));
         }

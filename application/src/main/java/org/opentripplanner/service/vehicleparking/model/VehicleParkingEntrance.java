@@ -2,7 +2,7 @@ package org.opentripplanner.service.vehicleparking.model;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.geometry.WgsCoordinate;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.street.model.vertex.StreetVertex;

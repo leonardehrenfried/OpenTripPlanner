@@ -4,7 +4,7 @@ import java.time.ZoneId;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.Geometry;
 import org.opentripplanner.framework.geometry.WgsCoordinate;
 import org.opentripplanner.framework.i18n.I18NString;

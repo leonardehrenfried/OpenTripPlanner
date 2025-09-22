@@ -1,7 +1,7 @@
 package org.opentripplanner.street.search.state;
 
 import java.util.Set;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.routing.algorithm.mapping.StreetModeToRentalTraverseModeMapper;
 import org.opentripplanner.street.model.RentalFormFactor;
 import org.opentripplanner.street.model.edge.Edge;

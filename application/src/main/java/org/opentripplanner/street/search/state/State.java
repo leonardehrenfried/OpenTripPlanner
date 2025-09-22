@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.astar.spi.AStarState;
 import org.opentripplanner.ext.dataoverlay.routing.DataOverlayContext;
 import org.opentripplanner.routing.api.request.preference.RoutingPreferences;

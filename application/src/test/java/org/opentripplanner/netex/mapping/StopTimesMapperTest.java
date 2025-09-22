@@ -67,14 +67,14 @@ public class StopTimesMapperTest {
 
     assertEquals(4, stopTimes.size());
 
-    assertStop(stopTimes.get(0), "NSR:Quay:1", 18000, "Bergen", List.of("Stavanger"));
+    assertStop(stopTimes.getFirst(), "NSR:Quay:1", 18000, "Bergen", List.of("Stavanger"));
     assertStop(stopTimes.get(1), "NSR:Quay:2", 18240, "Bergen", List.of("Stavanger"));
     assertStop(stopTimes.get(2), "NSR:Quay:3", 18600, "Stavanger", List.of("Bergen"));
     assertStop(stopTimes.get(3), "NSR:Quay:4", 18900, "Stavanger", List.of("Bergen"));
 
     Map<String, StopTime> map = result.stopTimeByNetexId;
 
-    assertEquals(stopTimes.get(0), map.get("TTPT-1"));
+    assertEquals(stopTimes.getFirst(), map.get("TTPT-1"));
     assertEquals(stopTimes.get(1), map.get("TTPT-2"));
     assertEquals(stopTimes.get(2), map.get("TTPT-3"));
     assertEquals(stopTimes.get(3), map.get("TTPT-4"));
@@ -104,7 +104,7 @@ public class StopTimesMapperTest {
 
     assertEquals(4, points.size(), "Expected StopPointInJourneyPattern.size to be 4");
 
-    points.get(0).withIsWaitPoint(true);
+    points.getFirst().withIsWaitPoint(true);
     points.get(1).withIsWaitPoint(true);
     points.get(2).withIsWaitPoint(false);
     points.get(3).withIsWaitPoint(null);
@@ -124,7 +124,7 @@ public class StopTimesMapperTest {
         .findAny()
         .orElseThrow();
 
-    var firstPassingTime = findPassingTime.apply(points.get(0).getId());
+    var firstPassingTime = findPassingTime.apply(points.getFirst().getId());
     var thirdPassingTime = findPassingTime.apply(points.get(2).getId());
     var fourthPassingTime = findPassingTime.apply(points.get(3).getId());
 
@@ -160,7 +160,7 @@ public class StopTimesMapperTest {
     assertEquals(4, stopTimes.size(), "Exptected 4 StopTime objects");
 
     Assertions.assertAll(
-      () -> assertEquals(1, stopTimes.get(0).getTimepoint(), "StopTime expected to be waitPoint"),
+      () -> assertEquals(1, stopTimes.getFirst().getTimepoint(), "StopTime expected to be waitPoint"),
       () ->
         assertNotEquals(
           1,

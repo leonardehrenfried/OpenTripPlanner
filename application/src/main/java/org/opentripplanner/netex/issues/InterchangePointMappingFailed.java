@@ -30,6 +30,6 @@ public class InterchangePointMappingFailed implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(MSG, detail, interchangeId, point, sjId, sspId);
+    return MSG.formatted(detail, interchangeId, point, sjId, sspId);
   }
 }

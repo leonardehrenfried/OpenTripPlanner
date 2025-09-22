@@ -105,7 +105,7 @@ public class CalendarServiceDataFactoryImpl {
       return null;
     }
     if (calendars.size() == 1) {
-      return calendars.get(0);
+      return calendars.getFirst();
     }
     throw new MultipleCalendarsForServiceIdException(serviceId);
   }

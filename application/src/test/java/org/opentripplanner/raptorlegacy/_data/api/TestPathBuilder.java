@@ -2,7 +2,7 @@ package org.opentripplanner.raptorlegacy._data.api;
 
 import static org.opentripplanner.raptor.rangeraptor.transit.TripTimesSearch.findTripTimes;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.raptor.api.model.RaptorAccessEgress;
 import org.opentripplanner.raptor.api.model.RaptorConstants;
 import org.opentripplanner.raptor.api.model.RaptorStopNameResolver;

@@ -3,7 +3,7 @@ package org.opentripplanner.service.paging;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner._support.debug.TestDebug;
 import org.opentripplanner.model.plan.Itinerary;
 import org.opentripplanner.model.plan.ItinerarySortKey;

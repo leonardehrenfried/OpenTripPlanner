@@ -21,7 +21,7 @@ public final class AndMatcher<T> implements Matcher<T> {
   public static <T> Matcher<T> of(List<Matcher<T>> matchers) {
     // simplify a list of one element
     if (matchers.size() == 1) {
-      return matchers.get(0);
+      return matchers.getFirst();
     }
     return new AndMatcher<>(matchers);
   }

@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.transfer.ConstrainedTransfer;
 import org.opentripplanner.raptor.api.model.RaptorTransfer;
 import org.opentripplanner.raptor.api.model.RaptorTripSchedule;
@@ -55,7 +55,7 @@ public class TransferGenerator<T extends RaptorTripSchedule> {
     List<TransitPathLeg<T>> transitLegs
   ) {
     List<List<TripToTripTransfer<T>>> result = new ArrayList<>();
-    var fromLeg = transitLegs.get(0);
+    var fromLeg = transitLegs.getFirst();
     TransitPathLeg<T> toLeg;
     var earliestDeparture = getFromStopTime(fromLeg);
 
@@ -77,7 +77,7 @@ public class TransferGenerator<T extends RaptorTripSchedule> {
   }
 
   private static <T> T last(List<T> list) {
-    return list.get(list.size() - 1);
+    return list.getLast();
   }
 
   private List<TripToTripTransfer<T>> findTransfers(

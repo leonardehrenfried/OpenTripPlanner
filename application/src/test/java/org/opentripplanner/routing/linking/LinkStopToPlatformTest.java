@@ -325,7 +325,7 @@ public class LinkStopToPlatformTest {
     List<TransitStopVertex> transitStops = graph.getVerticesOfType(TransitStopVertex.class);
     Vertex v1 = null;
     Vertex v2 = null;
-    for (Edge e : transitStops.get(0).getOutgoing()) {
+    for (Edge e : transitStops.getFirst().getOutgoing()) {
       v1 = e.getToVertex();
     }
     for (Edge e : transitStops.get(1).getOutgoing()) {
@@ -413,7 +413,7 @@ public class LinkStopToPlatformTest {
     assertTrue(graph.getEdges().size() < 40);
 
     // verify that nearest visibility vertex is connected
-    var transitStop = graph.getVerticesOfType(TransitStopVertex.class).get(0);
+    var transitStop = graph.getVerticesOfType(TransitStopVertex.class).getFirst();
     Vertex v = null;
     for (Edge e : transitStop.getOutgoing()) {
       v = e.getToVertex();

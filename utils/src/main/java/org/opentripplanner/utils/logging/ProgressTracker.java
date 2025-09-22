@@ -228,8 +228,7 @@ public class ProgressTracker {
     Duration totalTime = Duration.between(startTime, Instant.now());
     // Add 1 millisecond to prevent / by zero.
     String stepsPerSecond = toStr(Math.round((1000d * ii) / (totalTime.toMillis() + 1)));
-    return String.format(
-      "%s progress tracking complete. %s done in %s (%s per second). ",
+    return "%s progress tracking complete. %s done in %s (%s per second). ".formatted(
       actionName,
       toStr(ii),
       DurationUtils.durationToStr(totalTime),
@@ -255,8 +254,7 @@ public class ProgressTracker {
     if (expectedNumberOfSteps > 0) {
       long p = (100 * counter) / expectedNumberOfSteps;
       notification.accept(
-        String.format(
-          "%s progress: %s of %s (%2d%%)",
+        "%s progress: %s of %s (%2d%%)".formatted(
           actionName,
           toStr(counter),
           toStr(expectedNumberOfSteps),
@@ -264,7 +262,7 @@ public class ProgressTracker {
         )
       );
     } else {
-      notification.accept(String.format("%s progress: %s done", actionName, toStr(counter)));
+      notification.accept("%s progress: %s done".formatted(actionName, toStr(counter)));
     }
   }
 

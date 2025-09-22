@@ -6,7 +6,7 @@ import io.micrometer.core.instrument.Metrics;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.emission.internal.DefaultEmissionRepository;
 import org.opentripplanner.ext.emission.internal.DefaultEmissionService;
 import org.opentripplanner.ext.emission.internal.itinerary.EmissionItineraryDecorator;

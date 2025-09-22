@@ -7,7 +7,7 @@ import de.mfdz.MfdzRealtimeExtensions.StopTimePropertiesExtension.DropOffPickupT
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.utils.time.ServiceDateUtils;
 import org.opentripplanner.utils.time.TimeUtils;
 

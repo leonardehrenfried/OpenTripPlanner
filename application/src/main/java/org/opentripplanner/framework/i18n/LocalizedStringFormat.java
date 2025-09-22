@@ -17,8 +17,7 @@ public class LocalizedStringFormat implements I18NString, Serializable {
 
   @Override
   public String toString(Locale locale) {
-    return String.format(
-      format,
+    return format.formatted(
       Arrays.stream(values).map(i -> i.toString(locale)).toArray(Object[]::new)
     );
   }

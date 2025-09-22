@@ -1,4 +1,4 @@
 @ParametersAreNonnullByDefault
 package org.opentripplanner;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import jakarta.annotation.ParametersAreNonnullByDefault;

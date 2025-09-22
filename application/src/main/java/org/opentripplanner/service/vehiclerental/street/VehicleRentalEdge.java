@@ -1,6 +1,6 @@
 package org.opentripplanner.service.vehiclerental.street;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.routing.algorithm.mapping.StreetModeToRentalTraverseModeMapper;
 import org.opentripplanner.routing.api.request.StreetMode;

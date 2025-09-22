@@ -141,7 +141,7 @@ class GbfsFeedLoaderTest {
     loader.update();
     var zones = loader.getFeed(GBFSGeofencingZones.class);
     var features = zones.getData().getGeofencingZones().getFeatures();
-    var f = features.get(0);
+    var f = features.getFirst();
     assertNotNull(f);
   }
 
@@ -163,7 +163,7 @@ class GbfsFeedLoaderTest {
     GBFSVehicleTypes vehicleTypes = loader.getFeed(GBFSVehicleTypes.class);
     assertNotNull(vehicleTypes);
     assertEquals(1, vehicleTypes.getData().getVehicleTypes().size());
-    GBFSVehicleType vehicleType = vehicleTypes.getData().getVehicleTypes().get(0);
+    GBFSVehicleType vehicleType = vehicleTypes.getData().getVehicleTypes().getFirst();
     assertEquals("YLS:VehicleType:CityBike", vehicleType.getVehicleTypeId());
     assertEquals(GBFSVehicleType.FormFactor.BICYCLE, vehicleType.getFormFactor());
     assertEquals(GBFSVehicleType.PropulsionType.HUMAN, vehicleType.getPropulsionType());

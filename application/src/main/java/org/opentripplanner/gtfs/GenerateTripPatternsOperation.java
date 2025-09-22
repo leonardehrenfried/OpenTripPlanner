@@ -206,7 +206,7 @@ public class GenerateTripPatternsOperation {
     int counter = tripPatternIdCounters.getOrDefault(key, 0) + 1;
     tripPatternIdCounters.put(key, counter);
 
-    String id = String.format("%s:%s:%02d", routeId.getId(), directionId, counter);
+    String id = "%s:%s:%02d".formatted(routeId.getId(), directionId, counter);
 
     return new FeedScopedId(routeId.getFeedId(), id);
   }

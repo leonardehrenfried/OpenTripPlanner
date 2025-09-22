@@ -1,6 +1,6 @@
 package org.opentripplanner.routing.algorithm.raptoradapter.transit.cost;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.transfer.TransferConstraint;
 import org.opentripplanner.raptor.api.model.RaptorAccessEgress;
 import org.opentripplanner.raptor.api.model.RaptorCostConverter;

@@ -16,6 +16,6 @@ public class InterchangeWithoutConstraint implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(MSG, transfer);
+    return MSG.formatted(transfer);
   }
 }

@@ -165,12 +165,12 @@ public class TurnRestrictionModuleTest {
     List<TurnRestriction> useTurnRestrictions = new ArrayList<>();
     switch (order) {
       case 0:
-        useTurnRestrictions.add(turnRestrictions.get(0));
+        useTurnRestrictions.add(turnRestrictions.getFirst());
         useTurnRestrictions.add(turnRestrictions.get(1));
         break;
       case 1:
         useTurnRestrictions.add(turnRestrictions.get(1));
-        useTurnRestrictions.add(turnRestrictions.get(0));
+        useTurnRestrictions.add(turnRestrictions.getFirst());
         break;
     }
     for (var turnRestriction : useTurnRestrictions) {
@@ -248,7 +248,7 @@ public class TurnRestrictionModuleTest {
     useTurnRestrictions.add(turnRestrictions.get(order % 2));
     turnRestrictions.remove(order % 2);
     order /= 2;
-    useTurnRestrictions.add(turnRestrictions.get(0));
+    useTurnRestrictions.add(turnRestrictions.getFirst());
     for (var turnRestriction : useTurnRestrictions) {
       module.processRestriction(turnRestriction);
     }
@@ -260,7 +260,7 @@ public class TurnRestrictionModuleTest {
       .filter(v -> v.sameLocation(E) && v != E)
       .findFirst()
       .get();
-    var B1 = Bs.get(0);
+    var B1 = Bs.getFirst();
     var B2 = Bs.get(1);
     if (B1.getIncoming().stream().map(Edge::getFromVertex).toList().contains(D)) {
       var swap = B1;
@@ -322,7 +322,7 @@ public class TurnRestrictionModuleTest {
     GraphPath<State, Edge, Vertex> path = spt.getPath(F);
     List<State> states = path.states;
     assertEquals(5, states.size());
-    assertEquals(states.get(0).getVertex(), A);
+    assertEquals(states.getFirst().getVertex(), A);
     assertEquals(states.get(1).getVertex(), B);
     assertEquals(states.get(2).getVertex(), C);
     assertEquals(states.get(3).getVertex(), D);

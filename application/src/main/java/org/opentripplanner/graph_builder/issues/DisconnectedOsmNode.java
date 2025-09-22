@@ -14,13 +14,12 @@ public record DisconnectedOsmNode(OsmNode node, OsmEntity way, OsmEntity area)
 
   @Override
   public String getMessage() {
-    return String.format(FMT, node.getId(), way.getId(), area.getId());
+    return FMT.formatted(node.getId(), way.getId(), area.getId());
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(
-      HTMLFMT,
+    return HTMLFMT.formatted(
       node.url(),
       node.getId(),
       way.url(),

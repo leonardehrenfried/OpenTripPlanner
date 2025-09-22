@@ -142,13 +142,13 @@ public class TurnCostTest {
     List<State> states = path.states;
     assertEquals(5, states.size());
 
-    assertEquals("maple_1st", states.get(0).getVertex().getLabelString());
+    assertEquals("maple_1st", states.getFirst().getVertex().getLabelString());
     assertEquals("main_1st", states.get(1).getVertex().getLabelString());
     assertEquals("main_2nd", states.get(2).getVertex().getLabelString());
     assertEquals("broad_2nd", states.get(3).getVertex().getLabelString());
     assertEquals("broad_3rd", states.get(4).getVertex().getLabelString());
 
-    assertEquals(0, states.get(0).getElapsedTimeSeconds());
+    assertEquals(0, states.getFirst().getElapsedTimeSeconds());
     assertEquals(50, states.get(1).getElapsedTimeSeconds()); // maple_main1 = 50
     assertEquals(160, states.get(2).getElapsedTimeSeconds()); // main1_2 = 100
     assertEquals(220, states.get(3).getElapsedTimeSeconds()); // main_broad2 = 50
@@ -169,7 +169,7 @@ public class TurnCostTest {
     List<State> states = path.states;
     assertEquals(5, states.size());
 
-    assertEquals("maple_1st", getParentLabelString(states.get(0).getVertex()));
+    assertEquals("maple_1st", getParentLabelString(states.getFirst().getVertex()));
     assertEquals("main_1st", getParentLabelString(states.get(1).getVertex()));
     assertEquals("broad_1st", getParentLabelString(states.get(2).getVertex()));
     assertEquals("broad_2nd", getParentLabelString(states.get(3).getVertex()));
@@ -193,13 +193,13 @@ public class TurnCostTest {
     List<State> states = path.states;
     assertEquals(5, states.size());
 
-    assertEquals("maple_1st", getParentLabelString(states.get(0).getVertex()));
+    assertEquals("maple_1st", getParentLabelString(states.getFirst().getVertex()));
     assertEquals("main_1st", getParentLabelString(states.get(1).getVertex()));
     assertEquals("broad_1st", getParentLabelString(states.get(2).getVertex()));
     assertEquals("broad_2nd", getParentLabelString(states.get(3).getVertex()));
     assertEquals("broad_3rd", getParentLabelString(states.get(4).getVertex()));
 
-    assertEquals(0, states.get(0).getElapsedTimeSeconds());
+    assertEquals(0, states.getFirst().getElapsedTimeSeconds());
     assertEquals(50, states.get(1).getElapsedTimeSeconds()); // maple_main1 = 50
     assertEquals(160, states.get(2).getElapsedTimeSeconds()); // main1_2 = 100
     assertEquals(270, states.get(3).getElapsedTimeSeconds()); // broad1_2 = 100
@@ -253,7 +253,7 @@ public class TurnCostTest {
   private StreetEdge edge(StreetVertex vA, StreetVertex vB, double length, boolean back) {
     var labelA = vA.getLabel();
     var labelB = vB.getLabel();
-    String name = String.format("%s_%s", labelA, labelB);
+    String name = "%s_%s".formatted(labelA, labelB);
     Coordinate[] coords = new Coordinate[2];
     coords[0] = vA.getCoordinate();
     coords[1] = vB.getCoordinate();

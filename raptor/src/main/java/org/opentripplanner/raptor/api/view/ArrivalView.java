@@ -160,28 +160,24 @@ public interface ArrivalView<T extends RaptorTripSchedule> {
       cost(c2(), RaptorConstants.NOT_SET, RaptorValueFormatter::formatC2) +
       "]";
     return switch (arrivedBy()) {
-      case ACCESS -> String.format(
-        "Access { stop: %d, arrival: %s, path: %s }",
+      case ACCESS -> "Access { stop: %d, arrival: %s, path: %s }".formatted(
         stop(),
         arrival,
         accessPath().access()
       );
-      case TRANSIT -> String.format(
-        "Transit { round: %d, stop: %d, arrival: %s, pattern: %s }",
+      case TRANSIT -> "Transit { round: %d, stop: %d, arrival: %s, pattern: %s }".formatted(
         round(),
         stop(),
         arrival,
         transitPath().trip().pattern().debugInfo()
       );
-      case TRANSFER -> String.format(
-        "Walk { round: %d, stop: %d, arrival: %s, path: %s }",
+      case TRANSFER -> "Walk { round: %d, stop: %d, arrival: %s, path: %s }".formatted(
         round(),
         stop(),
         arrival,
         transfer()
       );
-      case EGRESS -> String.format(
-        "Egress { round: %d, from-stop: %d, arrival: %s, path: %s }",
+      case EGRESS -> "Egress { round: %d, from-stop: %d, arrival: %s, path: %s }".formatted(
         round(),
         egressPath().egress().stop(),
         arrival,

@@ -329,9 +329,9 @@ public class TripRequestMapperTest implements PlanTestConstants {
     ).getViaLocations();
     assertEquals(
       "PassThroughViaLocation{label: PTP1, stopLocationIds: [F:ST:stop1, F:ST:stop2, F:ST:stop3]}",
-      viaLocations.get(0).toString()
+      viaLocations.getFirst().toString()
     );
-    assertEquals("PTP1", viaLocations.get(0).label());
+    assertEquals("PTP1", viaLocations.getFirst().label());
     assertEquals(
       "PassThroughViaLocation{label: PTP2, stopLocationIds: [F:ST:stop3, F:ST:stop2]}",
       viaLocations.get(1).toString()

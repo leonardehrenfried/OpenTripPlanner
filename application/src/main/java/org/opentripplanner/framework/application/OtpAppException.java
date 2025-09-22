@@ -39,7 +39,7 @@ public class OtpAppException extends RuntimeException {
   }
 
   /**
-   * This method uses {@link String#format(String, Object...)} to format the message.
+   * This method uses {@link String#formatted(Object...)} to format the message.
    */
   public OtpAppException(String message, Object... args) {
     super(format(message, args));
@@ -47,7 +47,7 @@ public class OtpAppException extends RuntimeException {
 
   public static String format(String message, Object... args) {
     try {
-      return String.format(message, args);
+      return message.formatted(args);
     } catch (IllegalFormatException e) {
       LOG.error(e.getMessage(), e);
       return message + " " + Arrays.toString(args);

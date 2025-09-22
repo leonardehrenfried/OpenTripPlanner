@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.transfer.ConstrainedTransfer;
 import org.opentripplanner.model.transfer.TransferConstraint;
 import org.opentripplanner.raptor.api.model.RaptorConstrainedTransfer;
@@ -139,7 +139,7 @@ public class TestTransitData
           return null;
         }
         if (list.size() == 1) {
-          return list.get(0);
+          return list.getFirst();
         }
         throw new IllegalStateException("More than on transfers found: " + list);
       }

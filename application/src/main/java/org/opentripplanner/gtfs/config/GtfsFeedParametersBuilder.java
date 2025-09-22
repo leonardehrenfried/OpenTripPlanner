@@ -1,7 +1,7 @@
 package org.opentripplanner.gtfs.config;
 
 import java.net.URI;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class GtfsFeedParametersBuilder extends GtfsDefaultParametersBuilder {
 

@@ -32,7 +32,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.xml.namespace.QName;
 import org.opentripplanner.api.model.transit.FeedScopedIdMapper;
 import org.opentripplanner.ext.trias.service.CallAtStop;

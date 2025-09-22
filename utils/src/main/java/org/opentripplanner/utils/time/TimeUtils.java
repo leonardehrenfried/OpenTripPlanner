@@ -193,9 +193,9 @@ public class TimeUtils {
         decimals = decimals / 10;
         return seconds + "." + decimals + "s";
       }
-      return seconds + "." + String.format("%02d", decimals) + "s";
+      return seconds + "." + "%02d".formatted(decimals) + "s";
     }
-    return seconds + "." + String.format("%03d", decimals) + "s";
+    return seconds + "." + "%03d".formatted(decimals) + "s";
   }
 
   /**

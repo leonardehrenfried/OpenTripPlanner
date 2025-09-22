@@ -13,7 +13,7 @@ import java.time.Month;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.flex.FlexibleTransitLeg;
 import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
 import org.opentripplanner.ext.flex.flexpathcalculator.DirectFlexPathCalculator;
@@ -151,9 +151,9 @@ public class TestItineraryBuilder implements PlanTestConstants {
   public TestItineraryBuilder rentedBicycle(int startTime, int endTime, Place to) {
     int legCost = cost(BICYCLE_RELUCTANCE_FACTOR, endTime - startTime);
     streetLeg(BICYCLE, startTime, endTime, to, legCost, List.of());
-    var leg = ((StreetLeg) this.legs.get(0));
+    var leg = ((StreetLeg) this.legs.getFirst());
     var updatedLeg = leg.copyOf().withRentedVehicle(true).build();
-    this.legs.add(0, updatedLeg);
+    this.legs.addFirst(updatedLeg);
     return this;
   }
 
@@ -412,7 +412,7 @@ public class TestItineraryBuilder implements PlanTestConstants {
     // the removal is necessary because the call to streetLeg() also adds a leg to the list
     // since we want to override this and there is no replace() method we remove the last leg
     // and re-add another one
-    legs.remove(legs.size() - 1);
+    legs.removeLast();
     legs.add(rhl);
 
     return this;

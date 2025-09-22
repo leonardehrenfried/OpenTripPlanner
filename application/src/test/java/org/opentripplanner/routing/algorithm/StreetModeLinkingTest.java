@@ -277,7 +277,7 @@ public class StreetModeLinkingTest extends GraphRoutingTest {
     assertEquals(
       streetName,
       outgoing.getDefaultName(),
-      String.format("%s should be linked to %s", streetMode, streetName)
+      "%s should be linked to %s".formatted(streetMode, streetName)
     );
   }
 

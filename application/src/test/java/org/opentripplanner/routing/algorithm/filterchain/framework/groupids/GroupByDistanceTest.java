@@ -25,7 +25,7 @@ public class GroupByDistanceTest implements PlanTestConstants {
       .bus(31, T11_05, T11_07, D)
       .build();
 
-    Leg l1 = i.legs().get(0);
+    Leg l1 = i.legs().getFirst();
     Leg l2 = i.legs().get(1);
     Leg l3 = i.legs().get(2);
 
@@ -52,7 +52,7 @@ public class GroupByDistanceTest implements PlanTestConstants {
       .bus(31, T11_20, T11_23, D)
       .build();
 
-    Leg l1 = i.legs().get(0);
+    Leg l1 = i.legs().getFirst();
     Leg l2 = i.legs().get(1);
     Leg l3 = i.legs().get(2);
 
@@ -76,13 +76,13 @@ public class GroupByDistanceTest implements PlanTestConstants {
     var subject = new GroupByDistance(itinerary, 0.5);
 
     assertEquals(1, subject.size());
-    assertEquals(itinerary.legs().get(0), subject.getKeySet().get(0));
+    assertEquals(itinerary.legs().getFirst(), subject.getKeySet().getFirst());
 
     itinerary = newItinerary(A, T11_00).bicycle(T11_00, T11_02, A).walk(D12m, B).build();
     subject = new GroupByDistance(itinerary, 0.5);
 
     assertEquals(1, subject.size());
-    assertEquals(itinerary.legs().get(1), subject.getKeySet().get(0));
+    assertEquals(itinerary.legs().get(1), subject.getKeySet().getFirst());
   }
 
   @Test
@@ -95,7 +95,7 @@ public class GroupByDistanceTest implements PlanTestConstants {
 
     // The walk leg is the main part of the itinerary
     assertEquals(1, subject.size());
-    assertSame(itinerary.legs().get(0), subject.getKeySet().get(0));
+    assertSame(itinerary.legs().getFirst(), subject.getKeySet().getFirst());
 
     // TEST EGRESS
     itinerary = newItinerary(A, T11_00).bus(11, T11_32, T11_33, B).walk(D10m, A).build();
@@ -103,7 +103,7 @@ public class GroupByDistanceTest implements PlanTestConstants {
 
     // The walk leg is the main part of the itinerary
     assertEquals(1, subject.size());
-    assertSame(itinerary.legs().get(1), subject.getKeySet().get(0));
+    assertSame(itinerary.legs().get(1), subject.getKeySet().getFirst());
   }
 
   @Test

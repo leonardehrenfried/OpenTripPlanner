@@ -152,7 +152,7 @@ class GbfsVehicleRentalDataSourceTest {
 
     assertEquals(1, businessAreas.size());
 
-    assertEquals("tieroslo:OSLO Summer 2021", businessAreas.get(0).id().toString());
+    assertEquals("tieroslo:OSLO Summer 2021", businessAreas.getFirst().id().toString());
   }
 
   @Test

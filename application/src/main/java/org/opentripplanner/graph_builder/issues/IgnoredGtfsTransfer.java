@@ -9,6 +9,6 @@ public record IgnoredGtfsTransfer(Transfer transfer) implements DataImportIssue 
 
   @Override
   public String getMessage() {
-    return String.format(FMT, transfer);
+    return FMT.formatted(transfer);
   }
 }

@@ -10,6 +10,6 @@ public record TripDegenerate(Trip trip) implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(FMT, trip);
+    return FMT.formatted(trip);
   }
 }

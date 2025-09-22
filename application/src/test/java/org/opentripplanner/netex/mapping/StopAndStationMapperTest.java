@@ -306,7 +306,7 @@ class StopAndStationMapperTest {
 
     var stations = stopMapper.resultStations;
     assertThat(stations).hasSize(2);
-    assertTrue(stations.get(0).shouldRouteToCentroid());
+    assertTrue(stations.getFirst().shouldRouteToCentroid());
     assertFalse(stations.get(1).shouldRouteToCentroid());
   }
 

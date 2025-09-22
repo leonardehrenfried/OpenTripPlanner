@@ -207,7 +207,7 @@ public class HierarchicalMapTest {
 
       @Override
       public DataImportIssue logMessage(String key, E value) {
-        return () -> String.format("%s %s is removed", key, value.name());
+        return () -> "%s %s is removed".formatted(key, value.name());
       }
     };
 

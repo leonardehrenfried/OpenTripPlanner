@@ -64,7 +64,7 @@ public class OsmNode extends OsmEntity {
 
   @Override
   public String url() {
-    return String.format("https://www.openstreetmap.org/node/%d", getId());
+    return "https://www.openstreetmap.org/node/%d".formatted(getId());
   }
 
   /**

@@ -2,7 +2,7 @@ package org.opentripplanner.graph_builder.module.osm;
 
 import java.util.HashSet;
 import java.util.Set;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.graph_builder.issues.Graphwide;
 import org.opentripplanner.osm.model.OsmEntity;
@@ -57,8 +57,8 @@ class SafetyValueNormalizer {
     HashSet<AreaGroup> seenAreas = new HashSet<>();
     for (Vertex vertex : graph.getVertices()) {
       for (Edge e : vertex.getOutgoing()) {
-        if (e instanceof AreaEdge) {
-          AreaGroup areaGroup = ((AreaEdge) e).getArea();
+        if (e instanceof AreaEdge edge) {
+          AreaGroup areaGroup = edge.getArea();
           if (seenAreas.contains(areaGroup)) continue;
           seenAreas.add(areaGroup);
           for (Area area : areaGroup.getAreas()) {

@@ -9,11 +9,11 @@ public record TurnRestrictionUnknown(OsmEntity entity, String tagval) implements
 
   @Override
   public String getMessage() {
-    return String.format(FMT, tagval, entity.getId());
+    return FMT.formatted(tagval, entity.getId());
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(HTMLFMT, tagval, entity.url(), entity.getId());
+    return HTMLFMT.formatted(tagval, entity.url(), entity.getId());
   }
 }

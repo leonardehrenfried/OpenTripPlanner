@@ -2,7 +2,7 @@ package org.opentripplanner.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.network.TripPattern;
 import org.opentripplanner.transit.model.timetable.TripOnServiceDate;
 import org.opentripplanner.transit.model.timetable.TripTimes;

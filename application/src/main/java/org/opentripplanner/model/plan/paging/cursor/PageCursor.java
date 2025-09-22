@@ -2,7 +2,7 @@ package org.opentripplanner.model.plan.paging.cursor;
 
 import java.time.Duration;
 import java.time.Instant;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.model.Cost;
 import org.opentripplanner.model.plan.ItinerarySortKey;
 import org.opentripplanner.model.plan.SortOrder;

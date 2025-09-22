@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.geometry.WgsCoordinate;
 import org.opentripplanner.framework.i18n.LocalizedString;
 import org.opentripplanner.framework.i18n.NonLocalizedString;

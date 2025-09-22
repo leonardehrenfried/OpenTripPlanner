@@ -93,11 +93,11 @@ class StopTimesHelperTest {
 
     assertEquals(1, stopTimesForPattern.size());
 
-    var stopTimes = stopTimesForPattern.get(0).times;
+    var stopTimes = stopTimesForPattern.getFirst().times;
 
     assertEquals(1, stopTimes.size());
 
-    var stopTime = stopTimes.get(0);
+    var stopTime = stopTimes.getFirst();
 
     assertEquals(stopId, stopTime.getStop().getId());
     assertEquals((8 * 60 + 10) * 60, stopTime.getScheduledArrival());
@@ -182,11 +182,11 @@ class StopTimesHelperTest {
 
     assertEquals(1, stopTimesForPattern.size());
 
-    var stopTimes = stopTimesForPattern.get(0).times;
+    var stopTimes = stopTimesForPattern.getFirst().times;
 
     assertEquals(1, stopTimes.size());
 
-    var stopTime = stopTimes.get(0);
+    var stopTime = stopTimes.getFirst();
 
     assertEquals(stopId, stopTime.getStop().getId());
     assertEquals((8 * 60 + 10) * 60, stopTime.getScheduledArrival());
@@ -211,7 +211,7 @@ class StopTimesHelperTest {
 
     assertEquals(1, stopTimes.size());
 
-    var stopTime = stopTimes.get(0);
+    var stopTime = stopTimes.getFirst();
 
     assertEquals(stopId, stopTime.getStop().getId());
     assertEquals((8 * 60 + 10) * 60, stopTime.getScheduledArrival());
@@ -236,7 +236,7 @@ class StopTimesHelperTest {
 
     assertEquals(1, stopTimes.size());
 
-    var stopTime = stopTimes.get(0);
+    var stopTime = stopTimes.getFirst();
 
     assertEquals(stopId, stopTime.getStop().getId());
     assertEquals((8 * 60 + 10) * 60, stopTime.getScheduledArrival());
@@ -262,7 +262,7 @@ class StopTimesHelperTest {
 
     assertEquals(2, stopTimes.size());
 
-    var stopTime = stopTimes.get(0);
+    var stopTime = stopTimes.getFirst();
 
     assertEquals(stopId, stopTime.getStop().getId());
     assertEquals((8 * 60 + 10) * 60, stopTime.getScheduledArrival());
@@ -297,11 +297,11 @@ class StopTimesHelperTest {
 
     assertEquals(1, stopTimesForPattern.size());
 
-    var stopTimes = stopTimesForPattern.get(0).times;
+    var stopTimes = stopTimesForPattern.getFirst().times;
 
     assertEquals(1, stopTimes.size());
 
-    var stopTime = stopTimes.get(0);
+    var stopTime = stopTimes.getFirst();
 
     assertEquals(stopId, stopTime.getStop().getId());
     assertEquals((8 * 60 + 10) * 60, stopTime.getScheduledArrival());
@@ -310,12 +310,11 @@ class StopTimesHelperTest {
   }
 
   boolean hasCancelledTrips(List<StopTimesInPattern> stopTimes) {
-    return !stopTimes
+    return stopTimes
       .stream()
       .filter(s ->
         s.times.stream().anyMatch(tripTimeOnDate -> tripTimeOnDate.isCanceledEffectively())
       )
-      .findAny()
-      .isEmpty();
+      .findAny().isPresent();
   }
 }

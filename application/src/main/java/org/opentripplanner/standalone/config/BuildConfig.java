@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.datastore.api.OtpDataStoreConfig;
 import org.opentripplanner.ext.dataoverlay.configuration.DataOverlayConfig;
 import org.opentripplanner.ext.datastore.gs.config.GsConfig;

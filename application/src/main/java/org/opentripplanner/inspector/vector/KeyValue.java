@@ -2,7 +2,7 @@ package org.opentripplanner.inspector.vector;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 
 /**

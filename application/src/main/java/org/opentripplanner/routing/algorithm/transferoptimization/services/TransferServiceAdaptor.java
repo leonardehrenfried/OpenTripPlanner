@@ -1,7 +1,7 @@
 package org.opentripplanner.routing.algorithm.transferoptimization.services;
 
 import java.util.function.IntFunction;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.transfer.ConstrainedTransfer;
 import org.opentripplanner.model.transfer.TransferService;
 import org.opentripplanner.raptor.api.model.RaptorTripSchedule;

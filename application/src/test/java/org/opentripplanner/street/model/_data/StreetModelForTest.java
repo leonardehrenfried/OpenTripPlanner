@@ -75,7 +75,7 @@ public class StreetModelForTest {
   ) {
     var labelA = vA.getLabel();
     var labelB = vB.getLabel();
-    String name = String.format("%s_%s", labelA, labelB);
+    String name = "%s_%s".formatted(labelA, labelB);
     Coordinate[] coords = new Coordinate[2];
     coords[0] = vA.getCoordinate();
     coords[1] = vB.getCoordinate();

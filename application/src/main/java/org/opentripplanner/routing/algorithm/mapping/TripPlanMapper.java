@@ -30,9 +30,9 @@ public class TripPlanMapper {
         new LocalizedString("destination")
       );
     } else {
-      List<Leg> legs = itineraries.get(0).legs();
-      from = legs.get(0).from();
-      to = legs.get(legs.size() - 1).to();
+      List<Leg> legs = itineraries.getFirst().legs();
+      from = legs.getFirst().from();
+      to = legs.getLast().to();
     }
     return new TripPlan(from, to, request.dateTime(), itineraries);
   }

@@ -133,7 +133,7 @@ public class GrizzlyServer {
 
     // Add shutdown hook to gracefully shut down Grizzly. If no thread is returned then shutdown is already in progress.
     Optional<Thread> shutdownThread = addShutdownHook("grizzly-shutdown", httpServer::shutdown);
-    if (!shutdownThread.isPresent()) {
+    if (shutdownThread.isEmpty()) {
       return;
     }
 

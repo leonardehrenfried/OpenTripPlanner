@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.apis.gtfs.GraphQLRequestContext;
 import org.opentripplanner.apis.gtfs.GraphQLUtils;
 import org.opentripplanner.apis.gtfs.generated.GraphQLDataFetchers;
@@ -525,10 +525,10 @@ public class StopImpl implements GraphQLDataFetchers.GraphQLStop {
     Function<Station, T> stationTFunction
   ) {
     Object source = environment.getSource();
-    if (source instanceof StopLocation) {
-      return stopTFunction.apply((StopLocation) source);
-    } else if (source instanceof Station) {
-      return stationTFunction.apply((Station) source);
+    if (source instanceof StopLocation location) {
+      return stopTFunction.apply(location);
+    } else if (source instanceof Station station) {
+      return stationTFunction.apply(station);
     }
     return null;
   }

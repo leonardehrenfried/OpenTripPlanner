@@ -2,7 +2,7 @@ package org.opentripplanner.transit.model.framework;
 
 import java.util.BitSet;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * The deduplication service is used to reduce memory consumption by returning the

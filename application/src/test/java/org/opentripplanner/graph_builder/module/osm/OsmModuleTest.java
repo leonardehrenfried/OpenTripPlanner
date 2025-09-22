@@ -303,7 +303,7 @@ public class OsmModuleTest {
       new NonLocalizedString("second")
     );
 
-    assertEquals("Kreuzung first mit second", localizedString.toString(new Locale("de")));
+    assertEquals("Kreuzung first mit second", localizedString.toString(Locale.of("de")));
   }
 
   @Test

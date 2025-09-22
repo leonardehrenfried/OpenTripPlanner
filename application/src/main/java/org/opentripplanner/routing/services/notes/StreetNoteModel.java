@@ -47,8 +47,8 @@ public class StreetNoteModel implements Serializable {
    */
   public Set<StreetNoteAndMatcher> getNotes(Edge edge) {
     /* If the edge is temporary, we look for notes in it's parent edge. */
-    if (edge instanceof TemporaryPartialStreetEdge) {
-      edge = ((TemporaryPartialStreetEdge) edge).getParentEdge();
+    if (edge instanceof TemporaryPartialStreetEdge streetEdge) {
+      edge = streetEdge.getParentEdge();
     }
     Set<StreetNoteAndMatcher> maas = notesForEdge.get(edge);
     if (maas == null || maas.isEmpty()) {

@@ -9,6 +9,6 @@ public record NoFutureDates(String agency) implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(FMT, agency);
+    return FMT.formatted(agency);
   }
 }

@@ -50,8 +50,7 @@ public class FrequencyEntry implements Serializable {
 
   @Override
   public String toString() {
-    return String.format(
-      "FreqEntry: trip %s start %s end %s headway %s",
+    return "FreqEntry: trip %s start %s end %s headway %s".formatted(
       tripTimes.getTrip(),
       formatSeconds(startTime),
       formatSeconds(endTime),
@@ -141,6 +140,6 @@ public class FrequencyEntry implements Serializable {
     s = s % 60;
     final int h = m / 60;
     m = m % 60;
-    return String.format("%02d:%02d:%02d", h, m, s);
+    return "%02d:%02d:%02d".formatted(h, m, s);
   }
 }

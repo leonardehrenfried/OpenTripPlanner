@@ -11,12 +11,12 @@ public record UnconnectedArea(OsmAreaGroup areaGroup) implements DataImportIssue
 
   @Override
   public String getMessage() {
-    return String.format(FMT, idList());
+    return FMT.formatted(idList());
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(HTMLFMT, areaGroup.getSomeOsmObject().url(), idList());
+    return HTMLFMT.formatted(areaGroup.getSomeOsmObject().url(), idList());
   }
 
   @Override

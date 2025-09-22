@@ -1,6 +1,6 @@
 package org.opentripplanner.routing.algorithm.transferoptimization.model;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.transfer.TransferConstraint;
 import org.opentripplanner.raptor.api.model.RaptorConstants;
 import org.opentripplanner.raptor.api.model.RaptorStopNameResolver;

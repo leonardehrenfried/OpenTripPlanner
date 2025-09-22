@@ -642,8 +642,7 @@ public class PathBuilderLeg<T extends RaptorTripSchedule> {
   private static int assertTimeExist(int time, RaptorAccessEgress path, String details) {
     if (time == RaptorConstants.TIME_NOT_SET) {
       throw new IllegalStateException(
-        String.format(
-          "Unable to reconstruct path. %s. Arrival-time stop: %s, path: %s",
+        "Unable to reconstruct path. %s. Arrival-time stop: %s, path: %s".formatted(
           details,
           TimeUtils.timeToStrCompact(time),
           path

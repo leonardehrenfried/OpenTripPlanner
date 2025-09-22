@@ -20,7 +20,7 @@ public record HopZeroTime(
 
   @Override
   public String getMessage() {
-    return String.format(FMT, dist, trip.getRoute().getId(), trip.getId(), seq, fromStop, toStop);
+    return FMT.formatted(dist, trip.getRoute().getId(), trip.getId(), seq, fromStop, toStop);
   }
 
   @Override

@@ -155,7 +155,7 @@ public abstract class GtfsTest {
     // Assert itineraries
     List<Itinerary> itineraries = res.getTripPlan().itineraries;
     // Stored in instance field for use in individual tests
-    Itinerary itinerary = itineraries.get(0);
+    Itinerary itinerary = itineraries.getFirst();
 
     assertEquals(legCount, itinerary.legs().size());
 

@@ -77,7 +77,7 @@ final class Matchers {
       return NOOP;
     }
     if (list.size() == 1) {
-      return list.get(0);
+      return list.getFirst();
     }
     return new AndMatcher(list);
   }

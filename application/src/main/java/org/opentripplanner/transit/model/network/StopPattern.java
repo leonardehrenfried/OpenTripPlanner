@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.PickDrop;
 import org.opentripplanner.model.StopTime;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
@@ -107,8 +107,7 @@ public final class StopPattern implements Serializable {
   }
 
   public boolean equals(Object other) {
-    if (other instanceof StopPattern) {
-      StopPattern that = (StopPattern) other;
+    if (other instanceof StopPattern that) {
       return (
         Arrays.equals(this.stops, that.stops) &&
         Arrays.equals(this.pickups, that.pickups) &&
@@ -134,7 +133,7 @@ public final class StopPattern implements Serializable {
     StringBuilder sb = new StringBuilder();
     sb.append("StopPattern: ");
     for (int i = 0, j = stops.length; i < j; ++i) {
-      sb.append(String.format("%s_%s%s ", stops[i].getCode(), pickups[i], dropoffs[i]));
+      sb.append("%s_%s%s ".formatted(stops[i].getCode(), pickups[i], dropoffs[i]));
     }
     return sb.toString();
   }

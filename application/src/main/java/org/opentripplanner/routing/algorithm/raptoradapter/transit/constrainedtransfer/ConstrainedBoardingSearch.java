@@ -2,7 +2,7 @@ package org.opentripplanner.routing.algorithm.raptoradapter.transit.constrainedt
 
 import java.util.LinkedList;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.transfer.TransferConstraint;
 import org.opentripplanner.raptor.spi.RaptorBoardOrAlightEvent;
 import org.opentripplanner.raptor.spi.RaptorConstrainedBoardingSearch;

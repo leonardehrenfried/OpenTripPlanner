@@ -3,7 +3,7 @@ package org.opentripplanner.standalone.server;
 import graphql.schema.GraphQLSchema;
 import io.micrometer.core.instrument.MeterRegistry;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.apis.gtfs.GtfsApiParameters;
 import org.opentripplanner.apis.gtfs.configure.GtfsSchema;
 import org.opentripplanner.apis.transmodel.TransmodelAPIParameters;

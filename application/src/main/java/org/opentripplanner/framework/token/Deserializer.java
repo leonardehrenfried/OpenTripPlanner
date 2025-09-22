@@ -70,6 +70,6 @@ class Deserializer {
   }
 
   private int readVersion() {
-    return Integer.parseInt(values.get(0));
+    return Integer.parseInt(values.getFirst());
   }
 }

@@ -212,7 +212,7 @@ class TripPatternMapper {
     // Create StopPattern from any trip (since they are part of the same JourneyPattern)
     StopPattern stopPattern = deduplicator.deduplicateObject(
       StopPattern.class,
-      new StopPattern(tripStopTimes.get(trips.get(0)))
+      new StopPattern(tripStopTimes.get(trips.getFirst()))
     );
 
     var tripPatternModes = new HashSet<TransitMode>();
@@ -245,8 +245,8 @@ class TripPatternMapper {
     var tripPattern = TripPattern.of(idFactory.createId(journeyPattern.getId()))
       .withRoute(lookupRoute(journeyPattern))
       .withStopPattern(stopPattern)
-      .withMode(trips.get(0).getMode())
-      .withNetexSubmode(trips.get(0).getNetexSubMode())
+      .withMode(trips.getFirst().getMode())
+      .withNetexSubmode(trips.getFirst().getNetexSubMode())
       .withContainsMultipleModes(hasMultipleModes || hasMultipleSubmodes)
       .withName(journeyPattern.getName() == null ? "" : journeyPattern.getName().getValue())
       .withHopGeometries(
@@ -319,7 +319,7 @@ class TripPatternMapper {
           );
           return null;
         }
-        String serviceJourneyRef = replacement.getJourneyRef().get(0).getValue().getRef();
+        String serviceJourneyRef = replacement.getJourneyRef().getFirst().getValue().getRef();
         ServiceJourney serviceJourney = serviceJourneyById.lookup(serviceJourneyRef);
         if (serviceJourney == null) {
           issueStore.add(
@@ -406,7 +406,7 @@ class TripPatternMapper {
     if (times == null || times.isEmpty()) {
       return HEADSIGN_EMPTY;
     }
-    String headsign = stopTimesMapper.findTripHeadsign(journeyPattern, times.get(0));
+    String headsign = stopTimesMapper.findTripHeadsign(journeyPattern, times.getFirst());
     return headsign == null ? HEADSIGN_EMPTY : headsign;
   }
 }

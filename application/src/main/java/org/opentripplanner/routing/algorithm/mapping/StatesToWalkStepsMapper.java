@@ -7,7 +7,7 @@ import static org.opentripplanner.model.plan.walkstep.RelativeDirection.FOLLOW_S
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.opentripplanner.framework.geometry.DirectionUtils;

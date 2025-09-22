@@ -160,7 +160,7 @@ class OsmBoardingLocationsModuleTest {
 
     assertEquals(1, platformCentroids.size());
 
-    var platformCentroid = platformCentroids.get(0);
+    var platformCentroid = platformCentroids.getFirst();
 
     assertConnections(platformCentroid, Set.of(BoardingLocationToStopLink.class, AreaEdge.class));
 

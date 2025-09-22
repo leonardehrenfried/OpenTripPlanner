@@ -64,7 +64,7 @@ class StreetNearbyStopFinderMultipleLinksTest extends GraphRoutingTest {
     );
 
     assertThat(sortedNearbyStops).hasSize(3);
-    assertZeroDistanceStop(stopA, sortedNearbyStops.get(0));
+    assertZeroDistanceStop(stopA, sortedNearbyStops.getFirst());
     assertStopAtDistance(stopB, 100, sortedNearbyStops.get(1));
     assertStopAtDistance(stopC, 200, sortedNearbyStops.get(2));
   }

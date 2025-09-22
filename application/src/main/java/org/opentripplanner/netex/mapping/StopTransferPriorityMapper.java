@@ -1,6 +1,6 @@
 package org.opentripplanner.netex.mapping;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.site.StopTransferPriority;
 import org.rutebanken.netex.model.InterchangeWeightingEnumeration;
 
@@ -12,16 +12,11 @@ class StopTransferPriorityMapper {
       return null;
     }
 
-    switch (value) {
-      case NO_INTERCHANGE:
-        return StopTransferPriority.DISCOURAGED;
-      case INTERCHANGE_ALLOWED:
-        return StopTransferPriority.ALLOWED;
-      case PREFERRED_INTERCHANGE:
-        return StopTransferPriority.PREFERRED;
-      case RECOMMENDED_INTERCHANGE:
-        return StopTransferPriority.RECOMMENDED;
-    }
-    throw new IllegalArgumentException("Unsupported interchange weight: " + value);
+    return switch (value) {
+      case NO_INTERCHANGE -> StopTransferPriority.DISCOURAGED;
+      case INTERCHANGE_ALLOWED -> StopTransferPriority.ALLOWED;
+      case PREFERRED_INTERCHANGE -> StopTransferPriority.PREFERRED;
+      case RECOMMENDED_INTERCHANGE -> StopTransferPriority.RECOMMENDED;
+    };
   }
 }

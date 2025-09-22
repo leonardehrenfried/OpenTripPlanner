@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.flex.FlexibleTransitLeg;
 import org.opentripplanner.framework.model.Cost;
 import org.opentripplanner.framework.model.TimeAndCost;

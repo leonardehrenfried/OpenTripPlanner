@@ -81,8 +81,7 @@ public class OtpProjectInfo implements Serializable {
    */
   public String getVersionString() {
     String format = "Version: %s, ser.ver.id: %s, commit: %s, branch: %s";
-    return String.format(
-      format,
+    return format.formatted(
       version.version,
       getOtpSerializationVersionId(),
       versionControl.commit,

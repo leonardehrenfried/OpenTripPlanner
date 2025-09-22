@@ -163,7 +163,7 @@ class ServiceLinkMapperTest {
 
     assertEquals(0, issueStore.listIssues().size());
 
-    Coordinate[] coordinates = shape.get(0).getCoordinates();
+    Coordinate[] coordinates = shape.getFirst().getCoordinates();
 
     assertEquals(
       SERVICE_LINKS_COORDINATES[0],
@@ -237,7 +237,7 @@ class ServiceLinkMapperTest {
 
     assertEquals(1, issueStore.listIssues().size());
 
-    Coordinate[] coordinates = shape.get(0).getCoordinates();
+    Coordinate[] coordinates = shape.getFirst().getCoordinates();
 
     // when the provided service links are invalid, the mapper falls back to
     // generating straight-line ServiceLinks between the stops.

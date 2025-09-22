@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 
 /**

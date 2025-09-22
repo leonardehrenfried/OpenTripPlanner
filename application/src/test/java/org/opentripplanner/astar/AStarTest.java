@@ -106,7 +106,7 @@ public class AStarTest {
 
     assertEquals(7, states.size());
 
-    assertEquals("56th_24th", states.get(0).getVertex().getLabelString());
+    assertEquals("56th_24th", states.getFirst().getVertex().getLabelString());
     assertEquals("market_24th", states.get(1).getVertex().getLabelString());
     assertEquals("market_ballard", states.get(2).getVertex().getLabelString());
     assertEquals("market_22nd", states.get(3).getVertex().getLabelString());
@@ -137,7 +137,7 @@ public class AStarTest {
 
     assertTrue(states.size() == 6 || states.size() == 7);
 
-    assertEquals("56th_24th", states.get(0).getVertex().getLabelString());
+    assertEquals("56th_24th", states.getFirst().getVertex().getLabelString());
 
     int n;
     // we could go either way around the block formed by 56th, 22nd, market, and 24th.
@@ -187,7 +187,7 @@ public class AStarTest {
 
     assertEquals(9, states.size());
 
-    assertEquals("near_shilshole_22nd", states.get(0).getVertex().getDefaultName());
+    assertEquals("near_shilshole_22nd", states.getFirst().getVertex().getDefaultName());
     assertEquals("shilshole_22nd", states.get(1).getVertex().getLabelString());
     assertEquals("ballard_22nd", states.get(2).getVertex().getLabelString());
     assertEquals("market_22nd", states.get(3).getVertex().getLabelString());
@@ -230,7 +230,7 @@ public class AStarTest {
 
     assertEquals(9, states.size());
 
-    assertEquals("near_shilshole_22nd", states.get(0).getVertex().getDefaultName());
+    assertEquals("near_shilshole_22nd", states.getFirst().getVertex().getDefaultName());
     assertEquals("shilshole_22nd", states.get(1).getVertex().getLabelString());
     assertEquals("ballard_22nd", states.get(2).getVertex().getLabelString());
     assertEquals("market_22nd", states.get(3).getVertex().getLabelString());

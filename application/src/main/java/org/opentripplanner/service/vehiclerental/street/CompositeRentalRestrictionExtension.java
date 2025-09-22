@@ -65,7 +65,7 @@ public final class CompositeRentalRestrictionExtension implements RentalRestrict
   public static RentalRestrictionExtension of(RentalRestrictionExtension... exts) {
     var set = Arrays.stream(exts).flatMap(e -> e.toList().stream()).collect(Collectors.toSet());
     if (set.size() == 1) {
-      return List.copyOf(set).get(0);
+      return List.copyOf(set).getFirst();
     } else {
       return new CompositeRentalRestrictionExtension(
         set.toArray(RentalRestrictionExtension[]::new)

@@ -6,7 +6,7 @@ import static java.util.Objects.requireNonNullElse;
 import static org.opentripplanner.utils.lang.ObjectUtils.ifNotNull;
 
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.transit.model.basic.Accessibility;
 import org.opentripplanner.transit.model.basic.SubMode;

@@ -237,7 +237,7 @@ public class ToStringBuilder {
   }
 
   public ToStringBuilder addColSize(String name, Collection<?> c) {
-    return addIfNotNull(name, c, x -> String.format("%d items", x.size()));
+    return addIfNotNull(name, c, x -> "%d items".formatted(x.size()));
   }
 
   /** Add the collection, truncate the number of elements at given maxLimit. */

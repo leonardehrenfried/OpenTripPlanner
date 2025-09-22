@@ -44,7 +44,7 @@ class StatesToWalkStepsMapperTest {
         .areaEdge("name", 10)
     );
     assertEquals(3, walkSteps.size());
-    assertEquals(RelativeDirection.DEPART, walkSteps.get(0).getRelativeDirection());
+    assertEquals(RelativeDirection.DEPART, walkSteps.getFirst().getRelativeDirection());
     assertEquals(RelativeDirection.ENTER_OR_EXIT_STATION, walkSteps.get(1).getRelativeDirection());
     assertEquals(RelativeDirection.CONTINUE, walkSteps.get(2).getRelativeDirection());
   }

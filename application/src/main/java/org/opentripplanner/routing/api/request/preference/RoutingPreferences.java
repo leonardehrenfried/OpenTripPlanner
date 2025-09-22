@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.routing.api.request.StreetMode;
 import org.opentripplanner.street.search.TraverseMode;
 import org.opentripplanner.utils.tostring.ToStringBuilder;
@@ -14,7 +14,7 @@ import org.opentripplanner.utils.tostring.ToStringBuilder;
 @SuppressWarnings("UnusedReturnValue")
 public final class RoutingPreferences implements Serializable {
 
-  private static final Locale DEFAULT_LOCALE = new Locale("en", "US");
+  private static final Locale DEFAULT_LOCALE = Locale.of("en", "US");
 
   public static final RoutingPreferences DEFAULT = new RoutingPreferences();
 

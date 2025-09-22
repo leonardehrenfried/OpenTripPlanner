@@ -30,7 +30,7 @@ class VerifyRequestIsValid {
 
   private void verify(boolean condition, String format, Object... args) {
     if (condition) {
-      throw new IllegalArgumentException(String.format(format, args));
+      throw new IllegalArgumentException(format.formatted(args));
     }
   }
 

@@ -22,7 +22,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.mappers.RealTimeRaptorTransitDataUpdater;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.transit.model.framework.Result;
@@ -542,8 +542,8 @@ public class TimetableSnapshot {
   }
 
   public String toString() {
-    String d = readOnly ? "committed" : String.format("%d dirty", dirtyTimetables.size());
-    return String.format("Timetable snapshot: %d timetables (%s)", timetables.size(), d);
+    String d = readOnly ? "committed" : "%d dirty".formatted(dirtyTimetables.size());
+    return "Timetable snapshot: %d timetables (%s)".formatted(timetables.size(), d);
   }
 
   public Collection<TripPattern> getPatternsForStop(StopLocation stop) {

@@ -148,8 +148,7 @@ public class GraphStats {
     // go along road then random
     public void run() {
       LOG.info(
-        String.format(
-          "Producing %d random endpoints within radius %2.2fm around %s.",
+        "Producing %d random endpoints within radius %2.2fm around %s.".formatted(
           n,
           radius,
           useStops ? "stops" : "streets"
@@ -168,8 +167,8 @@ public class GraphStats {
         int i = 0;
         for (Vertex v : vertices) {
           Coordinate c;
-          if (v instanceof StreetVertex) {
-            LineString ls = ((StreetVertex) v).getOutgoing().iterator().next().getGeometry();
+          if (v instanceof StreetVertex vertex) {
+            LineString ls = vertex.getOutgoing().iterator().next().getGeometry();
             int numPoints = ls.getNumPoints();
             LocationIndexedLine lil = new LocationIndexedLine(ls);
             int seg = random.nextInt(numPoints);

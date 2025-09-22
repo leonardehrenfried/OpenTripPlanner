@@ -2,7 +2,7 @@ package org.opentripplanner.gtfs.graphbuilder;
 
 import java.io.File;
 import java.io.InputStream;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.onebusaway.csv_entities.CsvInputSource;
 import org.opentripplanner.datastore.api.CompositeDataSource;
 import org.opentripplanner.datastore.api.FileType;

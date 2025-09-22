@@ -45,7 +45,7 @@ class FilterFactory {
     }
 
     if (filters.size() == 1) {
-      return filters.get(0);
+      return filters.getFirst();
     }
 
     Map<Class<?>, List<AllowTransitModeFilter>> map = filters
@@ -95,7 +95,7 @@ class FilterFactory {
     }
 
     if (result.size() == 1) {
-      return result.get(0);
+      return result.getFirst();
     }
 
     // Remove duplicates and preserve order

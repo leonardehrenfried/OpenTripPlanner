@@ -33,9 +33,9 @@ public class TransportModeSlackTest {
     // When
     List<TransportModeSlack> result = TransportModeSlack.mapToApiList(domain);
 
-    assertEquals(D10m.toSeconds(), result.get(0).slack);
-    assertTrue(result.get(0).modes.contains(TransitMode.CABLE_CAR));
-    assertTrue(result.get(0).modes.contains(TransitMode.FUNICULAR));
+    assertEquals(D10m.toSeconds(), result.getFirst().slack);
+    assertTrue(result.getFirst().modes.contains(TransitMode.CABLE_CAR));
+    assertTrue(result.getFirst().modes.contains(TransitMode.FUNICULAR));
 
     assertEquals(D30m.toSeconds(), result.get(1).slack);
     assertTrue(result.get(1).modes.contains(TransitMode.RAIL));

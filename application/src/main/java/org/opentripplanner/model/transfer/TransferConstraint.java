@@ -8,7 +8,7 @@ import static org.opentripplanner.model.transfer.TransferPriority.RECOMMENDED;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.function.IntSupplier;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.application.OTPFeature;
 import org.opentripplanner.raptor.api.model.RaptorTransferConstraint;
 import org.opentripplanner.raptor.api.model.SearchDirection;

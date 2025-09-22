@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.stopconsolidation.StopConsolidationRepository;
 import org.opentripplanner.ext.stopconsolidation.StopConsolidationService;
 import org.opentripplanner.ext.stopconsolidation.model.ConsolidatedStopGroup;

@@ -72,7 +72,7 @@ public class QueryTypeImplTest {
 
     var filteredAlerts = QueryTypeImpl.filterAlerts(alerts, queryTypeAlertsArgs);
     assertEquals(1, filteredAlerts.size());
-    assertEquals(AlertSeverity.SEVERE, filteredAlerts.get(0).severity());
+    assertEquals(AlertSeverity.SEVERE, filteredAlerts.getFirst().severity());
   }
 
   @Test
@@ -91,7 +91,7 @@ public class QueryTypeImplTest {
 
     var filteredAlerts = QueryTypeImpl.filterAlerts(alerts, queryTypeAlertsArgs);
     assertEquals(1, filteredAlerts.size());
-    assertEquals(AlertCause.UNKNOWN_CAUSE, filteredAlerts.get(0).cause());
+    assertEquals(AlertCause.UNKNOWN_CAUSE, filteredAlerts.getFirst().cause());
   }
 
   @Test
@@ -110,7 +110,7 @@ public class QueryTypeImplTest {
 
     var filteredAlerts = QueryTypeImpl.filterAlerts(alerts, queryTypeAlertsArgs);
     assertEquals(1, filteredAlerts.size());
-    assertEquals(AlertEffect.REDUCED_SERVICE, filteredAlerts.get(0).effect());
+    assertEquals(AlertEffect.REDUCED_SERVICE, filteredAlerts.getFirst().effect());
   }
 
   @Test
@@ -143,9 +143,9 @@ public class QueryTypeImplTest {
 
     var filteredAlerts = QueryTypeImpl.filterAlerts(alerts, queryTypeAlertsArgs);
     assertEquals(1, filteredAlerts.size());
-    assertEquals(AlertSeverity.INFO, filteredAlerts.get(0).severity());
-    assertEquals(AlertCause.UNKNOWN_CAUSE, filteredAlerts.get(0).cause());
-    assertEquals(AlertEffect.DETOUR, filteredAlerts.get(0).effect());
+    assertEquals(AlertSeverity.INFO, filteredAlerts.getFirst().severity());
+    assertEquals(AlertCause.UNKNOWN_CAUSE, filteredAlerts.getFirst().cause());
+    assertEquals(AlertEffect.DETOUR, filteredAlerts.getFirst().effect());
   }
 
   @Test
@@ -156,7 +156,7 @@ public class QueryTypeImplTest {
 
     var filteredAlerts = QueryTypeImpl.filterAlerts(alerts, queryTypeAlertsArgs);
     assertEquals(1, filteredAlerts.size());
-    assertEquals(ROUTE_ID, filteredAlerts.get(0).getId());
+    assertEquals(ROUTE_ID, filteredAlerts.getFirst().getId());
   }
 
   @Test
@@ -167,6 +167,6 @@ public class QueryTypeImplTest {
 
     var filteredAlerts = QueryTypeImpl.filterAlerts(alerts, queryTypeAlertsArgs);
     assertEquals(1, filteredAlerts.size());
-    assertEquals(STOP_ID, filteredAlerts.get(0).getId());
+    assertEquals(STOP_ID, filteredAlerts.getFirst().getId());
   }
 }

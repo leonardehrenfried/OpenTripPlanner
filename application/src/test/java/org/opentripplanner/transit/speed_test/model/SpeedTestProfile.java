@@ -131,13 +131,13 @@ public enum SpeedTestProfile {
     StringBuilder text;
 
     if (name().equals(shortName)) {
-      text = new StringBuilder(String.format("%s : %s", name(), description));
+      text = new StringBuilder("%s : %s".formatted(name(), description));
     } else {
-      text = new StringBuilder(String.format("%s, %s : %s", shortName, name(), description));
+      text = new StringBuilder("%s, %s : %s".formatted(shortName, name(), description));
     }
 
     if (raptorProfile != null) {
-      text.append(String.format("\n·%22s%s", "", raptorProfile));
+      text.append("\n·%22s%s".formatted("", raptorProfile));
       text.append(", ").append(direction.name());
       for (Optimization it : optimizations) {
         text.append(", ").append(it.name());

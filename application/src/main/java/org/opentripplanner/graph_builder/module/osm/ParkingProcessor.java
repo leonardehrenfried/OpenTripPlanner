@@ -82,7 +82,7 @@ class ParkingProcessor {
           .entranceId(
             new FeedScopedId(
               VEHICLE_PARKING_OSM_FEED_ID,
-              String.format("%s/%s/entrance", node.getClass().getSimpleName(), node.getId())
+              "%s/%s/entrance".formatted(node.getClass().getSimpleName(), node.getId())
             )
           )
           .name(creativeName)
@@ -302,7 +302,7 @@ class ParkingProcessor {
         .entranceId(
           new FeedScopedId(
             VEHICLE_PARKING_OSM_FEED_ID,
-            String.format("%s/%d/centroid", entity.getClass().getSimpleName(), entity.getId())
+            "%s/%d/centroid".formatted(entity.getClass().getSimpleName(), entity.getId())
           )
         )
         .name(vehicleParkingName)
@@ -359,7 +359,7 @@ class ParkingProcessor {
 
     var id = new FeedScopedId(
       VEHICLE_PARKING_OSM_FEED_ID,
-      String.format("%s/%d", entity.getClass().getSimpleName(), entity.getId())
+      "%s/%d".formatted(entity.getClass().getSimpleName(), entity.getId())
     );
 
     var tags = new ArrayList<String>();
@@ -443,7 +443,7 @@ class ParkingProcessor {
       }
 
       if (suffix == null) {
-        suffix = new NonLocalizedString(String.format("#%d", entrances.size() + 1));
+        suffix = new NonLocalizedString("#%d".formatted(entrances.size() + 1));
       }
 
       var entranceName = new LocalizedStringFormat("%s (%s)", vehicleParkingName, suffix);
@@ -453,8 +453,7 @@ class ParkingProcessor {
           .entranceId(
             new FeedScopedId(
               VEHICLE_PARKING_OSM_FEED_ID,
-              String.format(
-                "%s/%d/%s",
+              "%s/%d/%s".formatted(
                 entity.getClass().getSimpleName(),
                 entity.getId(),
                 access.vertex().getLabel()

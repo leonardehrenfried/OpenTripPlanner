@@ -1,7 +1,7 @@
 package org.opentripplanner.transit.model.site;
 
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.framework.AbstractTransitEntity;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 

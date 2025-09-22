@@ -29,7 +29,7 @@ public interface DataImportIssueStore {
   /**
    * Add an issue to the issue report without the need of creating an issue class.
    * The given list of {@code arguments} is injected into the message using
-   * {@link String#format(String, Object...)}.
+   * {@link String#formatted(Object...)}.
    */
   void add(String type, String message, Object... arguments);
 

@@ -119,7 +119,7 @@ class VehicleParkingEdgeTest {
     VehicleParkingSpaces availability
   ) {
     var vehicleParking = createVehicleParking(bicyclePlaces, carPlaces, availability);
-    this.vertex = new VehicleParkingEntranceVertex(vehicleParking.getEntrances().get(0));
+    this.vertex = new VehicleParkingEntranceVertex(vehicleParking.getEntrances().getFirst());
 
     vehicleParkingEdge = VehicleParkingEdge.createVehicleParkingEdge(vertex);
 

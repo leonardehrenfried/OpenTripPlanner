@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.NonLocalizedString;
 import org.opentripplanner.model.StopTime;
 import org.opentripplanner.transit.model.basic.TransitMode;

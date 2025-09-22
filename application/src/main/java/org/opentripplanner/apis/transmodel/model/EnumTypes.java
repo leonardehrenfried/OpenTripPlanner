@@ -497,7 +497,7 @@ public class EnumTypes {
     List<DocumentedEnumMapping<E>> mappings
   ) {
     var builder = GraphQLEnumType.newEnum().name(typeName);
-    var enObj = mappings.get(0).internal;
+    var enObj = mappings.getFirst().internal;
     var enumType = (Class<E>) enObj.castToEnum().getClass();
     var mappedValues = EnumSet.noneOf(enumType);
 

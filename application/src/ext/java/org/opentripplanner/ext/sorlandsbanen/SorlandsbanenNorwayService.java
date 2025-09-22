@@ -2,7 +2,7 @@ package org.opentripplanner.ext.sorlandsbanen;
 
 import java.util.Collection;
 import java.util.function.BiFunction;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.geometry.WgsCoordinate;
 import org.opentripplanner.model.GenericLocation;
 import org.opentripplanner.raptor.api.path.RaptorPath;

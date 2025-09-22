@@ -393,8 +393,7 @@ public class BikeWalkingTest extends GraphRoutingTest {
     return path.states
       .stream()
       .map(s ->
-        String.format(
-          "%s%s - %s / %s - %s",
+        "%s%s - %s / %s - %s".formatted(
           s.getBackMode() != null && s.isBackWalkingBike() ? "🚲" : "",
           s.getBackMode(),
           s.getTimeDeltaSeconds(),

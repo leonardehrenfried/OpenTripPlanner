@@ -4,7 +4,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.plan.Itinerary;
 import org.opentripplanner.model.plan.SortOrder;
 import org.opentripplanner.model.plan.paging.PagingSearchWindowAdjuster;
@@ -183,7 +183,7 @@ public class PagingService {
 
     factory = factory.withOriginalSearch(
       currentPageType,
-      itineraries.size() > 0 ? itineraries.get(0).startTimeAsInstant() : null,
+      itineraries.size() > 0 ? itineraries.getFirst().startTimeAsInstant() : null,
       earliestDepartureTime,
       latestArrivalTime,
       searchWindowUsed

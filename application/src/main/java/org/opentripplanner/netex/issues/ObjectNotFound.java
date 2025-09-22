@@ -23,8 +23,7 @@ public class ObjectNotFound implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(
-      "Object not found. %s %s is not found in import. Id = %s, %s = %s",
+    return "Object not found. %s %s is not found in import. Id = %s, %s = %s".formatted(
       sourceType,
       targetFieldName,
       sourceId,

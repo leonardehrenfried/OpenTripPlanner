@@ -9,6 +9,6 @@ public record TripUndefinedService(Trip trip) implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(FMT, trip, trip.getServiceId());
+    return FMT.formatted(trip, trip.getServiceId());
   }
 }

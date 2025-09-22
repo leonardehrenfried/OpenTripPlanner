@@ -6,7 +6,7 @@ import de.mfdz.MfdzRealtimeExtensions;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.OptionalLong;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.gtfs.mapping.PickDropMapper;
 import org.opentripplanner.model.PickDrop;

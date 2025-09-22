@@ -9,7 +9,7 @@ public record ElevationProfileFailure(Edge edge, String reason) implements DataI
 
   @Override
   public String getMessage() {
-    return String.format(FMT, edge, reason);
+    return FMT.formatted(edge, reason);
   }
 
   @Override

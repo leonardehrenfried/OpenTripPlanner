@@ -20,7 +20,7 @@ public record InterliningTeleport(
 
   @Override
   public String getMessage() {
-    return String.format(FMT, prevTrip, blockId, fromStop, toStop, distance);
+    return FMT.formatted(prevTrip, blockId, fromStop, toStop, distance);
   }
 
   @Override

@@ -15,12 +15,12 @@ public record BarrierIntersectingHighway(OsmNode node) implements DataImportIssu
 
   @Override
   public String getHTMLMessage() {
-    return String.format(HTMLFMT, StringEscapeUtils.escapeHtml4(node.url()), node.getId());
+    return HTMLFMT.formatted(StringEscapeUtils.escapeHtml4(node.url()), node.getId());
   }
 
   @Override
   public String getMessage() {
-    return String.format(FMT, node.getId());
+    return FMT.formatted(node.getId());
   }
 
   @Override

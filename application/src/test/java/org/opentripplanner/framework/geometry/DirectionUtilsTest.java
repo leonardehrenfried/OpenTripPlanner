@@ -25,7 +25,7 @@ public class DirectionUtilsTest {
     // Add fixed points
     from.add(new Coordinate(0, 45));
     to.add(new Coordinate(0, 45)); // Undefined: 180 deg
-    assertEquals(180, DirectionUtils.getAzimuth(from.get(0), to.get(0)));
+    assertEquals(180, DirectionUtils.getAzimuth(from.getFirst(), to.getFirst()));
 
     from.add(new Coordinate(0, 45));
     to.add(new Coordinate(0.1, 45)); // East: 90 deg

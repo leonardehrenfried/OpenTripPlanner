@@ -64,7 +64,7 @@ public class OtpTransitServiceBuilderTest {
 
     assertEquals(
       "Frequency{trip: F:15.1, start: 6:00, end: 10:00:01}",
-      frequencies.get(0).toString()
+      frequencies.getFirst().toString()
     );
   }
 

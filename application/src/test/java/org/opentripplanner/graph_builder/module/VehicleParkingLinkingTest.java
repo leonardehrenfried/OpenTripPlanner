@@ -73,7 +73,7 @@ public class VehicleParkingLinkingTest {
           .walkAccessible(true)
       )
       .build();
-    var parkingVertex = vertexFactory.vehicleParkingEntrance(parking.getEntrances().get(0));
+    var parkingVertex = vertexFactory.vehicleParkingEntrance(parking.getEntrances().getFirst());
 
     TestStreetLinkerModule.link(graph, timetableRepository);
 
@@ -106,7 +106,7 @@ public class VehicleParkingLinkingTest {
           .walkAccessible(true)
       )
       .build();
-    var parkingVertex = vertexFactory.vehicleParkingEntrance(parking.getEntrances().get(0));
+    var parkingVertex = vertexFactory.vehicleParkingEntrance(parking.getEntrances().getFirst());
 
     TestStreetLinkerModule.link(graph, timetableRepository);
 

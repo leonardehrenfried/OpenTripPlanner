@@ -3,7 +3,7 @@ package org.opentripplanner.netex.mapping;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.opentripplanner.framework.geometry.HashGridSpatialIndex;

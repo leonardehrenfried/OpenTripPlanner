@@ -3,7 +3,7 @@ package org.opentripplanner.routing.impl;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.astar.model.GraphPath;
 import org.opentripplanner.astar.spi.TraverseVisitor;
 import org.opentripplanner.astar.strategy.DurationSkipEdgeStrategy;

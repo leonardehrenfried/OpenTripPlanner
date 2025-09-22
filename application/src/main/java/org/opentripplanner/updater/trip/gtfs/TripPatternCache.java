@@ -93,7 +93,7 @@ class TripPatternCache {
     } else {
       counter++;
     }
-    String code = String.format("%s:%s:rt#%d", routeId.getId(), directionId, counter);
+    String code = "%s:%s:rt#%d".formatted(routeId.getId(), directionId, counter);
     return new FeedScopedId(routeId.getFeedId(), code);
   }
 }

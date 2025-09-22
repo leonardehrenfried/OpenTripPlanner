@@ -68,7 +68,7 @@ public class TokenSchema {
    * latest version.
    */
   public TokenDefinition currentDefinition() {
-    return definitions.get(0);
+    return definitions.getFirst();
   }
 
   @Override

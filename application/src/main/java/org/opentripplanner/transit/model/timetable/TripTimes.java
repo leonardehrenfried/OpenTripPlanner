@@ -5,7 +5,7 @@ import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
 import java.util.OptionalInt;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.transit.model.basic.Accessibility;
 import org.opentripplanner.transit.model.timetable.booking.BookingInfo;

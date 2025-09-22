@@ -59,8 +59,7 @@ public final class DefaultRaptorTransfer implements RaptorTransfer {
   @Override
   public String toString() {
     String duration = DurationUtils.durationToStr(durationInSeconds());
-    return String.format(
-      "%s %s %s ~ %d",
+    return "%s %s %s ~ %d".formatted(
       transfer.modesAsString(),
       duration,
       OtpNumberFormat.formatCostCenti(c1),

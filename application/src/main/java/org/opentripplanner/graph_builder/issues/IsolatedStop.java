@@ -10,7 +10,7 @@ public record IsolatedStop(Vertex vertex) implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(FMT, vertex.getLabel());
+    return FMT.formatted(vertex.getLabel());
   }
 
   @Override

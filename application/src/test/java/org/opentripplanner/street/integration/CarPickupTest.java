@@ -162,8 +162,8 @@ public class CarPickupTest extends GraphRoutingTest {
     String formatString = "DepartAt: %s%nArriveBy: %s";
 
     assertEquals(
-      String.format(formatString, expectedDepartAt, expectedArriveBy),
-      String.format(formatString, departAt, arriveBy)
+      formatString.formatted(expectedDepartAt, expectedArriveBy),
+      formatString.formatted(departAt, arriveBy)
     );
   }
 
@@ -191,8 +191,7 @@ public class CarPickupTest extends GraphRoutingTest {
       ? path.states
         .stream()
         .map(s ->
-          String.format(
-            "%s - %s - %s",
+          "%s - %s - %s".formatted(
             s.getBackMode(),
             s.getCarPickupState(),
             s.getBackEdge() != null ? s.getBackEdge().getDefaultName() : null

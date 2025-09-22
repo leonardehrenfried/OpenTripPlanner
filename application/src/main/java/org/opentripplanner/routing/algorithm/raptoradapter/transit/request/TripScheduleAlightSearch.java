@@ -1,7 +1,7 @@
 package org.opentripplanner.routing.algorithm.raptoradapter.transit.request;
 
 import java.util.function.IntUnaryOperator;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.raptor.api.model.RaptorConstants;
 import org.opentripplanner.raptor.api.model.RaptorTransferConstraint;
 import org.opentripplanner.raptor.api.model.RaptorTripSchedule;

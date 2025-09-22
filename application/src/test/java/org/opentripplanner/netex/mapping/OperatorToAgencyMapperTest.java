@@ -77,7 +77,7 @@ public class OperatorToAgencyMapperTest {
     assertNull(o.getUrl());
     assertNull(o.getPhone());
     assertEquals(1, issueStore.listIssues().size());
-    DataImportIssue dataImportIssue = issueStore.listIssues().get(0);
+    DataImportIssue dataImportIssue = issueStore.listIssues().getFirst();
     assertEquals("MissingOperatorName", dataImportIssue.getType());
   }
 }

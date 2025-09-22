@@ -237,7 +237,7 @@ public class SiriAlertsUpdateHandler {
   private I18NString mapInfoLinkToI18NString(PtSituationElement.InfoLinks infoLinks) {
     if (infoLinks != null) {
       if (isNotEmpty(infoLinks.getInfoLinks())) {
-        InfoLinkStructure infoLinkStructure = infoLinks.getInfoLinks().get(0);
+        InfoLinkStructure infoLinkStructure = infoLinks.getInfoLinks().getFirst();
         if (infoLinkStructure != null && infoLinkStructure.getUri() != null) {
           return new NonLocalizedString(infoLinkStructure.getUri());
         }
@@ -258,7 +258,7 @@ public class SiriAlertsUpdateHandler {
           String label = null;
           List<NaturalLanguageStringStructure> labels = infoLink.getLabels();
           if (labels != null && !labels.isEmpty()) {
-            NaturalLanguageStringStructure lbl = labels.get(0);
+            NaturalLanguageStringStructure lbl = labels.getFirst();
             label = lbl.getValue();
           }
 

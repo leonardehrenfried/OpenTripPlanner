@@ -26,8 +26,7 @@ public record GraphIsland(
   @Override
   public String getMessage() {
     Vertex vertex = island.getRepresentativeVertex();
-    return String.format(
-      FMT,
+    return FMT.formatted(
       traversalMode,
       vertex.getLabel(),
       vertex,
@@ -45,8 +44,7 @@ public record GraphIsland(
   public String getHTMLMessage() {
     VertexLabel label = island.getRepresentativeVertex().getLabel();
     if (label instanceof VertexLabel.OsmNodeLabel osmLabel) {
-      return String.format(
-        HTMLFMT,
+      return HTMLFMT.formatted(
         traversalMode,
         osmLabel.nodeId(),
         osmLabel.nodeId(),

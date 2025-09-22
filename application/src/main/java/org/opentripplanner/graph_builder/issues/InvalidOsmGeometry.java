@@ -9,11 +9,11 @@ public record InvalidOsmGeometry(OsmEntity entity) implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(FMT, entity.getId());
+    return FMT.formatted(entity.getId());
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(HTMLFMT, entity.url(), entity.getId());
+    return HTMLFMT.formatted(entity.url(), entity.getId());
   }
 }

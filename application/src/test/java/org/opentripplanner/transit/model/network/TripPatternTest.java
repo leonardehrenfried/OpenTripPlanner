@@ -80,7 +80,7 @@ class TripPatternTest {
       .withOriginalTripPattern(subject)
       .build();
 
-    assertEquals(HOP_GEOMETRIES.get(0), pattern.getHopGeometry(0));
+    assertEquals(HOP_GEOMETRIES.getFirst(), pattern.getHopGeometry(0));
     assertEquals(
       makeLineString(STOP_B.getCoordinate(), STOP_X.getCoordinate()),
       pattern.getHopGeometry(1)

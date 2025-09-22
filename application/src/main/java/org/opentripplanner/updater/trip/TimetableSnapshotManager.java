@@ -3,7 +3,7 @@ package org.opentripplanner.updater.trip;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.function.Supplier;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.RealTimeTripUpdate;
 import org.opentripplanner.model.Timetable;
 import org.opentripplanner.model.TimetableSnapshot;

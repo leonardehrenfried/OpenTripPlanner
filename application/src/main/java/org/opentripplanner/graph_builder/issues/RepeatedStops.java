@@ -10,7 +10,7 @@ public record RepeatedStops(Trip trip, TIntList removedStopSequences) implements
 
   @Override
   public String getMessage() {
-    return String.format(FMT, trip.getId(), removedStopSequences);
+    return FMT.formatted(trip.getId(), removedStopSequences);
   }
 
   @Override

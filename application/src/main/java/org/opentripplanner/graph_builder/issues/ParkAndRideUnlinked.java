@@ -11,11 +11,11 @@ public record ParkAndRideUnlinked(String name, OsmEntity entity) implements Data
 
   @Override
   public String getMessage() {
-    return String.format(FMT, name, entity);
+    return FMT.formatted(name, entity);
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(HTMLFMT, entity.url(), name, entity);
+    return HTMLFMT.formatted(entity.url(), name, entity);
   }
 }

@@ -12,11 +12,11 @@ public record InvalidVehicleParkingCapacity(OsmEntity entity, String capacityVal
 
   @Override
   public String getMessage() {
-    return String.format(FMT, entity.getId(), capacityValue);
+    return FMT.formatted(entity.getId(), capacityValue);
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(HTMLFMT, entity.url(), entity.getId(), capacityValue);
+    return HTMLFMT.formatted(entity.url(), entity.getId(), capacityValue);
   }
 }

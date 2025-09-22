@@ -1,6 +1,6 @@
 package org.opentripplanner.street.model.vertex;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 
 public class ElevatorVertex extends StreetVertex {

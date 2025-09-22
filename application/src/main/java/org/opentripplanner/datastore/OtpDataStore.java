@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.datastore.api.CompositeDataSource;
 import org.opentripplanner.datastore.api.DataSource;
 import org.opentripplanner.datastore.api.FileType;
@@ -185,7 +185,7 @@ public class OtpDataStore {
     if (localRepos.size() != 1) {
       throw new IllegalStateException("Only one LocalDataSourceRepository is supported.");
     }
-    return localRepos.get(0);
+    return localRepos.getFirst();
   }
 
   private DataSource findSingleSource(@Nullable URI uri, String filename, FileType type) {

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.api.model.transit.FeedScopedIdMapper;
 import org.opentripplanner.apis.transmodel.TransmodelRequestContext;
 import org.opentripplanner.framework.graphql.GraphQLUtils;

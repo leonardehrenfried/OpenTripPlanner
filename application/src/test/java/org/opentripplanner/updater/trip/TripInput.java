@@ -2,7 +2,7 @@ package org.opentripplanner.updater.trip;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.transit.model._data.TimetableRepositoryForTest;
 import org.opentripplanner.transit.model.network.Route;

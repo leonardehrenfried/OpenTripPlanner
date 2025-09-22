@@ -9,11 +9,11 @@ public record TurnRestrictionBad(long id, String reason) implements DataImportIs
 
   @Override
   public String getMessage() {
-    return String.format(FMT, id, reason);
+    return FMT.formatted(id, reason);
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(HTMLFMT, id, id, reason);
+    return HTMLFMT.formatted(id, id, reason);
   }
 }

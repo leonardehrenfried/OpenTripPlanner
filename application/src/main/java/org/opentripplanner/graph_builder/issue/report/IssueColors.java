@@ -46,7 +46,7 @@ class IssueColors {
   /** Get and return color a in hex format: {@code "#FF00FF"} */
   static String rgb(String issueType) {
     // The '& 0xFFFFFF' is needed to remove the alpha value
-    return String.format("#%06X", backgroundColor(issueType).getRGB() & 0xFFFFFF);
+    return "#%06X".formatted(backgroundColor(issueType).getRGB() & 0xFFFFFF);
   }
 
   private static Color backgroundColor(String issueType) {

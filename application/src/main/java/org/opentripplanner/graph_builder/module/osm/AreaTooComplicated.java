@@ -11,13 +11,13 @@ public record AreaTooComplicated(OsmAreaGroup areaGroup, int nbNodes, int maxAre
 
   @Override
   public String getMessage() {
-    return String.format(FMT, areaGroup.getSomeOsmObject().getId(), nbNodes, maxAreaNodes);
+    return FMT.formatted(areaGroup.getSomeOsmObject().getId(), nbNodes, maxAreaNodes);
   }
 
   @Override
   public String getHTMLMessage() {
     OsmEntity entity = areaGroup.getSomeOsmObject();
-    return String.format(HTMLFMT, entity.url(), entity.getId(), nbNodes, maxAreaNodes);
+    return HTMLFMT.formatted(entity.url(), entity.getId(), nbNodes, maxAreaNodes);
   }
 
   @Override

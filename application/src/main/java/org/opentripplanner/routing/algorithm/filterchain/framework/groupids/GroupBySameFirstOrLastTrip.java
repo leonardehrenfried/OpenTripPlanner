@@ -48,10 +48,10 @@ public class GroupBySameFirstOrLastTrip implements GroupId<GroupBySameFirstOrLas
   }
 
   private static boolean isTheSame(List<Leg> a, List<Leg> b) {
-    var firstLegA = a.get(0);
-    var firstLegB = b.get(0);
-    var lastLegA = a.get(a.size() - 1);
-    var lastLegB = b.get(b.size() - 1);
+    var firstLegA = a.getFirst();
+    var firstLegB = b.getFirst();
+    var lastLegA = a.getLast();
+    var lastLegB = b.getLast();
 
     return isTheSame(firstLegA, firstLegB) || isTheSame(lastLegA, lastLegB);
   }

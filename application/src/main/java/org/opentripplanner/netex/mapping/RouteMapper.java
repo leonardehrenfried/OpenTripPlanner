@@ -5,7 +5,7 @@ import jakarta.xml.bind.annotation.adapters.HexBinaryAdapter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.NonLocalizedString;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.netex.index.api.NetexEntityIndexReadOnlyView;
@@ -99,9 +99,9 @@ class RouteMapper {
     builder.withMode(mode.mainMode());
     builder.withNetexSubmode(mode.subMode());
 
-    if (line instanceof FlexibleLine_VersionStructure) {
+    if (line instanceof FlexibleLine_VersionStructure structure) {
       builder.withFlexibleLineType(
-        ((FlexibleLine_VersionStructure) line).getFlexibleLineType().value()
+        structure.getFlexibleLineType().value()
       );
     }
 

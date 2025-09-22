@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.Coordinate;
 import org.opentripplanner.TestOtpModel;
 import org.opentripplanner.framework.geometry.GeometryUtils;
@@ -128,7 +128,7 @@ public abstract class GraphRoutingTest {
         .withGeometry(
           GeometryUtils.makeLineString(from.getLat(), from.getLon(), to.getLat(), to.getLon())
         )
-        .withName(String.format("%s%s street", from.getLabel(), to.getLabel()))
+        .withName("%s%s street".formatted(from.getLabel(), to.getLabel()))
         .withMeterLength(length)
         .withPermission(permissions)
         .withBack(false);
@@ -174,7 +174,7 @@ public abstract class GraphRoutingTest {
           .withGeometry(
             GeometryUtils.makeLineString(from.getLat(), from.getLon(), to.getLat(), to.getLon())
           )
-          .withName(String.format("%s%s street", from.getDefaultName(), to.getDefaultName()))
+          .withName("%s%s street".formatted(from.getDefaultName(), to.getDefaultName()))
           .withMeterLength(length)
           .withPermission(forwardPermissions)
           .withBack(false)
@@ -185,7 +185,7 @@ public abstract class GraphRoutingTest {
           .withGeometry(
             GeometryUtils.makeLineString(to.getLat(), to.getLon(), from.getLat(), from.getLon())
           )
-          .withName(String.format("%s%s street", from.getDefaultName(), to.getDefaultName()))
+          .withName("%s%s street".formatted(from.getDefaultName(), to.getDefaultName()))
           .withMeterLength(length)
           .withPermission(reversePermissions)
           .withBack(true)
@@ -198,7 +198,7 @@ public abstract class GraphRoutingTest {
       List<ElevatorVertex> onboardVertices = new ArrayList<>();
 
       for (Vertex v : vertices) {
-        var level = String.format("L-%s", v.getDefaultName());
+        var level = "L-%s".formatted(v.getDefaultName());
 
         var onboard = vertexFactory.elevator(v, v.getLabelString(), level);
 
@@ -339,7 +339,7 @@ public abstract class GraphRoutingTest {
         from,
         to,
         new NonLocalizedString(
-          String.format("%s%s pathway", from.getDefaultName(), to.getDefaultName())
+          "%s%s pathway".formatted(from.getDefaultName(), to.getDefaultName())
         ),
         time,
         length,

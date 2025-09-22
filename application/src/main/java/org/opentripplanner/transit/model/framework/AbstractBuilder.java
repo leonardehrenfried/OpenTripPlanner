@@ -1,6 +1,6 @@
 package org.opentripplanner.transit.model.framework;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public abstract class AbstractBuilder<
   E extends TransitObject<E, B>, B extends AbstractBuilder<E, B>

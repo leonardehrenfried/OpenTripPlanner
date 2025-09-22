@@ -1,6 +1,6 @@
 package org.opentripplanner.updater.vehicle_rental.datasources.params;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.updater.spi.HttpHeaders;
 import org.opentripplanner.updater.vehicle_rental.VehicleRentalSourceType;
 

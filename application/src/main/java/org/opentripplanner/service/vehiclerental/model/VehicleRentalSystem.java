@@ -1,7 +1,7 @@
 package org.opentripplanner.service.vehiclerental.model;
 
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.utils.tostring.ToStringBuilder;
 

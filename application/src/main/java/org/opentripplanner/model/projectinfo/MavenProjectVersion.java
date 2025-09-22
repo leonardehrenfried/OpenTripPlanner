@@ -36,7 +36,7 @@ public class MavenProjectVersion implements Serializable {
 
   /** @return "major.minor.patch". The SNAPSHOT `qualifier` is removed. */
   public String unqualifiedVersion() {
-    return String.format("%d.%d.%d", major, minor, patch);
+    return "%d.%d.%d".formatted(major, minor, patch);
   }
 
   /**

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.xml.namespace.QName;
 import org.rutebanken.netex.model.AllVehicleModesOfTransportEnumeration;
 import org.rutebanken.netex.model.DatedServiceJourney;

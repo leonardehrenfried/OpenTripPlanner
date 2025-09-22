@@ -39,7 +39,7 @@ class ServiceJourneyNonIncreasingPassingTime
     List<StopTimeAdaptor> orderedPassingTimes =
       serviceJourneyInfo.orderedTimetabledPassingTimeInfos();
 
-    var previousPassingTime = orderedPassingTimes.get(0);
+    var previousPassingTime = orderedPassingTimes.getFirst();
     if (!previousPassingTime.isComplete()) {
       return discard(previousPassingTime, ErrorType.INCOMPLETE);
     }

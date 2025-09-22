@@ -24,8 +24,7 @@ public record TestCaseDefinition(
 ) {
   @Override
   public String toString() {
-    return String.format(
-      "#%s %s - %s, %s - %s, %s-%s(%s)",
+    return "#%s %s - %s, %s - %s, %s-%s(%s)".formatted(
       id,
       fromPlace.label,
       toPlace.label,

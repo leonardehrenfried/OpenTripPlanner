@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -285,7 +285,7 @@ class RaptorRequestMapperTest {
           // One via location exist(no NPE), but it does not allow pass-through
           assertEquals(
             "RaptorViaLocation{via Via A : [(stop 0)]}",
-            result.searchParams().viaLocations().get(0).toString()
+            result.searchParams().viaLocations().getFirst().toString()
           );
         }
         break;
@@ -294,7 +294,7 @@ class RaptorRequestMapperTest {
           assertTrue(result.searchParams().isPassThroughSearch());
           assertEquals(
             "RaptorViaLocation{pass-through Via A : [(stop 0)]}",
-            result.searchParams().viaLocations().get(0).toString()
+            result.searchParams().viaLocations().getFirst().toString()
           );
         }
         break;

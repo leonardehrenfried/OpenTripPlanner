@@ -9,6 +9,6 @@ public record BogusShapeGeometry(FeedScopedId shapeId) implements DataImportIssu
 
   @Override
   public String getMessage() {
-    return String.format(FMT, shapeId);
+    return FMT.formatted(shapeId);
   }
 }

@@ -1,6 +1,6 @@
 package org.opentripplanner.street.model.vertex;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.basic.Accessibility;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.utils.tostring.ToStringBuilder;

@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.model.Units;
 import org.opentripplanner.raptor.api.model.SearchDirection;
 import org.opentripplanner.raptor.api.request.Optimization;

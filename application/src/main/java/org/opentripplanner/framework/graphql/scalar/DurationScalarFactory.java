@@ -47,8 +47,8 @@ public class DurationScalarFactory {
 
     @Override
     public Duration parseLiteral(Object input) throws CoercingParseLiteralException {
-      if (input instanceof StringValue) {
-        return parseValue(((StringValue) input).getValue());
+      if (input instanceof StringValue value) {
+        return parseValue(value.getValue());
       }
       throw new CoercingParseValueException("Expected type 'Duration' but was '" + input + "'.");
     }

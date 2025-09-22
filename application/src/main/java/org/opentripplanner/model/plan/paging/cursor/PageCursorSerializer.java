@@ -1,6 +1,6 @@
 package org.opentripplanner.model.plan.paging.cursor;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.model.Cost;
 import org.opentripplanner.framework.token.TokenSchema;
 import org.opentripplanner.model.plan.ItinerarySortKey;

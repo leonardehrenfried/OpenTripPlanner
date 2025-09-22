@@ -4,7 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import java.util.Collection;
 import java.util.Map;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.model.StopTime;
 import org.opentripplanner.netex.index.api.ReadOnlyHierarchicalMap;

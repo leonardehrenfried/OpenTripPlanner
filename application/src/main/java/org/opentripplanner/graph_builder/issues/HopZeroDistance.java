@@ -19,7 +19,7 @@ public record HopZeroDistance(
 
   @Override
   public String getMessage() {
-    return String.format(FMT, DurationUtils.durationToStr(sec), trip, seq, fromStop, toStop);
+    return FMT.formatted(DurationUtils.durationToStr(sec), trip, seq, fromStop, toStop);
   }
 
   @Override

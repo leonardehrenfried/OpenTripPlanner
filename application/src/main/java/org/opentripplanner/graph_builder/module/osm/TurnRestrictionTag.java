@@ -30,7 +30,7 @@ class TurnRestrictionTag {
 
   @Override
   public String toString() {
-    return String.format("%s turn restriction via node %d", direction, via);
+    return "%s turn restriction via node %d".formatted(direction, via);
   }
 
   enum Direction {

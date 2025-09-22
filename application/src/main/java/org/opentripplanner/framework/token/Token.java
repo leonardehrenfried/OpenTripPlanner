@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * Given a schema definition and a token version this class holds the values for all fields in a

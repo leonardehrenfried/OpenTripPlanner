@@ -124,7 +124,7 @@ public class GeometryProcessor {
       issueStore.add(
         "InvalidShapeReference",
         "Trip '%s' refers to unknown shape geometry '%s'",
-        stopTimes.get(0).getTrip().getId(),
+        stopTimes.getFirst().getTrip().getId(),
         shapeId
       );
       return createStraightLineHopGeometries(stopTimes);
@@ -135,7 +135,7 @@ public class GeometryProcessor {
       // this only happens on shape which have points very far from
       // their stop sequence. So we'll fall back to trivial stop-to-stop
       // linking, even though theoretically we could do better.
-      issueStore.add(new ShapeGeometryTooFar(stopTimes.get(0).getTrip().getId(), shapeId));
+      issueStore.add(new ShapeGeometryTooFar(stopTimes.getFirst().getTrip().getId(), shapeId));
       return createStraightLineHopGeometries(stopTimes);
     }
 
@@ -143,7 +143,7 @@ public class GeometryProcessor {
   }
 
   private boolean hasShapeDist(FeedScopedId shapeId, List<StopTime> stopTimes) {
-    StopTime st0 = stopTimes.get(0);
+    StopTime st0 = stopTimes.getFirst();
     return st0.isShapeDistTraveledSet() && getDistanceForShapeId(shapeId) != null;
   }
 

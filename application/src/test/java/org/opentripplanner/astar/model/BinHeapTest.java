@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.Test;
 
 /*
@@ -68,7 +69,7 @@ public class BinHeapTest {
   public void testCompareHeaps() throws InterruptedException {
     List<Integer> input, expected;
     input = new ArrayList<>(N);
-    for (int i = 0; i < N; i++) input.add((int) (Math.random() * 10000));
+    for (int i = 0; i < N; i++) input.add((int) (ThreadLocalRandom.current().nextDouble() * 10000));
 
     // First determine the expected results using a plain old PriorityQueue
     expected = new ArrayList<>(N);
@@ -103,7 +104,7 @@ public class BinHeapTest {
 
       // fill both keys and values with random numbers
       for (int i = 0; i < N; i++) {
-        keys.add(i, (Math.random() * 10000));
+        keys.add(i, (ThreadLocalRandom.current().nextDouble() * 10000));
         vals.add(i, (N - i) * 3);
       }
 

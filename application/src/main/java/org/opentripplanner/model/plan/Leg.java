@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.model.PickDrop;

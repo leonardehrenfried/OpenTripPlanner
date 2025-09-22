@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNullElse;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.mobilitydata.gbfs.v2_3.free_bike_status.GBFSBike;
 import org.mobilitydata.gbfs.v2_3.free_bike_status.GBFSRentalUris;
 import org.opentripplanner.framework.i18n.I18NString;

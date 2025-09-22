@@ -26,8 +26,8 @@ public class LocalTimeScalarFactory {
         new Coercing() {
           @Override
           public String serialize(Object input) {
-            if (input instanceof LocalTime) {
-              return FORMATTER.format((LocalTime) input);
+            if (input instanceof LocalTime time) {
+              return FORMATTER.format(time);
             }
             return null;
           }
@@ -45,8 +45,8 @@ public class LocalTimeScalarFactory {
 
           @Override
           public LocalTime parseLiteral(Object input) {
-            if (input instanceof StringValue) {
-              return parseValue(((StringValue) input).getValue());
+            if (input instanceof StringValue value) {
+              return parseValue(value.getValue());
             }
             return null;
           }

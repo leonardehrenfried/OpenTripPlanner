@@ -112,7 +112,7 @@ class StopAndStationMapper {
   }
 
   private static StopPlace first(List<StopPlace> stops) {
-    return stops.get(0);
+    return stops.getFirst();
   }
 
   private Station mapStopPlaceAllVersionsToStation(StopPlace stopPlace) {

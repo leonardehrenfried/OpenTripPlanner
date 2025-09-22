@@ -4,7 +4,7 @@ import static org.opentripplanner.transit.model.timetable.TimetableValidationErr
 import static org.opentripplanner.transit.model.timetable.TimetableValidationError.ErrorCode.MISSING_DEPARTURE_TIME;
 
 import java.util.Arrays;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.transit.model.basic.Accessibility;
 import org.opentripplanner.transit.model.framework.DataValidationException;

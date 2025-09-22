@@ -2,7 +2,7 @@ package org.opentripplanner.netex.mapping;
 
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.model.transfer.ConstrainedTransfer;
 import org.opentripplanner.model.transfer.TransferConstraint;

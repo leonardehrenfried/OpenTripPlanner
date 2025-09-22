@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.service.vehiclerental.internal.DefaultVehicleRentalService;

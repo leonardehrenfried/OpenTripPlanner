@@ -17,6 +17,6 @@ public class InterchangeMaxWaitTimeNotGuaranteed implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(MSG, interchange);
+    return MSG.formatted(interchange);
   }
 }

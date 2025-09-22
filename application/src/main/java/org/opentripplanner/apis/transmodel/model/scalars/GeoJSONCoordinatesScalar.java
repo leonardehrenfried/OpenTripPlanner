@@ -34,8 +34,8 @@ public class GeoJSONCoordinatesScalar {
       new Coercing() {
         @Override
         public List<List<Double>> serialize(Object input) {
-          if (input instanceof Coordinate[]) {
-            Coordinate[] coordinates = ((Coordinate[]) input);
+          if (input instanceof Coordinate[] coordinates1) {
+            Coordinate[] coordinates = coordinates1;
             List<List<Double>> coordinateList = new ArrayList<>();
             for (Coordinate coordinate : coordinates) {
               List<Double> coordinatePair = new ArrayList<>();
@@ -57,7 +57,7 @@ public class GeoJSONCoordinatesScalar {
 
           for (int i = 0; i < coordinateList.size(); i++) {
             coordinates[i] = new Coordinate(
-              coordinateList.get(i).get(0).doubleValue(),
+              coordinateList.get(i).getFirst().doubleValue(),
               coordinateList.get(i).get(1).doubleValue()
             );
           }
@@ -67,14 +67,14 @@ public class GeoJSONCoordinatesScalar {
 
         @Override
         public Object parseLiteral(Object input) {
-          if (input instanceof ArrayValue) {
-            ArrayList<ArrayValue> coordinateList = (ArrayList) ((ArrayValue) input).getValues();
+          if (input instanceof ArrayValue value) {
+            ArrayList<ArrayValue> coordinateList = (ArrayList) value.getValues();
             Coordinate[] coordinates = new Coordinate[coordinateList.size()];
 
             for (int i = 0; i < coordinateList.size(); i++) {
               ArrayValue v = coordinateList.get(i);
 
-              FloatValue longitude = (FloatValue) v.getValues().get(0);
+              FloatValue longitude = (FloatValue) v.getValues().getFirst();
               FloatValue latitude = (FloatValue) v.getValues().get(1);
               coordinates[i] = new Coordinate(
                 longitude.getValue().doubleValue(),

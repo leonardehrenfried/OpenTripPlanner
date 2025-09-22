@@ -27,7 +27,7 @@ public final class OrMatcher<T> implements Matcher<T> {
   public static <T> Matcher<T> of(List<Matcher<T>> matchers) {
     // Simplify if there is just one matcher in the list
     if (matchers.size() == 1) {
-      return matchers.get(0);
+      return matchers.getFirst();
     }
     // Collapse nested or matchers
     var expr = new ArrayList<Matcher<T>>();

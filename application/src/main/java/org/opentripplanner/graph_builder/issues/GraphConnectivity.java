@@ -18,8 +18,7 @@ public record GraphConnectivity(
 
   @Override
   public String getMessage() {
-    return String.format(
-      FMT,
+    return FMT.formatted(
       this.traverseMode.toString(),
       this.size,
       this.stopIslands,

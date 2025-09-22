@@ -21,7 +21,7 @@ class RoutingErrorsAttacherTest implements PlanTestConstants {
     var errors = RoutingErrorsAttacher.computeErrors(itins, itins);
     assertEquals(1, errors.size());
 
-    var error = errors.get(0);
+    var error = errors.getFirst();
     assertEquals(RoutingErrorCode.WALKING_BETTER_THAN_TRANSIT, error.code);
   }
 

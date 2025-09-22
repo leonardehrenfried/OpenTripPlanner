@@ -1,7 +1,7 @@
 package org.opentripplanner.model.transfer;
 
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.transit.model.timetable.Trip;
 

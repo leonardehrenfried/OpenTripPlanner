@@ -305,6 +305,6 @@ public class DebugTimingAggregator {
   }
 
   private void log(String msg, long nanos) {
-    messages.add(String.format("%-36s: %5s ms", msg, nanos / nanosToMillis));
+    messages.add("%-36s: %5s ms".formatted(msg, nanos / nanosToMillis));
   }
 }

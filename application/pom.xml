@@ -39,6 +39,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+    <dependency>
+      <groupId>com.sun.xml.ws</groupId>
+      <artifactId>jaxws-rt</artifactId>
+      <version>2.3.7</version>
+      <scope>provided</scope>
+    </dependency>
         <!-- Jersey uses java.util logging, redirect it to slf4j API (we use the Logback implementation) -->
         <dependency>
             <groupId>org.slf4j</groupId>

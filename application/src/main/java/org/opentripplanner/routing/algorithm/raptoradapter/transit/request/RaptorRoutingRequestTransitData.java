@@ -4,7 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.application.OTPFeature;
 import org.opentripplanner.model.transfer.TransferService;
 import org.opentripplanner.raptor.api.model.RaptorConstrainedTransfer;

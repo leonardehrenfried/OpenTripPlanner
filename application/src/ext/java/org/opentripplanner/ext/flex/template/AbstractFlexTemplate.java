@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.flex.FlexAccessEgress;
 import org.opentripplanner.ext.flex.FlexPathDurations;
 import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;

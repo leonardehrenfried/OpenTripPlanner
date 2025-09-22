@@ -115,7 +115,7 @@ class TimetableHelper {
     }
 
     if (call.getDestinationDisplaies() != null && !call.getDestinationDisplaies().isEmpty()) {
-      NaturalLanguageStringStructure destinationDisplay = call.getDestinationDisplaies().get(0);
+      NaturalLanguageStringStructure destinationDisplay = call.getDestinationDisplaies().getFirst();
       tripTimesBuilder.withStopHeadsign(
         index,
         new NonLocalizedString(destinationDisplay.getValue())

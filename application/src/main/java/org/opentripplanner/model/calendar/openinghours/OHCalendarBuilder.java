@@ -305,8 +305,7 @@ public class OHCalendarBuilder {
       if (commonDays.isEmpty()) {
         return new OpeningHoursBuilderAndNewBuilders(this, List.of());
       }
-      String newDescription = String.format(
-        "Days overlapping between %s and %s",
+      String newDescription = "Days overlapping between %s and %s".formatted(
         getPeriodDescription(),
         otherBuilder.getPeriodDescription()
       );

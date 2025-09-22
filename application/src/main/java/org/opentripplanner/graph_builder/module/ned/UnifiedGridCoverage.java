@@ -43,7 +43,7 @@ public class UnifiedGridCoverage extends AbstractCoverage {
    * construction time.
    */
   protected UnifiedGridCoverage(List<GridCoverage2D> regionCoverages, List<VerticalDatum> datums) {
-    super("unified", regionCoverages.get(0));
+    super("unified", regionCoverages.getFirst());
     regions = new ArrayList<>();
     datumRegionIndex = new STRtree();
 
@@ -82,12 +82,12 @@ public class UnifiedGridCoverage extends AbstractCoverage {
 
   @Override
   public int getNumSampleDimensions() {
-    return regions.get(0).getNumSampleDimensions();
+    return regions.getFirst().getNumSampleDimensions();
   }
 
   @Override
   public SampleDimension getSampleDimension(int index) throws IndexOutOfBoundsException {
-    return regions.get(0).getSampleDimension(index);
+    return regions.getFirst().getSampleDimension(index);
   }
 
   /**
@@ -101,7 +101,7 @@ public class UnifiedGridCoverage extends AbstractCoverage {
     List<DatumRegion> coverageCandidates = datumRegionIndex.query(envelope);
     if (coverageCandidates.size() > 0) {
       // Found a match for coverage/datum.
-      DatumRegion datumRegion = coverageCandidates.get(0);
+      DatumRegion datumRegion = coverageCandidates.getFirst();
       double[] result = datumRegion.region.evaluate(point, values);
       result[0] += datumRegion.datum.interpolatedHeight(x, y);
       return result;

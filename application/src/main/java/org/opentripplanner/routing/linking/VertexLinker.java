@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
@@ -649,7 +649,7 @@ public class VertexLinker {
             Double.compare(distSquared(v1, newVertex), distSquared(v2, newVertex))
           )
           .findFirst();
-        if (!nearest.isPresent()) {
+        if (nearest.isEmpty()) {
           // This can happen when all (probably the single one) visibility points are very close
           // to the linked vertex. Such situation can arise in boarding location linking which skips
           // the snapping logic of normal linking and calls addPermanentAreaVertex directly

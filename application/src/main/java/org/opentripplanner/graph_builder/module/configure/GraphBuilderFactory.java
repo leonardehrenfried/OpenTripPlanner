@@ -5,7 +5,7 @@ import dagger.Component;
 import jakarta.inject.Singleton;
 import java.time.ZoneId;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.dataoverlay.EdgeUpdaterModule;
 import org.opentripplanner.ext.emission.EmissionRepository;
 import org.opentripplanner.ext.emission.configure.EmissionGraphBuilderModule;

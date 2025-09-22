@@ -32,8 +32,8 @@ class DataImportIssueReporterTest {
 
     var sortedBuckets = buckets.stream().sorted().toList();
 
-    assertEquals(new BucketKey("TypeA", null), sortedBuckets.get(0).key());
-    assertEquals(11, sortedBuckets.get(0).issues().size());
+    assertEquals(new BucketKey("TypeA", null), sortedBuckets.getFirst().key());
+    assertEquals(11, sortedBuckets.getFirst().issues().size());
 
     for (int i = 1; i < 21; i++) {
       assertEquals(new BucketKey("TypeB", i), sortedBuckets.get(i).key());

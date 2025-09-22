@@ -350,7 +350,7 @@ public class StreetLinkerModule implements GraphBuilderModule {
 
     boolean removeVehicleParking =
       vehicleParking.getEntrances().size() == 1 &&
-      vehicleParking.getEntrances().get(0).equals(entrance);
+      vehicleParking.getEntrances().getFirst().equals(entrance);
 
     vehicleParkingEntranceVertex.getIncoming().forEach(graph::removeEdge);
     vehicleParkingEntranceVertex.getOutgoing().forEach(graph::removeEdge);

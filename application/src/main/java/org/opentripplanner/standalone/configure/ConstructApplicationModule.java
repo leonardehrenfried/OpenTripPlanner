@@ -6,7 +6,7 @@ import graphql.schema.GraphQLSchema;
 import io.micrometer.core.instrument.Metrics;
 import jakarta.inject.Singleton;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.apis.gtfs.configure.GtfsSchema;
 import org.opentripplanner.apis.transmodel.configure.TransmodelSchema;
 import org.opentripplanner.astar.spi.TraverseVisitor;

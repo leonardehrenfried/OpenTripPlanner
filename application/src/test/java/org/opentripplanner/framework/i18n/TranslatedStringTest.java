@@ -31,7 +31,7 @@ public class TranslatedStringTest {
     I18NString string3 = TranslatedString.getI18NString(translations, true, false);
     assertEquals("Test", string3.toString());
     assertEquals("Test", string3.toString(Locale.ENGLISH));
-    assertEquals("Testi", string3.toString(new Locale("fi")));
+    assertEquals("Testi", string3.toString(Locale.of("fi")));
     assertTrue(string3 instanceof TranslatedString);
 
     HashMap<String, String> translations2 = new HashMap<>();

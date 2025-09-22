@@ -32,7 +32,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.xml.stream.XMLStreamException;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.hc.client5.http.classic.methods.HttpGet;

@@ -53,8 +53,7 @@ public class QualifiedMode implements Serializable {
 
   @Override
   public boolean equals(Object other) {
-    if (other instanceof QualifiedMode) {
-      QualifiedMode qmOther = (QualifiedMode) other;
+    if (other instanceof QualifiedMode qmOther) {
       return qmOther.mode.equals(this.mode) && qmOther.qualifiers.equals(this.qualifiers);
     }
     return false;

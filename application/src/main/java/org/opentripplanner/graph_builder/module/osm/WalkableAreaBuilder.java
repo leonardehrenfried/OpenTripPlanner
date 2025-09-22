@@ -487,8 +487,7 @@ class WalkableAreaBuilder {
       // No intersections - not really possible
       return Set.of();
     }
-    String label = String.format(
-      labelTemplate,
+    String label = labelTemplate.formatted(
       parent.getId(),
       vertex1.getLabel(),
       vertex2.getLabel()
@@ -514,7 +513,7 @@ class WalkableAreaBuilder {
       .withWheelchairAccessible(wheelchairAccessible)
       .withLink(parent.isLink());
 
-    label = String.format(labelTemplate, parent.getId(), vertex2.getLabel(), vertex1.getLabel());
+    label = labelTemplate.formatted(parent.getId(), vertex2.getLabel(), vertex1.getLabel());
     name = namer.getNameForWay(parent, label);
     AreaEdgeBuilder backStreetEdgeBuilder = new AreaEdgeBuilder()
       .withFromVertex(vertex2)

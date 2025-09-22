@@ -9,7 +9,7 @@ public record ElevationFlattened(Edge edge) implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(FMT, edge);
+    return FMT.formatted(edge);
   }
 
   @Override

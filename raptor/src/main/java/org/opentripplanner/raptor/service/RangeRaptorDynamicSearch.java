@@ -215,7 +215,7 @@ public class RangeRaptorDynamicSearch<T extends RaptorTripSchedule> {
     }
 
     // Run the first heuristic search
-    Heuristics result = runHeuristicSearchTask(tasks.get(0));
+    Heuristics result = runHeuristicSearchTask(tasks.getFirst());
     calculateDynamicSearchParametersFromHeuristics(result);
 
     if (tasks.size() == 1) {

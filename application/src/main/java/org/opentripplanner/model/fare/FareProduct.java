@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.basic.Money;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.utils.lang.Sandbox;

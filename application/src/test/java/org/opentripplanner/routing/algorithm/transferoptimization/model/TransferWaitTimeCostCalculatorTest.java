@@ -42,7 +42,7 @@ public class TransferWaitTimeCostCalculatorTest {
 
       for (int t0 : ts) {
         subject.setMinSafeTransferTime(t0);
-        String testCase = String.format("t0=%d, n=%.1f", t0, n);
+        String testCase = "t0=%d, n=%.1f".formatted(t0, n);
 
         assertEquals(
           n * t0,

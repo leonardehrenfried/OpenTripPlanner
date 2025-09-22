@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.model.StopTime;
 import org.opentripplanner.transit.model.framework.DeduplicatorService;

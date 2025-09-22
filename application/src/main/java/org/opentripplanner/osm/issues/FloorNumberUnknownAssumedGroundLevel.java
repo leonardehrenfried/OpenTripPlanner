@@ -13,11 +13,11 @@ public record FloorNumberUnknownAssumedGroundLevel(String layer, OsmEntity entit
 
   @Override
   public String getMessage() {
-    return String.format(FMT, entity.getId(), layer);
+    return FMT.formatted(entity.getId(), layer);
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(HTMLFMT, entity.url(), entity.getId(), layer);
+    return HTMLFMT.formatted(entity.url(), entity.getId(), layer);
   }
 }

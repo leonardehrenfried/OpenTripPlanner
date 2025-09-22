@@ -2,7 +2,7 @@ package org.opentripplanner.model.plan.legreference;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.Timetable;
 import org.opentripplanner.model.plan.leg.LegConstructionSupport;
 import org.opentripplanner.model.plan.leg.ScheduledTransitLeg;

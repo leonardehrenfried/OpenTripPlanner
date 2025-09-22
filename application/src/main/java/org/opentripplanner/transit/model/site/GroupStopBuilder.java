@@ -71,8 +71,7 @@ public class GroupStopBuilder extends AbstractEntityBuilder<GroupStop, GroupStop
         location.getStopType() == StopType.FLEXIBLE_AREA)
     ) {
       throw new RuntimeException(
-        String.format(
-          "Unsupported location for %s. Must be %s or %s.",
+        "Unsupported location for %s. Must be %s or %s.".formatted(
           GroupStop.class.getSimpleName(),
           StopType.REGULAR,
           StopType.FLEXIBLE_AREA

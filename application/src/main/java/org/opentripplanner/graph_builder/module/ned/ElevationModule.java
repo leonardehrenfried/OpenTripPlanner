@@ -185,8 +185,7 @@ public class ElevationModule implements GraphBuilderModule {
       } catch (IOException | ClassNotFoundException e) {
         issueStore.add(
           new Graphwide(
-            String.format(
-              "Cached elevations file could not be read in due to error: %s!",
+            "Cached elevations file could not be read in due to error: %s!".formatted(
               e.getMessage()
             )
           )
@@ -199,7 +198,7 @@ public class ElevationModule implements GraphBuilderModule {
 
     for (Vertex gv : graph.getVertices()) {
       for (Edge ee : gv.getOutgoing()) {
-        if (ee instanceof StreetEdge) {
+        if (ee instanceof StreetEdge edge) {
           if (multiThreadElevationCalculations) {
             // Multi-threaded execution requested, check and prepare a few things that are used only during
             // multi-threaded runs.
@@ -209,7 +208,7 @@ public class ElevationModule implements GraphBuilderModule {
               examplarCoordinate = ee.getGeometry().getCoordinates()[0];
             }
           }
-          streetsWithElevationEdges.add((StreetEdge) ee);
+          streetsWithElevationEdges.add(edge);
         }
       }
     }
@@ -237,8 +236,7 @@ public class ElevationModule implements GraphBuilderModule {
       if (failurePercentage > 50) {
         issueStore.add(
           new Graphwide(
-            String.format(
-              "Fetching elevation failed at %d/%d points (%.1f%%)",
+            "Fetching elevation failed at %d/%d points (%.1f%%)".formatted(
               nPointsOutsideDEM.get(),
               nPoints,
               failurePercentage
@@ -466,8 +464,8 @@ public class ElevationModule implements GraphBuilderModule {
       }
 
       // remove final-segment sample if it is less than half the distance between samples
-      if (edgeLenM - coordList.get(coordList.size() - 1).x < distanceBetweenSamplesM / 2) {
-        coordList.remove(coordList.size() - 1);
+      if (edgeLenM - coordList.getLast().x < distanceBetweenSamplesM / 2) {
+        coordList.removeLast();
       }
 
       // final sample (x = edge length)

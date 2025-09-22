@@ -138,7 +138,7 @@ public interface DataSource {
    * {@code [icon] [filename]  [path]  [date time]  [file size]}
    */
   default String detailedInfo() {
-    String info = String.format("%s %s  %s", type().icon(), name(), directory());
+    String info = "%s %s  %s".formatted(type().icon(), name(), directory());
     if (lastModified() > 0) {
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       info += "  " + sdf.format(lastModified());

@@ -41,13 +41,10 @@ public class WheelChairMapper {
       return Accessibility.NO_INFORMATION;
     }
 
-    switch (wheelChairLimitation.value()) {
-      case "true":
-        return Accessibility.POSSIBLE;
-      case "false":
-        return Accessibility.NOT_POSSIBLE;
-      default:
-        return Accessibility.NO_INFORMATION;
-    }
+    return switch (wheelChairLimitation.value()) {
+      case "true" -> Accessibility.POSSIBLE;
+      case "false" -> Accessibility.NOT_POSSIBLE;
+      default -> Accessibility.NO_INFORMATION;
+    };
   }
 }

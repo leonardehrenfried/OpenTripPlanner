@@ -32,7 +32,7 @@ public class GtfsRealtimeTripUpdateSourceTest {
 
     assertEquals(35, updates.size());
 
-    var first = updates.get(0);
+    var first = updates.getFirst();
     assertEquals("AIR_4846_V55_M", first.getTrip().getTripId());
   }
 }

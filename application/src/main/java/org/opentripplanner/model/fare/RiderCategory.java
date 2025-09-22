@@ -1,7 +1,7 @@
 package org.opentripplanner.model.fare;
 
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.utils.lang.Sandbox;
 

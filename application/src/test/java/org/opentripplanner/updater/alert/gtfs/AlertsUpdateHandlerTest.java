@@ -130,8 +130,8 @@ public class AlertsUpdateHandlerTest {
     List<Entry<String, String>> translations =
       ((TranslatedString) transitAlert.url().get()).getTranslations();
     assertEquals(2, translations.size());
-    assertEquals("en", translations.get(0).getKey());
-    assertEquals("https://www.opentripplanner.org/", translations.get(0).getValue());
+    assertEquals("en", translations.getFirst().getKey());
+    assertEquals("https://www.opentripplanner.org/", translations.getFirst().getValue());
     assertEquals("fr", translations.get(1).getKey());
     assertEquals("https://www.opentripplanner.org/fr", translations.get(1).getValue());
   }
@@ -166,8 +166,8 @@ public class AlertsUpdateHandlerTest {
     List<Entry<String, String>> translations =
       ((TranslatedString) transitAlert.headerText().get()).getTranslations();
     assertEquals(2, translations.size());
-    assertEquals("en", translations.get(0).getKey());
-    assertEquals("Title", translations.get(0).getValue());
+    assertEquals("en", translations.getFirst().getKey());
+    assertEquals("Title", translations.getFirst().getValue());
     assertEquals("fr", translations.get(1).getKey());
     assertEquals("Titre", translations.get(1).getValue());
   }
@@ -208,8 +208,8 @@ public class AlertsUpdateHandlerTest {
     List<Entry<String, String>> translations =
       ((TranslatedString) transitAlert.descriptionText().get()).getTranslations();
     assertEquals(2, translations.size());
-    assertEquals("en", translations.get(0).getKey());
-    assertEquals("Description", translations.get(0).getValue());
+    assertEquals("en", translations.getFirst().getKey());
+    assertEquals("Description", translations.getFirst().getValue());
     assertEquals("fr", translations.get(1).getKey());
     assertEquals("La description", translations.get(1).getValue());
   }
@@ -413,7 +413,7 @@ public class AlertsUpdateHandlerTest {
     assertEquals(1l, selectors.size());
     assertEquals(
       "Alert had no entities",
-      ((EntitySelector.Unknown) selectors.get(0)).description()
+      ((EntitySelector.Unknown) selectors.getFirst()).description()
     );
   }
 
@@ -434,7 +434,7 @@ public class AlertsUpdateHandlerTest {
     assertEquals(1l, selectors.size());
     assertEquals(
       "Entity selector: direction_id: 1\n",
-      ((EntitySelector.Unknown) selectors.get(0)).description()
+      ((EntitySelector.Unknown) selectors.getFirst()).description()
     );
   }
 

@@ -70,7 +70,7 @@ public class DataImportIssueSummary implements Serializable {
       .keySet()
       .stream()
       .sorted()
-      .forEach(issueType -> ISSUE_LOG.info(String.format(FMT, issueType, summary.get(issueType))));
+      .forEach(issueType -> ISSUE_LOG.info(FMT.formatted(issueType, summary.get(issueType))));
   }
 
   public Map<String, Long> asMap() {

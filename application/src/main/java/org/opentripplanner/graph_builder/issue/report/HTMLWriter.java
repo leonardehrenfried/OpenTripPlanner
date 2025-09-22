@@ -47,7 +47,7 @@ class HTMLWriter {
       printPrelude(out);
 
       String title = bucketKey.label();
-      out.println(String.format("<h1>OpenTripPlanner data import issue log %s</h1>", title));
+      out.println("<h1>OpenTripPlanner data import issue log %s</h1>".formatted(title));
       out.println("<h2>Graph report for <em>graph.obj</em></h2>");
 
       printCategoryLinks(out);

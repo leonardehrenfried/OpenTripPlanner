@@ -60,9 +60,9 @@ public class LocalizedString implements I18NString, Serializable {
   @Override
   public boolean equals(Object other) {
     return (
-      other instanceof LocalizedString &&
-      key.equals(((LocalizedString) other).key) &&
-      Arrays.equals(params, ((LocalizedString) other).params)
+      other instanceof LocalizedString ls &&
+      key.equals(ls.key) &&
+      Arrays.equals(params, ls.params)
     );
   }
 
@@ -89,8 +89,7 @@ public class LocalizedString implements I18NString, Serializable {
     String translation = ResourceBundleSingleton.INSTANCE.localize(this.key, locale);
     if (this.params != null) {
       translation = patternMatcher.matcher(translation).replaceAll("%s");
-      return String.format(
-        translation,
+      return translation.formatted(
         Arrays.stream(params).map(i -> i.toString(locale)).toArray(Object[]::new)
       );
     } else {

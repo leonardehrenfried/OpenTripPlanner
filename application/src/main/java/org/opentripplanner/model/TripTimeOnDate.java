@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.transit.model.network.TripPattern;
 import org.opentripplanner.transit.model.site.StopLocation;

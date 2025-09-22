@@ -38,7 +38,7 @@ public class TransitGroupPriorityItineraryDecorator {
   }
 
   private Itinerary decorate(Itinerary itinerary) {
-    if (!itinerary.generalizedCost2().isEmpty()) {
+    if (itinerary.generalizedCost2().isPresent()) {
       return itinerary;
     }
     int c2 = priorityGroupConfigurator.baseGroupId();

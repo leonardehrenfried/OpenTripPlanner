@@ -12,8 +12,7 @@ public record ParkAndRideEntranceRemoved(VehicleParkingEntrance vehicleParkingEn
 
   @Override
   public String getMessage() {
-    return String.format(
-      FMT,
+    return FMT.formatted(
       vehicleParkingEntrance.getEntranceId().toString(),
       vehicleParkingEntrance.getVertex().getDefaultName()
     );

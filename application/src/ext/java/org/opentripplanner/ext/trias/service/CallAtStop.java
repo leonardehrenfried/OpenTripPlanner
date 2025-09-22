@@ -2,7 +2,7 @@ package org.opentripplanner.ext.trias.service;
 
 import java.time.Duration;
 import java.util.Comparator;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.model.TripTimeOnDate;
 
 public record CallAtStop(TripTimeOnDate tripTimeOnDate, @Nullable Duration walkTime) {

@@ -193,13 +193,13 @@ public abstract class SnapshotTestBase {
     RouteRequest arriveBy = request
       .copyOf()
       .withArriveBy(true)
-      .withDateTime(departByItineraries.get(0).legs().getLast().endTime().toInstant())
+      .withDateTime(departByItineraries.getFirst().legs().getLast().endTime().toInstant())
       .buildRequest();
 
     List<Itinerary> arriveByItineraries = retrieveItineraries(arriveBy);
 
-    var departAtItinerary = departByItineraries.get(0);
-    var arriveByItinerary = arriveByItineraries.get(0);
+    var departAtItinerary = departByItineraries.getFirst();
+    var arriveByItinerary = arriveByItineraries.getFirst();
 
     logDebugInformationOnFailure(arriveBy, () ->
       assertEquals(
@@ -279,9 +279,9 @@ public abstract class SnapshotTestBase {
 
     // TODO: 2022-12-20 filters: there should not be more than one filter but technically this is not right
     List<MainAndSubMode> transportModes = new ArrayList<>();
-    var filter = request.journey().transit().filters().get(0);
+    var filter = request.journey().transit().filters().getFirst();
     if (filter instanceof TransitFilterRequest filterRequest) {
-      transportModes = filterRequest.select().get(0).transportModes();
+      transportModes = filterRequest.select().getFirst().transportModes();
     } else if (filter instanceof AllowAllTransitFilter) {
       transportModes = MainAndSubMode.all();
     }
@@ -301,8 +301,7 @@ public abstract class SnapshotTestBase {
       .distinct()
       .collect(Collectors.joining(","));
 
-    return String.format(
-      "http://localhost:8080/?module=planner&fromPlace=%s&toPlace=%s&date=%s&time=%s&mode=%s&arriveBy=%s&wheelchair=%s",
+    return "http://localhost:8080/?module=planner&fromPlace=%s&toPlace=%s&date=%s&time=%s&mode=%s&arriveBy=%s&wheelchair=%s".formatted(
       formatPlace(request.from()),
       formatPlace(request.to()),
       dateTime.toLocalDate().format(apiDateFormatter),
@@ -316,9 +315,9 @@ public abstract class SnapshotTestBase {
   private String formatPlace(GenericLocation location) {
     String formatted;
     if (location.stopId != null) {
-      formatted = String.format("%s::%s", location.label, location.stopId);
+      formatted = "%s::%s".formatted(location.label, location.stopId);
     } else {
-      formatted = String.format("%s::%s,%s", location.label, location.lat, location.lng);
+      formatted = "%s::%s,%s".formatted(location.label, location.lat, location.lng);
     }
     return URLEncoder.encode(formatted, StandardCharsets.UTF_8);
   }
@@ -328,33 +327,22 @@ public abstract class SnapshotTestBase {
       return null;
     }
 
-    switch (streetMode) {
-      case WALK:
-        return new QualifiedMode(ApiRequestMode.WALK);
-      case BIKE:
-        return new QualifiedMode(ApiRequestMode.BICYCLE);
-      case BIKE_TO_PARK:
-        return new QualifiedMode(ApiRequestMode.BICYCLE, Qualifier.PARK);
-      case BIKE_RENTAL:
-        return new QualifiedMode(ApiRequestMode.BICYCLE, Qualifier.RENT);
-      case SCOOTER_RENTAL:
-        return new QualifiedMode(ApiRequestMode.SCOOTER, Qualifier.RENT);
-      case CAR:
-        return new QualifiedMode(ApiRequestMode.CAR);
-      case CAR_TO_PARK:
-        return new QualifiedMode(ApiRequestMode.CAR, Qualifier.PARK);
-      case CAR_PICKUP:
-        return new QualifiedMode(
+    return switch (streetMode) {
+      case WALK -> new QualifiedMode(ApiRequestMode.WALK);
+      case BIKE -> new QualifiedMode(ApiRequestMode.BICYCLE);
+      case BIKE_TO_PARK -> new QualifiedMode(ApiRequestMode.BICYCLE, Qualifier.PARK);
+      case BIKE_RENTAL -> new QualifiedMode(ApiRequestMode.BICYCLE, Qualifier.RENT);
+      case SCOOTER_RENTAL -> new QualifiedMode(ApiRequestMode.SCOOTER, Qualifier.RENT);
+      case CAR -> new QualifiedMode(ApiRequestMode.CAR);
+      case CAR_TO_PARK -> new QualifiedMode(ApiRequestMode.CAR, Qualifier.PARK);
+      case CAR_PICKUP -> new QualifiedMode(
           ApiRequestMode.CAR,
           isEgress ? Qualifier.PICKUP : Qualifier.DROPOFF
         );
-      case CAR_RENTAL:
-        return new QualifiedMode(ApiRequestMode.CAR, Qualifier.RENT);
-      case FLEXIBLE:
-        return new QualifiedMode(ApiRequestMode.FLEX);
-      default:
-        return null;
-    }
+      case CAR_RENTAL -> new QualifiedMode(ApiRequestMode.CAR, Qualifier.RENT);
+      case FLEXIBLE -> new QualifiedMode(ApiRequestMode.FLEX);
+      default -> null;
+    };
   }
 
   private static class SnapshotItinerarySerializer implements SnapshotSerializer {

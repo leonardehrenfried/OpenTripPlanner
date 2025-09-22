@@ -56,8 +56,7 @@ class IntrospectionTypeWiring {
                 DataFetcher dataFetcher = (DataFetcher) method.invoke(instance);
                 if (dataFetcher == null) {
                   throw new RuntimeException(
-                    String.format(
-                      "Data fetcher %s for type %s is null",
+                    "Data fetcher %s for type %s is null".formatted(
                       fieldName,
                       clazz.getSimpleName()
                     )
@@ -82,8 +81,7 @@ class IntrospectionTypeWiring {
                 return dataFetcher;
               } catch (IllegalAccessException | InvocationTargetException error) {
                 throw new RuntimeException(
-                  String.format(
-                    "Data fetcher %s for type %s threw error",
+                  "Data fetcher %s for type %s threw error".formatted(
                     fieldName,
                     clazz.getSimpleName()
                   ),

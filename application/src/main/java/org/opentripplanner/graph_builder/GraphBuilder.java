@@ -10,7 +10,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.emission.EmissionRepository;
 import org.opentripplanner.ext.stopconsolidation.StopConsolidationRepository;
 import org.opentripplanner.framework.application.OTPFeature;

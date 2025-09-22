@@ -10,6 +10,7 @@ import static org.opentripplanner.graph_builder.module.linking.TestGraph.link;
 import java.io.File;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -76,7 +77,7 @@ public class LinkingTest {
         .buildAndConnect();
 
       // split it but not too close to the end
-      double splitVal = Math.random() * 0.95 + 0.025;
+      double splitVal = ThreadLocalRandom.current().nextDouble() * 0.95 + 0.025;
 
       SplitterVertex sv0 = new SplitterVertex(
         "split",

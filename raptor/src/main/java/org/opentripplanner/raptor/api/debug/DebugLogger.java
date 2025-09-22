@@ -43,7 +43,7 @@ public interface DebugLogger {
    */
   default void debug(DebugTopic topic, String format, Object... args) {
     if (isEnabled()) {
-      debug(topic, String.format(format, args));
+      debug(topic, format.formatted(args));
     }
   }
 }

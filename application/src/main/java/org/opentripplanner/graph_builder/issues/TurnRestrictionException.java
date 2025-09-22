@@ -10,11 +10,11 @@ public record TurnRestrictionException(long nodeId, long wayId) implements DataI
 
   @Override
   public String getMessage() {
-    return String.format(FMT, nodeId, wayId);
+    return FMT.formatted(nodeId, wayId);
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(HTMLFMT, nodeId, nodeId, wayId, wayId);
+    return HTMLFMT.formatted(nodeId, nodeId, wayId, wayId);
   }
 }

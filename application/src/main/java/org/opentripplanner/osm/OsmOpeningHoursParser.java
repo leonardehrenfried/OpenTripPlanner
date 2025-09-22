@@ -218,8 +218,7 @@ public class OsmOpeningHoursParser {
             .getDays()
             .stream()
             .flatMap(weekDayRange -> {
-              String description = String.format(
-                "%s %s",
+              String description = "%s %s".formatted(
                 dateRange.toString(),
                 weekDayRange.toString()
               );
@@ -503,19 +502,17 @@ public class OsmOpeningHoursParser {
    */
   private void logUnhandled(Rule rule, String ohTag, String id, String link) {
     var message = link != null
-      ? String.format(
-        "Rule %s is unhandled in the opening hours definition %s for %s (%s)",
-        rule,
-        ohTag,
-        id,
-        link
-      )
-      : String.format(
-        "Rule %s is unhandled in the opening hours definition %s for %s",
-        rule,
-        ohTag,
-        id
-      );
+      ? "Rule %s is unhandled in the opening hours definition %s for %s (%s)".formatted(
+      rule,
+      ohTag,
+      id,
+      link
+    )
+      : "Rule %s is unhandled in the opening hours definition %s for %s".formatted(
+      rule,
+      ohTag,
+      id
+    );
     if (issueStore != null) {
       issueStore.add("UnhandledOHRule", message);
     } else {

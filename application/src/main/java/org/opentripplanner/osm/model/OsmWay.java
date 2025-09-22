@@ -106,7 +106,7 @@ public class OsmWay extends OsmEntity {
 
   @Override
   public String url() {
-    return String.format("https://www.openstreetmap.org/way/%d", getId());
+    return "https://www.openstreetmap.org/way/%d".formatted(getId());
   }
 
   /**

@@ -170,7 +170,7 @@ public class CommandLineParameters {
    */
   public File getBaseDirectory() {
     validateOneDirectorySet();
-    return baseDirectory.get(0);
+    return baseDirectory.getFirst();
   }
 
   public boolean doBuildStreet() {
@@ -239,7 +239,7 @@ public class CommandLineParameters {
       }
     }
     if (portUnavailable) {
-      String msg = String.format(": port %d is not available. %s.", port, reason);
+      String msg = ": port %d is not available. %s.".formatted(port, reason);
       throw new ParameterException(msg);
     }
   }
@@ -312,11 +312,11 @@ public class CommandLineParameters {
     public void validate(String name, String value) throws ParameterException {
       File file = new File(value);
       if (!file.isDirectory()) {
-        String msg = String.format("%s: '%s' is not a directory.", name, value);
+        String msg = "%s: '%s' is not a directory.".formatted(name, value);
         throw new ParameterException(msg);
       }
       if (!file.canRead()) {
-        String msg = String.format("%s: directory '%s' is not readable.", name, value);
+        String msg = "%s: directory '%s' is not readable.".formatted(name, value);
         throw new ParameterException(msg);
       }
     }
@@ -329,7 +329,7 @@ public class CommandLineParameters {
       new ReadableDirectory().validate(name, value);
       File file = new File(value);
       if (!file.canWrite()) {
-        String msg = String.format("%s: directory '%s' is not writable.", name, value);
+        String msg = "%s: directory '%s' is not writable.".formatted(name, value);
         throw new ParameterException(msg);
       }
     }
@@ -341,7 +341,7 @@ public class CommandLineParameters {
     public void validate(String name, String value) throws ParameterException {
       int i = Integer.parseInt(value);
       if (i <= 0) {
-        String msg = String.format("%s must be a positive integer.", name);
+        String msg = "%s must be a positive integer.".formatted(name);
         throw new ParameterException(msg);
       }
     }

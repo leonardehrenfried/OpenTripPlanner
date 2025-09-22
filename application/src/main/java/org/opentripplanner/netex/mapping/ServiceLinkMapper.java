@@ -3,7 +3,7 @@ package org.opentripplanner.netex.mapping;
 import jakarta.xml.bind.JAXBElement;
 import java.util.Arrays;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import net.opengis.gml._3.LineStringType;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateSequence;

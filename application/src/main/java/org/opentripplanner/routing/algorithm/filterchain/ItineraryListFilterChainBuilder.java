@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.accessibilityscore.DecorateWithAccessibilityScore;
 import org.opentripplanner.framework.application.OTPFeature;
 import org.opentripplanner.framework.model.Cost;

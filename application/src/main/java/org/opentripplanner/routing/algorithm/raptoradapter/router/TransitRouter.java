@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.stream.IntStream;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.ridehailing.RideHailingAccessShifter;
 import org.opentripplanner.framework.application.OTPFeature;
 import org.opentripplanner.model.plan.Itinerary;

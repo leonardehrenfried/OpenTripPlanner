@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.Envelope;
 import org.opentripplanner.ext.flex.FlexIndex;
 import org.opentripplanner.model.FeedInfo;

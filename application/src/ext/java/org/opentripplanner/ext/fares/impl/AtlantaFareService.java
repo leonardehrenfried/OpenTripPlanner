@@ -15,7 +15,7 @@ import java.util.Currency;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.fares.impl.gtfs.DefaultFareService;
 import org.opentripplanner.ext.fares.model.FareRuleSet;
 import org.opentripplanner.model.fare.FareProduct;

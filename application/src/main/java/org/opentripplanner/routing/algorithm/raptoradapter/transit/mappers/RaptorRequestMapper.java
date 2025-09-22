@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.application.OTPFeature;
 import org.opentripplanner.raptor.api.model.GeneralizedCostRelaxFunction;
 import org.opentripplanner.raptor.api.model.RaptorAccessEgress;

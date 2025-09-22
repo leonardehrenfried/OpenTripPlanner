@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.Duration;
 import java.util.EnumSet;
 import java.util.Optional;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.organization.ContactInfo;
 import org.opentripplanner.utils.tostring.ToStringBuilder;
 

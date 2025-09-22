@@ -10,6 +10,6 @@ public record ShapeGeometryTooFar(FeedScopedId tripId, FeedScopedId shapeId)
 
   @Override
   public String getMessage() {
-    return String.format(FMT, tripId, shapeId);
+    return FMT.formatted(tripId, shapeId);
   }
 }

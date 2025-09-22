@@ -50,14 +50,14 @@ class LocalizedStringTest {
 
   @Test
   public void hungarianResource() {
-    assertEquals("névtelen", new LocalizedString("unnamedStreet").toString(new Locale("hu")));
+    assertEquals("névtelen", new LocalizedString("unnamedStreet").toString(Locale.of("hu")));
     assertEquals(
       "A (B része)",
       new LocalizedString(
         "partOf",
         new NonLocalizedString("A"),
         new NonLocalizedString("B")
-      ).toString(new Locale("hu"))
+      ).toString(Locale.of("hu"))
     );
   }
 }

@@ -243,7 +243,7 @@ public class ParameterBuilder {
     List<Optional<T>> optionalList = buildAndListSimpleArrayElements(List.of(), it ->
       parseOptionalEnum(it.asText(), enumClass)
     );
-    List<T> result = optionalList.stream().filter(Optional::isPresent).map(Optional::get).toList();
+    List<T> result = optionalList.stream().flatMap(Optional::stream).toList();
     // Set is immutable
     return result.isEmpty() ? Set.of() : Set.copyOf(result);
   }
@@ -256,7 +256,7 @@ public class ParameterBuilder {
     List<Optional<T>> optionalList = buildAndListSimpleArrayElements(List.of(), it ->
       parseOptionalEnum(it.asText(), enumClass)
     );
-    List<T> result = optionalList.stream().filter(Optional::isPresent).map(Optional::get).toList();
+    List<T> result = optionalList.stream().flatMap(Optional::stream).toList();
     // Set is immutable
     return result.isEmpty() ? Set.copyOf(dft) : Set.copyOf(result);
   }
@@ -695,9 +695,9 @@ public class ParameterBuilder {
   private Locale parseLocale(String text) {
     String[] parts = text.split("[-_ ]+");
     return switch (parts.length) {
-      case 1 -> new Locale(parts[0]);
-      case 2 -> new Locale(parts[0], parts[1]);
-      case 3 -> new Locale(parts[0], parts[1], parts[2]);
+      case 1 -> Locale.of(parts[0]);
+      case 2 -> Locale.of(parts[0], parts[1]);
+      case 3 -> Locale.of(parts[0], parts[1], parts[2]);
       default -> throw error(
         "The parameter is not a valid Locale: '" +
         text +

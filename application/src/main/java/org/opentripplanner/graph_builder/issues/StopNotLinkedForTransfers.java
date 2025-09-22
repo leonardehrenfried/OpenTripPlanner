@@ -13,13 +13,12 @@ public record StopNotLinkedForTransfers(TransitStopVertex stop) implements DataI
 
   @Override
   public String getMessage() {
-    return String.format(FMT, stop);
+    return FMT.formatted(stop);
   }
 
   @Override
   public String getHTMLMessage() {
-    return String.format(
-      HTMLFMT,
+    return HTMLFMT.formatted(
       stop.getLat(),
       stop.getLon(),
       stop.getDefaultName(),

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.ext.fares.impl.gtfs.DefaultFareService;
 import org.opentripplanner.ext.fares.model.FareRuleSet;
 import org.opentripplanner.framework.i18n.I18NString;

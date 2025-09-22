@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

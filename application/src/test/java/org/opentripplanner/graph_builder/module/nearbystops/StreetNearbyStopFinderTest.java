@@ -91,7 +91,7 @@ class StreetNearbyStopFinderTest extends GraphRoutingTest {
     );
 
     assertThat(sortedNearbyStops).hasSize(4);
-    assertZeroDistanceStop(stopA, sortedNearbyStops.get(0));
+    assertZeroDistanceStop(stopA, sortedNearbyStops.getFirst());
     assertStopAtDistance(stopB, 100, sortedNearbyStops.get(1));
     assertStopAtDistance(stopC, 200, sortedNearbyStops.get(2));
     assertStopAtDistance(stopD, 300, sortedNearbyStops.get(3));
@@ -108,7 +108,7 @@ class StreetNearbyStopFinderTest extends GraphRoutingTest {
     );
 
     assertThat(sortedNearbyStops).hasSize(2);
-    assertZeroDistanceStop(stopA, sortedNearbyStops.get(0));
+    assertZeroDistanceStop(stopA, sortedNearbyStops.getFirst());
     assertStopAtDistance(stopB, 100, sortedNearbyStops.get(1));
   }
 
@@ -128,7 +128,7 @@ class StreetNearbyStopFinderTest extends GraphRoutingTest {
     );
 
     assertThat(sortedNearbyStops).hasSize(2);
-    assertZeroDistanceStop(stopA, sortedNearbyStops.get(0));
+    assertZeroDistanceStop(stopA, sortedNearbyStops.getFirst());
     assertStopAtDistance(stopB, 100, sortedNearbyStops.get(1));
   }
 
@@ -149,7 +149,7 @@ class StreetNearbyStopFinderTest extends GraphRoutingTest {
     );
 
     assertThat(sortedNearbyStops).hasSize(2);
-    assertStopAtDistance(stopC, 200, sortedNearbyStops.get(0));
+    assertStopAtDistance(stopC, 200, sortedNearbyStops.getFirst());
     assertStopAtDistance(stopD, 300, sortedNearbyStops.get(1));
   }
 
@@ -170,7 +170,7 @@ class StreetNearbyStopFinderTest extends GraphRoutingTest {
     );
 
     assertThat(sortedNearbyStops).hasSize(1);
-    assertStopAtDistance(stopC, 200, sortedNearbyStops.get(0));
+    assertStopAtDistance(stopC, 200, sortedNearbyStops.getFirst());
   }
 
   static List<NearbyStop> sort(Collection<NearbyStop> stops) {

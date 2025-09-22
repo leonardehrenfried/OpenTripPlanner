@@ -1,6 +1,6 @@
 package org.opentripplanner.netex.mapping;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.utils.lang.StringUtils;
 import org.rutebanken.netex.model.MultilingualString;
 

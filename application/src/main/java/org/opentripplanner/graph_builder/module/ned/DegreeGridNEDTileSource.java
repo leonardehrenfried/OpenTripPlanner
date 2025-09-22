@@ -85,7 +85,7 @@ public class DegreeGridNEDTileSource implements NEDTileSource {
     } else {
       eastWest = "e";
     }
-    return String.format("%s%d%s%03d", northSouth, y, eastWest, x);
+    return "%s%d%s%03d".formatted(northSouth, y, eastWest, x);
   }
 
   private File getPathToTile(int x, int y) {
@@ -131,7 +131,7 @@ public class DegreeGridNEDTileSource implements NEDTileSource {
         // forbidden access error.
         if (e.getS3ErrorCode().equals("NoSuchKey")) {
           log.error(
-            String.format("Elevation tile %s missing from s3bucket. Proceeding without tile!", key)
+            "Elevation tile %s missing from s3bucket. Proceeding without tile!".formatted(key)
           );
           return null;
         }

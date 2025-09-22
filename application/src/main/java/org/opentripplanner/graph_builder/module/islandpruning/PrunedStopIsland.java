@@ -21,8 +21,7 @@ public record PrunedStopIsland(
 
   @Override
   public String getMessage() {
-    return String.format(
-      FMT,
+    return FMT.formatted(
       island.getRepresentativeVertex().getLabel(),
       island.streetSize(),
       island.stopSize(),
@@ -37,8 +36,7 @@ public record PrunedStopIsland(
   public String getHTMLMessage() {
     VertexLabel label = island.getRepresentativeVertex().getLabel();
     if (label instanceof VertexLabel.OsmNodeLabel osmLabel) {
-      return String.format(
-        HTMLFMT,
+      return HTMLFMT.formatted(
         osmLabel.nodeId(),
         osmLabel.nodeId(),
         island.streetSize(),

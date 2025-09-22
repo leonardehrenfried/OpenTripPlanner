@@ -54,8 +54,8 @@ public final class TimeScalarFactory {
         new Coercing<>() {
           @Override
           public String serialize(Object input) {
-            if (input instanceof Integer) {
-              return (LocalTime.ofSecondOfDay(((Integer) input % SECONDS_PER_DAY))).format(
+            if (input instanceof Integer integer) {
+              return (LocalTime.ofSecondOfDay((integer % SECONDS_PER_DAY))).format(
                   FORMATTER
                 );
             }
@@ -75,8 +75,8 @@ public final class TimeScalarFactory {
 
           @Override
           public Integer parseLiteral(Object input) {
-            if (input instanceof StringValue) {
-              return parseValue(((StringValue) input).getValue());
+            if (input instanceof StringValue value) {
+              return parseValue(value.getValue());
             }
             return null;
           }

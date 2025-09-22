@@ -29,17 +29,12 @@ public interface TransitTuningParameters {
 
     @Override
     public Integer stopBoardAlightDuringTransferCost(StopTransferPriority key) {
-      switch (key) {
-        case DISCOURAGED:
-          return 3600;
-        case ALLOWED:
-          return 60;
-        case RECOMMENDED:
-          return 20;
-        case PREFERRED:
-          return 0;
-      }
-      throw new IllegalArgumentException("Unknown key: " + key);
+      return switch (key) {
+        case DISCOURAGED -> 3600;
+        case ALLOWED -> 60;
+        case RECOMMENDED -> 20;
+        case PREFERRED -> 0;
+      };
     }
 
     @Override

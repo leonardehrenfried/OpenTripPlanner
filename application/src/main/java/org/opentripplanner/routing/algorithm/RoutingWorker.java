@@ -7,7 +7,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.application.OTPFeature;
 import org.opentripplanner.framework.application.OTPRequestTimeoutException;
 import org.opentripplanner.model.plan.Itinerary;

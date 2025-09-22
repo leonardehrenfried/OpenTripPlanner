@@ -213,8 +213,8 @@ class RaptorViaLocationTest implements RaptorTestConstants {
       .addViaStop(STOP_A)
       .build();
 
-    var sameTransferConnection = viaTxConnection.connections().get(0);
-    var sameStopConnection = viaStopConnections.connections().get(0);
+    var sameTransferConnection = viaTxConnection.connections().getFirst();
+    var sameStopConnection = viaStopConnections.connections().getFirst();
 
     // Equals
     assertEquals(sameTransferConnection, transferConnection);

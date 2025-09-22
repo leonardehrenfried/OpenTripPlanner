@@ -136,7 +136,7 @@ class ServiceJourneyNonIncreasingPassingTimeTest {
     StopPointInJourneyPattern stopPointInJourneyPattern = (StopPointInJourneyPattern) journeyPattern
       .getPointsInSequence()
       .getPointInJourneyPatternOrStopPointInJourneyPatternOrTimingPointInJourneyPattern()
-      .get(0);
+      .getFirst();
     netexEntityIndex.flexibleStopPlaceByStopPointRef.add(
       stopPointInJourneyPattern.getScheduledStopPointRef().getValue().getRef(),
       null
@@ -161,7 +161,7 @@ class ServiceJourneyNonIncreasingPassingTimeTest {
     TimetabledPassingTime timetabledPassingTime = serviceJourney
       .getPassingTimes()
       .getTimetabledPassingTime()
-      .get(0);
+      .getFirst();
     timetabledPassingTime
       .withArrivalTime(null)
       .withDepartureTime(null)
@@ -176,7 +176,7 @@ class ServiceJourneyNonIncreasingPassingTimeTest {
     StopPointInJourneyPattern stopPointInJourneyPattern = (StopPointInJourneyPattern) journeyPattern
       .getPointsInSequence()
       .getPointInJourneyPatternOrStopPointInJourneyPatternOrTimingPointInJourneyPattern()
-      .get(0);
+      .getFirst();
     netexEntityIndex.flexibleStopPlaceByStopPointRef.add(
       stopPointInJourneyPattern.getScheduledStopPointRef().getValue().getRef(),
       null

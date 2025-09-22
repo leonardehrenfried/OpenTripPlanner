@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 
 /**
@@ -36,8 +36,7 @@ public interface FeedScopedIdMapper {
     return ids
       .stream()
       .map(this::parseNullSafe)
-      .filter(Optional::isPresent)
-      .map(Optional::get)
+      .flatMap(Optional::stream)
       .toList();
   }
 

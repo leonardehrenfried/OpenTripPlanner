@@ -287,7 +287,7 @@ class GeometryProcessorTest {
       testModel.stopTime(trip, 1, stopB),
       testModel.stopTime(trip, 2, stopA)
     );
-    stopTimes.get(0).setShapeDistTraveled(0);
+    stopTimes.getFirst().setShapeDistTraveled(0);
     stopTimes.get(1).setShapeDistTraveled(3);
     stopTimes.get(2).setShapeDistTraveled(4);
     builder.getStopTimesSortedByTrip().put(trip, stopTimes);

@@ -125,7 +125,7 @@ public class TestTransitData
           return null;
         }
         if (list.size() == 1) {
-          return list.get(0);
+          return list.getFirst();
         }
         throw new IllegalStateException("More than on transfers found: " + list);
       }

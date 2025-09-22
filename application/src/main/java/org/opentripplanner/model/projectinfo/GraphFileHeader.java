@@ -156,7 +156,7 @@ public class GraphFileHeader implements Serializable {
     }
     StringBuilder buf = new StringBuilder();
     for (int v : text) {
-      buf.append(" ").append(String.format("%02X", v));
+      buf.append(" ").append("%02X".formatted(v));
     }
     return buf.substring(1) + "  \"" + new String(text, CHARSET) + "\"";
   }

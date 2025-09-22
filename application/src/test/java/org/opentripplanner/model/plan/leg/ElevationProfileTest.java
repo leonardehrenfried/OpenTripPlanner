@@ -35,8 +35,8 @@ class ElevationProfileTest {
   @Test
   void offsetX() {
     var subject = ElevationProfile.of().step(ZERO, ANY).transformX(2.0).build();
-    assertEquals(2.0, subject.steps().get(0).x());
-    assertEquals(ANY, subject.steps().get(0).y());
+    assertEquals(2.0, subject.steps().getFirst().x());
+    assertEquals(ANY, subject.steps().getFirst().y());
   }
 
   @Test

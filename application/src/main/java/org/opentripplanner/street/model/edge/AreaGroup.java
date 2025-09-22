@@ -27,7 +27,7 @@ public class AreaGroup implements Serializable {
   }
 
   public String toString() {
-    return String.format("AreaGroup: visibilityVertices=%s, %s", visibilityVertices, geometry);
+    return "AreaGroup: visibilityVertices=%s, %s".formatted(visibilityVertices, geometry);
   }
 
   public void addArea(Area area) {

@@ -2,7 +2,7 @@ package org.opentripplanner.framework.token;
 
 import java.time.Duration;
 import java.time.Instant;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.utils.time.DurationUtils;
 
 /**

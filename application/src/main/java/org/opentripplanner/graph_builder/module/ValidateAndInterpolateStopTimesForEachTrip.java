@@ -94,7 +94,7 @@ public class ValidateAndInterpolateStopTimesForEachTrip {
       return false;
     }
 
-    StopTime st0 = stopTimes.get(0);
+    StopTime st0 = stopTimes.getFirst();
 
     // If the feed does not specify any time points, we want to mark all times that are present as
     // time points.

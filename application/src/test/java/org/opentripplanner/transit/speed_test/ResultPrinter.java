@@ -84,7 +84,7 @@ class ResultPrinter {
       "\n" +
       String.join("\n", listResults(timer)) +
       "\n" +
-      logLine("Test case ids", "[%s]", summary.get(0)) +
+      logLine("Test case ids", "[%s]", summary.getFirst()) +
       logLine("Number of paths", "[%s]", summary.get(1)) +
       logLine("Transit times(ms)", "[%s]", summary.get(2)) +
       logLine("Total times(ms)", "[%s]", summary.get(3)) +
@@ -176,8 +176,7 @@ class ResultPrinter {
   }
 
   private static String formatResultOk(SpeedTestTimer.Result r) {
-    return String.format(
-      "%4s %5s %4s %s %6s %6.1f s",
+    return "%4s %5s %4s %s %6s %6.1f s".formatted(
       str(r.min()),
       str(r.mean()),
       str(r.max()),
@@ -203,7 +202,7 @@ class ResultPrinter {
     if (!v.isEmpty()) {
       String values =
         "[ " +
-        v.stream().map(it -> String.format("%4d", it)).reduce((a, b) -> a + ", " + b).orElse("") +
+        v.stream().map(it -> "%4d".formatted(it)).reduce((a, b) -> a + ", " + b).orElse("") +
         " ]";
       double avg = v.stream().mapToInt(it -> it).average().orElse(0d);
 
@@ -222,6 +221,6 @@ class ResultPrinter {
   }
 
   private static String logLine(boolean enable, String label, String formatValues, Object... args) {
-    return enable ? (String.format("%n%-20s: ", label) + String.format(formatValues, args)) : "";
+    return enable ? ("%n%-20s: ".formatted(label) + formatValues.formatted(args)) : "";
   }
 }

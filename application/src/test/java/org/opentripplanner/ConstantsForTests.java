@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.datastore.api.CompositeDataSource;
 import org.opentripplanner.datastore.api.FileType;
 import org.opentripplanner.datastore.file.DirectoryDataSource;

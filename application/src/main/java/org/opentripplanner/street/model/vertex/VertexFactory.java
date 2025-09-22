@@ -1,7 +1,7 @@
 package org.opentripplanner.street.model.vertex;
 
 import java.util.Set;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.locationtech.jts.geom.Coordinate;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.osm.model.OsmNode;
@@ -122,7 +122,7 @@ public class VertexFactory {
   }
 
   public VehicleParkingEntranceVertex vehicleParkingEntrance(VehicleParking vehicleParking) {
-    return vehicleParkingEntrance(vehicleParking.getEntrances().get(0));
+    return vehicleParkingEntrance(vehicleParking.getEntrances().getFirst());
   }
 
   public VehicleParkingEntranceVertex vehicleParkingEntrance(VehicleParkingEntrance entrance) {

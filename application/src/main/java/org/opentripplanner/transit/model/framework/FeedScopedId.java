@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.utils.lang.StringUtils;
 
 public final class FeedScopedId implements Serializable, Comparable<FeedScopedId> {

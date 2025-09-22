@@ -12,8 +12,7 @@ public class DayTypeScheduleIsEmpty implements DataImportIssue {
 
   @Override
   public String getMessage() {
-    return String.format(
-      "DayType calendar (set of operating days) is empty. DayType=%s.",
+    return "DayType calendar (set of operating days) is empty. DayType=%s.".formatted(
       dayTypeId
     );
   }

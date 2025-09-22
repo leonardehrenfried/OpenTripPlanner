@@ -2,7 +2,7 @@ package org.opentripplanner.netex.mapping;
 
 import jakarta.xml.bind.JAXBElement;
 import java.util.List;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.framework.geometry.WgsCoordinate;
 import org.opentripplanner.framework.i18n.I18NString;
 import org.opentripplanner.framework.i18n.NonLocalizedString;
@@ -55,7 +55,7 @@ class GroupOfStationsMapper {
       StopPlaceRefStructure ref = groupOfStopPlaces
         .getMembers()
         .getStopPlaceRef()
-        .get(0)
+        .getFirst()
         .getValue();
       name = stations.get(idFactory.createId(ref.getRef())).getName();
     }

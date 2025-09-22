@@ -3,7 +3,7 @@ package org.opentripplanner.transit.model.organization;
 import static org.opentripplanner.utils.lang.StringUtils.assertHasValue;
 
 import java.util.Objects;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.transit.model.framework.AbstractTransitEntity;
 import org.opentripplanner.transit.model.framework.FeedScopedId;
 import org.opentripplanner.transit.model.framework.LogInfo;

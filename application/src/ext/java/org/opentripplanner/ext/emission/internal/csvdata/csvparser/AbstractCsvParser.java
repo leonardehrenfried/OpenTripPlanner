@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.utils.lang.DoubleRange;
 import org.opentripplanner.utils.lang.IntRange;

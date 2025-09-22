@@ -88,11 +88,11 @@ public class NodeAdapterTest {
       "]",
       infos.toString()
     );
-    assertEquals("bool", infos.get(0).name());
-    assertNull(infos.get(0).defaultValue());
-    assertEquals("B Summary", infos.get(0).summary());
-    assertEquals("Ddd", infos.get(0).description());
-    assertEquals(BOOLEAN, infos.get(0).type());
+    assertEquals("bool", infos.getFirst().name());
+    assertNull(infos.getFirst().defaultValue());
+    assertEquals("B Summary", infos.getFirst().summary());
+    assertEquals("Ddd", infos.getFirst().description());
+    assertEquals(BOOLEAN, infos.getFirst().type());
   }
 
   @Test

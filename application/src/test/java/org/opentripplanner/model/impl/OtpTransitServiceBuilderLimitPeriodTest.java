@@ -124,12 +124,12 @@ public class OtpTransitServiceBuilderLimitPeriodTest {
     // Verify calendar
     List<ServiceCalendar> calendars = subject.getCalendars();
     assertEquals(1, calendars.size(), calendars.toString());
-    assertEquals(SERVICE_C_IN, calendars.get(0).getServiceId(), calendars.toString());
+    assertEquals(SERVICE_C_IN, calendars.getFirst().getServiceId(), calendars.toString());
 
     // Verify calendar dates
     List<ServiceCalendarDate> dates = subject.getCalendarDates();
     assertEquals(1, dates.size(), dates.toString());
-    assertEquals(SERVICE_D_IN, dates.get(0).getServiceId(), dates.toString());
+    assertEquals(SERVICE_D_IN, dates.getFirst().getServiceId(), dates.toString());
 
     // Verify trips
     EntityById<Trip> trips = subject.getTripsById();
@@ -162,7 +162,7 @@ public class OtpTransitServiceBuilderLimitPeriodTest {
     assertEquals(1, copyOfTripPattern1.getScheduledTimetable().getTripTimes().size());
     assertEquals(
       tripCSIn,
-      copyOfTripPattern1.getScheduledTimetable().getTripTimes().get(0).getTrip()
+      copyOfTripPattern1.getScheduledTimetable().getTripTimes().getFirst().getTrip()
     );
 
     // Verify scheduledTimetable trips in pattern is unchanged (one trip)

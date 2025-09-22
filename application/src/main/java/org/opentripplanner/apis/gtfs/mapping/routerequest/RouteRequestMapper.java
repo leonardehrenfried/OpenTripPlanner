@@ -11,7 +11,7 @@ import graphql.schema.DataFetchingEnvironment;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.apis.gtfs.GraphQLRequestContext;
 import org.opentripplanner.apis.gtfs.generated.GraphQLTypes;
 import org.opentripplanner.framework.graphql.GraphQLUtils;

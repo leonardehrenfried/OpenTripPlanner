@@ -2,7 +2,7 @@ package org.opentripplanner.transit.model.basic;
 
 import java.util.Optional;
 import java.util.function.Consumer;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.opentripplanner.utils.tostring.ValueObjectToStringBuilder;
 
 public class Distance {

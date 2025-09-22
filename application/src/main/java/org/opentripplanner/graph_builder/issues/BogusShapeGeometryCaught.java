@@ -12,6 +12,6 @@ public record BogusShapeGeometryCaught(FeedScopedId shapeId, StopTime stA, StopT
 
   @Override
   public String getMessage() {
-    return String.format(FMT, shapeId, stA, stB);
+    return FMT.formatted(shapeId, stA, stB);
   }
 }

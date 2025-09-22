@@ -129,10 +129,11 @@ public class TripType {
         GraphQLFieldDefinition.newFieldDefinition()
           .name("previousPageCursor")
           .description(
-            "Use the cursor to get the previous page of results. Use this cursor for " +
-            "the pageCursor parameter in the trip query in order to get the previous page.\n" +
-            "The previous page is a set of itineraries departing BEFORE the first itinerary" +
-            " in this result."
+            """
+            Use the cursor to get the previous page of results. Use this cursor for \
+            the pageCursor parameter in the trip query in order to get the previous page.
+            The previous page is a set of itineraries departing BEFORE the first itinerary\
+             in this result."""
           )
           .type(Scalars.GraphQLString)
           .dataFetcher(env -> {
@@ -145,10 +146,11 @@ public class TripType {
         GraphQLFieldDefinition.newFieldDefinition()
           .name("nextPageCursor")
           .description(
-            "Use the cursor to get the next page of results. Use this cursor for " +
-            "the pageCursor parameter in the trip query in order to get the next page.\n" +
-            "The next page is a set of itineraries departing AFTER the last " +
-            "itinerary in this result."
+            """
+            Use the cursor to get the next page of results. Use this cursor for \
+            the pageCursor parameter in the trip query in order to get the next page.
+            The next page is a set of itineraries departing AFTER the last \
+            itinerary in this result."""
           )
           .type(Scalars.GraphQLString)
           .dataFetcher(env -> {

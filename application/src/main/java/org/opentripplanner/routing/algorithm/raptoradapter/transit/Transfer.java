@@ -97,7 +97,7 @@ public class Transfer {
       );
     }
 
-    StateEditor se = new StateEditor(edges.get(0).getFromVertex(), request);
+    StateEditor se = new StateEditor(edges.getFirst().getFromVertex(), request);
     se.setTimeSeconds(0);
 
     var state = EdgeTraverser.traverseEdges(se.makeState(), edges);
