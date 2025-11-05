@@ -614,8 +614,8 @@ public class ShowGraph extends PApplet implements MouseWheelListener {
       //        strokeWeight(6);
       //        drawEdge(e);
       //      }
-      if (e instanceof StreetEdge) {
-        StreetTraversalPermission stp = ((StreetEdge) e).getPermission();
+      if (e instanceof StreetEdge edge) {
+        StreetTraversalPermission stp = edge.getPermission();
         if (stp == StreetTraversalPermission.PEDESTRIAN) {
           stroke(000, 200, 000);
           strokeWeight(6);
@@ -780,14 +780,14 @@ public class ShowGraph extends PApplet implements MouseWheelListener {
       }
       if (
         drawStreetVertices &&
-        ((v instanceof IntersectionVertex && ((IntersectionVertex) v).hasCyclingTrafficLight()) ||
+        ((v instanceof IntersectionVertex vertex1 && vertex1.hasCyclingTrafficLight()) ||
           (v instanceof ElevatorVertex ||
             v instanceof ExitVertex ||
             v instanceof TemporaryVertex ||
             v instanceof SplitterVertex ||
             v instanceof StreetLocation))
       ) {
-        if (v instanceof IntersectionVertex && ((IntersectionVertex) v).hasCyclingTrafficLight()) {
+        if (v instanceof IntersectionVertex vertex && vertex.hasCyclingTrafficLight()) {
           fill(120, 60, 60); // Make traffic lights red dots
           drawVertex(v, 5);
         }

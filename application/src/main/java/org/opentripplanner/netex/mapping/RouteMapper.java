@@ -99,10 +99,8 @@ class RouteMapper {
     builder.withMode(mode.mainMode());
     builder.withNetexSubmode(mode.subMode());
 
-    if (line instanceof FlexibleLine_VersionStructure) {
-      builder.withFlexibleLineType(
-        ((FlexibleLine_VersionStructure) line).getFlexibleLineType().value()
-      );
+    if (line instanceof FlexibleLine_VersionStructure structure) {
+      builder.withFlexibleLineType(structure.getFlexibleLineType().value());
     }
 
     if (line.getPresentation() != null) {

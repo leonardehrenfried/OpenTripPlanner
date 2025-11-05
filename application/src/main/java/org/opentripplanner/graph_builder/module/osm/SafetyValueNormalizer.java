@@ -57,8 +57,8 @@ class SafetyValueNormalizer {
     HashSet<AreaGroup> seenAreas = new HashSet<>();
     for (Vertex vertex : graph.getVertices()) {
       for (Edge e : vertex.getOutgoing()) {
-        if (e instanceof AreaEdge) {
-          AreaGroup areaGroup = ((AreaEdge) e).getArea();
+        if (e instanceof AreaEdge edge) {
+          AreaGroup areaGroup = edge.getArea();
           if (seenAreas.contains(areaGroup)) continue;
           seenAreas.add(areaGroup);
           for (Area area : areaGroup.getAreas()) {

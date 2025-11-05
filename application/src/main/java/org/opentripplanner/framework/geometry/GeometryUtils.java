@@ -196,8 +196,7 @@ public class GeometryUtils {
    */
   public static Geometry convertGeoJsonToJtsGeometry(GeoJsonObject geoJsonGeom)
     throws UnsupportedGeometryException {
-    if (geoJsonGeom instanceof org.geojson.Point) {
-      org.geojson.Point geoJsonPoint = (org.geojson.Point) geoJsonGeom;
+    if (geoJsonGeom instanceof org.geojson.Point geoJsonPoint) {
       return gf.createPoint(
         new Coordinate(
           geoJsonPoint.getCoordinates().getLongitude(),
@@ -205,8 +204,7 @@ public class GeometryUtils {
           geoJsonPoint.getCoordinates().getAltitude()
         )
       );
-    } else if (geoJsonGeom instanceof org.geojson.Polygon) {
-      org.geojson.Polygon geoJsonPolygon = (org.geojson.Polygon) geoJsonGeom;
+    } else if (geoJsonGeom instanceof org.geojson.Polygon geoJsonPolygon) {
       LinearRing shell = gf.createLinearRing(convertPath(geoJsonPolygon.getExteriorRing()));
       LinearRing[] holes = new LinearRing[geoJsonPolygon.getInteriorRings().size()];
       int i = 0;
@@ -214,8 +212,7 @@ public class GeometryUtils {
         holes[i++] = gf.createLinearRing(convertPath(hole));
       }
       return gf.createPolygon(shell, holes);
-    } else if (geoJsonGeom instanceof org.geojson.MultiPolygon) {
-      org.geojson.MultiPolygon geoJsonMultiPolygon = (org.geojson.MultiPolygon) geoJsonGeom;
+    } else if (geoJsonGeom instanceof org.geojson.MultiPolygon geoJsonMultiPolygon) {
       Polygon[] jtsPolygons = new Polygon[geoJsonMultiPolygon.getCoordinates().size()];
       int i = 0;
       for (List<List<LngLatAlt>> geoJsonRings : geoJsonMultiPolygon.getCoordinates()) {
@@ -224,12 +221,9 @@ public class GeometryUtils {
         jtsPolygons[i++] = (Polygon) convertGeoJsonToJtsGeometry(geoJsonPoly);
       }
       return gf.createMultiPolygon(jtsPolygons);
-    } else if (geoJsonGeom instanceof org.geojson.LineString) {
-      org.geojson.LineString geoJsonLineString = (org.geojson.LineString) geoJsonGeom;
+    } else if (geoJsonGeom instanceof org.geojson.LineString geoJsonLineString) {
       return gf.createLineString(convertPath(geoJsonLineString.getCoordinates()));
-    } else if (geoJsonGeom instanceof org.geojson.MultiLineString) {
-      org.geojson.MultiLineString geoJsonMultiLineString =
-        (org.geojson.MultiLineString) geoJsonGeom;
+    } else if (geoJsonGeom instanceof org.geojson.MultiLineString geoJsonMultiLineString) {
       LineString[] jtsLineStrings = new LineString[geoJsonMultiLineString.getCoordinates().size()];
       int i = 0;
       for (List<LngLatAlt> geoJsonPath : geoJsonMultiLineString.getCoordinates()) {

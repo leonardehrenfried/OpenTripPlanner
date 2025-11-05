@@ -159,11 +159,11 @@ public class StreetEdge
    */
   public boolean canTraverse(TraverseMode mode) {
     StreetTraversalPermission permission = getPermission();
-    if (fromv instanceof BarrierVertex) {
-      permission = permission.intersection(((BarrierVertex) fromv).getBarrierPermissions());
+    if (fromv instanceof BarrierVertex vertex) {
+      permission = permission.intersection(vertex.getBarrierPermissions());
     }
-    if (tov instanceof BarrierVertex) {
-      permission = permission.intersection(((BarrierVertex) tov).getBarrierPermissions());
+    if (tov instanceof BarrierVertex vertex) {
+      permission = permission.intersection(vertex.getBarrierPermissions());
     }
 
     return permission.allows(mode);

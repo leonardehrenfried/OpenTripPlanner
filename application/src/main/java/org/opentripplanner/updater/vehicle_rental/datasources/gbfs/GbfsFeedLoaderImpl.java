@@ -149,9 +149,7 @@ public abstract class GbfsFeedLoaderImpl<N, F extends GbfsFeedDetails<N>>
         Object lastUpdatedValue = implementingClass.getMethod("getLastUpdated").invoke(newData);
         Integer lastUpdated = lastUpdatedValue == null
           ? null
-          : (lastUpdatedValue instanceof Date
-              ? (int) ((Date) lastUpdatedValue).getTime()
-              : (Integer) lastUpdatedValue);
+          : (lastUpdatedValue instanceof Date d ? (int) d.getTime() : (Integer) lastUpdatedValue);
         Integer ttl = (Integer) implementingClass.getMethod("getTtl").invoke(newData);
         if (lastUpdated == null || ttl == null) {
           nextUpdate = getCurrentTimeSeconds();

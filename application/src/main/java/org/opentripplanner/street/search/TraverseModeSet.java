@@ -112,8 +112,8 @@ public class TraverseModeSet implements Cloneable, Serializable {
   }
 
   public boolean equals(Object other) {
-    if (other instanceof TraverseModeSet) {
-      return modes == ((TraverseModeSet) other).modes;
+    if (other instanceof TraverseModeSet set) {
+      return modes == set.modes;
     }
     return false;
   }

@@ -107,8 +107,7 @@ public final class StopPattern implements Serializable {
   }
 
   public boolean equals(Object other) {
-    if (other instanceof StopPattern) {
-      StopPattern that = (StopPattern) other;
+    if (other instanceof StopPattern that) {
       return (
         Arrays.equals(this.stops, that.stops) &&
         Arrays.equals(this.pickups, that.pickups) &&

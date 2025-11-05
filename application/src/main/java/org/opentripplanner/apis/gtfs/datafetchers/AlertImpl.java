@@ -170,23 +170,23 @@ public class AlertImpl implements GraphQLDataFetchers.GraphQLAlert {
         .entities()
         .stream()
         .map(entitySelector -> {
-          if (entitySelector instanceof EntitySelector.Stop) {
-            FeedScopedId id = ((EntitySelector.Stop) entitySelector).stopId();
+          if (entitySelector instanceof EntitySelector.Stop stop1) {
+            FeedScopedId id = stop1.stopId();
             Object stop = getStopOrStation(getTransitService(environment), id);
             return List.of(getAlertEntityOrUnknown(stop, id.toString(), "stop"));
           }
-          if (entitySelector instanceof EntitySelector.Agency) {
-            FeedScopedId id = ((EntitySelector.Agency) entitySelector).agencyId();
+          if (entitySelector instanceof EntitySelector.Agency agency1) {
+            FeedScopedId id = agency1.agencyId();
             Agency agency = getTransitService(environment).getAgency(id);
             return List.of(getAlertEntityOrUnknown(agency, id.toString(), "agency"));
           }
-          if (entitySelector instanceof EntitySelector.Route) {
-            FeedScopedId id = ((EntitySelector.Route) entitySelector).routeId();
+          if (entitySelector instanceof EntitySelector.Route route1) {
+            FeedScopedId id = route1.routeId();
             Route route = getTransitService(environment).getRoute(id);
             return List.of(getAlertEntityOrUnknown(route, id.toString(), "route"));
           }
-          if (entitySelector instanceof EntitySelector.Trip) {
-            FeedScopedId id = ((EntitySelector.Trip) entitySelector).tripId();
+          if (entitySelector instanceof EntitySelector.Trip trip1) {
+            FeedScopedId id = trip1.tripId();
             Trip trip = getTransitService(environment).getTrip(id);
             return List.of(getAlertEntityOrUnknown(trip, id.toString(), "trip"));
           }
@@ -226,9 +226,9 @@ public class AlertImpl implements GraphQLDataFetchers.GraphQLAlert {
                 )
             );
           }
-          if (entitySelector instanceof EntitySelector.RouteTypeAndAgency) {
-            FeedScopedId agencyId = ((EntitySelector.RouteTypeAndAgency) entitySelector).agencyId();
-            int routeType = ((EntitySelector.RouteTypeAndAgency) entitySelector).routeType();
+          if (entitySelector instanceof EntitySelector.RouteTypeAndAgency agency1) {
+            FeedScopedId agencyId = agency1.agencyId();
+            int routeType = agency1.routeType();
             Agency agency = getTransitService(environment).getAgency(agencyId);
             return List.of(
               agency != null
@@ -243,14 +243,14 @@ public class AlertImpl implements GraphQLDataFetchers.GraphQLAlert {
                 )
             );
           }
-          if (entitySelector instanceof EntitySelector.RouteType) {
-            int routeType = ((EntitySelector.RouteType) entitySelector).routeType();
-            String feedId = ((EntitySelector.RouteType) entitySelector).feedId();
+          if (entitySelector instanceof EntitySelector.RouteType type) {
+            int routeType = type.routeType();
+            String feedId = type.feedId();
             return List.of(new RouteTypeModel(null, routeType, feedId));
           }
-          if (entitySelector instanceof EntitySelector.DirectionAndRoute) {
-            Direction direction = ((DirectionAndRoute) entitySelector).direction();
-            FeedScopedId routeId = ((EntitySelector.DirectionAndRoute) entitySelector).routeId();
+          if (entitySelector instanceof EntitySelector.DirectionAndRoute route1) {
+            Direction direction = route1.direction();
+            FeedScopedId routeId = route1.routeId();
             Route route = getTransitService(environment).getRoute(routeId);
             return route != null
               ? getTransitService(environment)
@@ -269,10 +269,8 @@ public class AlertImpl implements GraphQLDataFetchers.GraphQLAlert {
                 )
               );
           }
-          if (entitySelector instanceof EntitySelector.Unknown) {
-            final List<Object> objects = List.of(
-              new UnknownModel(((EntitySelector.Unknown) entitySelector).description())
-            );
+          if (entitySelector instanceof EntitySelector.Unknown unknown) {
+            final List<Object> objects = List.of(new UnknownModel(unknown.description()));
             return objects;
           }
           return List.of();
@@ -408,8 +406,6 @@ public class AlertImpl implements GraphQLDataFetchers.GraphQLAlert {
   }
 
   private Iterable<Map.Entry<String, String>> getTranslations(I18NString text) {
-    return text instanceof TranslatedString
-      ? ((TranslatedString) text).getTranslations()
-      : Collections.emptyList();
+    return text instanceof TranslatedString ts ? ts.getTranslations() : Collections.emptyList();
   }
 }

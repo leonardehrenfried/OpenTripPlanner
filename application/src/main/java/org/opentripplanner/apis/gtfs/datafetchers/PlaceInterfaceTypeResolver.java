@@ -18,8 +18,7 @@ public class PlaceInterfaceTypeResolver implements TypeResolver {
     Object o = environment.getObject();
     GraphQLSchema schema = environment.getSchema();
 
-    if (o instanceof VehicleParking) {
-      var vehicleParking = (VehicleParking) o;
+    if (o instanceof VehicleParking vehicleParking) {
       if (
         NodeTypeResolver.queryContainsFragment("BikePark", environment) &&
         vehicleParking.hasBicyclePlaces()

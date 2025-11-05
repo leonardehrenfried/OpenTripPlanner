@@ -245,8 +245,7 @@ public class GraphQLScalars {
       new Coercing<Geometry, JsonNode>() {
         @Override
         public JsonNode serialize(Object dataFetcherResult) throws CoercingSerializeException {
-          if (dataFetcherResult instanceof Geometry) {
-            var geom = (Geometry) dataFetcherResult;
+          if (dataFetcherResult instanceof Geometry geom) {
             return GEOJSON_MAPPER.valueToTree(geom);
           }
           return null;
@@ -271,8 +270,7 @@ public class GraphQLScalars {
       new Coercing<Relay.ResolvedGlobalId, String>() {
         @Override
         public String serialize(Object dataFetcherResult) throws CoercingSerializeException {
-          if (dataFetcherResult instanceof Relay.ResolvedGlobalId) {
-            Relay.ResolvedGlobalId globalId = (Relay.ResolvedGlobalId) dataFetcherResult;
+          if (dataFetcherResult instanceof Relay.ResolvedGlobalId globalId) {
             return new Relay().toGlobalId(globalId.getType(), globalId.getId());
           }
           throw new CoercingSerializeException(
@@ -282,8 +280,8 @@ public class GraphQLScalars {
 
         @Override
         public Relay.ResolvedGlobalId parseValue(Object input) throws CoercingParseValueException {
-          if (input instanceof String) {
-            return new Relay().fromGlobalId((String) input);
+          if (input instanceof String string) {
+            return new Relay().fromGlobalId(string);
           }
           throw new CoercingParseValueException(
             "Unexpected type " + input.getClass().getSimpleName()
@@ -293,8 +291,8 @@ public class GraphQLScalars {
         @Override
         public Relay.ResolvedGlobalId parseLiteral(Object input)
           throws CoercingParseLiteralException {
-          if (input instanceof StringValue) {
-            return new Relay().fromGlobalId(((StringValue) input).getValue());
+          if (input instanceof StringValue value) {
+            return new Relay().fromGlobalId(value.getValue());
           }
           throw new CoercingParseLiteralException(
             "Unexpected type " + input.getClass().getSimpleName()
@@ -310,8 +308,7 @@ public class GraphQLScalars {
       new Coercing<Gram, Double>() {
         @Override
         public Double serialize(Object dataFetcherResult) throws CoercingSerializeException {
-          if (dataFetcherResult instanceof Gram) {
-            var gram = (Gram) dataFetcherResult;
+          if (dataFetcherResult instanceof Gram gram) {
             return Double.valueOf(gram.asDouble());
           }
           return null;

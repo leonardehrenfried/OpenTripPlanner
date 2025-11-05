@@ -20,14 +20,14 @@ public class OTPExceptionMapper implements ExceptionMapper<Exception> {
   private static final Logger LOG = LoggerFactory.getLogger(OTPExceptionMapper.class);
 
   public Response toResponse(Exception ex) {
-    if (ex instanceof WebApplicationException) {
+    if (ex instanceof WebApplicationException exception) {
       String header = "";
       if (ex instanceof BadRequestException) {
         header = "FOUR HUNDRED\n\n";
       } else if (ex instanceof NotFoundException) {
         header = "FOUR ZERO FOUR\n\n";
       }
-      return Response.fromResponse(((WebApplicationException) ex).getResponse())
+      return Response.fromResponse(exception.getResponse())
         .entity(header + ex.getMessage())
         .build();
     }

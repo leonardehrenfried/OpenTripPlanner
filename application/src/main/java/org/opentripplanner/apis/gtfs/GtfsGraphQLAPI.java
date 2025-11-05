@@ -75,11 +75,11 @@ public class GtfsGraphQLAPI {
     String operationName = (String) jsonParameters.getOrDefault("operationName", null);
     Map<String, Object> variables;
 
-    if (queryVariables instanceof Map) {
-      variables = (Map) queryVariables;
-    } else if (queryVariables instanceof String && !((String) queryVariables).isEmpty()) {
+    if (queryVariables instanceof Map map) {
+      variables = map;
+    } else if (queryVariables instanceof String string && !string.isEmpty()) {
       try {
-        variables = deserializer.readValue((String) queryVariables, Map.class);
+        variables = deserializer.readValue(string, Map.class);
       } catch (IOException e) {
         return Response.status(Response.Status.BAD_REQUEST)
           .type(MediaType.TEXT_PLAIN_TYPE)

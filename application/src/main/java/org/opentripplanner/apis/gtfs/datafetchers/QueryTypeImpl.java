@@ -779,8 +779,8 @@ public class QueryTypeImpl implements GraphQLDataFetchers.GraphQLQueryType {
   public DataFetcher<Iterable<FareRuleSet>> ticketTypes() {
     return environment -> {
       var fareService = getFareService(environment);
-      Map<FareType, Collection<FareRuleSet>> fareRules = fareService instanceof GtfsFaresService
-        ? ((GtfsFaresService) fareService).faresV1().getFareRulesPerType()
+      Map<FareType, Collection<FareRuleSet>> fareRules = fareService instanceof GtfsFaresService gfs
+        ? gfs.faresV1().getFareRulesPerType()
         : ((DefaultFareService) fareService).getFareRulesPerType();
 
       return fareRules

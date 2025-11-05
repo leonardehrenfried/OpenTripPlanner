@@ -525,10 +525,10 @@ public class StopImpl implements GraphQLDataFetchers.GraphQLStop {
     Function<Station, T> stationTFunction
   ) {
     Object source = environment.getSource();
-    if (source instanceof StopLocation) {
-      return stopTFunction.apply((StopLocation) source);
-    } else if (source instanceof Station) {
-      return stationTFunction.apply((Station) source);
+    if (source instanceof StopLocation location) {
+      return stopTFunction.apply(location);
+    } else if (source instanceof Station station) {
+      return stationTFunction.apply(station);
     }
     return null;
   }

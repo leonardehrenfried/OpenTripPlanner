@@ -34,8 +34,8 @@ public class GeoJSONCoordinatesScalar {
       new Coercing() {
         @Override
         public List<List<Double>> serialize(Object input) {
-          if (input instanceof Coordinate[]) {
-            Coordinate[] coordinates = ((Coordinate[]) input);
+          if (input instanceof Coordinate[] coordinates1) {
+            Coordinate[] coordinates = coordinates1;
             List<List<Double>> coordinateList = new ArrayList<>();
             for (Coordinate coordinate : coordinates) {
               List<Double> coordinatePair = new ArrayList<>();
@@ -67,8 +67,8 @@ public class GeoJSONCoordinatesScalar {
 
         @Override
         public Object parseLiteral(Object input) {
-          if (input instanceof ArrayValue) {
-            ArrayList<ArrayValue> coordinateList = (ArrayList) ((ArrayValue) input).getValues();
+          if (input instanceof ArrayValue value) {
+            ArrayList<ArrayValue> coordinateList = (ArrayList) value.getValues();
             Coordinate[] coordinates = new Coordinate[coordinateList.size()];
 
             for (int i = 0; i < coordinateList.size(); i++) {

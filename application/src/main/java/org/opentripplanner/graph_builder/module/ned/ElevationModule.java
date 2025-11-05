@@ -199,7 +199,7 @@ public class ElevationModule implements GraphBuilderModule {
 
     for (Vertex gv : graph.getVertices()) {
       for (Edge ee : gv.getOutgoing()) {
-        if (ee instanceof StreetEdge) {
+        if (ee instanceof StreetEdge edge) {
           if (multiThreadElevationCalculations) {
             // Multi-threaded execution requested, check and prepare a few things that are used only during
             // multi-threaded runs.
@@ -209,7 +209,7 @@ public class ElevationModule implements GraphBuilderModule {
               examplarCoordinate = ee.getGeometry().getCoordinates()[0];
             }
           }
-          streetsWithElevationEdges.add((StreetEdge) ee);
+          streetsWithElevationEdges.add(edge);
         }
       }
     }

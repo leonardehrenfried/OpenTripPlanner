@@ -61,9 +61,7 @@ public abstract class StreetVertex extends Vertex {
     return this.getOutgoing()
       .stream()
       .anyMatch(
-        edge ->
-          edge instanceof StreetEdge &&
-          ((StreetEdge) edge).getPermission().allows(TraverseMode.WALK)
+        edge -> edge instanceof StreetEdge se && se.getPermission().allows(TraverseMode.WALK)
       );
   }
 
@@ -74,8 +72,7 @@ public abstract class StreetVertex extends Vertex {
     return this.getOutgoing()
       .stream()
       .anyMatch(
-        edge ->
-          edge instanceof StreetEdge && ((StreetEdge) edge).getPermission().allows(TraverseMode.CAR)
+        edge -> edge instanceof StreetEdge se && se.getPermission().allows(TraverseMode.CAR)
       );
   }
 

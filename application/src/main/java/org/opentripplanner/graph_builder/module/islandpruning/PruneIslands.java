@@ -318,8 +318,8 @@ public class PruneIslands implements GraphBuilderModule {
       State s0 = new State(gv, request);
       for (Edge e : gv.getOutgoing()) {
         if (
-          e instanceof StreetEdge &&
-          shouldMatchNoThruType != ((StreetEdge) e).isNoThruTraffic(traverseMode)
+          e instanceof StreetEdge edge &&
+          shouldMatchNoThruType != edge.isNoThruTraffic(traverseMode)
         ) {
           continue;
         }
@@ -389,12 +389,11 @@ public class PruneIslands implements GraphBuilderModule {
       Vertex v = vIter.next();
       Collection<Edge> outgoing = new ArrayList<>(v.getOutgoing());
       for (Edge e : outgoing) {
-        if (e instanceof StreetEdge) {
+        if (e instanceof StreetEdge pse) {
           if (markIsolated) {
             isolated.put(e, true);
             stats.put("isolated", stats.get("isolated") + 1);
           } else {
-            StreetEdge pse = (StreetEdge) e;
             if (!isolated.containsKey(e)) {
               boolean changed = false;
 

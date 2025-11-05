@@ -308,17 +308,19 @@ public class GraphPathToItineraryMapper {
     //This gets nicer names instead of osm:node:id when changing mode of transport
     //Names are generated from all the streets in a corner, same as names in origin and destination
     //We use name in TemporaryStreetLocation since this name generation already happened when temporary location was generated
-    if (vertex instanceof StreetVertex && !(vertex instanceof TemporaryStreetLocation)) {
-      name = ((StreetVertex) vertex).getIntersectionName();
+    if (
+      vertex instanceof StreetVertex streetVertex && !(vertex instanceof TemporaryStreetLocation)
+    ) {
+      name = streetVertex.getIntersectionName();
     }
 
     if (vertex instanceof TransitStopVertex tsv) {
       var stop = Objects.requireNonNull(stopResolver.getStop(tsv.getId()));
       return Place.forStop(stop);
-    } else if (vertex instanceof VehicleRentalPlaceVertex) {
-      return Place.forVehicleRentalPlace((VehicleRentalPlaceVertex) vertex);
-    } else if (vertex instanceof VehicleParkingEntranceVertex) {
-      return Place.forVehicleParkingEntrance((VehicleParkingEntranceVertex) vertex, state);
+    } else if (vertex instanceof VehicleRentalPlaceVertex placeVertex) {
+      return Place.forVehicleRentalPlace(placeVertex);
+    } else if (vertex instanceof VehicleParkingEntranceVertex entranceVertex) {
+      return Place.forVehicleParkingEntrance(entranceVertex, state);
     } else {
       return Place.normal(vertex, name);
     }

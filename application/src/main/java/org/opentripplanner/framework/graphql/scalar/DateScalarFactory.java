@@ -46,8 +46,8 @@ public class DateScalarFactory {
         new Coercing<LocalDate, String>() {
           @Override
           public String serialize(Object input) throws CoercingSerializeException {
-            if (input instanceof LocalDate) {
-              return ((LocalDate) input).toString();
+            if (input instanceof LocalDate date) {
+              return date.toString();
             }
 
             throw new CoercingSerializeException(
@@ -68,8 +68,8 @@ public class DateScalarFactory {
 
           @Override
           public LocalDate parseLiteral(Object input) throws CoercingParseLiteralException {
-            if (input instanceof StringValue) {
-              return parseValue(((StringValue) input).getValue());
+            if (input instanceof StringValue value) {
+              return parseValue(value.getValue());
             }
 
             throw new CoercingParseLiteralException("Expected String type but found " + input);

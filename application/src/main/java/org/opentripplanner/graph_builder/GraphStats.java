@@ -168,8 +168,8 @@ public class GraphStats {
         int i = 0;
         for (Vertex v : vertices) {
           Coordinate c;
-          if (v instanceof StreetVertex) {
-            LineString ls = ((StreetVertex) v).getOutgoing().iterator().next().getGeometry();
+          if (v instanceof StreetVertex vertex) {
+            LineString ls = vertex.getOutgoing().iterator().next().getGeometry();
             int numPoints = ls.getNumPoints();
             LocationIndexedLine lil = new LocationIndexedLine(ls);
             int seg = random.nextInt(numPoints);
