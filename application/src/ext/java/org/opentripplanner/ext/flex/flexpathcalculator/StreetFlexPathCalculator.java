@@ -6,12 +6,14 @@ import java.util.Map;
 import org.opentripplanner.astar.model.GraphPath;
 import org.opentripplanner.astar.model.ShortestPathTree;
 import org.opentripplanner.astar.strategy.DurationSkipEdgeStrategy;
+import org.opentripplanner.astar.strategy.MaxCountTerminationStrategy;
 import org.opentripplanner.framework.application.OTPRequestTimeoutException;
 import org.opentripplanner.framework.geometry.GeometryUtils;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.api.request.StreetMode;
 import org.opentripplanner.routing.api.request.request.StreetRequest;
 import org.opentripplanner.street.model.edge.Edge;
+import org.opentripplanner.street.model.vertex.TransitStopVertex;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.StreetSearchBuilder;
 import org.opentripplanner.street.search.state.State;
@@ -85,6 +87,9 @@ public class StreetFlexPathCalculator implements FlexPathCalculator {
     return StreetSearchBuilder.of()
       .withPreStartHook(OTPRequestTimeoutException::checkForTimeout)
       .withSkipEdgeStrategy(new DurationSkipEdgeStrategy<>(maxFlexTripDuration))
+      .withTerminationStrategy(
+        new MaxCountTerminationStrategy<>(300, state -> state.getVertex() instanceof TransitStopVertex)
+      )
       .withDominanceFunction(new DominanceFunctions.EarliestArrival())
       .withRequest(routingRequest)
       .withStreetRequest(new StreetRequest(StreetMode.CAR))
