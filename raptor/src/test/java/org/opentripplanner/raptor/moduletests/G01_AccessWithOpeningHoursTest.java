@@ -290,7 +290,11 @@ public class G01_AccessWithOpeningHoursTest implements RaptorTestConstants {
     int earliestDepartureTime,
     int latestArrivalTime
   ) {
-    return RaptorModuleTestCase.of()
-      .addMinDuration("18m", TX_0, earliestDepartureTime, latestArrivalTime);
+    return RaptorModuleTestCase.of().addMinDuration(
+      "18m",
+      TX_0,
+      earliestDepartureTime,
+      latestArrivalTime
+    );
   }
 }

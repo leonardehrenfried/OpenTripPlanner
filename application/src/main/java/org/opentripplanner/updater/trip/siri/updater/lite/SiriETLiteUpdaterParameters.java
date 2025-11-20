@@ -13,8 +13,7 @@ public record SiriETLiteUpdaterParameters(
   Duration timeout,
   boolean fuzzyTripMatching,
   HttpHeaders httpRequestHeaders
-)
-  implements SiriETUpdater.Parameters, SiriETLiteHttpTripUpdateSource.Parameters {
+) implements SiriETUpdater.Parameters, SiriETLiteHttpTripUpdateSource.Parameters {
   public SiriETLiteHttpTripUpdateSource.Parameters sourceParameters() {
     return this;
   }

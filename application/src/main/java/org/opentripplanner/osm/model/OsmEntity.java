@@ -389,7 +389,10 @@ public abstract class OsmEntity {
     // all, in parsing a LocalTime it makes sense and is correct that hours cannot be more than
     // 23 or minutes more than 59, but in durations if you have capped the largest unit, it is
     // reasonable for the amount of the largest unit to be as large as it needs to be.
-    int colonCount = (int) duration.chars().filter(ch -> ch == ':').count();
+    int colonCount = (int) duration
+      .chars()
+      .filter(ch -> ch == ':')
+      .count();
     if (colonCount <= 2) {
       try {
         int i, j;
@@ -583,10 +586,8 @@ public abstract class OsmEntity {
     }
     for (StringBuffer sb : i18n.values()) sb.append(pattern, lastEnd, pattern.length());
     Map<String, String> out = new HashMap<>(i18n.size());
-    for (Map.Entry<String, StringBuffer> kv : i18n.entrySet()) out.put(
-      kv.getKey(),
-      kv.getValue().toString()
-    );
+    for (Map.Entry<String, StringBuffer> kv : i18n.entrySet())
+      out.put(kv.getKey(), kv.getValue().toString());
     return out;
   }
 
@@ -627,7 +628,9 @@ public abstract class OsmEntity {
    * Note that oneway tags are not handled in this method.
    */
   public boolean isGeneralAccessDenied(TraverseDirection direction) {
-    return checkModePermission("access", direction).map(x -> x == DENY).orElse(false);
+    return checkModePermission("access", direction)
+      .map(x -> x == DENY)
+      .orElse(false);
   }
 
   /**
@@ -987,7 +990,11 @@ public abstract class OsmEntity {
           case DENY -> permission.remove(entry.getKey());
         };
       }
-      if (isOneWay(entry.getValue()).map(wayDirection -> wayDirection != direction).orElse(false)) {
+      if (
+        isOneWay(entry.getValue())
+          .map(wayDirection -> wayDirection != direction)
+          .orElse(false)
+      ) {
         // cannot travel against one-way road
         permission = permission.remove(entry.getKey());
       }

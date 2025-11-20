@@ -122,12 +122,12 @@ class RaptorPreferencesTest {
     assertEquals("RaptorPreferences{}", RaptorPreferences.DEFAULT.toString());
     assertEquals(
       "RaptorPreferences{" +
-      "optimizations: [PARALLEL], " +
-      "profile: STANDARD, " +
-      "searchDirection: REVERSE, " +
-      "timeLimit: 2020-06-09T00:00:00Z, " +
-      "relaxGeneralizedCostAtDestination: 1.2" +
-      "}",
+        "optimizations: [PARALLEL], " +
+        "profile: STANDARD, " +
+        "searchDirection: REVERSE, " +
+        "timeLimit: 2020-06-09T00:00:00Z, " +
+        "relaxGeneralizedCostAtDestination: 1.2" +
+        "}",
       subject.toString()
     );
   }

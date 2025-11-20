@@ -47,7 +47,8 @@ public class DlugoszVarLenIntPacker {
         baos.write((ui >> 16) & 0xFF); // 8b
         baos.write((ui >> 8) & 0xFF); // 8b
         baos.write(ui & 0xFF); // 8b
-      } else { // int can't have more than 32 bits
+      } else {
+        // int can't have more than 32 bits
         // 1110 1xxx + 4x8 -> 35 bits value
         // i + 0x80000000 fits in 35 bits for sure
         long ui = (long) i + 2147483648L;

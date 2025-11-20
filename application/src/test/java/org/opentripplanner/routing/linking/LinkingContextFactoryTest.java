@@ -163,7 +163,7 @@ class LinkingContextFactoryTest {
 
   @Test
   void locationsShouldBeRoutableWithTheGivenModes() {
-    try (var container = new TemporaryVerticesContainer();) {
+    try (var container = new TemporaryVerticesContainer()) {
       var from = GenericLocation.fromCoordinate(0.5, 0.5);
       var to = GenericLocation.fromCoordinate(0.6, 0.4);
       var via = GenericLocation.fromCoordinate(0.4, 0.6);

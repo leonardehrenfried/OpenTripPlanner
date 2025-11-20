@@ -389,7 +389,7 @@ class OsmBoardingLocationsModuleTest {
 
     assertTrue(
       (getEdge(beginning, vertex).isPresent() && getEdge(vertex, end).isPresent()) ||
-      (getEdge(end, vertex).isPresent() && getEdge(vertex, beginning).isPresent())
+        (getEdge(end, vertex).isPresent() && getEdge(vertex, beginning).isPresent())
     );
   }
 

@@ -3,7 +3,8 @@ package org.opentripplanner.transit.model.framework;
 import java.util.Objects;
 
 public abstract class AbstractEntityBuilder<
-  E extends AbstractTransitEntity<E, B>, B extends AbstractEntityBuilder<E, B>
+  E extends AbstractTransitEntity<E, B>,
+  B extends AbstractEntityBuilder<E, B>
 >
   extends AbstractBuilder<E, B>
   implements TransitEntityBuilder<E, B> {
@@ -53,7 +54,8 @@ public abstract class AbstractEntityBuilder<
 
   @SuppressWarnings("unchecked")
   private static <
-    E extends AbstractTransitEntity<E, B>, B extends AbstractEntityBuilder<E, B>
+    E extends AbstractTransitEntity<E, B>,
+    B extends AbstractEntityBuilder<E, B>
   > EntityContext<E, B> noopContext() {
     return (EntityContext<E, B>) NOOP;
   }

@@ -7,8 +7,7 @@ public record CouldNotApplyMultiLevelInfoToElevatorWay(
   OsmWay way,
   int levels,
   int intersectionNodes
-)
-  implements DataImportIssue {
+) implements DataImportIssue {
   private static final String FMT =
     "Multi-level info for elevator way %s can not be used. " +
     "The number of defined levels and intersection nodes did not match. " +

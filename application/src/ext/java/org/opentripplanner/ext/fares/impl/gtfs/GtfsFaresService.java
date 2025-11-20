@@ -8,8 +8,8 @@ import org.opentripplanner.model.plan.Itinerary;
 import org.opentripplanner.model.plan.Leg;
 import org.opentripplanner.routing.fares.FareService;
 
-public record GtfsFaresService(DefaultFareService faresV1, GtfsFaresV2Service faresV2)
-  implements FareService {
+public record GtfsFaresService(DefaultFareService faresV1, GtfsFaresV2Service faresV2) implements
+  FareService {
   @Override
   public ItineraryFare calculateFares(Itinerary itinerary) {
     var fare = ItineraryFare.empty();
@@ -24,6 +24,7 @@ public record GtfsFaresService(DefaultFareService faresV1, GtfsFaresV2Service fa
     }
     return fare;
   }
+
   /**
    * Add a complex set of fare products for a specific leg;
    */

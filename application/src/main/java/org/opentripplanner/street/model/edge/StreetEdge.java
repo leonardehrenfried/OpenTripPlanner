@@ -210,16 +210,13 @@ public class StreetEdge
       return Double.NaN;
     }
 
-    final double speed =
-      switch (traverseMode) {
-        case WALK -> walkingBike
-          ? preferences.bike().walking().speed()
-          : preferences.walk().speed();
-        case BICYCLE -> Math.min(preferences.bike().speed(), getCyclingSpeedLimit());
-        case CAR -> getCarSpeed();
-        case SCOOTER -> Math.min(preferences.scooter().speed(), getCyclingSpeedLimit());
-        case FLEX -> throw new IllegalArgumentException("getSpeed(): Invalid mode " + traverseMode);
-      };
+    final double speed = switch (traverseMode) {
+      case WALK -> walkingBike ? preferences.bike().walking().speed() : preferences.walk().speed();
+      case BICYCLE -> Math.min(preferences.bike().speed(), getCyclingSpeedLimit());
+      case CAR -> getCarSpeed();
+      case SCOOTER -> Math.min(preferences.scooter().speed(), getCyclingSpeedLimit());
+      case FLEX -> throw new IllegalArgumentException("getSpeed(): Invalid mode " + traverseMode);
+    };
 
     return isStairs() ? (speed / preferences.walk().stairsTimeFactor()) : speed;
   }
@@ -989,18 +986,17 @@ public class StreetEdge
     // Automobiles have variable speeds depending on the edge type
     double speed = calculateSpeed(request, traverseMode, walkingBike);
 
-    var traversalCosts =
-      switch (traverseMode) {
-        case BICYCLE, SCOOTER -> bicycleOrScooterTraversalCost(request, traverseMode, speed);
-        case WALK -> walkingTraversalCosts(
-          request,
-          traverseMode,
-          speed,
-          walkingBike,
-          s0.getRequest().wheelchairEnabled()
-        );
-        default -> otherTraversalCosts(request, traverseMode, walkingBike, speed);
-      };
+    var traversalCosts = switch (traverseMode) {
+      case BICYCLE, SCOOTER -> bicycleOrScooterTraversalCost(request, traverseMode, speed);
+      case WALK -> walkingTraversalCosts(
+        request,
+        traverseMode,
+        speed,
+        walkingBike,
+        s0.getRequest().wheelchairEnabled()
+      );
+      default -> otherTraversalCosts(request, traverseMode, walkingBike, speed);
+    };
 
     long time_ms = (long) Math.ceil(1000.0 * traversalCosts.time());
     var weight = traversalCosts.weight();
@@ -1026,7 +1022,8 @@ public class StreetEdge
        */
       var intersectionMode = arriveBy ? backMode : traverseMode;
       boolean walkingBikeThroughIntersection = arriveBy ? s0.isBackWalkingBike() : walkingBike;
-      if (arriveBy && tov instanceof IntersectionVertex traversedVertex) { // arrive-by search
+      if (arriveBy && tov instanceof IntersectionVertex traversedVertex) {
+        // arrive-by search
         turnDuration = s0
           .intersectionTraversalCalculator()
           .computeTraversalDuration(
@@ -1037,7 +1034,8 @@ public class StreetEdge
             (float) speed,
             (float) backSpeed
           );
-      } else if (!arriveBy && fromv instanceof IntersectionVertex traversedVertex) { // depart-after search
+      } else if (!arriveBy && fromv instanceof IntersectionVertex traversedVertex) {
+        // depart-after search
         turnDuration = s0
           .intersectionTraversalCalculator()
           .computeTraversalDuration(
@@ -1054,16 +1052,15 @@ public class StreetEdge
         turnDuration = 0;
       }
 
-      var modeReluctance =
-        switch (intersectionMode) {
-          case WALK -> walkingBikeThroughIntersection
-            ? request.bike().walking().reluctance()
-            : request.walk().reluctance();
-          case BICYCLE -> request.bike().reluctance();
-          case SCOOTER -> request.scooter().reluctance();
-          case CAR -> request.car().reluctance();
-          case FLEX -> 1;
-        };
+      var modeReluctance = switch (intersectionMode) {
+        case WALK -> walkingBikeThroughIntersection
+          ? request.bike().walking().reluctance()
+          : request.walk().reluctance();
+        case BICYCLE -> request.bike().reluctance();
+        case SCOOTER -> request.scooter().reluctance();
+        case CAR -> request.car().reluctance();
+        case FLEX -> 1;
+      };
       time_ms += (long) Math.ceil(1000.0 * turnDuration);
       weight += modeReluctance * request.turnReluctance() * turnDuration;
     }
@@ -1120,8 +1117,9 @@ public class StreetEdge
         }
       }
       case SAFE_STREETS -> weight = getEffectiveBicycleSafetyDistance() / speed;
-      case FLAT_STREETS -> /* see notes in StreetVertex on speed overhead */weight =
-        getEffectiveBikeDistanceForWorkCost() / speed;
+      case FLAT_STREETS ->
+        /* see notes in StreetVertex on speed overhead */ weight =
+          getEffectiveBikeDistanceForWorkCost() / speed;
       case SHORTEST_DURATION -> weight = getEffectiveBikeDistance() / speed;
       case TRIANGLE -> {
         double quick = getEffectiveBikeDistance();

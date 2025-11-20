@@ -178,9 +178,9 @@ public class AccessAndEgressWithOpeningHoursPathTestCase implements RaptorTestCo
   public static String flexCaseAText() {
     return String.format(
       "Flex 5m15s 1x 10:01 10:06:15 %s ~ A 1m45s ~ " +
-      "BUS A 10:08 10:20 12m C₁996 ~ D 1m15s ~ " +
-      "Flex 6m 1x 10:21:15 10:27:15 %s " +
-      "[10:01 10:27:15 26m15s Tₓ2 %s]",
+        "BUS A 10:08 10:20 12m C₁996 ~ D 1m15s ~ " +
+        "Flex 6m 1x 10:21:15 10:27:15 %s " +
+        "[10:01 10:27:15 26m15s Tₓ2 %s]",
       RaptorCostConverter.toString(ACCESS_C1),
       RaptorCostConverter.toString(EGRESS_C1_W_1M_SLACK),
       RaptorCostConverter.toString(TOT_C1_A)
@@ -194,11 +194,11 @@ public class AccessAndEgressWithOpeningHoursPathTestCase implements RaptorTestCo
   public static String flexCaseBText() {
     return String.format(
       "Flex 5m15s 1x 10:00 10:05:15 %s ~ A 0s ~ " +
-      "Walk 1m 10:05:15 10:06:15 C₁120 ~ B 1m45s ~ " +
-      "BUS B 10:08 10:20 12m C₁996 ~ C 15s ~ " +
-      "Walk 2m 10:20:15 10:22:15 C₁240 ~ D 1m ~ " +
-      "Flex 6m 1x 10:23:15 10:29:15 %s" +
-      " [10:00 10:29:15 29m15s Tₓ2 %s]",
+        "Walk 1m 10:05:15 10:06:15 C₁120 ~ B 1m45s ~ " +
+        "BUS B 10:08 10:20 12m C₁996 ~ C 15s ~ " +
+        "Walk 2m 10:20:15 10:22:15 C₁240 ~ D 1m ~ " +
+        "Flex 6m 1x 10:23:15 10:29:15 %s" +
+        " [10:00 10:29:15 29m15s Tₓ2 %s]",
       RaptorCostConverter.toString(ACCESS_C1),
       RaptorCostConverter.toString(EGRESS_C1_W_1M_SLACK),
       RaptorCostConverter.toString(TOT_C1_B)
@@ -212,9 +212,9 @@ public class AccessAndEgressWithOpeningHoursPathTestCase implements RaptorTestCo
   public static String flexCaseAWithOpeningHoursText() {
     return String.format(
       "Flex 5m15s 1x Open(9:00 9:50) 9:50 9:55:15 %s ~ A 12m45s ~ " +
-      "BUS A 10:08 10:20 12m %s ~ D 10m ~ " +
-      "Flex 6m 1x Open(10:30 11:00) 10:30 10:36 %s " +
-      "[9:50 10:36 46m Tₓ2 %s]",
+        "BUS A 10:08 10:20 12m %s ~ D 10m ~ " +
+        "Flex 6m 1x Open(10:30 11:00) 10:30 10:36 %s " +
+        "[9:50 10:36 46m Tₓ2 %s]",
       formatC1(ACCESS_C1),
       formatC1(L1_C1_INC_WAIT_W_OPENING_HOURS_A),
       formatC1(EGRESS_C1_W_9M45S_SLACK),
@@ -229,11 +229,11 @@ public class AccessAndEgressWithOpeningHoursPathTestCase implements RaptorTestCo
   public static String flexCaseBWithOpeningHoursText() {
     return String.format(
       "Flex 5m15s 1x Open(9:00 9:50) 9:50 9:55:15 %s ~ A 0s ~ " +
-      "Walk 1m 9:55:15 9:56:15 C₁120 ~ B 11m45s ~ " +
-      "BUS B 10:08 10:20 12m %s ~ C 15s ~ " +
-      "Walk 2m 10:20:15 10:22:15 C₁240 ~ D 7m45s ~ " +
-      "Flex 6m 1x Open(10:30 11:00) 10:30 10:36 %s" +
-      " [9:50 10:36 46m Tₓ2 %s]",
+        "Walk 1m 9:55:15 9:56:15 C₁120 ~ B 11m45s ~ " +
+        "BUS B 10:08 10:20 12m %s ~ C 15s ~ " +
+        "Walk 2m 10:20:15 10:22:15 C₁240 ~ D 7m45s ~ " +
+        "Flex 6m 1x Open(10:30 11:00) 10:30 10:36 %s" +
+        " [9:50 10:36 46m Tₓ2 %s]",
       formatC1(ACCESS_C1),
       formatC1(L1_C1_INC_WAIT_W_OPENING_HOURS_B),
       formatC1(EGRESS_C1_W_7M45S_SLACK),

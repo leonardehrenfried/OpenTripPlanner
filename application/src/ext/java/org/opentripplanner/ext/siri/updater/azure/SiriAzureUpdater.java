@@ -448,8 +448,9 @@ public class SiriAzureUpdater implements GraphUpdater {
     }
 
     // Set options
-    CreateSubscriptionOptions options = new CreateSubscriptionOptions()
-      .setAutoDeleteOnIdle(autoDeleteOnIdle);
+    CreateSubscriptionOptions options = new CreateSubscriptionOptions().setAutoDeleteOnIdle(
+      autoDeleteOnIdle
+    );
 
     // Make sure there is no old subscription on serviceBus
     if (serviceBusAdmin.getSubscriptionExists(topicName, subscriptionName)) {

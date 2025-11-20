@@ -98,7 +98,7 @@ class ServiceLinkMapper {
       var linkInLinkSequence = linksInJourneyPattern.get(i);
       if (
         linkInLinkSequence instanceof
-        ServiceLinkInJourneyPattern_VersionedChildStructure serviceLinkInJourneyPattern
+          ServiceLinkInJourneyPattern_VersionedChildStructure serviceLinkInJourneyPattern
       ) {
         String serviceLinkRef = serviceLinkInJourneyPattern.getServiceLinkRef().getRef();
         ServiceLink serviceLink = serviceLinkById.lookup(serviceLinkRef);
@@ -239,7 +239,7 @@ class ServiceLinkMapper {
       issueStore.add(
         "ServiceLinkGeometryError",
         "Ignore linkSequenceProjection with invalid linestring, " +
-        "containing fewer than two coordinates for: %s",
+          "containing fewer than two coordinates for: %s",
         id
       );
       return false;
@@ -247,7 +247,7 @@ class ServiceLinkMapper {
       issueStore.add(
         "ServiceLinkGeometryError",
         "Ignore linkSequenceProjection with invalid linestring, " +
-        "containing odd number of values for coordinates: %s",
+          "containing odd number of values for coordinates: %s",
         id
       );
       return false;
@@ -261,7 +261,7 @@ class ServiceLinkMapper {
       issueStore.add(
         "ServiceLinkGeometryError",
         "Ignore linkSequenceProjection with invalid linestring, " +
-        "containing fewer than two coordinates for: %s",
+          "containing fewer than two coordinates for: %s",
         id
       );
       return false;
@@ -279,7 +279,7 @@ class ServiceLinkMapper {
         issueStore.add(
           "ServiceLinkGeometryError",
           "Ignore linkSequenceProjection with invalid linestring, " +
-          "containing coordinate with NaN for: %s",
+            "containing coordinate with NaN for: %s",
           id
         );
         return false;
@@ -307,7 +307,7 @@ class ServiceLinkMapper {
       issueStore.add(
         "ServiceLinkGeometryTooFar",
         "Ignore linkSequenceProjection with too long distance between stop and start of linestring, " +
-        " stop %s, distance: %s, link id: %s",
+          " stop %s, distance: %s, link id: %s",
         fromStop,
         SphericalDistanceLibrary.fastDistance(startCoordinate, geometryStartCoordinate),
         id
@@ -320,7 +320,7 @@ class ServiceLinkMapper {
       issueStore.add(
         "ServiceLinkGeometryTooFar",
         "Ignore linkSequenceProjection with too long distance between stop and end of linestring, " +
-        " stop %s, distance: %s, link id: %s",
+          " stop %s, distance: %s, link id: %s",
         toStop,
         SphericalDistanceLibrary.fastDistance(endCoordinate, geometryEndCoordinate),
         id

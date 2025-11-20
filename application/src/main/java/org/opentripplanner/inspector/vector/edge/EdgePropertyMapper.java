@@ -21,21 +21,20 @@ public class EdgePropertyMapper extends PropertyMapper<Edge> {
   @Override
   protected Collection<KeyValue> map(Edge input) {
     var baseProps = List.of(kv("class", input.getClass().getSimpleName()));
-    List<KeyValue> properties =
-      switch (input) {
-        case StreetEdge e -> mapStreetEdge(e);
-        case EscalatorEdge e -> List.of(
-          kv("distance", e.getDistanceMeters()),
-          kv("duration", e.getDuration().map(Duration::toString).orElse(null))
-        );
-        case ElevatorHopEdge e -> List.of(
-          kv("permission", e.getPermission()),
-          kv("levels", e.getLevels()),
-          kv("wheelchairAccessible", e.isWheelchairAccessible()),
-          kv("travelTime", e.getTravelTime().map(Duration::toString).orElse(null))
-        );
-        default -> List.of();
-      };
+    List<KeyValue> properties = switch (input) {
+      case StreetEdge e -> mapStreetEdge(e);
+      case EscalatorEdge e -> List.of(
+        kv("distance", e.getDistanceMeters()),
+        kv("duration", e.getDuration().map(Duration::toString).orElse(null))
+      );
+      case ElevatorHopEdge e -> List.of(
+        kv("permission", e.getPermission()),
+        kv("levels", e.getLevels()),
+        kv("wheelchairAccessible", e.isWheelchairAccessible()),
+        kv("travelTime", e.getTravelTime().map(Duration::toString).orElse(null))
+      );
+      default -> List.of();
+    };
     return ListUtils.combine(baseProps, properties);
   }
 

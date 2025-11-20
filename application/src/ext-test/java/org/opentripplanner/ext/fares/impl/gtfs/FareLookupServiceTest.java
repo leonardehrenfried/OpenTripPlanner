@@ -54,8 +54,7 @@ class FareLookupServiceTest implements FareTestConstants {
     Function<FareLegRuleBuilder, FareLegRuleBuilder> rule2Customiser,
     Multimap<FeedScopedId, FeedScopedId> stopAreas,
     Collection<FeedScopedId> expectedResults
-  )
-    implements Named {
+  ) implements Named {
     @Override
     public String getName() {
       return name;

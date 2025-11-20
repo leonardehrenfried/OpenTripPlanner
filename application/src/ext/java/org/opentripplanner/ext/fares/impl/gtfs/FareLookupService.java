@@ -60,10 +60,9 @@ class FareLookupService implements Serializable {
    * exist.
    */
   Set<FareLegRule> legRules(TransitLeg leg) {
-    var rules =
-      this.legRules.stream()
-        .filter(r -> legMatchesRule(leg, r))
-        .collect(Collectors.toUnmodifiableSet());
+    var rules = this.legRules.stream()
+      .filter(r -> legMatchesRule(leg, r))
+      .collect(Collectors.toUnmodifiableSet());
     var containsPriorities = rules.stream().anyMatch(r -> r.priority().isPresent());
     if (containsPriorities) {
       return findHighestPriority(rules);
@@ -103,19 +102,18 @@ class FareLookupService implements Serializable {
    * Find fare offers for a specific pair of legs.
    */
   Set<LegOffer> findTransferOffersForSubLegs(TransitLeg head, List<TransitLeg> tail) {
-    Set<TransferMatch> transfers =
-      this.transferRules.stream()
-        .flatMap(r -> {
-          var fromRules = findFareLegRule(r.fromLegGroup());
-          var toRules = findFareLegRule(r.toLegGroup());
-          if (fromRules.isEmpty() || toRules.isEmpty()) {
-            return Stream.of();
-          } else {
-            var possibleTransfers = findPossibleTransfers(head, tail, r, fromRules, toRules);
-            return SetUtils.intersection(possibleTransfers).stream();
-          }
-        })
-        .collect(Collectors.toSet());
+    Set<TransferMatch> transfers = this.transferRules.stream()
+      .flatMap(r -> {
+        var fromRules = findFareLegRule(r.fromLegGroup());
+        var toRules = findFareLegRule(r.toLegGroup());
+        if (fromRules.isEmpty() || toRules.isEmpty()) {
+          return Stream.of();
+        } else {
+          var possibleTransfers = findPossibleTransfers(head, tail, r, fromRules, toRules);
+          return SetUtils.intersection(possibleTransfers).stream();
+        }
+      })
+      .collect(Collectors.toSet());
 
     Multimap<FareProduct, FareProduct> dependencies = HashMultimap.create();
 
@@ -203,8 +201,14 @@ class FareLookupService implements Serializable {
         .flatMap(pair -> {
           var from = pair.first();
           var to = pair.second();
-          var matchingFrom = fromRules.stream().filter(rule -> legMatchesRule(from, rule)).toList();
-          var matchingTo = toRules.stream().filter(rule -> legMatchesRule(to, rule)).toList();
+          var matchingFrom = fromRules
+            .stream()
+            .filter(rule -> legMatchesRule(from, rule))
+            .toList();
+          var matchingTo = toRules
+            .stream()
+            .filter(rule -> legMatchesRule(to, rule))
+            .toList();
 
           return matchingFrom
             .stream()
@@ -231,7 +235,10 @@ class FareLookupService implements Serializable {
   }
 
   private List<FareLegRule> findFareLegRule(FeedScopedId id) {
-    return legRules.stream().filter(r -> r.legGroupId().equals(id)).toList();
+    return legRules
+      .stream()
+      .filter(r -> r.legGroupId().equals(id))
+      .toList();
   }
 
   private static List<FareTransferRule> stripWildcards(Collection<FareTransferRule> rules) {
@@ -256,7 +263,11 @@ class FareLookupService implements Serializable {
    * @link <a href="https://gtfs.org/documentation/schedule/reference/#fare_leg_rulestxt">spec</a>
    */
   private static Set<FareLegRule> findHighestPriority(Set<FareLegRule> rules) {
-    var maxPriority = rules.stream().mapToInt(r -> r.priority().orElse(0)).max().orElse(0);
+    var maxPriority = rules
+      .stream()
+      .mapToInt(r -> r.priority().orElse(0))
+      .max()
+      .orElse(0);
     return rules
       .stream()
       .filter(r -> r.priority().orElse(0) == maxPriority)

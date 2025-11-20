@@ -288,7 +288,7 @@ class TripTimesUpdater {
         if (arrivalTime < 0 || arrivalTime > MAX_ARRIVAL_DEPARTURE_TIME) {
           LOG.debug(
             "NEW trip {} on {} has invalid arrival time (compared to start date in " +
-            "TripDescriptor), skipping.",
+              "TripDescriptor), skipping.",
             trip.getId(),
             serviceDate
           );
@@ -303,7 +303,7 @@ class TripTimesUpdater {
         if (departureTime < 0 || departureTime > MAX_ARRIVAL_DEPARTURE_TIME) {
           LOG.debug(
             "NEW trip {} on {} has invalid departure time (compared to start date in " +
-            "TripDescriptor), skipping.",
+              "TripDescriptor), skipping.",
             trip.getId(),
             serviceDate
           );

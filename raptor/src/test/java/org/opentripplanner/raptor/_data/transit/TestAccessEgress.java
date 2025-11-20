@@ -335,10 +335,10 @@ public class TestAccessEgress implements RaptorAccessEgress {
       if (opening > closing) {
         throw new IllegalStateException(
           "Must open before is close. Opens at " +
-          TimeUtils.timeToStrCompact(opening) +
-          " and close at " +
-          TimeUtils.timeToStrCompact(closing) +
-          "."
+            TimeUtils.timeToStrCompact(opening) +
+            " and close at " +
+            TimeUtils.timeToStrCompact(closing) +
+            "."
         );
       }
       this.closed = false;

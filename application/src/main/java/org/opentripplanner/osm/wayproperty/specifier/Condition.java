@@ -130,6 +130,7 @@ public sealed interface Condition {
     public MatchResult matchType() {
       return WILDCARD;
     }
+
     @Override
     public boolean isExtendedKeyMatch(OsmEntity way, String exKey) {
       return way.hasTag(exKey);

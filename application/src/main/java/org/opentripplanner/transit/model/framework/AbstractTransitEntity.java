@@ -24,7 +24,8 @@ import javax.annotation.Nullable;
  * This class also enforce a strong type-safe relationship between entity and builder.
  */
 public abstract class AbstractTransitEntity<
-  E extends AbstractTransitEntity<E, B>, B extends AbstractEntityBuilder<E, B>
+  E extends AbstractTransitEntity<E, B>,
+  B extends AbstractEntityBuilder<E, B>
 >
   implements TransitEntity, TransitObject<E, B>, Serializable {
 

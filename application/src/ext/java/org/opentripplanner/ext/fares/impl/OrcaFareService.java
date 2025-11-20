@@ -137,12 +137,14 @@ public class OrcaFareService extends DefaultFareService {
      */
     public boolean permitsFreeTransfers(ZonedDateTime startTime) {
       return switch (this) {
-        case WASHINGTON_STATE_FERRIES,
+        case
+          WASHINGTON_STATE_FERRIES,
           SKAGIT_TRANSIT,
           WHATCOM_LOCAL,
           WHATCOM_CROSS_COUNTY,
           SKAGIT_CROSS_COUNTY -> false;
-        case KITSAP_TRANSIT_FAST_FERRY_EASTBOUND,
+        case
+          KITSAP_TRANSIT_FAST_FERRY_EASTBOUND,
           KITSAP_TRANSIT_FAST_FERRY_WESTBOUND -> !startTime.isAfter(
           KITSAP_FAST_FERRY_CHANGE_DATE.atStartOfDay(startTime.getZone())
         );
@@ -342,7 +344,8 @@ public class OrcaFareService extends DefaultFareService {
         getWashingtonStateFerriesFare(route.getLongName(), fareType, df)
       );
       case SOUND_TRANSIT_BUS -> optionalUSD(3.25f);
-      case WHATCOM_LOCAL,
+      case
+        WHATCOM_LOCAL,
         WHATCOM_CROSS_COUNTY,
         SKAGIT_LOCAL,
         SKAGIT_CROSS_COUNTY -> fareType.equals(FareType.electronicRegular)
@@ -364,7 +367,8 @@ public class OrcaFareService extends DefaultFareService {
     return switch (rideType) {
       case COMM_TRANS_LOCAL_SWIFT -> getCTLocalReducedFare(leg);
       case KC_WATER_TAXI_VASHON_ISLAND, KC_WATER_TAXI_WEST_SEATTLE -> optionalUSD(1.00f);
-      case KC_METRO,
+      case
+        KC_METRO,
         SOUND_TRANSIT,
         SOUND_TRANSIT_BUS,
         SOUND_TRANSIT_LINK,
@@ -384,7 +388,8 @@ public class OrcaFareService extends DefaultFareService {
           .isBefore(KITSAP_FAST_FERRY_CHANGE_DATE.atStartOfDay(leg.startTime().getZone()))
         ? optionalUSD(6.00f)
         : optionalUSD(6.50f);
-      case SKAGIT_LOCAL,
+      case
+        SKAGIT_LOCAL,
         SKAGIT_CROSS_COUNTY,
         WHATCOM_CROSS_COUNTY,
         WHATCOM_LOCAL -> Optional.empty();
@@ -410,7 +415,8 @@ public class OrcaFareService extends DefaultFareService {
       case COMM_TRANS_LOCAL_SWIFT -> getCTLocalReducedFare(leg);
       case SKAGIT_TRANSIT, WHATCOM_LOCAL, SKAGIT_LOCAL -> optionalUSD(0.5f);
       case EVERETT_TRANSIT -> optionalUSD(0.5f);
-      case KITSAP_TRANSIT_FAST_FERRY_EASTBOUND,
+      case
+        KITSAP_TRANSIT_FAST_FERRY_EASTBOUND,
         SOUND_TRANSIT,
         SOUND_TRANSIT_BUS,
         SOUND_TRANSIT_LINK,

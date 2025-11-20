@@ -103,7 +103,12 @@ class ElevatorTest {
 
     assertEquals(
       graph.getVertices().size(),
-      graph.getVertices().stream().map(vertex -> vertex.getLabel()).distinct().count()
+      graph
+        .getVertices()
+        .stream()
+        .map(vertex -> vertex.getLabel())
+        .distinct()
+        .count()
     );
   }
 }

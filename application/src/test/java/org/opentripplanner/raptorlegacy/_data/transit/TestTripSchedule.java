@@ -221,10 +221,10 @@ public class TestTripSchedule implements TripSchedule {
       if (arrivalTimes.length != departureTimes.length) {
         throw new IllegalStateException(
           "Number of arrival and departure times do not match." +
-          " Arrivals: " +
-          arrivalTimes.length +
-          ", departures: " +
-          arrivalTimes.length
+            " Arrivals: " +
+            arrivalTimes.length +
+            ", departures: " +
+            arrivalTimes.length
         );
       }
       if (pattern == null) {
@@ -233,10 +233,10 @@ public class TestTripSchedule implements TripSchedule {
       if (arrivalTimes.length != pattern.numberOfStopsInPattern()) {
         throw new IllegalStateException(
           "Number of arrival and departure times do not match stops in pattern." +
-          " Arrivals/departures: " +
-          arrivalTimes.length +
-          ", stops: " +
-          pattern.numberOfStopsInPattern()
+            " Arrivals/departures: " +
+            arrivalTimes.length +
+            ", stops: " +
+            pattern.numberOfStopsInPattern()
         );
       }
 

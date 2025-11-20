@@ -194,7 +194,8 @@ public class OsmModule implements GraphBuilderModule {
       osmdb.getWalkableAreas(),
       osmdb.getParkAndRideAreas(),
       osmdb.getBikeParkingAreas()
-    )) setEntityName(area.parent);
+    ))
+      setEntityName(area.parent);
 
     // figure out which nodes that are actually intersections
     vertexGenerator.initIntersectionNodes();
@@ -350,7 +351,7 @@ public class OsmModule implements GraphBuilderModule {
       double lastLat = -1;
       double lastLon = -1;
       String lastLevel = null;
-      for (TLongIterator iter = way.getNodeRefs().iterator(); iter.hasNext();) {
+      for (TLongIterator iter = way.getNodeRefs().iterator(); iter.hasNext(); ) {
         long nodeId = iter.next();
         OsmNode node = osmdb.getNode(nodeId);
         if (node == null) continue WAY;
@@ -428,8 +429,9 @@ public class OsmModule implements GraphBuilderModule {
         ) {
           segmentCoordinates.add(osmEndNode.getCoordinate());
 
-          geometry = GeometryUtils.getGeometryFactory()
-            .createLineString(segmentCoordinates.toArray(new Coordinate[0]));
+          geometry = GeometryUtils.getGeometryFactory().createLineString(
+            segmentCoordinates.toArray(new Coordinate[0])
+          );
           segmentCoordinates.clear();
         } else {
           segmentCoordinates.add(osmEndNode.getCoordinate());
@@ -437,7 +439,8 @@ public class OsmModule implements GraphBuilderModule {
         }
 
         /* generate endpoints */
-        if (startEndpoint == null) { // first iteration on this way
+        if (startEndpoint == null) {
+          // first iteration on this way
           // make or get a shared vertex for flat intersections,
           // one vertex per level for multilevel nodes like elevators
           startEndpoint = vertexGenerator.getVertexForOsmNode(osmStartNode, way, NORMAL);
@@ -448,7 +451,8 @@ public class OsmModule implements GraphBuilderModule {
               elevationData.put(startEndpoint, elevation);
             }
           }
-        } else { // subsequent iterations
+        } else {
+          // subsequent iterations
           startEndpoint = endEndpoint;
         }
 

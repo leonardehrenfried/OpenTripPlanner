@@ -112,16 +112,18 @@ public class NetexTestDataSample {
     DestinationDisplay destinationBergen = new DestinationDisplay()
       .withId(DESTINATION_DISPLAY_ID_1)
       .withVias(
-        new Vias_RelStructure()
-          .withVia(List.of(this.createViaDestinationDisplayRef(DESTINATION_DISPLAY_ID_2)))
+        new Vias_RelStructure().withVia(
+          List.of(this.createViaDestinationDisplayRef(DESTINATION_DISPLAY_ID_2))
+        )
       )
       .withFrontText(new MultilingualString().withValue("Bergen"));
 
     DestinationDisplay destinationStavanger = new DestinationDisplay()
       .withId(DESTINATION_DISPLAY_ID_2)
       .withVias(
-        new Vias_RelStructure()
-          .withVia(List.of(this.createViaDestinationDisplayRef(DESTINATION_DISPLAY_ID_1)))
+        new Vias_RelStructure().withVia(
+          List.of(this.createViaDestinationDisplayRef(DESTINATION_DISPLAY_ID_1))
+        )
       )
       .withFrontText(new MultilingualString().withValue("Stavanger"));
 
@@ -153,10 +155,9 @@ public class NetexTestDataSample {
       .withId("RUT:JourneyPattern:1")
       .withRouteRef(routeRef)
       .withPointsInSequence(
-        new PointsInJourneyPattern_RelStructure()
-          .withPointInJourneyPatternOrStopPointInJourneyPatternOrTimingPointInJourneyPattern(
-            pointsInLink
-          )
+        new PointsInJourneyPattern_RelStructure().withPointInJourneyPatternOrStopPointInJourneyPatternOrTimingPointInJourneyPattern(
+          pointsInLink
+        )
       );
     journeyPatternById.add(journeyPattern);
 
@@ -168,8 +169,9 @@ public class NetexTestDataSample {
         .withDayTypes(createEveryDayRefs())
         .withJourneyPatternRef(createJourneyPatternRef(journeyPattern.getId()))
         .withPassingTimes(
-          new TimetabledPassingTimes_RelStructure()
-            .withTimetabledPassingTime(timetabledPassingTimes)
+          new TimetabledPassingTimes_RelStructure().withTimetabledPassingTime(
+            timetabledPassingTimes
+          )
         );
       serviceJourneyById.add(serviceJourney);
 
@@ -202,8 +204,9 @@ public class NetexTestDataSample {
   }
 
   static DayTypeRefs_RelStructure createEveryDayRefs() {
-    return new DayTypeRefs_RelStructure()
-      .withDayTypeRef(Collections.singleton(createEveryDayRef()));
+    return new DayTypeRefs_RelStructure().withDayTypeRef(
+      Collections.singleton(createEveryDayRef())
+    );
   }
 
   HierarchicalMapById<DestinationDisplay> getDestinationDisplayById() {
@@ -294,9 +297,8 @@ public class NetexTestDataSample {
   }
 
   private Via_VersionedChildStructure createViaDestinationDisplayRef(String destinationDisplayId) {
-    return new Via_VersionedChildStructure()
-      .withDestinationDisplayRef(
-        new DestinationDisplayRefStructure().withRef(destinationDisplayId)
-      );
+    return new Via_VersionedChildStructure().withDestinationDisplayRef(
+      new DestinationDisplayRefStructure().withRef(destinationDisplayId)
+    );
   }
 }

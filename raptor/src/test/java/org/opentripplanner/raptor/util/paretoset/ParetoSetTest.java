@@ -515,10 +515,10 @@ public class ParetoSetTest {
         qualify,
         added,
         description +
-        " - qualify() and add() should return the same value. v0: " +
-        v0 +
-        ", v1: " +
-        v1
+          " - qualify() and add() should return the same value. v0: " +
+          v0 +
+          ", v1: " +
+          v1
       );
       assertEquals(expected, set.toString(), description);
     }

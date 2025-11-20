@@ -73,14 +73,13 @@ public class PathConfig<T extends RaptorTripSchedule> {
     DominanceFunction c2Comp
   ) {
     // This code goes away when the USE_C1_RELAX_DESTINATION is deleted
-    var relaxC1 =
-      switch (costConfig) {
-        case USE_C1_RELAXED_IF_C2_IS_OPTIMAL -> ctx.multiCriteria().relaxC1();
-        case USE_C1_RELAX_DESTINATION -> GeneralizedCostRelaxFunction.of(
-          ctx.multiCriteria().relaxCostAtDestination()
-        );
-        default -> RelaxFunction.NORMAL;
-      };
+    var relaxC1 = switch (costConfig) {
+      case USE_C1_RELAXED_IF_C2_IS_OPTIMAL -> ctx.multiCriteria().relaxC1();
+      case USE_C1_RELAX_DESTINATION -> GeneralizedCostRelaxFunction.of(
+        ctx.multiCriteria().relaxCostAtDestination()
+      );
+      default -> RelaxFunction.NORMAL;
+    };
 
     return paretoComparator(paretoSetTimeConfig(), costConfig, relaxC1, c2Comp);
   }
@@ -118,20 +117,20 @@ public class PathConfig<T extends RaptorTripSchedule> {
   ) {
     return searchDirection.isForward()
       ? new ForwardPathMapper<>(
-        slackProvider,
-        costCalculator,
-        stopNameResolver,
-        txConstraintsSearch,
-        lifeCycle,
-        profile.useApproximateTripSearch()
-      )
+          slackProvider,
+          costCalculator,
+          stopNameResolver,
+          txConstraintsSearch,
+          lifeCycle,
+          profile.useApproximateTripSearch()
+        )
       : new ReversePathMapper<>(
-        slackProvider,
-        costCalculator,
-        stopNameResolver,
-        txConstraintsSearch,
-        lifeCycle,
-        profile.useApproximateTripSearch()
-      );
+          slackProvider,
+          costCalculator,
+          stopNameResolver,
+          txConstraintsSearch,
+          lifeCycle,
+          profile.useApproximateTripSearch()
+        );
   }
 }

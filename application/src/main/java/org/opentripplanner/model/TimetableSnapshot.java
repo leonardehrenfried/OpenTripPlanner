@@ -499,7 +499,7 @@ public class TimetableSnapshot {
     validateNotReadOnly();
 
     boolean modified = false;
-    for (Iterator<TripPattern> it = timetables.keySet().iterator(); it.hasNext();) {
+    for (Iterator<TripPattern> it = timetables.keySet().iterator(); it.hasNext(); ) {
       TripPattern pattern = it.next();
       SortedSet<Timetable> sortedTimetables = timetables.get(pattern);
       SortedSet<Timetable> toKeepTimetables = new TreeSet<>(new SortedTimetableComparator());
@@ -523,6 +523,7 @@ public class TimetableSnapshot {
       Iterator<Entry<TripIdAndServiceDate, TripPattern>> iterator =
         realTimeNewTripPatternsForModifiedTrips.entrySet().iterator();
       iterator.hasNext();
+
     ) {
       TripIdAndServiceDate tripIdAndServiceDate = iterator.next().getKey();
       if (!serviceDate.isBefore(tripIdAndServiceDate.serviceDate())) {

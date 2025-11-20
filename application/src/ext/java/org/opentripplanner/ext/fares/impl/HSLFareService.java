@@ -130,15 +130,26 @@ public class HSLFareService extends DefaultFareService {
         }
       }
 
-      if (ruleZones != null) { // the special case
+      if (ruleZones != null) {
+        // the special case
         // evaluate boolean ride.zones AND rule.zones
         Set<String> zoneIntersection = new HashSet<String>(
-          leg.fareZones().stream().map(z -> z.getId().getId()).toList()
+          leg
+            .fareZones()
+            .stream()
+            .map(z -> z.getId().getId())
+            .toList()
         );
         zoneIntersection.retainAll(ruleZones); // don't add temporarily visited zones
         zones.addAll(zoneIntersection);
       } else {
-        zones.addAll(leg.fareZones().stream().map(z -> z.getId().getId()).toList());
+        zones.addAll(
+          leg
+            .fareZones()
+            .stream()
+            .map(z -> z.getId().getId())
+            .toList()
+        );
       }
     }
 
@@ -159,7 +170,8 @@ public class HSLFareService extends DefaultFareService {
                 but for the largest zone set allowed for a certain ticket type.
                 This way we need only a few rules instead of hundreds of rules. Good for speed!
                 */
-        if (ruleSet.getContains().containsAll(zones)) { // contains, not equals !!
+        if (ruleSet.getContains().containsAll(zones)) {
+          // contains, not equals !!
           FareAttribute attribute = ruleSet.getFareAttribute();
           // transfers are evaluated at boarding time
           if (attribute.isTransferDurationSet()) {

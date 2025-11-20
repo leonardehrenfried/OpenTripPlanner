@@ -38,29 +38,27 @@ class BookingInfoMapperTest {
     StopPointInJourneyPattern emptyStopPoint = new StopPointInJourneyPattern();
     ServiceJourney emptyServiceJourney = new ServiceJourney();
 
-    StopPointInJourneyPattern stopPoint = new StopPointInJourneyPattern()
-      .withBookingArrangements(
-        new BookingArrangementsStructure()
-          .withBookingContact(
-            new ContactStructure()
-              .withContactPerson(new MultilingualString().withValue(STOP_POINT_CONTACT))
-          )
-      );
+    StopPointInJourneyPattern stopPoint = new StopPointInJourneyPattern().withBookingArrangements(
+      new BookingArrangementsStructure().withBookingContact(
+        new ContactStructure().withContactPerson(
+          new MultilingualString().withValue(STOP_POINT_CONTACT)
+        )
+      )
+    );
 
-    ServiceJourney serviceJourney = new ServiceJourney()
-      .withFlexibleServiceProperties(
-        new FlexibleServiceProperties()
-          .withBookingContact(
-            new ContactStructure()
-              .withContactPerson(new MultilingualString().withValue(SERVICE_JOURNEY_CONTACT))
-          )
-      );
+    ServiceJourney serviceJourney = new ServiceJourney().withFlexibleServiceProperties(
+      new FlexibleServiceProperties().withBookingContact(
+        new ContactStructure().withContactPerson(
+          new MultilingualString().withValue(SERVICE_JOURNEY_CONTACT)
+        )
+      )
+    );
 
-    FlexibleLine flexibleLine = new FlexibleLine()
-      .withBookingContact(
-        new ContactStructure()
-          .withContactPerson(new MultilingualString().withValue(FLEXIBLE_LINE_CONTACT))
-      );
+    FlexibleLine flexibleLine = new FlexibleLine().withBookingContact(
+      new ContactStructure().withContactPerson(
+        new MultilingualString().withValue(FLEXIBLE_LINE_CONTACT)
+      )
+    );
 
     assertEquals(
       STOP_POINT_CONTACT,
@@ -90,18 +88,17 @@ class BookingInfoMapperTest {
     ServiceJourney emptyServiceJourney = new ServiceJourney();
     LocalTime stopPointLatestBookingTime = FIVE_THIRTY;
 
-    StopPointInJourneyPattern stopPoint = new StopPointInJourneyPattern()
-      .withBookingArrangements(
-        new BookingArrangementsStructure()
-          .withLatestBookingTime(stopPointLatestBookingTime)
-          .withBookWhen(PurchaseWhenEnumeration.ADVANCE_AND_DAY_OF_TRAVEL)
-      );
+    StopPointInJourneyPattern stopPoint = new StopPointInJourneyPattern().withBookingArrangements(
+      new BookingArrangementsStructure()
+        .withLatestBookingTime(stopPointLatestBookingTime)
+        .withBookWhen(PurchaseWhenEnumeration.ADVANCE_AND_DAY_OF_TRAVEL)
+    );
 
-    FlexibleLine flexibleLine = new FlexibleLine()
-      .withBookingContact(
-        new ContactStructure()
-          .withContactPerson(new MultilingualString().withValue(FLEXIBLE_LINE_CONTACT))
-      );
+    FlexibleLine flexibleLine = new FlexibleLine().withBookingContact(
+      new ContactStructure().withContactPerson(
+        new MultilingualString().withValue(FLEXIBLE_LINE_CONTACT)
+      )
+    );
 
     BookingInfo bookingInfo = subject.map(stopPoint, null, flexibleLine);
     assertEquals(stopPointLatestBookingTime, bookingInfo.getLatestBookingTime().getTime());
@@ -119,8 +116,9 @@ class BookingInfoMapperTest {
     BookingArrangementsStructure bookingArrangements = new BookingArrangementsStructure();
     bookingArrangements.setBookingContact(contactStructure);
 
-    StopPointInJourneyPattern stopPoint = new StopPointInJourneyPattern()
-      .withBookingArrangements(bookingArrangements);
+    StopPointInJourneyPattern stopPoint = new StopPointInJourneyPattern().withBookingArrangements(
+      bookingArrangements
+    );
 
     BookingInfo bookingInfo = subject.map(stopPoint, null, null);
 
@@ -138,8 +136,9 @@ class BookingInfoMapperTest {
     bookingArrangements.setBookingContact(contactStructure);
     bookingArrangements.setLatestBookingTime(FIVE_THIRTY);
 
-    StopPointInJourneyPattern stopPoint = new StopPointInJourneyPattern()
-      .withBookingArrangements(bookingArrangements);
+    StopPointInJourneyPattern stopPoint = new StopPointInJourneyPattern().withBookingArrangements(
+      bookingArrangements
+    );
 
     bookingArrangements.setBookWhen(PurchaseWhenEnumeration.ADVANCE_ONLY);
 
@@ -186,8 +185,9 @@ class BookingInfoMapperTest {
     bookingArrangements.setBookingContact(contactStructure);
     bookingArrangements.setLatestBookingTime(FIVE_THIRTY);
 
-    StopPointInJourneyPattern stopPoint = new StopPointInJourneyPattern()
-      .withBookingArrangements(bookingArrangements);
+    StopPointInJourneyPattern stopPoint = new StopPointInJourneyPattern().withBookingArrangements(
+      bookingArrangements
+    );
 
     bookingArrangements.setMinimumBookingPeriod(THIRTY_MINUTES);
 

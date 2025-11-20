@@ -195,16 +195,20 @@ public class MapperTest {
     assertEquals(ALL, useSidepathProps.backward().getPermission());
     assertEquals(4.9, useSidepathProps.backward().bicycleSafety(), epsilon);
 
-    var useSidepathForward = (OsmWay) WayTestData.southeastLaBonitaWay()
-      .addTag("bicycle:forward", "use_sidepath");
+    var useSidepathForward = (OsmWay) WayTestData.southeastLaBonitaWay().addTag(
+      "bicycle:forward",
+      "use_sidepath"
+    );
     var useSidepathForwardProps = wps.getDataForWay(useSidepathForward);
     assertEquals(ALL, useSidepathForwardProps.forward().getPermission());
     assertEquals(ALL, useSidepathForwardProps.backward().getPermission());
     assertEquals(4.9, useSidepathForwardProps.forward().bicycleSafety(), epsilon);
     assertEquals(0.98, useSidepathForwardProps.backward().bicycleSafety(), epsilon);
 
-    var useSidepathBackward = (OsmWay) WayTestData.southeastLaBonitaWay()
-      .addTag("bicycle:backward", "use_sidepath");
+    var useSidepathBackward = (OsmWay) WayTestData.southeastLaBonitaWay().addTag(
+      "bicycle:backward",
+      "use_sidepath"
+    );
     var useSidepathBackwardProps = wps.getDataForWay(useSidepathBackward);
     assertEquals(ALL, useSidepathBackwardProps.forward().getPermission());
     assertEquals(ALL, useSidepathBackwardProps.backward().getPermission());

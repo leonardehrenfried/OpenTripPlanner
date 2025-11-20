@@ -320,17 +320,17 @@ public class QueryTypeImpl implements GraphQLDataFetchers.GraphQLQueryType {
 
       List<TransitMode> filterByModes = args.getGraphQLFilterByModes() != null
         ? args
-          .getGraphQLFilterByModes()
-          .stream()
-          .map(mode -> {
-            try {
-              return TransitMode.valueOf(mode.name());
-            } catch (IllegalArgumentException ignored) {
-              return null;
-            }
-          })
-          .filter(Objects::nonNull)
-          .toList()
+            .getGraphQLFilterByModes()
+            .stream()
+            .map(mode -> {
+              try {
+                return TransitMode.valueOf(mode.name());
+              } catch (IllegalArgumentException ignored) {
+                return null;
+              }
+            })
+            .filter(Objects::nonNull)
+            .toList()
         : null;
       List<PlaceType> filterByPlaceTypes = args.getGraphQLFilterByPlaceTypes() != null
         ? args.getGraphQLFilterByPlaceTypes().stream().map(GraphQLUtils::toModel).toList()
@@ -398,11 +398,11 @@ public class QueryTypeImpl implements GraphQLDataFetchers.GraphQLQueryType {
           return vehicleParkingService == null
             ? null
             : vehicleParkingService
-              .listBikeParks()
-              .stream()
-              .filter(bikePark -> bikePark.getId().equals(bikeParkId))
-              .findAny()
-              .orElse(null);
+                .listBikeParks()
+                .stream()
+                .filter(bikePark -> bikePark.getId().equals(bikeParkId))
+                .findAny()
+                .orElse(null);
         case "BikeRentalStation":
           return vehicleRentalStationService == null
             ? null
@@ -420,11 +420,11 @@ public class QueryTypeImpl implements GraphQLDataFetchers.GraphQLQueryType {
           return vehicleParkingService == null
             ? null
             : vehicleParkingService
-              .listCarParks()
-              .stream()
-              .filter(carPark -> carPark.getId().equals(carParkId))
-              .findAny()
-              .orElse(null);
+                .listCarParks()
+                .stream()
+                .filter(carPark -> carPark.getId().equals(carParkId))
+                .findAny()
+                .orElse(null);
         case "Cluster":
           return null; //TODO
         case "DepartureRow":
@@ -436,13 +436,12 @@ public class QueryTypeImpl implements GraphQLDataFetchers.GraphQLQueryType {
 
           Relay.ResolvedGlobalId internalId = new Relay().fromGlobalId(parts[1]);
 
-          Object place = node()
-            .get(
-              DataFetchingEnvironmentImpl.newDataFetchingEnvironment(environment)
-                .source(new Object())
-                .arguments(Map.of("id", internalId))
-                .build()
-            );
+          Object place = node().get(
+            DataFetchingEnvironmentImpl.newDataFetchingEnvironment(environment)
+              .source(new Object())
+              .arguments(Map.of("id", internalId))
+              .build()
+          );
 
           return new PlaceAtDistance(place, Double.parseDouble(parts[0]));
         }
@@ -469,11 +468,11 @@ public class QueryTypeImpl implements GraphQLDataFetchers.GraphQLQueryType {
           return vehicleParkingService == null
             ? null
             : vehicleParkingService
-              .listVehicleParkings()
-              .stream()
-              .filter(bikePark -> bikePark.getId().equals(vehicleParkingId))
-              .findAny()
-              .orElse(null);
+                .listVehicleParkings()
+                .stream()
+                .filter(bikePark -> bikePark.getId().equals(vehicleParkingId))
+                .findAny()
+                .orElse(null);
         default:
           return null;
       }

@@ -92,10 +92,10 @@ public class A04_BoardingTest implements RaptorTestConstants {
         standard().forwardOnly(),
         // Board L2 at first possible stop B (not C) and arrive at F (the earliest arrival time)
         "Walk 1m ~ A " +
-        "~ BUS L1_1 0:10 0:18 ~ B " +
-        "~ BUS L2 0:20 0:31 ~ F " +
-        "~ BUS L3_2 0:35 0:40 ~ H " +
-        "~ Walk 1m [0:09 0:41 32m Tₓ2]"
+          "~ BUS L1_1 0:10 0:18 ~ B " +
+          "~ BUS L2 0:20 0:31 ~ F " +
+          "~ BUS L3_2 0:35 0:40 ~ H " +
+          "~ Walk 1m [0:09 0:41 32m Tₓ2]"
       )
       // A reverse test on the standard profile is included to demonstrate
       // that the min-travel-duration and the standard give different results
@@ -105,19 +105,19 @@ public class A04_BoardingTest implements RaptorTestConstants {
         // Searching in REVERSE we will "board" L2 at the first possible stop G and "alight" at the
         // optimal stop C (the best "arrival-time").
         "Walk 1m ~ A " +
-        "~ BUS L1_2 0:14 0:18 ~ C " +
-        "~ BUS L2 0:21 0:32 ~ G " +
-        "~ BUS L3_3 0:35 0:44 ~ H " +
-        "~ Walk 1m [0:13 0:45 32m Tₓ2]"
+          "~ BUS L1_2 0:14 0:18 ~ C " +
+          "~ BUS L2 0:21 0:32 ~ G " +
+          "~ BUS L3_3 0:35 0:44 ~ H " +
+          "~ Walk 1m [0:13 0:45 32m Tₓ2]"
       )
       .add(
         multiCriteria(),
         // Board L2 at stop C and alight at stop F
         "Walk 1m ~ A " +
-        "~ BUS L1_2 0:14 0:18 ~ C " +
-        "~ BUS L2 0:21 0:31 ~ F " +
-        "~ BUS L3_2 0:35 0:40 ~ H " +
-        "~ Walk 1m [0:13 0:41 28m Tₓ2 C₁3_600]"
+          "~ BUS L1_2 0:14 0:18 ~ C " +
+          "~ BUS L2 0:21 0:31 ~ F " +
+          "~ BUS L3_2 0:35 0:40 ~ H " +
+          "~ Walk 1m [0:13 0:41 28m Tₓ2 C₁3_600]"
       )
       .build();
   }

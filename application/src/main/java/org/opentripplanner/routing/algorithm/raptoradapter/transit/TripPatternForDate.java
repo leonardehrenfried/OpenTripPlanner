@@ -80,7 +80,11 @@ public class TripPatternForDate implements Comparable<TripPatternForDate> {
 
       this.endOfRunningPeriod = ServiceDateUtils.asDateTime(
         serviceDate,
-        frequencies.stream().mapToInt(frequencyEntry -> frequencyEntry.endTime).max().orElseThrow()
+        frequencies
+          .stream()
+          .mapToInt(frequencyEntry -> frequencyEntry.endTime)
+          .max()
+          .orElseThrow()
       ).toLocalDate();
     } else {
       // These depend on the tripTimes array being sorted

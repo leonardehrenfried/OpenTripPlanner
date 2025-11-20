@@ -160,11 +160,11 @@ public class OptimizePathDomainService<T extends RaptorTripSchedule> {
       // next iteration (looking at the boarding of the current transit leg)
       int earliestDepartureTimeFromLeg = i == 0
         ? accessArrivalTime
-        // The transfer with the earliest-arrival-time BEFORE the transit-leg is used to
-        // prune the transfers AFTER the transit-leg. The transfers are sorted on
-        // arrival-time in descending order, so the earliest-arrival-time is the
-        // last element of the list of transfers.
-        : last(possibleTransfers.get(i - 1)).to().time();
+        : // The transfer with the earliest-arrival-time BEFORE the transit-leg is used to
+          // prune the transfers AFTER the transit-leg. The transfers are sorted on
+          // arrival-time in descending order, so the earliest-arrival-time is the
+          // last element of the list of transfers.
+          last(possibleTransfers.get(i - 1)).to().time();
 
       // create a tailSelector for the tails produced in the last round and use it to filter them
       // based on the transfer-arrival-time and given filter

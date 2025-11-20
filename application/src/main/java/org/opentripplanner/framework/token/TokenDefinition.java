@@ -74,7 +74,10 @@ public class TokenDefinition {
   }
 
   List<FieldDefinition> listNonDeprecatedFields() {
-    return listFields().stream().filter(it -> !it.deprecated()).toList();
+    return listFields()
+      .stream()
+      .filter(it -> !it.deprecated())
+      .toList();
   }
 
   List<FieldDefinition> listFields() {
