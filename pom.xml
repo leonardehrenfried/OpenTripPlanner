@@ -350,7 +350,7 @@
                 <artifactId>prettier-maven-plugin</artifactId>
                 <configuration>
                     <skip>${plugin.prettier.skip}</skip>
-                    <prettierJavaVersion>2.6.8</prettierJavaVersion>
+                    <prettierJavaVersion>2.7.7</prettierJavaVersion>
                     <inputGlobs>
                         <inputGlob>src/main/java/**/*.java</inputGlob>
                         <inputGlob>src/test/java/**/*.java</inputGlob>
