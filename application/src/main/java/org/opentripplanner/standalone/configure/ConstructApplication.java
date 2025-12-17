@@ -20,6 +20,7 @@ import org.opentripplanner.routing.algorithm.raptoradapter.transit.mappers.Rapto
 import org.opentripplanner.routing.fares.FareServiceFactory;
 import org.opentripplanner.routing.graph.Graph;
 import org.opentripplanner.routing.linking.VertexLinker;
+import org.opentripplanner.routing.util.ElevationUtils;
 import org.opentripplanner.service.osminfo.OsmInfoGraphBuildRepository;
 import org.opentripplanner.service.realtimevehicles.RealtimeVehicleRepository;
 import org.opentripplanner.service.vehicleparking.VehicleParkingRepository;
@@ -36,7 +37,6 @@ import org.opentripplanner.standalone.config.RouterConfig;
 import org.opentripplanner.standalone.server.GrizzlyServer;
 import org.opentripplanner.standalone.server.OTPWebApplication;
 import org.opentripplanner.street.StreetRepository;
-import org.opentripplanner.street.model.elevation.ElevationUtils;
 import org.opentripplanner.transit.service.TimetableRepository;
 import org.opentripplanner.updater.configure.UpdaterConfigurator;
 import org.opentripplanner.updater.trip.TimetableSnapshotManager;

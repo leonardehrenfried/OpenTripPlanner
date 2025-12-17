@@ -12,7 +12,6 @@ import org.opentripplanner.framework.geometry.SphericalDistanceLibrary;
 import org.opentripplanner.framework.geometry.SplitLineString;
 import org.opentripplanner.framework.geometry.WgsCoordinate;
 import org.opentripplanner.routing.graph.Graph;
-import org.opentripplanner.routing.linking.DisposableEdgeCollection;
 import org.opentripplanner.service.vehicleparking.model.VehicleParking;
 import org.opentripplanner.service.vehiclerental.model.TestFreeFloatingRentalVehicleBuilder;
 import org.opentripplanner.service.vehiclerental.street.VehicleRentalPlaceVertex;
@@ -26,6 +25,7 @@ import org.opentripplanner.street.model.edge.StreetEdgeBuilder;
 import org.opentripplanner.street.model.edge.TemporaryFreeEdge;
 import org.opentripplanner.street.model.edge.TemporaryPartialStreetEdge;
 import org.opentripplanner.street.model.edge.TemporaryPartialStreetEdgeBuilder;
+import org.opentripplanner.street.model.linking.EdgeDisposable;
 import org.opentripplanner.street.model.vertex.IntersectionVertex;
 import org.opentripplanner.street.model.vertex.LabelledIntersectionVertex;
 import org.opentripplanner.street.model.vertex.StreetVertex;
@@ -206,7 +206,7 @@ public class StreetModelForTest {
     Iterable<StreetEdge> edges,
     Coordinate nearestPoint,
     boolean endVertex,
-    DisposableEdgeCollection tempEdges
+    EdgeDisposable tempEdges
   ) {
     boolean wheelchairAccessible = false;
 
@@ -252,7 +252,7 @@ public class StreetModelForTest {
     Coordinate nearestPoint,
     StreetEdge street,
     boolean endVertex,
-    DisposableEdgeCollection tempEdges
+    EdgeDisposable tempEdges
   ) {
     StreetVertex tov = (StreetVertex) street.getToVertex();
     StreetVertex fromv = (StreetVertex) street.getFromVertex();
