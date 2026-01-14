@@ -513,6 +513,12 @@ class OsmTagMapperTest {
     return (kmh * 1000) / 3600;
   }
 
+  @Test
+  void listTags(){
+    var keys = wps.listRelevantTags();
+    keys.forEach(System.out::println);
+  }
+
   public OsmEntity way(String key, String value) {
     return OsmWay.of().withTag(key, value).build();
   }

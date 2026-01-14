@@ -1,5 +1,6 @@
 package org.opentripplanner.osm.wayproperty;
 
+import java.util.Set;
 import org.opentripplanner.osm.wayproperty.specifier.OsmSpecifier;
 
 /**
@@ -11,4 +12,8 @@ public record WayPropertyPicker(
   WayProperties properties,
   WayProperties forwardProperties,
   WayProperties backwardProperties
-) {}
+) {
+  public Set<String> listKeys() {
+    return specifier.listTags();
+  }
+}

@@ -81,4 +81,6 @@ public class PortlandMapperTest {
     var props = WPS.getDataForWay(way);
     assertEquals(PEDESTRIAN, props.forward().getPermission());
   }
+
+
 }

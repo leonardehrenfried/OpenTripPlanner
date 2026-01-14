@@ -1,5 +1,6 @@
 package org.opentripplanner.osm.wayproperty;
 
+import java.util.Set;
 import org.opentripplanner.osm.model.TraverseDirection;
 import org.opentripplanner.osm.wayproperty.specifier.OsmSpecifier;
 
@@ -15,6 +16,10 @@ public record MixinProperties(
   MixinDirectionalProperties forwardProperties,
   MixinDirectionalProperties backwardProperties
 ) {
+  public Set<String> listTags() {
+    return specifier.listTags();
+  }
+
   MixinDirectionalProperties getDirectionalProperties(TraverseDirection direction) {
     return switch (direction) {
       case DIRECTIONLESS -> directionlessProperties;

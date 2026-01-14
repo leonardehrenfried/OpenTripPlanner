@@ -4,10 +4,19 @@ import static org.opentripplanner.osm.model.TraverseDirection.BACKWARD;
 import static org.opentripplanner.osm.model.TraverseDirection.DIRECTIONLESS;
 import static org.opentripplanner.osm.model.TraverseDirection.FORWARD;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.opentripplanner.core.model.i18n.I18NString;
 import org.opentripplanner.framework.functional.FunctionUtils.TriFunction;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
@@ -27,6 +36,28 @@ import org.opentripplanner.street.model.note.StreetNoteAndMatcher;
  * number of exact, partial, and wildcard tag matches. See OSMSpecifier for more details on the matching process.
  */
 public class WayPropertySet {
+
+  private static final Logger LOG = LoggerFactory.getLogger(WayPropertySet.class);
+  private Set<String> relevantTags;
+
+  private record CacheKey(String tags, TraverseDirection direction) {
+    public static CacheKey of(Set<String> relevantTags, OsmEntity entity, TraverseDirection direction) {
+      var tags = relevantTags.stream().map(t -> {
+        var value = entity.getTag(t);
+        if(value == null){
+          return null;
+        }
+        else {
+          return t+ "="+value;
+        }
+      })
+        .filter(Objects::nonNull)
+        .sorted()
+        .collect(Collectors.joining("|"));
+      return new CacheKey(tags, direction);
+    }
+  }
+  Cache<CacheKey, WayProperties> cache = CacheBuilder.newBuilder().maximumSize(20_000).expireAfterAccess(Duration.ofSeconds(10)).build();
 
   /** Sets 1.0 as default safety value for all permissions. */
   public static final TriFunction<
@@ -116,20 +147,30 @@ public class WayPropertySet {
    * that are mixins will have their safety values applied if they match at all.
    */
   public WayPropertiesPair getDataForWay(OsmWay way) {
-    return new WayPropertiesPair(getDataForEntity(way, FORWARD), getDataForEntity(way, BACKWARD));
+    return new WayPropertiesPair(getDataForEntityCached(way, FORWARD), getDataForEntityCached(way, BACKWARD));
   }
 
   /**
    * Get the way properties for an OSM entity without a known traverse direction.
    */
   public WayProperties getDataForEntity(OsmEntity entity) {
-    return getDataForEntity(entity, DIRECTIONLESS);
+    return getDataForEntityCached(entity, DIRECTIONLESS);
+  }
+
+  public WayProperties getDataForEntityCached(OsmEntity entity, TraverseDirection direction){
+    var cacheKey = cacheKey(entity, direction);
+    try {
+      return cache.get(cacheKey, () -> getDataForEntity(entity, direction));
+    } catch (ExecutionException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
    * Get the way properties for an OSM entity in the specified traverse direction.
    */
-  public WayProperties getDataForEntity(OsmEntity entity, TraverseDirection direction) {
+  private WayProperties getDataForEntity(OsmEntity entity, TraverseDirection direction) {
+
     WayProperties result = defaultProperties;
     int bestScore = 0;
     List<MixinProperties> matchedMixins = new ArrayList<>();
@@ -178,6 +219,13 @@ public class WayPropertySet {
       result = applyMixins(result, matchedMixins, direction);
     }
     return result;
+  }
+
+  private CacheKey cacheKey(OsmEntity entity, TraverseDirection direction) {
+    if(relevantTags==null){
+      relevantTags = listRelevantTags();
+    }
+    return CacheKey.of(relevantTags, entity, direction);
   }
 
   public I18NString getCreativeName(OsmEntity entity) {

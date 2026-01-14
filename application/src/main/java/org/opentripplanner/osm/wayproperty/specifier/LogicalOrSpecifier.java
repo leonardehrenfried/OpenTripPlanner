@@ -2,6 +2,7 @@ package org.opentripplanner.osm.wayproperty.specifier;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.opentripplanner.osm.model.OsmEntity;
 import org.opentripplanner.osm.model.TraverseDirection;
@@ -52,5 +53,10 @@ public class LogicalOrSpecifier implements OsmSpecifier {
   @Override
   public String toDocString() {
     return subSpecs.stream().map(ExactMatchSpecifier::toDocString).collect(Collectors.joining("|"));
+  }
+
+  @Override
+  public Set<String> listTags() {
+    return subSpecs.stream().flatMap(s -> s.listTags().stream()).collect(Collectors.toSet());
   }
 }

@@ -1,6 +1,7 @@
 package org.opentripplanner.osm.wayproperty.specifier;
 
 import java.util.Arrays;
+import java.util.Set;
 import org.opentripplanner.osm.model.OsmEntity;
 import org.opentripplanner.osm.model.TraverseDirection;
 
@@ -40,4 +41,6 @@ public interface OsmSpecifier {
    * documentation.
    */
   String toDocString();
+
+  Set<String> listTags();
 }

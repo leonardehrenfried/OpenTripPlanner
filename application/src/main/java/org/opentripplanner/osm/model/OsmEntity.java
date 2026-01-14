@@ -937,7 +937,7 @@ public abstract class OsmEntity {
   }
 
   public StreetTraversalPermission getPermission(TraverseDirection direction) {
-    return getOsmProvider().getWayPropertySet().getDataForEntity(this, direction).getPermission();
+    return getOsmProvider().getWayPropertySet().getDataForEntityCached(this, direction).getPermission();
   }
 
   private StreetTraversalPermission getBarrierPermission() {
