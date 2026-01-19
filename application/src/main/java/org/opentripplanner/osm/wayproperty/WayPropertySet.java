@@ -13,10 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.opentripplanner.core.model.i18n.I18NString;
 import org.opentripplanner.framework.functional.FunctionUtils.TriFunction;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
@@ -26,6 +23,9 @@ import org.opentripplanner.osm.model.TraverseDirection;
 import org.opentripplanner.osm.wayproperty.specifier.OsmSpecifier;
 import org.opentripplanner.street.model.StreetTraversalPermission;
 import org.opentripplanner.street.model.note.StreetNoteAndMatcher;
+import org.opentripplanner.utils.collection.SetUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Information given to the GraphBuilder about how to assign permissions, safety values, names, etc.
@@ -38,7 +38,7 @@ import org.opentripplanner.street.model.note.StreetNoteAndMatcher;
 public class WayPropertySet {
 
   private static final Logger LOG = LoggerFactory.getLogger(WayPropertySet.class);
-  private Set<String> relevantTags;
+  private final Set<String> relevantKeys;
 
   private record CacheKey(String tags, TraverseDirection direction) {
     public static CacheKey of(Set<String> relevantTags, OsmEntity entity, TraverseDirection direction) {
@@ -128,6 +128,7 @@ public class WayPropertySet {
     this.defaultWalkSafetyForPermission = builder.defaultWalkSafetyForPermission;
     this.defaultBicycleSafetyForPermission = builder.defaultBicycleSafetyForPermission;
     this.defaultProperties = builder.defaultProperties;
+    this.relevantKeys = listKeys();
   }
 
   public static WayPropertySetBuilder of() {
@@ -222,10 +223,7 @@ public class WayPropertySet {
   }
 
   private CacheKey cacheKey(OsmEntity entity, TraverseDirection direction) {
-    if(relevantTags==null){
-      relevantTags = listRelevantTags();
-    }
-    return CacheKey.of(relevantTags, entity, direction);
+    return CacheKey.of(relevantKeys, entity, direction);
   }
 
   public I18NString getCreativeName(OsmEntity entity) {
@@ -358,30 +356,6 @@ public class WayPropertySet {
     return result;
   }
 
-  @Override
-  public int hashCode() {
-    return (
-      defaultProperties.hashCode() +
-      wayProperties.hashCode() +
-      creativeNamers.hashCode() +
-      slopeOverrides.hashCode()
-    );
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (o instanceof WayPropertySet other) {
-      return (
-        defaultProperties.equals(other.defaultProperties) &&
-        wayProperties.equals(other.wayProperties) &&
-        creativeNamers.equals(other.creativeNamers) &&
-        slopeOverrides.equals(other.slopeOverrides) &&
-        notes.equals(other.notes)
-      );
-    }
-    return false;
-  }
-
   public List<WayPropertyPicker> listWayProperties() {
     return wayProperties;
   }
@@ -404,6 +378,41 @@ public class WayPropertySet {
 
   public List<NotePicker> listNotes() {
     return notes;
+  }
+
+  public Set<String> listKeys() {
+    return SetUtils.combine(
+      wayProperties.stream().flatMap(w -> w.listKeys().stream()).collect(Collectors.toSet()),
+      slopeOverrides.stream().flatMap(s -> s.specifier().listKeys().stream()).collect(Collectors.toSet()),
+      speedPickers.stream().flatMap(p-> p.specifier().listKeys().stream()).collect(Collectors.toSet()),
+      notes.stream().flatMap(n -> n.specifier().listKeys().stream()).collect(Collectors.toSet()),
+      mixins.stream().flatMap(w -> w.listTags().stream()).collect(Collectors.toSet()),
+      Set.of("access", "oneway", "oneway:bicycle", "bicycle", "foot", "motorcar", "motor_vehicle")
+    );
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof WayPropertySet other) {
+      return (
+        defaultProperties.equals(other.defaultProperties) &&
+          wayProperties.equals(other.wayProperties) &&
+          creativeNamers.equals(other.creativeNamers) &&
+          slopeOverrides.equals(other.slopeOverrides) &&
+          notes.equals(other.notes)
+      );
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return (
+      defaultProperties.hashCode() +
+        wayProperties.hashCode() +
+        creativeNamers.hashCode() +
+        slopeOverrides.hashCode()
+    );
   }
 
   private WayProperties applyMixins(

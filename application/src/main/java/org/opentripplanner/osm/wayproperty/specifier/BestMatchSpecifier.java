@@ -66,7 +66,7 @@ public class BestMatchSpecifier implements OsmSpecifier {
   }
 
   @Override
-  public Set<String> listTags() {
+  public Set<String> listKeys() {
     return Arrays.stream(conditions).map(Condition::key).collect(Collectors.toUnmodifiableSet());
   }
 

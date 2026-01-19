@@ -17,7 +17,7 @@ public record MixinProperties(
   MixinDirectionalProperties backwardProperties
 ) {
   public Set<String> listTags() {
-    return specifier.listTags();
+    return specifier.listKeys();
   }
 
   MixinDirectionalProperties getDirectionalProperties(TraverseDirection direction) {

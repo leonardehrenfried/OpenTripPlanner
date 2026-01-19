@@ -56,7 +56,7 @@ public class LogicalOrSpecifier implements OsmSpecifier {
   }
 
   @Override
-  public Set<String> listTags() {
-    return subSpecs.stream().flatMap(s -> s.listTags().stream()).collect(Collectors.toSet());
+  public Set<String> listKeys() {
+    return subSpecs.stream().flatMap(s -> s.listKeys().stream()).collect(Collectors.toSet());
   }
 }

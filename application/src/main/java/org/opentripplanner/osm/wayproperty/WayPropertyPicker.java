@@ -14,6 +14,6 @@ public record WayPropertyPicker(
   WayProperties backwardProperties
 ) {
   public Set<String> listKeys() {
-    return specifier.listTags();
+    return specifier.listKeys();
   }
 }

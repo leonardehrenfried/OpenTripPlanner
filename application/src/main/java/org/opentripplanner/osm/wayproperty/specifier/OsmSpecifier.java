@@ -42,5 +42,5 @@ public interface OsmSpecifier {
    */
   String toDocString();
 
-  Set<String> listTags();
+  Set<String> listKeys();
 }

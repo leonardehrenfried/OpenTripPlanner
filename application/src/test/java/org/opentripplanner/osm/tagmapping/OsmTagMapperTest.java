@@ -515,7 +515,7 @@ class OsmTagMapperTest {
 
   @Test
   void listTags(){
-    var keys = wps.listRelevantTags();
+    var keys = wps.listKeys();
     keys.forEach(System.out::println);
   }
 

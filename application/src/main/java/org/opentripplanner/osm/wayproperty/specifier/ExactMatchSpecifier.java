@@ -51,7 +51,7 @@ public class ExactMatchSpecifier implements OsmSpecifier {
   }
 
   @Override
-  public Set<String> listTags() {
+  public Set<String> listKeys() {
     return conditions.stream().map(Condition::key).collect(Collectors.toUnmodifiableSet());
   }
 
