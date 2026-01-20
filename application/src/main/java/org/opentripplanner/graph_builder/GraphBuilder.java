@@ -137,10 +137,7 @@ public class GraphBuilder implements Runnable {
     if (hasTransitData) {
       graphBuilder.addModuleOptional(factory.stopConsolidationModule());
       graphBuilder.addModule(factory.tripPatternNamer());
-      graphBuilder.addModuleOptional(
-        factory.timeZoneAdjusterModule(),
-        timetableRepository.getAgencyTimeZones().size() > 1
-      );
+      graphBuilder.addModule(factory.timeZoneAdjusterModule());
 
       if (hasOsm || graphBuilder.graph.hasStreets) {
         graphBuilder.addModule(factory.osmBoardingLocationsModule());

@@ -24,6 +24,9 @@ public class TimeZoneAdjusterModule implements GraphBuilderModule {
 
   @Override
   public void buildGraph() {
+    if (timetableRepository.getAgencyTimeZones().size() <= 1) {
+      return;
+    }
     // TODO: We assume that all time zones follow the same DST rules. In reality we need to split up
     //  the services for each DST transition
     final Instant serviceStart = timetableRepository.getTransitServiceStarts();
