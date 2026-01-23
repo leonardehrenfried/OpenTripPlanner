@@ -87,10 +87,18 @@ public final class StopTimeUpdate {
       : OptionalLong.empty();
   }
 
+  /**
+   * Returns the arrival time for this stop time. If that is not available, returns the departure time.
+   * If that is also not available, returns an empty optional.
+   */
   public OptionalLong arrivalTime() {
-    return stopTimeUpdate.hasArrival()
-      ? getTime(stopTimeUpdate.getArrival())
-      : OptionalLong.empty();
+    if (stopTimeUpdate.hasArrival()) {
+      return getTime(stopTimeUpdate.getArrival());
+    } else if (stopTimeUpdate.hasDeparture()) {
+      return getTime(stopTimeUpdate.getDeparture());
+    } else {
+      return OptionalLong.empty();
+    }
   }
 
   public OptionalLong scheduledDepartureTimeWithRealTimeFallback() {
