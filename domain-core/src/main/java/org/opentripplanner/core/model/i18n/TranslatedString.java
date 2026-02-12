@@ -26,16 +26,18 @@ public class TranslatedString implements I18NString, Serializable {
    */
   private static final HashMap<Map<String, String>, I18NString> TRANSLATION_CACHE = new HashMap<>();
 
-  private final Map<String, String> translations = new HashMap<>();
+  private final Map<String, String> translations;
 
   private TranslatedString(Map<String, String> translations) {
+    var tmp = new HashMap<String, String>();
     for (Map.Entry<String, String> i : translations.entrySet()) {
       if (i.getKey() == null) {
-        this.translations.put(null, i.getValue());
+        tmp.put(null, i.getValue());
       } else {
-        this.translations.put(i.getKey().toLowerCase(), i.getValue());
+        tmp.put(i.getKey().toLowerCase(), i.getValue());
       }
     }
+    this.translations = Map.copyOf(tmp);
   }
 
   public static I18NString getI18NString(String untranslated, String... translations) {
@@ -139,7 +141,7 @@ public class TranslatedString implements I18NString, Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(translations);
+    return translations.hashCode();
   }
 
   @Override
