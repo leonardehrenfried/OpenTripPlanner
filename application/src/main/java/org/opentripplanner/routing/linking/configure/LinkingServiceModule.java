@@ -7,9 +7,9 @@ import dagger.Provides;
 import java.util.Optional;
 import org.opentripplanner.framework.application.OTPFeature;
 import org.opentripplanner.routing.linking.LinkingContextFactory;
-import org.opentripplanner.street.linking.VertexLinker;
 import org.opentripplanner.routing.linking.internal.VertexCreationService;
 import org.opentripplanner.street.graph.Graph;
+import org.opentripplanner.street.linking.VertexLinker;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
 import org.opentripplanner.transit.service.TransitService;
 

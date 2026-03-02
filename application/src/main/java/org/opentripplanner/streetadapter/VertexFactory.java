@@ -96,7 +96,6 @@ public class VertexFactory {
     return addToGraph(new OsmBoardingLocationVertex(label, coordinate.x, coordinate.y, name, refs));
   }
 
-
   public BarrierVertex barrier(
     long nid,
     Coordinate coordinate,
