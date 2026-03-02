@@ -17,7 +17,7 @@ import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.linking.DisposableEdgeCollection;
 import org.opentripplanner.street.linking.VehicleParkingHelper;
 import org.opentripplanner.street.linking.VertexLinker;
-import org.opentripplanner.street.model.edge.LinkingDirection;
+import org.opentripplanner.street.linking.LinkingDirection;
 import org.opentripplanner.street.model.edge.StreetVehicleParkingLink;
 import org.opentripplanner.street.model.edge.VehicleParkingEdge;
 import org.opentripplanner.street.model.vertex.VehicleParkingEntranceVertex;

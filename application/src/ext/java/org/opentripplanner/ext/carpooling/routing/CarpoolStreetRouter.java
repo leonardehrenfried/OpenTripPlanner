@@ -14,7 +14,7 @@ import org.opentripplanner.street.linking.TemporaryVerticesContainer;
 import org.opentripplanner.street.linking.VertexLinker;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.edge.Edge;
-import org.opentripplanner.street.model.edge.LinkingDirection;
+import org.opentripplanner.street.linking.LinkingDirection;
 import org.opentripplanner.street.model.edge.TemporaryFreeEdge;
 import org.opentripplanner.street.model.vertex.TemporaryStreetLocation;
 import org.opentripplanner.street.model.vertex.TemporaryVertex;

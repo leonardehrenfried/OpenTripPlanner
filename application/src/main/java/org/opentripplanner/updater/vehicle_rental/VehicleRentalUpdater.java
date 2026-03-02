@@ -22,7 +22,7 @@ import org.opentripplanner.street.linking.DisposableEdgeCollection;
 import org.opentripplanner.street.linking.VertexLinker;
 import org.opentripplanner.street.model.RentalFormFactor;
 import org.opentripplanner.street.model.RentalRestrictionExtension;
-import org.opentripplanner.street.model.edge.LinkingDirection;
+import org.opentripplanner.street.linking.LinkingDirection;
 import org.opentripplanner.street.model.edge.StreetEdge;
 import org.opentripplanner.street.search.TraverseMode;
 import org.opentripplanner.street.search.TraverseModeSet;
