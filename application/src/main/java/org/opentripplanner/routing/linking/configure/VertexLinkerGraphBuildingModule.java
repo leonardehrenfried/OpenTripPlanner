@@ -4,8 +4,8 @@ import dagger.Module;
 import dagger.Provides;
 import jakarta.inject.Singleton;
 import org.opentripplanner.framework.application.OTPFeature;
-import org.opentripplanner.routing.linking.VertexLinker;
-import org.opentripplanner.routing.linking.VisibilityMode;
+import org.opentripplanner.street.linking.VertexLinker;
+import org.opentripplanner.street.linking.VisibilityMode;
 import org.opentripplanner.standalone.config.BuildConfig;
 import org.opentripplanner.street.graph.Graph;
 
