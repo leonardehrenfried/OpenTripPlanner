@@ -5,7 +5,9 @@ import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 import java.io.InputStream;
+import org.rutebanken.netex.model.EntityInVersionStructure;
 import org.rutebanken.netex.model.PublicationDeliveryStructure;
+import org.rutebanken.netex.model.TimetabledPassingTime;
 
 /** Simple wrapper to perform typesafe xml parsing and simple error handling. */
 public class NetexXmlParser {
@@ -32,7 +34,26 @@ public class NetexXmlParser {
   /** factory method for unmarshaller */
   private static Unmarshaller createUnmarshaller() {
     try {
-      return JAXBContext.newInstance(PublicationDeliveryStructure.class).createUnmarshaller();
+      var unmarshaller = JAXBContext.newInstance(
+        PublicationDeliveryStructure.class
+      ).createUnmarshaller();
+      unmarshaller.setListener(
+        new Unmarshaller.Listener() {
+          @Override
+          public void afterUnmarshal(Object target, Object parent) {
+            if (
+              target instanceof EntityInVersionStructure versioned &&
+              versioned.getDerivedFromObjectRef() != null
+            ) {
+              versioned.setDerivedFromObjectRef(null);
+            }
+            if (target instanceof TimetabledPassingTime ttpt) {
+              ttpt.setId(null);
+            }
+          }
+        }
+      );
+      return unmarshaller;
     } catch (JAXBException e) {
       // This is a programming error - not expected!
       // We abort early and also allow for this to happen in the constructor;
