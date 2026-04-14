@@ -376,9 +376,7 @@ class OsmTagMapperTest {
     assertEquals(ALL, props.backward().getPermission());
     assertEquals(1, props.backward().walkSafety());
 
-    var discouraged = WayTestData.highwayTertiary().copy()
-      .addTag("foot", "discouraged")
-      .build();
+    var discouraged = WayTestData.highwayTertiary().copy().addTag("foot", "discouraged").build();
     var discouragedProps = WPS.getDataForWay(discouraged);
     assertEquals(ALL, discouragedProps.forward().getPermission());
     assertEquals(3, discouragedProps.forward().walkSafety());
@@ -395,7 +393,8 @@ class OsmTagMapperTest {
     assertEquals(ALL, props.backward().getPermission());
     assertEquals(.98, props.backward().bicycleSafety());
 
-    var discouraged = WayTestData.southeastLaBonitaWay().copy()
+    var discouraged = WayTestData.southeastLaBonitaWay()
+      .copy()
       .addTag("bicycle", "discouraged")
       .build();
     var discouragedProps = WPS.getDataForWay(discouraged);
@@ -414,9 +413,7 @@ class OsmTagMapperTest {
     assertEquals(ALL, props.backward().getPermission());
     assertEquals(1, props.backward().walkSafety());
 
-    var useSidepath = WayTestData.highwayTertiary().copy()
-      .addTag("foot", "use_sidepath")
-      .build();
+    var useSidepath = WayTestData.highwayTertiary().copy().addTag("foot", "use_sidepath").build();
     var useSidepathProps = WPS.getDataForWay(useSidepath);
     assertEquals(ALL, useSidepathProps.forward().getPermission());
     assertEquals(5, useSidepathProps.forward().walkSafety());
@@ -433,7 +430,8 @@ class OsmTagMapperTest {
     assertEquals(ALL, props.backward().getPermission());
     assertEquals(.98, props.backward().bicycleSafety());
 
-    var useSidepath = WayTestData.southeastLaBonitaWay().copy()
+    var useSidepath = WayTestData.southeastLaBonitaWay()
+      .copy()
       .addTag("bicycle", "use_sidepath")
       .build();
     var useSidepathProps = WPS.getDataForWay(useSidepath);
@@ -442,7 +440,8 @@ class OsmTagMapperTest {
     assertEquals(ALL, useSidepathProps.backward().getPermission());
     assertEquals(4.9, useSidepathProps.backward().bicycleSafety(), EPSILON);
 
-    var useSidepathForward = WayTestData.southeastLaBonitaWay().copy()
+    var useSidepathForward = WayTestData.southeastLaBonitaWay()
+      .copy()
       .addTag("bicycle:forward", "use_sidepath")
       .build();
     var useSidepathForwardProps = WPS.getDataForWay(useSidepathForward);
@@ -451,7 +450,8 @@ class OsmTagMapperTest {
     assertEquals(4.9, useSidepathForwardProps.forward().bicycleSafety(), EPSILON);
     assertEquals(0.98, useSidepathForwardProps.backward().bicycleSafety(), EPSILON);
 
-    var useSidepathBackward = WayTestData.southeastLaBonitaWay().copy()
+    var useSidepathBackward = WayTestData.southeastLaBonitaWay()
+      .copy()
       .addTag("bicycle:backward", "use_sidepath")
       .build();
     var useSidepathBackwardProps = WPS.getDataForWay(useSidepathBackward);
