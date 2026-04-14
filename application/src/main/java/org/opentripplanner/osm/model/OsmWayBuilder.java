@@ -15,10 +15,9 @@ public class OsmWayBuilder {
   private OsmProvider osmProvider;
   private final TLongList nodes = new TLongArrayList();
 
-  public OsmWayBuilder(){
-  }
+  public OsmWayBuilder() {}
 
-  public OsmWayBuilder(OsmWay way){
+  public OsmWayBuilder(OsmWay way) {
     this.id = way.getId();
     this.tags.putAll(way.getTags());
     this.osmProvider = way.getOsmProvider();
