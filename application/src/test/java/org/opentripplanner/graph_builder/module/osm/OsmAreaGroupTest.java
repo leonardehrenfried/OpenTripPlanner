@@ -23,11 +23,6 @@ class OsmAreaGroupTest {
   private static final Set<OsmLevel> LEVEL_1_SET = Set.of(
     new OsmLevel(1.0, "1", OsmLevelSource.LEVEL_TAG)
   );
-  private static final TestOsmProvider OSM_PROVIDER = new TestOsmProvider(
-    List.of(),
-    List.of(),
-    List.of()
-  );
 
   private static final TLongObjectHashMap<OsmNode> NODES = new TLongObjectHashMap<>();
 
@@ -52,7 +47,7 @@ class OsmAreaGroupTest {
     .addNodeRef(3)
     .addNodeRef(4)
     .addNodeRef(1)
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay L0_5_2_1_5 = OsmWay.of()
@@ -61,7 +56,7 @@ class OsmAreaGroupTest {
     .addNodeRef(2)
     .addNodeRef(1)
     .addNodeRef(5)
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay L0_1_5_6_1 = OsmWay.of()
@@ -70,7 +65,7 @@ class OsmAreaGroupTest {
     .addNodeRef(5)
     .addNodeRef(6)
     .addNodeRef(1)
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay L0_1_2_3_7_8_9_1 = OsmWay.of()
@@ -82,7 +77,7 @@ class OsmAreaGroupTest {
     .addNodeRef(8)
     .addNodeRef(9)
     .addNodeRef(1)
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay L0_2_10_7_11_6_2 = OsmWay.of()
@@ -93,7 +88,7 @@ class OsmAreaGroupTest {
     .addNodeRef(11)
     .addNodeRef(6)
     .addNodeRef(2)
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay L1_1_2_5_1 = OsmWay.of()
@@ -103,7 +98,7 @@ class OsmAreaGroupTest {
     .addNodeRef(2)
     .addNodeRef(5)
     .addNodeRef(1)
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay PEDESTRIAN_1_2_3_4_1 = OsmWay.of()
@@ -115,7 +110,7 @@ class OsmAreaGroupTest {
     .addNodeRef(3)
     .addNodeRef(4)
     .addNodeRef(1)
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay PEDESTRIAN_5_2_1_5 = OsmWay.of()
@@ -126,7 +121,7 @@ class OsmAreaGroupTest {
     .addNodeRef(2)
     .addNodeRef(1)
     .addNodeRef(5)
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay BARRIER_3_2_1 = OsmWay.of()
@@ -134,21 +129,21 @@ class OsmAreaGroupTest {
     .addNodeRef(2)
     .addNodeRef(1)
     .addTag("barrier", "wall")
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay BARRIER_1_4 = OsmWay.of()
     .addNodeRef(1)
     .addNodeRef(4)
     .addTag("barrier", "wall")
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay BARRIER_2_3 = OsmWay.of()
     .addNodeRef(2)
     .addNodeRef(3)
     .addTag("barrier", "wall")
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay BARRIER_5_1_4 = OsmWay.of()
@@ -156,7 +151,7 @@ class OsmAreaGroupTest {
     .addNodeRef(1)
     .addNodeRef(4)
     .addTag("barrier", "wall")
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay BARRIER_1_3_2 = OsmWay.of()
@@ -164,14 +159,14 @@ class OsmAreaGroupTest {
     .addNodeRef(3)
     .addNodeRef(2)
     .addTag("barrier", "wall")
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay BARRIER_3_1 = OsmWay.of()
     .addNodeRef(3)
     .addNodeRef(1)
     .addTag("barrier", "wall")
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   private static final OsmWay BOLLARD_1_2_3 = OsmWay.of()
@@ -179,7 +174,7 @@ class OsmAreaGroupTest {
     .addNodeRef(2)
     .addNodeRef(3)
     .addTag("barrier", "bollard")
-    .withOsmProvider(OSM_PROVIDER)
+    .withOsmProvider(TestOsmProvider.EMPTY)
     .build();
 
   @Test
