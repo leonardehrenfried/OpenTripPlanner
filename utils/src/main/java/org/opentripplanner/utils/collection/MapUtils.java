@@ -36,7 +36,13 @@ public class MapUtils {
     return Map.copyOf(ret);
   }
 
+  /**
+   * Transforms the keys of a map using the provided key mapper function.
+   */
   public static <K, V> Map<K, V> transformKeys(Map<K, V> input, Function<K, K> keyMapper) {
+    if (input.isEmpty()) {
+      return input;
+    }
     ArrayList<Map.Entry<K, V>> ret = new ArrayList<>(input.size());
     for (var entry : input.entrySet()) {
       ret.add(entry(keyMapper.apply(entry.getKey()), entry.getValue()));
