@@ -126,9 +126,10 @@ class OsmParser extends BinaryParser {
       double latf = parseLat(lat);
       double lonf = parseLon(lon);
 
-      var tags = new HashMap<String, String>(nodes.getKeysValsCount());
+      Map<String, String> tags = Map.of();
       // If empty, assume that nothing here has keys or vals.
       if (nodes.getKeysValsCount() > 0) {
+        tags = HashMap.newHashMap(nodes.getKeysValsCount());
         while (nodes.getKeysVals(j) != 0) {
           int keyid = nodes.getKeysVals(j++);
           int valid = nodes.getKeysVals(j++);
