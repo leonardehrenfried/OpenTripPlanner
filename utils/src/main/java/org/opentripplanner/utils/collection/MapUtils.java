@@ -1,5 +1,7 @@
 package org.opentripplanner.utils.collection;
 
+import static java.util.Map.entry;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,12 +36,12 @@ public class MapUtils {
     return Map.copyOf(ret);
   }
 
-  public static <K,V>Map<K, V> transformKeys(Map<K,V> input, Function<K, K> keyMapper) {
-    ArrayList<Map.Entry<K,V>>ret = new ArrayList<>(input.size());
-    for(var entry : input.entrySet()){
-      ret.add(Map.entry(keyMapper.apply(entry.getKey()), entry.getValue()));
+  public static <K, V> Map<K, V> transformKeys(Map<K, V> input, Function<K, K> keyMapper) {
+    ArrayList<Map.Entry<K, V>> ret = new ArrayList<>(input.size());
+    for (var entry : input.entrySet()) {
+      ret.add(entry(keyMapper.apply(entry.getKey()), entry.getValue()));
     }
-    Map.Entry<K,V>[] array = ret.toArray(Map.Entry[]::new);
+    Map.Entry<K, V>[] array = ret.toArray(Map.Entry[]::new);
     return Map.ofEntries(array);
   }
 }
