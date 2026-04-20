@@ -49,8 +49,15 @@ class MapUtilsTest {
   }
 
   @Test
+  void duplicateKey() {
+    var expected = Map.of("foo", "bar");
+    assertEquals(expected, MapUtils.transformKeys(Map.of("foo","baz","FOO", "bar"), String::toLowerCase));
+  }
+
+  @Test
   void transformEmpty() {
     Map<String, String> empty = Map.of();
     assertEquals(empty, MapUtils.transformKeys(empty, String::toLowerCase));
   }
+
 }
