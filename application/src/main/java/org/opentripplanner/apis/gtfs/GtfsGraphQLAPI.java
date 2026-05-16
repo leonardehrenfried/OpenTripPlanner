@@ -1,6 +1,5 @@
 package org.opentripplanner.apis.gtfs;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.HeaderParam;
@@ -13,7 +12,6 @@ import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -21,6 +19,9 @@ import org.opentripplanner.apis.support.TracingUtils;
 import org.opentripplanner.standalone.api.OtpServerRequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @Path("/gtfs/v1/")
 @Produces(MediaType.APPLICATION_JSON)
@@ -29,7 +30,7 @@ public class GtfsGraphQLAPI {
   private static final Logger LOG = LoggerFactory.getLogger(GtfsGraphQLAPI.class);
 
   private final OtpServerRequestContext serverContext;
-  private final ObjectMapper deserializer = new ObjectMapper();
+  private final ObjectMapper deserializer = new JsonMapper();
 
   public GtfsGraphQLAPI(@Context OtpServerRequestContext serverContext) {
     this.serverContext = serverContext;
@@ -80,7 +81,7 @@ public class GtfsGraphQLAPI {
     } else if (queryVariables instanceof String && !((String) queryVariables).isEmpty()) {
       try {
         variables = deserializer.readValue((String) queryVariables, Map.class);
-      } catch (IOException e) {
+      } catch (JacksonException e) {
         return Response.status(Response.Status.BAD_REQUEST)
           .type(MediaType.TEXT_PLAIN_TYPE)
           .entity("Variables must be a valid json object")

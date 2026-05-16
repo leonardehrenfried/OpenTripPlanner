@@ -1,8 +1,5 @@
 package org.opentripplanner.ext.vehiclerentalservicedirectory;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
@@ -28,6 +25,9 @@ import org.opentripplanner.updater.vehicle_rental.datasources.params.GbfsVehicle
 import org.opentripplanner.updater.vehicle_rental.datasources.params.RentalPickupType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * Fetches GBFS endpoints from a GBFS v3 manifest.json file.
@@ -40,9 +40,7 @@ public class VehicleRentalServiceDirectoryFetcher {
   );
   private static final Duration DEFAULT_FREQUENCY = Duration.ofSeconds(15);
   private static final Duration DEFAULT_STARTUP_RETRY_PERIOD = Duration.ZERO;
-  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
-    .registerModule(new JavaTimeModule())
-    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+  private static final ObjectMapper OBJECT_MAPPER = new JsonMapper();
 
   private final VertexLinker vertexLinker;
   private final VehicleRentalRepository repository;
@@ -206,7 +204,7 @@ public class VehicleRentalServiceDirectoryFetcher {
       }
 
       return OBJECT_MAPPER.readValue(manifestContent, GBFSManifest.class);
-    } catch (OtpHttpClientException | IOException e) {
+    } catch (OtpHttpClientException | JacksonException | IOException e) {
       LOG.error("Error loading GBFS manifest from {}", url, e);
       return null;
     }

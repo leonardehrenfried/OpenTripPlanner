@@ -1,6 +1,5 @@
 package org.opentripplanner.apis.transmodel;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.SchemaPrinter;
 import jakarta.ws.rs.BadRequestException;
@@ -14,7 +13,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,6 +21,9 @@ import org.opentripplanner.apis.support.TracingUtils;
 import org.opentripplanner.standalone.api.OtpServerRequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @Path("/transmodel/v3")
 @Produces(MediaType.APPLICATION_JSON)
@@ -44,7 +45,7 @@ public class TransmodelAPI {
 
   private final OtpServerRequestContext serverContext;
   private final TransmodelGraph index;
-  private final ObjectMapper deserializer = new ObjectMapper();
+  private final ObjectMapper deserializer = new JsonMapper();
 
   public TransmodelAPI(@Context OtpServerRequestContext serverContext) {
     this.serverContext = serverContext;
@@ -93,7 +94,7 @@ public class TransmodelAPI {
     ) {
       try {
         variables = deserializer.readValue(queryVariablesAsString, Map.class);
-      } catch (IOException e) {
+      } catch (JacksonException e) {
         throw new BadRequestException("Variables must be a valid json object");
       }
     } else {

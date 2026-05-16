@@ -1,6 +1,6 @@
 package org.opentripplanner.routing.alertpatch;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 /**
  * Represents a period of time, in terms of seconds in [start, end)
