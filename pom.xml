@@ -96,6 +96,7 @@
 
     <modules>
         <module>utils</module>
+        <module>jackson-geojson</module>
         <module>domain-core</module>
         <module>raptor</module>
         <module>astar</module>
