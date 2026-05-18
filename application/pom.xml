@@ -261,6 +261,11 @@
             <version>2.21</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-epsg-hsql</artifactId>
+        </dependency>
+
         <!--
           Google library imports
           The version is imported using google libraries-bom, see dep.management

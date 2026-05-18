@@ -15,7 +15,7 @@ import org.locationtech.jts.geom.Polygon;
 /** Created by mihaildoronin on 11/11/15. */
 public class MultiPolygonParser extends BaseParser implements GeometryParser<MultiPolygon> {
 
-  private PolygonParser helperParser;
+  private final PolygonParser helperParser;
 
   public MultiPolygonParser(GeometryFactory geometryFactory) {
     super(geometryFactory);

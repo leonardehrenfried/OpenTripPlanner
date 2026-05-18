@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Collection;
 import org.geojson.MultiPolygon;
 import org.geotools.api.feature.simple.SimpleFeatureType;
-import org.geotools.data.geojson.GeoJSONWriter;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
@@ -45,12 +44,8 @@ public class GeoJsonWriter {
     }
 
     var featureCollection = makeContourFeatures(issues);
-    try (GeoJSONWriter geoJSONWriter = new GeoJSONWriter(target.asOutputStream())) {
-      // Set slightly higher resolution than default. We output small details
-      geoJSONWriter.setMaxDecimals(6);
-      // Make easier to view the file
-      geoJSONWriter.setPrettyPrinting(true);
-      geoJSONWriter.writeFeatureCollection(featureCollection);
+    try (var writer = new FeatureCollectionWriter(target.asOutputStream())) {
+      writer.writeFeatureCollection(featureCollection);
     } catch (IOException e) {
       LOG.error("Unable to write GeoJSON", e);
       return false;
