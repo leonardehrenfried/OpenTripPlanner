@@ -7,6 +7,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.core.model.accessibility.Accessibility;
 import org.opentripplanner.core.model.i18n.I18NString;
+import org.opentripplanner.core.model.i18n.LocalizedString;
 import org.opentripplanner.service.vehicleparking.model.VehicleParking;
 import org.opentripplanner.service.vehiclerental.model.TestFreeFloatingRentalVehicleBuilder;
 import org.opentripplanner.service.vehiclerental.street.VehicleRentalPlaceVertex;
@@ -122,6 +123,24 @@ public class StreetModelFactory {
     StreetTraversalPermission permissions
   ) {
     return streetEdge(from, to, 1, permissions);
+  }
+
+  public static AreaEdgeBuilder createAreaEdge(
+    IntersectionVertex from,
+    IntersectionVertex to,
+    AreaGroup area
+  ) {
+    LineString line = GeometryUtils.getGeometryFactory().createLineString(
+      new Coordinate[] { from.getCoordinate(), to.getCoordinate() }
+    );
+    return new AreaEdgeBuilder()
+      .withFromVertex(from)
+      .withToVertex(to)
+      .withGeometry(line)
+      .withName(new LocalizedString("ring"))
+      .withPermission(StreetTraversalPermission.PEDESTRIAN_AND_BICYCLE)
+      .withBack(false)
+      .withArea(area);
   }
 
   public static VehicleRentalPlaceVertex rentalVertex(

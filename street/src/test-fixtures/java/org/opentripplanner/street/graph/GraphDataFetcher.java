@@ -90,4 +90,10 @@ public class GraphDataFetcher {
   public Graph graph() {
     return graph;
   }
+
+  public void printSummary() {
+    summarizeEdges().forEach(s -> {
+      System.out.println("\"" + s + "\",");
+    });
+  }
 }

@@ -10,7 +10,8 @@ import java.util.Objects;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.opentripplanner.street.geometry.GeometryUtils;
-import org.opentripplanner.street.graph.Graph;
+import org.opentripplanner.street.model.edge.Area;
+import org.opentripplanner.street.model.edge.AreaEdge;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.utils.collection.ListUtils;
@@ -34,10 +35,6 @@ public class GeoJsonIo {
     }
   }
 
-  public static String toUrl(Graph graph) {
-    return toUrl(graph.getEdges(), graph.getVertices());
-  }
-
   public static String toUrl(Collection<Edge> edges, Collection<Vertex> vertices) {
     var edgeGeoms = edges.stream().map(GeoJsonIo::geom).toList();
     var vertexGeoms = vertices
@@ -45,7 +42,17 @@ public class GeoJsonIo {
       .map(v -> GeometryUtils.getGeometryFactory().createPoint(v.getCoordinate()))
       .map(Geometry.class::cast)
       .toList();
-    var geomArray = GeometryFactory.toGeometryArray(ListUtils.combine(edgeGeoms, vertexGeoms));
+    var areaGeoms = edges
+      .stream()
+      .filter(e -> e instanceof AreaEdge)
+      .map(AreaEdge.class::cast)
+      .flatMap(e -> e.getArea().getAreas().stream().map(Area::getGeometry))
+      .distinct()
+      .toList();
+    var geomArray = GeometryFactory.toGeometryArray(
+      ListUtils.combine(edgeGeoms, vertexGeoms, areaGeoms)
+    );
+
     var collection = GeometryUtils.getGeometryFactory().createGeometryCollection(geomArray);
     return toUrl(collection);
   }
