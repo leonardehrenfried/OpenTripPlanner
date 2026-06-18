@@ -56,7 +56,7 @@ public class WayPropertySet {
       return new CacheKey(tags, direction);
     }
   }
-  Cache<CacheKey, WayProperties> cache = CacheBuilder.newBuilder().maximumSize(20_000).expireAfterAccess(Duration.ofSeconds(10)).build();
+  Cache<CacheKey, WayProperties> cache = CacheBuilder.newBuilder().maximumSize(20_000).expireAfterAccess(Duration.ofMinutes(1)).softValues().build();
 
   /** Sets 1.0 as default safety value for all permissions. */
   public static final TriFunction<
