@@ -52,7 +52,7 @@ public class ExactMatchSpecifier implements OsmSpecifier {
 
   @Override
   public Set<String> listKeys() {
-    return conditions.stream().map(Condition::key).collect(Collectors.toUnmodifiableSet());
+    return Arrays.stream(conditions).map(Condition::key).collect(Collectors.toUnmodifiableSet());
   }
 
   public boolean allTagsMatch(OsmEntity way) {

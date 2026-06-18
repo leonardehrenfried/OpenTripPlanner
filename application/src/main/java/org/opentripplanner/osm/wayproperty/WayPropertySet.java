@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class WayPropertySet {
 
-  private static final Logger LOG = LoggerFactory.getLogger(WayPropertySet.class);
   private final Set<String> relevantKeys;
 
   private record CacheKey(String tags, TraverseDirection direction) {
