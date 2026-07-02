@@ -3,7 +3,6 @@ package org.opentripplanner.graph_builder.module.osm;
 import static org.opentripplanner.graph_builder.module.osm.LinearBarrierNodeType.SPLIT;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,7 +43,6 @@ import org.opentripplanner.street.model.edge.AreaGroup;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.edge.StreetEdge;
 import org.opentripplanner.street.model.vertex.IntersectionVertex;
-import org.opentripplanner.street.model.vertex.OsmVertex;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.StreetSearchBuilder;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
@@ -699,34 +697,6 @@ class WalkableAreaBuilder {
         }
       }
     }
-  }
-
-  private boolean isPlatformLinkingPoint(OsmVertex osmVertex) {
-    boolean isCandidate = false;
-    Vertex start = null;
-    for (Edge e : osmVertex.getIncoming()) {
-      if (e instanceof StreetEdge se && !(e instanceof AreaEdge)) {
-        if (Arrays.asList(1, 2, 3).contains(se.getPermission().code)) {
-          isCandidate = true;
-          start = se.getFromVertex();
-          break;
-        }
-      }
-    }
-
-    if (isCandidate && start != null) {
-      boolean isLinkingPoint = true;
-      for (Edge se : osmVertex.getOutgoing()) {
-        if (
-          !se.getToVertex().getCoordinate().equals(start.getCoordinate()) &&
-          !(se instanceof AreaEdge)
-        ) {
-          isLinkingPoint = false;
-        }
-      }
-      return isLinkingPoint;
-    }
-    return false;
   }
 
   private boolean shouldSkipEdge(
