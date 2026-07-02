@@ -2,7 +2,6 @@
   "transitModelTimeZone": "Europe/Berlin",
   "transitServiceStart": "2023-01-01",
   "transitServiceEnd": "2023-12-01",
-  "platformEntriesLinking": true,
   "subwayAccessTime": 0,
   "netexDefaults": {
     "groupFilePattern": "(.*)\\/.*\\.xml",

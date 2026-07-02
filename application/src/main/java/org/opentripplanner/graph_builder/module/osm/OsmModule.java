@@ -297,7 +297,6 @@ public class OsmModule implements GraphBuilderModule {
       safetyValueApplier,
       issueStore,
       params.maxAreaNodes(),
-      params.platformEntriesLinking(),
       params.boardingAreaRefTags(),
       visibilityCache
     );

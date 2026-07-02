@@ -1,6 +1,5 @@
 {
   "areaVisibility": true,
-  "platformEntriesLinking": true,
   "osmDefaults": {
     "osmTagMapping": "norway"
   },

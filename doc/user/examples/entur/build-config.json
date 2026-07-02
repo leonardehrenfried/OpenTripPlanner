@@ -4,7 +4,6 @@
   "subwayAccessTime": 0,
   "embedRouterConfig": true,
   "areaVisibility": true,
-  "platformEntriesLinking": true,
   "staticParkAndRide": true,
   "staticBikeParkAndRide": true,
   "maxDataImportIssuesPerFile": 1000,

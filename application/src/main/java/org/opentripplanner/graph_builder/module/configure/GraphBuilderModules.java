@@ -110,7 +110,6 @@ public class GraphBuilderModules {
     )
       .withEdgeNamer(edgeNamer)
       .withAreaVisibility(config.areaVisibility)
-      .withPlatformEntriesLinking(config.platformEntriesLinking)
       .withStaticParkAndRide(config.staticParkAndRide)
       .withStaticBikeParkAndRide(config.staticBikeParkAndRide)
       .withIncludeInclinedEdgeLevelInfo(config.includeInclinedEdgeLevelInfo)

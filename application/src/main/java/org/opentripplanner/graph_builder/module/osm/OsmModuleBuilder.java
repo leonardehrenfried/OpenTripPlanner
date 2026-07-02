@@ -31,7 +31,6 @@ public class OsmModuleBuilder {
   private DataImportIssueStore issueStore = DataImportIssueStore.NOOP;
   private EdgeNamer edgeNamer = new DefaultNamer();
   private boolean areaVisibility = false;
-  private boolean platformEntriesLinking = false;
   private boolean staticParkAndRide = false;
   private boolean staticBikeParkAndRide = false;
   private boolean includeInclinedEdgeLevelInfo = false;
@@ -81,11 +80,6 @@ public class OsmModuleBuilder {
     return this;
   }
 
-  public OsmModuleBuilder withPlatformEntriesLinking(boolean platformEntriesLinking) {
-    this.platformEntriesLinking = platformEntriesLinking;
-    return this;
-  }
-
   public OsmModuleBuilder withStaticParkAndRide(boolean staticParkAndRide) {
     this.staticParkAndRide = staticParkAndRide;
     return this;
@@ -125,7 +119,6 @@ public class OsmModuleBuilder {
         edgeNamer,
         maxAreaNodes,
         areaVisibility,
-        platformEntriesLinking,
         staticParkAndRide,
         staticBikeParkAndRide,
         includeInclinedEdgeLevelInfo,

@@ -39,7 +39,6 @@ public class WalkableAreaBuilderTest {
     final String osmFile = testMethod.getAnnotation(OsmFile.class).value();
     final boolean visibility = testMethod.getAnnotation(Visibility.class).value();
     final int maxAreaNodes = testMethod.getAnnotation(MaxAreaNodes.class).value();
-    final boolean platformEntriesLinking = true;
 
     final Set<String> boardingAreaRefTags = Set.of("ref");
     final OsmDatabase osmdb = new OsmDatabase(DataImportIssueStore.NOOP);
@@ -59,7 +58,6 @@ public class WalkableAreaBuilderTest {
       new SafetyValueApplier(graph),
       DataImportIssueStore.NOOP,
       maxAreaNodes,
-      platformEntriesLinking,
       boardingAreaRefTags
     );
 

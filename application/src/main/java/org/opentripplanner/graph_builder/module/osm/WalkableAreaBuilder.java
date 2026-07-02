@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import org.locationtech.jts.geom.Geometry;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.prep.PreparedPolygon;
 import org.opentripplanner.astar.model.GraphPath;
@@ -33,7 +32,6 @@ import org.opentripplanner.osm.model.TraverseDirection;
 import org.opentripplanner.osm.wayproperty.WayProperties;
 import org.opentripplanner.service.osminfo.OsmInfoGraphBuildRepository;
 import org.opentripplanner.service.osminfo.model.Platform;
-import org.opentripplanner.street.geometry.GeometryUtils;
 import org.opentripplanner.street.geometry.LineStringShrinker;
 import org.opentripplanner.street.geometry.SphericalDistanceLibrary;
 import org.opentripplanner.street.graph.Graph;
@@ -64,9 +62,6 @@ class WalkableAreaBuilder {
 
   private final VertexGenerator vertexBuilder;
 
-  private final boolean platformEntriesLinking;
-
-  private final List<OsmVertex> platformLinkingPoints;
   private final Set<String> boardingLocationRefTags;
   private final EdgeNamer namer;
   private final SafetyValueApplier safetyValueApplier;
@@ -91,7 +86,6 @@ class WalkableAreaBuilder {
     SafetyValueApplier safetyValueApplier,
     DataImportIssueStore issueStore,
     int maxAreaNodes,
-    boolean platformEntriesLinking,
     Set<String> boardingLocationRefTags
   ) {
     this(
@@ -103,7 +97,6 @@ class WalkableAreaBuilder {
       safetyValueApplier,
       issueStore,
       maxAreaNodes,
-      platformEntriesLinking,
       boardingLocationRefTags,
       null
     );
@@ -118,7 +111,6 @@ class WalkableAreaBuilder {
     SafetyValueApplier safetyValueApplier,
     DataImportIssueStore issueStore,
     int maxAreaNodes,
-    boolean platformEntriesLinking,
     Set<String> boardingLocationRefTags,
     @Nullable KeyValueCache<Long, double[][]> visibilityCache
   ) {
@@ -130,18 +122,8 @@ class WalkableAreaBuilder {
     this.safetyValueApplier = safetyValueApplier;
     this.issueStore = issueStore;
     this.maxAreaNodes = maxAreaNodes;
-    this.platformEntriesLinking = platformEntriesLinking;
     this.boardingLocationRefTags = boardingLocationRefTags;
     this.visibilityCache = visibilityCache;
-    this.platformLinkingPoints = platformEntriesLinking
-      ? graph
-          .getVertices()
-          .stream()
-          .filter(OsmVertex.class::isInstance)
-          .map(OsmVertex.class::cast)
-          .filter(this::isPlatformLinkingPoint)
-          .collect(Collectors.toList())
-      : List.of();
   }
 
   /**
@@ -271,7 +253,6 @@ class WalkableAreaBuilder {
     Map<IntersectionVertex, AreaGroup> vertexToAreaGroup = new HashMap<>();
     List<PerRingData> perRingData = new ArrayList<>();
 
-    GeometryFactory geometryFactory = GeometryUtils.getGeometryFactory();
     for (Ring ring : group.outermostRings) {
       Polygon polygon = ring.jtsPolygon;
       AreaGroup areaGroup = new AreaGroup(polygon);
@@ -298,20 +279,6 @@ class WalkableAreaBuilder {
 
         for (Ring outerRing : area.outermostRings) {
           boolean linkPointsAdded = !entrances.isEmpty();
-          if (platformEntriesLinking && area.parent.isPlatform()) {
-            List<OsmVertex> verticesWithin = platformLinkingPoints
-              .stream()
-              .filter(t ->
-                outerRing.jtsPolygon.contains(geometryFactory.createPoint(t.getCoordinate()))
-              )
-              .toList();
-            platformLinkingVertices.addAll(verticesWithin);
-            for (OsmVertex v : verticesWithin) {
-              startingVertices.add(v);
-              visibilityVertices.add(v);
-              linkPointsAdded = true;
-            }
-          }
 
           for (int i = 0; i < outerRing.nodes.size(); ++i) {
             OsmNode node = outerRing.nodes.get(i);

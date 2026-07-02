@@ -1,7 +1,6 @@
 {
   "dataImportReport": true,
   "transitModelTimeZone": "Europe/Berlin",
-  "platformEntriesLinking": true,
   "subwayAccessTime": 0,
   "netexDefaults": {
     "groupFilePattern": "(.*)_.*\\.xml",

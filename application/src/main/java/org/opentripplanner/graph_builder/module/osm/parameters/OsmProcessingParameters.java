@@ -10,7 +10,6 @@ import org.opentripplanner.graph_builder.services.osm.EdgeNamer;
  * @param maxAreaNodes           Maximum number of nodes of an area to try to generate visibility
  *                               lines from.
  * @param areaVisibility         Whether to create visibility lines crossing walkable areas.
- * @param platformEntriesLinking Whether platform entries should be linked
  * @param staticParkAndRide      Whether we should create car P+R stations from OSM data.
  * @param staticBikeParkAndRide  Whether we should create bike P+R stations from OSM data.
  * @param includeInclinedEdgeLevelInfo Whether level info for inclined edges should be stored.
@@ -21,7 +20,6 @@ public record OsmProcessingParameters(
   EdgeNamer edgeNamer,
   int maxAreaNodes,
   boolean areaVisibility,
-  boolean platformEntriesLinking,
   boolean staticParkAndRide,
   boolean staticBikeParkAndRide,
   boolean includeInclinedEdgeLevelInfo,

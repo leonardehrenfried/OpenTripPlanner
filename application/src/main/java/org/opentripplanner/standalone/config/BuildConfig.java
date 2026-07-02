@@ -122,8 +122,6 @@ public class BuildConfig implements OtpDataStoreConfig {
 
   public final boolean areaVisibility;
 
-  public final boolean platformEntriesLinking;
-
   /** See {@link S3BucketConfig}. */
   public final S3BucketConfig elevationBucket;
 
@@ -337,11 +335,6 @@ public class BuildConfig implements OtpDataStoreConfig {
         data, and to `false` to read the stream from the source each time.
         """
       )
-      .asBoolean(false);
-    platformEntriesLinking = root
-      .of("platformEntriesLinking")
-      .since(V2_0)
-      .summary("Link unconnected entries to public transport platforms.")
       .asBoolean(false);
     staticParkAndRide = root
       .of("staticParkAndRide")
