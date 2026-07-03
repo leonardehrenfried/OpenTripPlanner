@@ -27,8 +27,8 @@ import org.opentripplanner.street.graph.summary.GraphSummarizer;
  *
  * <p>A pedestrian footway from the north terminates at {@code ped}, a node on the outer ring's
  * north side that is shared with the footway. Like innerS, ped becomes a startingNode, so it
- * enters visibilityVertices. The SPT from {ped, innerS} finds a path through the ped↔innerTR
- * visibility edge, keeping that edge alive after pruning.
+ * enters visibilityVertices. The SPT from {ped, innerS} finds a path via ped↔innerTR visibility
+ * edges, keeping them alive after pruning.
  */
 class PlatformRelationWithHoleAndStairsTest {
 
@@ -37,8 +37,8 @@ class PlatformRelationWithHoleAndStairsTest {
     // Pedestrian footway from north: north is the external entry, ped is a node on the outer
     // ring's north side. Being shared with the footway makes ped a startingNode, so it enters
     // visibilityVertices and gets connected to the inner ring via a visibility edge.
-    var north = node(21, new WgsCoordinate(0.0011, 0.00045));
-    var ped = node(22, new WgsCoordinate(0.0009, 0.000451));
+    var north = node(21, new WgsCoordinate(0.0011, 0.000451));
+    var ped = node(22, new WgsCoordinate(0.0009, 0.0004511));
 
     // Outer ring: ~100 m square (0.0009° ≈ 100 m at the equator)
     var outerBL = node(0, new WgsCoordinate(0, 0));
@@ -53,13 +53,13 @@ class PlatformRelationWithHoleAndStairsTest {
     var innerTL = node(11, new WgsCoordinate(0.0006, 0.0003));
     var innerTR = node(12, new WgsCoordinate(0.0006, 0.0006));
     var innerBR = node(13, new WgsCoordinate(0.0003, 0.0006));
-    var innerS = node(14, new WgsCoordinate(0.0003, 0.00045));
+    var innerS = node(14, new WgsCoordinate(0.0003, 0.000451));
     var innerHole = List.of(innerBL, innerTL, innerTR, innerBR, innerS);
 
     // Stair from south: terminates at innerS on the inner hole boundary.
     // innerS fails the donut contains() check so it is NOT a platformLinkingPoint,
     // but isStartingNode returns true (shared with stair way) → innerS enters visibilityVertices.
-    var stairBottom = node(20, new WgsCoordinate(-0.0001, 0.00045));
+    var stairBottom = node(20, new WgsCoordinate(-0.0001, 0.000451));
 
     long outerRingId = 1000;
     long innerHoleId = 1001;
@@ -96,10 +96,10 @@ class PlatformRelationWithHoleAndStairsTest {
         // outer ring (5 segments × 2 directions) — ped splits the north side into two segments
         "(0,0) → (0.0009,0) PEDESTRIAN ♿✅",
         "(0.0009,0) → (0,0) PEDESTRIAN ♿✅",
-        "(0.0009,0) → (0.0009,0.00045) PEDESTRIAN ♿✅",
-        "(0.0009,0.00045) → (0.0009,0) PEDESTRIAN ♿✅",
-        "(0.0009,0.00045) → (0.0009,0.0009) PEDESTRIAN ♿✅",
-        "(0.0009,0.0009) → (0.0009,0.00045) PEDESTRIAN ♿✅",
+        "(0.0009,0) → (0.0009,0.000451) PEDESTRIAN ♿✅",
+        "(0.0009,0.000451) → (0.0009,0) PEDESTRIAN ♿✅",
+        "(0.0009,0.000451) → (0.0009,0.0009) PEDESTRIAN ♿✅",
+        "(0.0009,0.0009) → (0.0009,0.000451) PEDESTRIAN ♿✅",
         "(0.0009,0.0009) → (0,0.0009) PEDESTRIAN ♿✅",
         "(0,0.0009) → (0.0009,0.0009) PEDESTRIAN ♿✅",
         "(0,0.0009) → (0,0) PEDESTRIAN ♿✅",
@@ -111,21 +111,21 @@ class PlatformRelationWithHoleAndStairsTest {
         "(0.0006,0.0006) → (0.0006,0.0003) PEDESTRIAN ♿✅",
         "(0.0006,0.0006) → (0.0003,0.0006) PEDESTRIAN ♿✅",
         "(0.0003,0.0006) → (0.0006,0.0006) PEDESTRIAN ♿✅",
-        "(0.0003,0.0006) → (0.0003,0.00045) PEDESTRIAN ♿✅",
-        "(0.0003,0.00045) → (0.0003,0.0006) PEDESTRIAN ♿✅",
-        "(0.0003,0.00045) → (0.0003,0.0003) PEDESTRIAN ♿✅",
-        "(0.0003,0.0003) → (0.0003,0.00045) PEDESTRIAN ♿✅",
-        // visibility edges: ped ↔ inner hole corners, kept by SPT from {ped, innerS}.
-        // The SPT finds two equal-length paths: ped→innerTL→innerBL→innerS and
-        // innerS→innerBR→innerTR→ped, so one direction is kept for each corner.
-        "(0.0009,0.00045) → (0.0006,0.0003) PEDESTRIAN ♿✅",
-        "(0.0006,0.0006) → (0.0009,0.00045) PEDESTRIAN ♿✅",
+        "(0.0003,0.0006) → (0.0003,0.000451) PEDESTRIAN ♿✅",
+        "(0.0003,0.000451) → (0.0003,0.0006) PEDESTRIAN ♿✅",
+        "(0.0003,0.000451) → (0.0003,0.0003) PEDESTRIAN ♿✅",
+        "(0.0003,0.0003) → (0.0003,0.000451) PEDESTRIAN ♿✅",
+        // visibility edges: ped ↔ innerTR (NE corner of inner hole), both directions survive.
+        // The lon offset of 0.000451 breaks the path-length tie that existed at 0.00045,
+        // so the SPT finds a unique shortest path in both directions through innerTR.
+        "(0.0009,0.000451) → (0.0006,0.0006) PEDESTRIAN ♿✅",
+        "(0.0006,0.0006) → (0.0009,0.000451) PEDESTRIAN ♿✅",
         // stair — wheelchair-inaccessible steps
-        "(0.0003,0.00045) → (-0.0001,0.00045) PEDESTRIAN ♿❌",
-        "(-0.0001,0.00045) → (0.0003,0.00045) PEDESTRIAN ♿❌",
+        "(0.0003,0.000451) → (-0.0001,0.000451) PEDESTRIAN ♿❌",
+        "(-0.0001,0.000451) → (0.0003,0.000451) PEDESTRIAN ♿❌",
         // pedestrian footway from north
-        "(0.0011,0.00045) → (0.0009,0.00045) PEDESTRIAN ♿✅",
-        "(0.0009,0.00045) → (0.0011,0.00045) PEDESTRIAN ♿✅"
+        "(0.0011,0.000451) → (0.0009,0.000451) PEDESTRIAN ♿✅",
+        "(0.0009,0.000451) → (0.0011,0.000451) PEDESTRIAN ♿✅"
       );
   }
 }
