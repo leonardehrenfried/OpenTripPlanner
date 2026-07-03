@@ -38,7 +38,7 @@ class PlatformRelationWithHoleAndStairsTest {
     // ring's north side. Being shared with the footway makes ped a startingNode, so it enters
     // visibilityVertices and gets connected to the inner ring via a visibility edge.
     var north = node(21, new WgsCoordinate(0.0011, 0.00045));
-    var ped = node(22, new WgsCoordinate(0.0009, 0.00045));
+    var ped = node(22, new WgsCoordinate(0.0009, 0.000451));
 
     // Outer ring: ~100 m square (0.0009° ≈ 100 m at the equator)
     var outerBL = node(0, new WgsCoordinate(0, 0));
@@ -93,7 +93,6 @@ class PlatformRelationWithHoleAndStairsTest {
     assertWithMessage("Unexpected edges. Check graph at %s", summarizer.geoJsonUrl())
       .that(summarizer.summarizeEdges())
       .containsExactly(
-        "",
         // outer ring (5 segments × 2 directions) — ped splits the north side into two segments
         "(0,0) → (0.0009,0) PEDESTRIAN ♿✅",
         "(0.0009,0) → (0,0) PEDESTRIAN ♿✅",
