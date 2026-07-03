@@ -58,6 +58,7 @@ class ConcaveHoleTest {
     var holeId = 1001;
 
     var relation = RelationBuilder.ofMultiPolygon()
+      .withTag("highway", "pedestrian")
       .withWayMember(outerRingId, "outer")
       .withWayMember(holeId, "inner")
       .build();
