@@ -3,7 +3,6 @@ package org.opentripplanner.graph_builder.module.osm;
 import static org.opentripplanner.graph_builder.module.osm.LinearBarrierNodeType.SPLIT;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,6 +14,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.prep.PreparedPolygon;
 import org.opentripplanner.astar.model.GraphPath;
@@ -240,21 +240,21 @@ class WalkableAreaBuilder {
       }
     }
 
-    ringSetData
-      .visibilityVertexCandidates()
-      .forEach((areaGroup, vertices) -> {
-        if (vertices.size() > maxAreaNodes) {
-          areaGroup.addVisibilityVertices(
-            vertices
-              .stream()
-              .sorted((v1, v2) -> Long.compare(v2.getDegreeOut(), v1.getDegreeOut()))
-              .limit(maxAreaNodes)
-              .collect(Collectors.toSet())
-          );
-        } else {
-          areaGroup.addVisibilityVertices(vertices);
-        }
-      });
+    for (PerRingData ringData : ringSetData.perRingData()) {
+      AreaGroup areaGroup = ringData.areaGroup();
+      HashSet<IntersectionVertex> vertices = ringData.visibilityVertices();
+      if (vertices.size() > maxAreaNodes) {
+        areaGroup.addVisibilityVertices(
+          vertices
+            .stream()
+            .sorted((v1, v2) -> Long.compare(v2.getDegreeOut(), v1.getDegreeOut()))
+            .limit(maxAreaNodes)
+            .collect(Collectors.toSet())
+        );
+      } else {
+        areaGroup.addVisibilityVertices(vertices);
+      }
+    }
   }
 
   // ---- Phase 1: ring traversal -------------------------------------------------------
@@ -267,8 +267,6 @@ class WalkableAreaBuilder {
     Set<Edge> allEdges = new HashSet<>();
     Set<Edge> ringEdges = new HashSet<>();
     Set<Vertex> startingVertices = new HashSet<>();
-    Map<AreaGroup, HashSet<IntersectionVertex>> visibilityVertexCandidates = new HashMap<>();
-    Map<IntersectionVertex, AreaGroup> vertexToAreaGroup = new HashMap<>();
     List<PerRingData> perRingData = new ArrayList<>();
 
     GeometryFactory geometryFactory = GeometryUtils.getGeometryFactory();
@@ -380,10 +378,6 @@ class WalkableAreaBuilder {
         issueStore.add(new AreaTooComplicated(group, visibilityVertices.size(), maxAreaNodes));
       }
 
-      visibilityVertexCandidates.put(areaGroup, visibilityVertices);
-      for (IntersectionVertex v : visibilityVertices) {
-        vertexToAreaGroup.putIfAbsent(v, areaGroup);
-      }
       createAreas(areaGroup, ring, group.areas);
       perRingData.add(
         new PerRingData(
@@ -396,14 +390,7 @@ class WalkableAreaBuilder {
       );
     }
 
-    return new RingSetData(
-      allEdges,
-      ringEdges,
-      startingVertices,
-      visibilityVertexCandidates,
-      vertexToAreaGroup,
-      perRingData
-    );
+    return new RingSetData(allEdges, ringEdges, startingVertices, perRingData);
   }
 
   // ---- Phase 2: visibility computation -----------------------------------------------
@@ -488,8 +475,14 @@ class WalkableAreaBuilder {
     RingSetData ringSetData,
     OsmAreaGroup group
   ) {
+    Map<IntersectionVertex, AreaGroup> vertexToAreaGroup = new HashMap<>();
+    for (PerRingData ringData : ringSetData.perRingData()) {
+      for (IntersectionVertex v : ringData.visibilityVertices()) {
+        vertexToAreaGroup.putIfAbsent(v, ringData.areaGroup());
+      }
+    }
     Map<CoordKey, IntersectionVertex> vertexByCoord = new HashMap<>();
-    for (IntersectionVertex v : ringSetData.vertexToAreaGroup().keySet()) {
+    for (IntersectionVertex v : vertexToAreaGroup.keySet()) {
       vertexByCoord.put(new CoordKey(v.getX(), v.getY()), v);
     }
     for (double[] pair : cachedPairs) {
@@ -498,9 +491,7 @@ class WalkableAreaBuilder {
       if (v1 == null || v2 == null) {
         continue;
       }
-      AreaGroup ag = ringSetData
-        .vertexToAreaGroup()
-        .getOrDefault(v1, ringSetData.vertexToAreaGroup().get(v2));
+      AreaGroup ag = vertexToAreaGroup.getOrDefault(v1, vertexToAreaGroup.get(v2));
       if (ag != null) {
         createSegments(v1, v2, group.areas, ag, true);
       }
@@ -651,53 +642,67 @@ class WalkableAreaBuilder {
       // No intersections - not really possible
       return Set.of();
     }
-    String label = String.format(
-      LABEL_TEMPLATE,
-      parent.getId(),
-      vertex1.getLabel(),
-      vertex2.getLabel()
-    );
-
     float carSpeed = parent
       .getOsmProvider()
       .getOsmTagMapper()
       .getCarSpeedForWay(parent, TraverseDirection.DIRECTIONLESS, issueStore);
 
-    I18NString name = namer.getName(parent, label);
-    AreaEdgeBuilder streetEdgeBuilder = new AreaEdgeBuilder()
-      .withFromVertex(vertex1)
-      .withToVertex(vertex2)
-      .withGeometry(line)
-      .withName(name)
-      .withMeterLength(length)
-      .withPermission(areaPermissions)
-      .withBack(false)
-      .withArea(areaGroup)
-      .withCarSpeed(carSpeed)
-      .withBogusName(parent.hasNoName())
-      .withWheelchairAccessible(wheelchairAccessible)
-      .withLink(parent.isLink());
-
-    label = String.format(LABEL_TEMPLATE, parent.getId(), vertex2.getLabel(), vertex1.getLabel());
-    name = namer.getName(parent, label);
-    AreaEdgeBuilder backStreetEdgeBuilder = new AreaEdgeBuilder()
-      .withFromVertex(vertex2)
-      .withToVertex(vertex1)
-      .withGeometry(line.reverse())
-      .withName(name)
-      .withMeterLength(length)
-      .withPermission(areaPermissions)
-      .withBack(true)
-      .withArea(areaGroup)
-      .withCarSpeed(carSpeed)
-      .withBogusName(parent.hasNoName())
-      .withWheelchairAccessible(wheelchairAccessible)
-      .withLink(parent.isLink());
-
-    AreaEdge street = streetEdgeBuilder.buildAndConnect();
-    AreaEdge backStreet = backStreetEdgeBuilder.buildAndConnect();
+    AreaEdge street = buildAreaEdge(
+      vertex1,
+      vertex2,
+      line,
+      false,
+      parent,
+      areaGroup,
+      areaPermissions,
+      wheelchairAccessible,
+      length,
+      carSpeed
+    );
+    AreaEdge backStreet = buildAreaEdge(
+      vertex2,
+      vertex1,
+      line.reverse(),
+      true,
+      parent,
+      areaGroup,
+      areaPermissions,
+      wheelchairAccessible,
+      length,
+      carSpeed
+    );
     safetyValueApplier.applyWayProperties(street, backStreet, wayData, wayData, parent);
     return Set.of(street, backStreet);
+  }
+
+  private AreaEdge buildAreaEdge(
+    IntersectionVertex from,
+    IntersectionVertex to,
+    LineString geometry,
+    boolean back,
+    OsmEntity parent,
+    AreaGroup areaGroup,
+    StreetTraversalPermission permission,
+    boolean wheelchairAccessible,
+    double length,
+    float carSpeed
+  ) {
+    String label = String.format(LABEL_TEMPLATE, parent.getId(), from.getLabel(), to.getLabel());
+    I18NString name = namer.getName(parent, label);
+    return new AreaEdgeBuilder()
+      .withFromVertex(from)
+      .withToVertex(to)
+      .withGeometry(geometry)
+      .withName(name)
+      .withMeterLength(length)
+      .withPermission(permission)
+      .withBack(back)
+      .withArea(areaGroup)
+      .withCarSpeed(carSpeed)
+      .withBogusName(parent.hasNoName())
+      .withWheelchairAccessible(wheelchairAccessible)
+      .withLink(parent.isLink())
+      .buildAndConnect();
   }
 
   private void createAreas(AreaGroup areaGroup, Ring ring, Collection<OsmArea> areas) {
@@ -739,7 +744,7 @@ class WalkableAreaBuilder {
     Vertex start = null;
     for (Edge e : osmVertex.getIncoming()) {
       if (e instanceof StreetEdge se && !(e instanceof AreaEdge)) {
-        if (Arrays.asList(1, 2, 3).contains(se.getPermission().code)) {
+        if (se.getPermission().isWalkOrBikeOnly()) {
           isCandidate = true;
           start = se.getFromVertex();
           break;
@@ -807,8 +812,6 @@ class WalkableAreaBuilder {
     Set<Edge> allEdges,
     Set<Edge> ringEdges,
     Set<Vertex> startingVertices,
-    Map<AreaGroup, HashSet<IntersectionVertex>> visibilityVertexCandidates,
-    Map<IntersectionVertex, AreaGroup> vertexToAreaGroup,
     List<PerRingData> perRingData
   ) {}
 

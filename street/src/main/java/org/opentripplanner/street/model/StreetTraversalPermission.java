@@ -96,4 +96,12 @@ public enum StreetTraversalPermission {
   public boolean allowsNothing() {
     return this == StreetTraversalPermission.NONE;
   }
+
+  /**
+   * True if the permission allows walking or cycling but not driving, i.e. this edge is a path
+   * rather than a road that a platform can legitimately link into.
+   */
+  public boolean isWalkOrBikeOnly() {
+    return this.allowsAnything() && !this.allows(CAR);
+  }
 }
