@@ -400,29 +400,16 @@ class WalkableAreaBuilder {
    * This is a pure computation — no graph mutations.
    *
    * <p>When the area has more vertices than {@code maxAreaNodes}, the vertex set is sampled
-   * uniformly so that at least some cross-edges are added even for complex areas.
+   * uniformly ({@link #sampleEvenly}) so that at least some cross-edges are added even for
+   * complex areas without incurring the full O(n²) visibility test.
    */
   private List<VisibilityPair> computeVisiblePairs(RingSetData ringSetData) {
     List<VisibilityPair> pairs = new ArrayList<>();
 
     for (PerRingData ringData : ringSetData.perRingData()) {
-      float skipRatio = (float) maxAreaNodes / (float) ringData.visibilityVertices().size();
-      int i = 0;
-      float sumI = 0;
-      for (IntersectionVertex vertex1 : ringData.visibilityVertices()) {
-        sumI += skipRatio;
-        if (Math.floor(sumI) < i + 1) {
-          continue;
-        }
-        i = (int) Math.floor(sumI);
-        int j = 0;
-        float sumJ = 0;
-        for (IntersectionVertex vertex2 : ringData.visibilityVertices()) {
-          sumJ += skipRatio;
-          if (Math.floor(sumJ) < j + 1) {
-            continue;
-          }
-          j = (int) Math.floor(sumJ);
+      List<IntersectionVertex> sampled = sampleEvenly(ringData.visibilityVertices(), maxAreaNodes);
+      for (IntersectionVertex vertex1 : sampled) {
+        for (IntersectionVertex vertex2 : sampled) {
           if (shouldSkipEdge(vertex1, vertex2, ringData.alreadyAddedEdges())) {
             continue;
           }
@@ -437,6 +424,31 @@ class WalkableAreaBuilder {
       }
     }
     return pairs;
+  }
+
+  /**
+   * Selects at most {@code max} vertices spread evenly across the iteration order of
+   * {@code vertices}. When there are {@code max} or fewer vertices, all of them are returned in
+   * order. Otherwise every vertex is visited and kept whenever the running fractional stride
+   * ({@code max/size} per step) crosses the next integer, yielding a roughly uniform subset.
+   */
+  static <T> List<T> sampleEvenly(Collection<T> items, int max) {
+    if (items.size() <= max) {
+      return new ArrayList<>(items);
+    }
+    List<T> sampled = new ArrayList<>(max);
+    float stride = (float) max / (float) items.size();
+    float sum = 0;
+    int kept = 0;
+    for (T item : items) {
+      sum += stride;
+      if (Math.floor(sum) < kept + 1) {
+        continue;
+      }
+      kept = (int) Math.floor(sum);
+      sampled.add(item);
+    }
+    return sampled;
   }
 
   // ---- Phase 3a: add visibility edges (cache miss) -----------------------------------
