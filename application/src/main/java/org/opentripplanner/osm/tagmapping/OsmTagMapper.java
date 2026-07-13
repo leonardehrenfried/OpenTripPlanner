@@ -60,17 +60,21 @@ public class OsmTagMapper {
     /* no bicycle tags */
 
     /* NONE */
-    props.setProperties("mtb:scale=3", noneWayProperties);
-    props.setProperties("mtb:scale=4", noneWayProperties);
-    props.setProperties("mtb:scale=5", noneWayProperties);
-    props.setProperties("mtb:scale=6", noneWayProperties);
+    props.setProperties(
+      new ExactMatchSpecifier(new Condition.OneOf("mtb:scale", "3", "4", "5", "6")),
+      noneWayProperties
+    );
     props.setProperties("highway=bridleway", withModes(NONE).walkSafety(1.6).bicycleSafety(1.3));
 
     /* PEDESTRIAN */
-    props.setProperties("highway=corridor", withModes(PEDESTRIAN).walkSafety(1.1));
-    props.setProperties("highway=steps", withModes(PEDESTRIAN).walkSafety(1.2));
-    props.setProperties("highway=crossing", withModes(PEDESTRIAN).walkSafety(1.1));
-    props.setProperties("highway=platform", withModes(PEDESTRIAN).walkSafety(1.2));
+    props.setProperties(
+      new ExactMatchSpecifier(new Condition.OneOf("highway", "corridor", "crossing")),
+      withModes(PEDESTRIAN).walkSafety(1.1)
+    );
+    props.setProperties(
+      new ExactMatchSpecifier(new Condition.OneOf("highway", "steps", "platform")),
+      withModes(PEDESTRIAN).walkSafety(1.2)
+    );
     props.setProperties("public_transport=platform", withModes(PEDESTRIAN).walkSafety(1.2));
     props.setProperties("railway=platform", withModes(PEDESTRIAN).walkSafety(1.2));
     props.setProperties(
@@ -83,8 +87,10 @@ public class OsmTagMapper {
     );
     props.setProperties("mtb:scale=1", withModes(PEDESTRIAN).walkSafety(1.9).bicycleSafety(1.5));
     props.setProperties("mtb:scale=2", withModes(PEDESTRIAN).walkSafety(3.8).bicycleSafety(3.0));
-    props.setProperties("indoor=area", withModes(PEDESTRIAN).walkSafety(1.1));
-    props.setProperties("indoor=corridor", withModes(PEDESTRIAN).walkSafety(1.1));
+    props.setProperties(
+      new ExactMatchSpecifier(new Condition.OneOf("indoor", "area", "corridor")),
+      withModes(PEDESTRIAN).walkSafety(1.1)
+    );
 
     /* BICYCLE */
     props.setProperties("highway=cycleway", withModes(BICYCLE).walkSafety(2.5).bicycleSafety(0.6));
@@ -101,25 +107,29 @@ public class OsmTagMapper {
       "highway=living_street",
       withModes(ALL).walkSafety(1.15).bicycleSafety(0.9)
     );
-    props.setProperties("highway=unclassified", withModes(ALL).walkSafety(1.25));
-    props.setProperties("highway=road", withModes(ALL).walkSafety(1.25));
-    props.setProperties("highway=byway", withModes(ALL).walkSafety(1.7).bicycleSafety(1.3));
-    props.setProperties("highway=track", withModes(ALL).walkSafety(1.7).bicycleSafety(1.3));
-    props.setProperties("highway=service", withModes(ALL).walkSafety(1.3).bicycleSafety(1.1));
-    props.setProperties("highway=residential", withModes(ALL).walkSafety(1.2).bicycleSafety(0.98));
     props.setProperties(
-      "highway=residential_link",
+      new ExactMatchSpecifier(
+        new Condition.OneOf("highway", "unclassified", "road", "tertiary", "tertiary_link")
+      ),
+      withModes(ALL).walkSafety(1.25)
+    );
+    props.setProperties(
+      new ExactMatchSpecifier(new Condition.OneOf("highway", "byway", "track")),
+      withModes(ALL).walkSafety(1.7).bicycleSafety(1.3)
+    );
+    props.setProperties("highway=service", withModes(ALL).walkSafety(1.3).bicycleSafety(1.1));
+    props.setProperties(
+      new ExactMatchSpecifier(new Condition.OneOf("highway", "residential", "residential_link")),
       withModes(ALL).walkSafety(1.2).bicycleSafety(0.98)
     );
-    props.setProperties("highway=tertiary", withModes(ALL).walkSafety(1.25));
-    props.setProperties("highway=tertiary_link", withModes(ALL).walkSafety(1.25));
-    props.setProperties("highway=secondary", withModes(ALL).walkSafety(1.9).bicycleSafety(1.5));
     props.setProperties(
-      "highway=secondary_link",
+      new ExactMatchSpecifier(new Condition.OneOf("highway", "secondary", "secondary_link")),
       withModes(ALL).walkSafety(1.9).bicycleSafety(1.5)
     );
-    props.setProperties("highway=primary", withModes(ALL).walkSafety(2.6).bicycleSafety(2.06));
-    props.setProperties("highway=primary_link", withModes(ALL).walkSafety(2.6).bicycleSafety(2.06));
+    props.setProperties(
+      new ExactMatchSpecifier(new Condition.OneOf("highway", "primary", "primary_link")),
+      withModes(ALL).walkSafety(2.6).bicycleSafety(2.06)
+    );
     props.setProperties("highway=trunk", withModes(ALL).walkSafety(9.3).bicycleSafety(7.47));
     props.setProperties("highway=trunk_link", withModes(ALL).walkSafety(9.3).bicycleSafety(2.06));
 

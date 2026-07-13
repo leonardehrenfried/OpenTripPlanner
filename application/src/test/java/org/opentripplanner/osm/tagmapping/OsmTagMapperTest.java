@@ -474,8 +474,6 @@ class OsmTagMapperTest {
     assertTrue(WPS.getSlopeOverride(indoor));
   }
 
-<<<<<<< Updated upstream
-=======
   @Test
   void embeddedRails() {
     assertEquals(1.8, WPS.getDataForEntity(WayTestData.embeddedRails()).bicycleSafety(), EPSILON);
@@ -509,7 +507,6 @@ class OsmTagMapperTest {
     assertEquals(expectedBicycleSafety, WPS.getDataForEntity(way).bicycleSafety(), EPSILON);
   }
 
->>>>>>> Stashed changes
   /**
    * Test that car speeds are calculated accurately
    */
