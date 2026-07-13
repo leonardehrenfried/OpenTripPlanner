@@ -367,25 +367,36 @@ public class OsmTagMapper {
      * running tracks are usually made of)
      */
 
-    props.setMixinProperties("surface=unpaved", ofBicycleSafety(1.18));
-    props.setMixinProperties("surface=compacted", ofBicycleSafety(1.18));
-    props.setMixinProperties("surface=wood", ofBicycleSafety(1.18));
+    props.setMixinProperties(
+      new ExactMatchSpecifier(new Condition.OneOf("surface", "unpaved", "compacted", "wood")),
+      ofBicycleSafety(1.18)
+    );
 
-    props.setMixinProperties("surface=cobblestone", ofBicycleSafety(1.3));
-    props.setMixinProperties("surface=sett", ofBicycleSafety(1.3));
-    props.setMixinProperties("surface=unhewn_cobblestone", ofBicycleSafety(1.5));
-    props.setMixinProperties("surface=grass_paver", ofBicycleSafety(1.3));
-    props.setMixinProperties("surface=pebblestone", ofBicycleSafety(1.3));
-    // Can be slick if wet, but otherwise not unfavorable to bikes
-    props.setMixinProperties("surface=metal", ofBicycleSafety(1.3));
-    props.setMixinProperties("surface=ground", ofBicycleSafety(1.5));
-    props.setMixinProperties("surface=dirt", ofBicycleSafety(1.5));
-    props.setMixinProperties("surface=earth", ofBicycleSafety(1.5));
-    props.setMixinProperties("surface=grass", ofBicycleSafety(1.5));
-    props.setMixinProperties("surface=mud", ofBicycleSafety(1.5));
-    props.setMixinProperties("surface=woodchip", ofBicycleSafety(1.5));
-    props.setMixinProperties("surface=gravel", ofBicycleSafety(1.5));
-    props.setMixinProperties("surface=artifical_turf", ofBicycleSafety(1.5));
+    // metal can be slick if wet, but otherwise not unfavorable to bikes
+    props.setMixinProperties(
+      new ExactMatchSpecifier(
+        new Condition.OneOf("surface", "cobblestone", "sett", "grass_paver", "pebblestone", "metal")
+      ),
+      ofBicycleSafety(1.3)
+    );
+
+    props.setMixinProperties(
+      new ExactMatchSpecifier(
+        new Condition.OneOf(
+          "surface",
+          "unhewn_cobblestone",
+          "ground",
+          "dirt",
+          "earth",
+          "grass",
+          "mud",
+          "woodchip",
+          "gravel",
+          "artifical_turf"
+        )
+      ),
+      ofBicycleSafety(1.5)
+    );
 
     /* sand is deadly for bikes */
     props.setMixinProperties("surface=sand", ofBicycleSafety(100));

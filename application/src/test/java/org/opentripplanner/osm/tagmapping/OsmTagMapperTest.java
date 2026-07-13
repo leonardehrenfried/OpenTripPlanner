@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Locale;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.opentripplanner.osm.model.OsmEntity;
 import org.opentripplanner.osm.model.OsmTestEntity;
@@ -473,6 +474,42 @@ class OsmTagMapperTest {
     assertTrue(WPS.getSlopeOverride(indoor));
   }
 
+<<<<<<< Updated upstream
+=======
+  @Test
+  void embeddedRails() {
+    assertEquals(1.8, WPS.getDataForEntity(WayTestData.embeddedRails()).bicycleSafety(), EPSILON);
+  }
+
+  @ParameterizedTest
+  @CsvSource(
+    {
+      "unpaved, 1.18",
+      "compacted, 1.18",
+      "wood, 1.18",
+      "cobblestone, 1.3",
+      "sett, 1.3",
+      "unhewn_cobblestone, 1.5",
+      "grass_paver, 1.3",
+      "pebblestone, 1.3",
+      "metal, 1.3",
+      "ground, 1.5",
+      "dirt, 1.5",
+      "earth, 1.5",
+      "grass, 1.5",
+      "mud, 1.5",
+      "woodchip, 1.5",
+      "gravel, 1.5",
+      "artifical_turf, 1.5",
+      "sand, 100",
+    }
+  )
+  void surfaces(String surface, double expectedBicycleSafety) {
+    var way = OsmWay.of().withTag("surface", surface).build();
+    assertEquals(expectedBicycleSafety, WPS.getDataForEntity(way).bicycleSafety(), EPSILON);
+  }
+
+>>>>>>> Stashed changes
   /**
    * Test that car speeds are calculated accurately
    */
