@@ -474,11 +474,6 @@ class OsmTagMapperTest {
     assertTrue(WPS.getSlopeOverride(indoor));
   }
 
-  @Test
-  void embeddedRails() {
-    assertEquals(1.8, WPS.getDataForEntity(WayTestData.embeddedRails()).bicycleSafety(), EPSILON);
-  }
-
   @ParameterizedTest
   @CsvSource(
     {

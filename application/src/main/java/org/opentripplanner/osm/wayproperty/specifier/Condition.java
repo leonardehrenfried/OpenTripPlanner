@@ -237,7 +237,15 @@ public sealed interface Condition {
   record OneOf(String key, String... values) implements Condition {
     @Override
     public boolean isExtendedKeyMatch(OsmEntity way, String exKey) {
-      return Arrays.stream(values).anyMatch(value -> way.isTag(exKey, value));
+      var value = way.getTag(exKey);
+      if (value != null) {
+        for (var v : values) {
+          if (value.equals(v)) {
+            return true;
+          }
+        }
+      }
+      return false;
     }
 
     @Override
