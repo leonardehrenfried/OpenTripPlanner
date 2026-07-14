@@ -25,6 +25,7 @@ import org.opentripplanner.osm.model.OsmTestEntity;
 import org.opentripplanner.osm.model.OsmWay;
 import org.opentripplanner.osm.wayproperty.WayPropertySet;
 import org.opentripplanner.osm.wayproperty.specifier.WayTestData;
+import org.opentripplanner.street.model.StreetTraversalPermission;
 
 class OsmTagMapperTest {
 
@@ -500,6 +501,48 @@ class OsmTagMapperTest {
   void surfaces(String surface, double expectedBicycleSafety) {
     var way = OsmWay.of().withTag("surface", surface).build();
     assertEquals(expectedBicycleSafety, WPS.getDataForEntity(way).bicycleSafety(), EPSILON);
+  }
+
+  @ParameterizedTest
+  @CsvSource(
+    {
+      // key,        value,             permission,  walkSafety, bicycleSafety
+      "mtb:scale,     3,                 NONE,        1.25,       1.0",
+      "mtb:scale,     4,                 NONE,        1.25,       1.0",
+      "mtb:scale,     5,                 NONE,        1.25,       1.0",
+      "mtb:scale,     6,                 NONE,        1.25,       1.0",
+      "highway,       corridor,          PEDESTRIAN,  1.1,        1.0",
+      "highway,       crossing,          PEDESTRIAN,  1.1,        1.0",
+      "highway,       steps,             PEDESTRIAN,  1.2,        1.0",
+      "highway,       platform,          PEDESTRIAN,  1.2,        1.0",
+      "indoor,        area,              PEDESTRIAN,  1.1,        1.0",
+      "indoor,        corridor,          PEDESTRIAN,  1.1,        1.0",
+      "highway,       unclassified,      ALL,         1.25,       1.0",
+      "highway,       road,              ALL,         1.25,       1.0",
+      "highway,       tertiary,          ALL,         1.25,       1.0",
+      "highway,       tertiary_link,     ALL,         1.25,       1.0",
+      "highway,       byway,             ALL,         1.7,        1.3",
+      "highway,       track,             ALL,         1.7,        1.3",
+      "highway,       residential,       ALL,         1.2,        0.98",
+      "highway,       residential_link,  ALL,         1.2,        0.98",
+      "highway,       secondary,         ALL,         1.9,        1.5",
+      "highway,       secondary_link,    ALL,         1.9,        1.5",
+      "highway,       primary,           ALL,         2.6,        2.06",
+      "highway,       primary_link,      ALL,         2.6,        2.06",
+    }
+  )
+  void highwaySafetyValues(
+    String key,
+    String value,
+    StreetTraversalPermission permission,
+    double walkSafety,
+    double bicycleSafety
+  ) {
+    var way = OsmWay.of().withTag(key, value).build();
+    var data = WPS.getDataForEntity(way);
+    assertEquals(permission, data.getPermission());
+    assertEquals(walkSafety, data.walkSafety(), EPSILON);
+    assertEquals(bicycleSafety, data.bicycleSafety(), EPSILON);
   }
 
   /**

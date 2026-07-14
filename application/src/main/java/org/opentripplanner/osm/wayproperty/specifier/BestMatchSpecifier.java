@@ -35,6 +35,10 @@ public class BestMatchSpecifier implements OsmSpecifier {
     conditions = OsmSpecifier.parseConditions(spec, ";");
   }
 
+  public BestMatchSpecifier(Condition... conditions) {
+    this.conditions = conditions;
+  }
+
   @Override
   public int matchScore(OsmEntity way, TraverseDirection direction) {
     int score = 0;
