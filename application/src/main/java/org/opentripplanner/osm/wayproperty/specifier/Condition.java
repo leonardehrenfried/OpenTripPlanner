@@ -4,7 +4,6 @@ import static org.opentripplanner.osm.wayproperty.specifier.Condition.MatchResul
 import static org.opentripplanner.osm.wayproperty.specifier.Condition.MatchResult.NONE;
 import static org.opentripplanner.osm.wayproperty.specifier.Condition.MatchResult.WILDCARD;
 
-import java.util.Arrays;
 import org.opentripplanner.osm.model.OsmEntity;
 
 public sealed interface Condition {
@@ -267,9 +266,17 @@ public sealed interface Condition {
 
     @Override
     public boolean isExtendedKeyMatch(OsmEntity way, String exKey) {
-      return (
-        !way.hasTag(exKey) || Arrays.stream(values).anyMatch(value -> way.isTag(exKey, value))
-      );
+      var value = way.getTag(exKey);
+      if (value == null) {
+        return true;
+      } else {
+        for (var v : values) {
+          if (value.equals(v)) {
+            return true;
+          }
+        }
+      }
+      return false;
     }
 
     @Override
