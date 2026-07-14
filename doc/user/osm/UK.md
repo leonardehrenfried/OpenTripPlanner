@@ -44,50 +44,37 @@ For details, see [#6782](https://github.com/opentripplanner/OpenTripPlanner/pull
 <!-- props BEGIN -->
 <!-- NOTE! This section is auto-generated. Do not change, change doc in code instead. -->
 
-| specifier                   | permission               | bike safety | walk safety |
-|-----------------------------|--------------------------|-------------|-------------|
-| `highway=cycleway`          | `PEDESTRIAN_AND_BICYCLE` | 0.6         | 1.2         |
-| `highway=bridleway`         | `PEDESTRIAN_AND_BICYCLE` | 1.3         | 1.2         |
-| `highway=trunk`             | `ALL`                    | 2.5         | 3.8         |
-| `highway=trunk_link`        | `ALL`                    | 2.06        | 3.8         |
-| `mtb:scale=3`               | `NONE`                   |             |             |
-| `mtb:scale=4`               | `NONE`                   |             |             |
-| `mtb:scale=5`               | `NONE`                   |             |             |
-| `mtb:scale=6`               | `NONE`                   |             |             |
-| `highway=bridleway`         | `NONE`                   | 1.3         | 1.6         |
-| `highway=corridor`          | `PEDESTRIAN`             |             | 1.1         |
-| `highway=steps`             | `PEDESTRIAN`             |             | 1.2         |
-| `highway=crossing`          | `PEDESTRIAN`             |             | 1.1         |
-| `highway=platform`          | `PEDESTRIAN`             |             | 1.2         |
-| `public_transport=platform` | `PEDESTRIAN`             |             | 1.2         |
-| `railway=platform`          | `PEDESTRIAN`             |             | 1.2         |
-| `highway=pedestrian`        | `PEDESTRIAN`             | 0.9         |             |
-| `highway=footway`           | `PEDESTRIAN`             | 1.1         |             |
-| `mtb:scale=1`               | `PEDESTRIAN`             | 1.5         | 1.9         |
-| `mtb:scale=2`               | `PEDESTRIAN`             | 3.0         | 3.8         |
-| `indoor=area`               | `PEDESTRIAN`             |             | 1.1         |
-| `indoor=corridor`           | `PEDESTRIAN`             |             | 1.1         |
-| `highway=cycleway`          | `BICYCLE`                | 0.6         | 2.5         |
-| `mtb:scale=0`               | `PEDESTRIAN_AND_BICYCLE` |             | 1.2         |
-| `highway=path`              | `PEDESTRIAN_AND_BICYCLE` | 0.75        | 1.05        |
-| `highway=living_street`     | `ALL`                    | 0.9         | 1.15        |
-| `highway=unclassified`      | `ALL`                    |             | 1.25        |
-| `highway=road`              | `ALL`                    |             | 1.25        |
-| `highway=byway`             | `ALL`                    | 1.3         | 1.7         |
-| `highway=track`             | `ALL`                    | 1.3         | 1.7         |
-| `highway=service`           | `ALL`                    | 1.1         | 1.3         |
-| `highway=residential`       | `ALL`                    | 0.98        | 1.2         |
-| `highway=residential_link`  | `ALL`                    | 0.98        | 1.2         |
-| `highway=tertiary`          | `ALL`                    |             | 1.25        |
-| `highway=tertiary_link`     | `ALL`                    |             | 1.25        |
-| `highway=secondary`         | `ALL`                    | 1.5         | 1.9         |
-| `highway=secondary_link`    | `ALL`                    | 1.5         | 1.9         |
-| `highway=primary`           | `ALL`                    | 2.06        | 2.6         |
-| `highway=primary_link`      | `ALL`                    | 2.06        | 2.6         |
-| `highway=trunk`             | `ALL`                    | 7.47        | 9.3         |
-| `highway=trunk_link`        | `ALL`                    | 2.06        | 9.3         |
-| `highway=motorway_link`     | `CAR`                    | 2.06        |             |
-| `highway=motorway`          | `CAR`                    | 8.0         |             |
+| specifier                                                      | permission               | bike safety | walk safety |
+|----------------------------------------------------------------|--------------------------|-------------|-------------|
+| `highway=cycleway`                                             | `PEDESTRIAN_AND_BICYCLE` | 0.6         | 1.2         |
+| `highway=bridleway`                                            | `PEDESTRIAN_AND_BICYCLE` | 1.3         | 1.2         |
+| `highway=trunk`                                                | `ALL`                    | 2.5         | 3.8         |
+| `highway=trunk_link`                                           | `ALL`                    | 2.06        | 3.8         |
+| `mtb:scale one of [3, 4, 5, 6]`                                | `NONE`                   |             |             |
+| `highway=bridleway`                                            | `NONE`                   | 1.3         | 1.6         |
+| `highway one of [corridor, crossing]`                          | `PEDESTRIAN`             |             | 1.1         |
+| `highway one of [steps, platform]`                             | `PEDESTRIAN`             |             | 1.2         |
+| `public_transport=platform`                                    | `PEDESTRIAN`             |             | 1.2         |
+| `railway=platform`                                             | `PEDESTRIAN`             |             | 1.2         |
+| `highway=pedestrian`                                           | `PEDESTRIAN`             | 0.9         |             |
+| `highway=footway`                                              | `PEDESTRIAN`             | 1.1         |             |
+| `mtb:scale=1`                                                  | `PEDESTRIAN`             | 1.5         | 1.9         |
+| `mtb:scale=2`                                                  | `PEDESTRIAN`             | 3.0         | 3.8         |
+| `indoor one of [area, corridor]`                               | `PEDESTRIAN`             |             | 1.1         |
+| `highway=cycleway`                                             | `BICYCLE`                | 0.6         | 2.5         |
+| `mtb:scale=0`                                                  | `PEDESTRIAN_AND_BICYCLE` |             | 1.2         |
+| `highway=path`                                                 | `PEDESTRIAN_AND_BICYCLE` | 0.75        | 1.05        |
+| `highway=living_street`                                        | `ALL`                    | 0.9         | 1.15        |
+| `highway one of [unclassified, road, tertiary, tertiary_link]` | `ALL`                    |             | 1.25        |
+| `highway one of [byway, track]`                                | `ALL`                    | 1.3         | 1.7         |
+| `highway=service`                                              | `ALL`                    | 1.1         | 1.3         |
+| `highway one of [residential, residential_link]`               | `ALL`                    | 0.98        | 1.2         |
+| `highway one of [secondary, secondary_link]`                   | `ALL`                    | 1.5         | 1.9         |
+| `highway one of [primary, primary_link]`                       | `ALL`                    | 2.06        | 2.6         |
+| `highway=trunk`                                                | `ALL`                    | 7.47        | 9.3         |
+| `highway=trunk_link`                                           | `ALL`                    | 2.06        | 9.3         |
+| `highway=motorway_link`                                        | `CAR`                    | 2.06        |             |
+| `highway=motorway`                                             | `CAR`                    | 8.0         |             |
 
 <!-- props END -->
 
