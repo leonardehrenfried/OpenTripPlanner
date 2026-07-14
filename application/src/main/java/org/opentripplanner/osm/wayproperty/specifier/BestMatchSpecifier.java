@@ -1,6 +1,7 @@
 package org.opentripplanner.osm.wayproperty.specifier;
 
 import java.util.Arrays;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.opentripplanner.osm.model.OsmEntity;
 import org.opentripplanner.osm.model.TraverseDirection;
@@ -66,6 +67,13 @@ public class BestMatchSpecifier implements OsmSpecifier {
   @Override
   public String toDocString() {
     return Arrays.stream(conditions).map(Object::toString).collect(Collectors.joining("; "));
+  }
+
+  @Override
+  public Set<String> keys() {
+    return Arrays.stream(conditions)
+      .flatMap(c -> c.matchableKeys().stream())
+      .collect(Collectors.toSet());
   }
 
   @Override

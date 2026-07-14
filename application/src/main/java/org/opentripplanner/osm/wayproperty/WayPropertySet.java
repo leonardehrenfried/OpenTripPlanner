@@ -56,6 +56,7 @@ public class WayPropertySet {
   private final List<NotePicker> notes;
 
   private final List<MixinProperties> mixins;
+  private final Set<String> mixinKeys;
 
   /** The automobile speed for street segments that do not match any SpeedPicker. */
   private final Float defaultCarSpeed;
@@ -85,7 +86,7 @@ public class WayPropertySet {
   /** The WayProperties applied to all ways that do not match any WayPropertyPicker. */
   private final WayProperties defaultProperties;
 
-  WayPropertySet(WayPropertySetBuilder builder) {
+  WayPropertySet(WayPropertySetBuilder builder, Set<String> mixinKeys) {
     this.wayProperties = List.copyOf(builder.wayProperties);
     this.creativeNamers = List.copyOf(builder.creativeNamers);
     this.slopeOverrides = List.copyOf(builder.slopeOverrides);
@@ -97,6 +98,7 @@ public class WayPropertySet {
     this.defaultWalkSafetyForPermission = builder.defaultWalkSafetyForPermission;
     this.defaultBicycleSafetyForPermission = builder.defaultBicycleSafetyForPermission;
     this.defaultProperties = builder.defaultProperties;
+    this.mixinKeys = mixinKeys;
   }
 
   public static WayPropertySetBuilder of() {
@@ -132,7 +134,6 @@ public class WayPropertySet {
   public WayProperties getDataForEntity(OsmEntity entity, TraverseDirection direction) {
     WayProperties result = defaultProperties;
     int bestScore = 0;
-    List<MixinProperties> matchedMixins = new ArrayList<>();
     for (WayPropertyPicker picker : wayProperties) {
       OsmSpecifier specifier = picker.specifier();
       WayProperties wayProperties = switch (direction) {
@@ -147,12 +148,7 @@ public class WayPropertySet {
       }
     }
 
-    for (var mixin : mixins) {
-      var score = mixin.specifier().matchScore(entity, direction);
-      if (score > 0) {
-        matchedMixins.add(mixin);
-      }
-    }
+    var matchedMixins = getMixinProperties(entity, direction);
 
     float speed = getCarSpeedForWay(entity, DIRECTIONLESS);
 
@@ -178,6 +174,20 @@ public class WayPropertySet {
       result = applyMixins(result, matchedMixins, direction);
     }
     return result;
+  }
+
+  private List<MixinProperties> getMixinProperties(OsmEntity entity, TraverseDirection direction) {
+    if (!entity.hasAnyKeys(mixinKeys)) {
+      return List.of();
+    }
+    List<MixinProperties> matchedMixins = new ArrayList<>();
+    for (var mixin : mixins) {
+      var score = mixin.specifier().matchScore(entity, direction);
+      if (score > 0) {
+        matchedMixins.add(mixin);
+      }
+    }
+    return matchedMixins;
   }
 
   public I18NString getCreativeName(OsmEntity entity) {

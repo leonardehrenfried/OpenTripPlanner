@@ -238,6 +238,23 @@ public abstract class OsmEntity {
   }
 
   /**
+   * Does the entity have at least one of the given tag keys?
+   */
+  public final boolean hasAnyKeys(Set<String> keys) {
+    if(this.isTagless()){
+      return false;
+    }
+    else {
+      for(var key:keys){
+        if(hasTag(key)){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
    * Does the entity contain any tags at all?
    */
   final boolean isTagless() {

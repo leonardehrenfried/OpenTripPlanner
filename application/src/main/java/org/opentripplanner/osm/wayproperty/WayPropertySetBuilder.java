@@ -5,6 +5,7 @@ import static org.opentripplanner.street.model.StreetTraversalPermission.ALL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.opentripplanner.framework.functional.FunctionUtils;
 import org.opentripplanner.osm.model.OsmEntity;
 import org.opentripplanner.osm.wayproperty.specifier.BestMatchSpecifier;
@@ -188,6 +189,10 @@ public class WayPropertySetBuilder {
   }
 
   public WayPropertySet build() {
-    return new WayPropertySet(this);
+    var mixinKeys = mixins
+      .stream()
+      .flatMap(mixin -> mixin.keys().stream())
+      .collect(Collectors.toUnmodifiableSet());
+    return new WayPropertySet(this, mixinKeys);
   }
 }

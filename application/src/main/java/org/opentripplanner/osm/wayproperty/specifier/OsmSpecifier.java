@@ -1,6 +1,7 @@
 package org.opentripplanner.osm.wayproperty.specifier;
 
 import java.util.Arrays;
+import java.util.Set;
 import org.opentripplanner.osm.model.OsmEntity;
 import org.opentripplanner.osm.model.TraverseDirection;
 
@@ -40,4 +41,10 @@ public interface OsmSpecifier {
    * documentation.
    */
   String toDocString();
+
+  /**
+   * The set of tag keys that this specifier's conditions test. Used to cheaply short-circuit
+   * matching against entities that don't carry any of these keys.
+   */
+  Set<String> keys();
 }

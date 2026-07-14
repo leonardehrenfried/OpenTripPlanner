@@ -4,6 +4,7 @@ import static org.opentripplanner.osm.wayproperty.specifier.Condition.MatchResul
 import static org.opentripplanner.osm.wayproperty.specifier.Condition.MatchResult.NONE;
 import static org.opentripplanner.osm.wayproperty.specifier.Condition.MatchResult.WILDCARD;
 
+import java.util.Set;
 import org.opentripplanner.osm.model.OsmEntity;
 
 public sealed interface Condition {
@@ -11,6 +12,23 @@ public sealed interface Condition {
 
   default MatchResult matchType() {
     return EXACT;
+  }
+
+  /**
+   * All the tag keys that a match against this condition can possibly inspect, including the
+   * {@code :left}, {@code :right}, {@code :both}, {@code :forward} and {@code :backward} suffix
+   * variants of {@link #key()} used to resolve directional tags.
+   */
+  default Set<String> matchableKeys() {
+    var key = key();
+    return Set.of(
+      key,
+      key + ":left",
+      key + ":right",
+      key + ":both",
+      key + ":forward",
+      key + ":backward"
+    );
   }
 
   boolean isExtendedKeyMatch(OsmEntity way, String exKey);
