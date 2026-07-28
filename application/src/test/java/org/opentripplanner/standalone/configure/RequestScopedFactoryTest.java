@@ -2,7 +2,6 @@ package org.opentripplanner.standalone.configure;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import dagger.BindsInstance;
 import dagger.Component;
 import graphql.schema.GraphQLSchema;
@@ -61,6 +60,7 @@ import org.opentripplanner.transit.repository.ReadOnlyTimetableSnapshot;
 import org.opentripplanner.transit.repository.TimetableSnapshotLifecycle;
 import org.opentripplanner.transit.service.DefaultTransitService;
 import org.opentripplanner.transit.service.TimetableRepository;
+import tools.jackson.databind.JsonNode;
 
 /**
  * Verifies the real Dagger scoping added for issue #7441: bindings inside one {@link
