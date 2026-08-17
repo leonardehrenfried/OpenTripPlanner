@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.ConstantsForTests;
@@ -24,7 +23,6 @@ import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.gtfs.GtfsContext;
 import org.opentripplanner.gtfs.GtfsContextBuilder;
 import org.opentripplanner.model.FeedInfoTestFactory;
-import org.opentripplanner.model.calendar.CalendarService;
 import org.opentripplanner.model.calendar.CalendarServiceData;
 import org.opentripplanner.model.calendar.ServiceCalendarDate;
 import org.opentripplanner.model.impl.TransitDataImportBuilder;
@@ -37,21 +35,12 @@ public class CalendarServiceDataFactoryImplTest {
 
   private static final FeedScopedId SERVICE_WEEKDAYS_ID = id("weekdays");
 
-  private static final LocalDate A_FRIDAY = LocalDate.of(2009, 1, 2);
-
-  private static final LocalDate A_SUNDAY = LocalDate.of(2009, 1, 4);
-
-  private static final LocalDate A_MONDAY = LocalDate.of(2009, 1, 5);
-
   private static CalendarServiceData data;
-
-  private static CalendarService calendarService;
 
   @BeforeAll
   public static void setup() throws IOException {
     // The context builder uses the CalendarServiceDataFactoryImpl to create data
     data = createCtxBuilder().getCalendarServiceData();
-    calendarService = new CalendarServiceImpl(data);
   }
 
   @Test
@@ -84,40 +73,6 @@ public class CalendarServiceDataFactoryImplTest {
     assertEquals(10697, weekdays.size());
   }
 
-  @Test
-  public void testServiceGetServiceIdsOnDate() {
-    Set<FeedScopedId> servicesOnFriday = calendarService.getServiceIdsOnDate(A_FRIDAY);
-    assertEquals("[F:alldays, F:weekdays]", sort(servicesOnFriday).toString());
-
-    Set<FeedScopedId> servicesOnSunday = calendarService.getServiceIdsOnDate(A_SUNDAY);
-    assertEquals("[F:alldays]", servicesOnSunday.toString());
-
-    // Test exclusion of serviceCalendarDate
-    Set<FeedScopedId> servicesOnMonday = calendarService.getServiceIdsOnDate(A_MONDAY);
-    assertEquals("[F:weekdays]", servicesOnMonday.toString());
-  }
-
-  @Test
-  public void testServiceGetServiceIds() {
-    Set<FeedScopedId> serviceIds = calendarService.getServiceIds();
-    assertEquals("[F:alldays, F:weekdays]", sort(serviceIds).toString());
-  }
-
-  @Test
-  public void testServiceGetServiceDatesForServiceId() {
-    Set<LocalDate> alldays = calendarService.getServiceDatesForServiceId(SERVICE_ALLDAYS_ID);
-
-    assertTrue(alldays.contains(A_FRIDAY));
-    assertTrue(alldays.contains(A_SUNDAY));
-    assertEquals(14975, alldays.size());
-
-    Set<LocalDate> weekdays = calendarService.getServiceDatesForServiceId(SERVICE_WEEKDAYS_ID);
-
-    assertTrue(weekdays.contains(A_FRIDAY));
-    Assertions.assertFalse(weekdays.contains(A_SUNDAY));
-    assertEquals(10697, weekdays.size());
-  }
-
   private static GtfsContext createCtxBuilder() throws IOException {
     GtfsContextBuilder ctxBuilder = contextBuilder(
       TransitRepositoryForTest.FEED_ID,
@@ -140,10 +95,6 @@ public class CalendarServiceDataFactoryImplTest {
       LocalDate.of(2009, 1, 5),
       EXCEPTION_TYPE_REMOVE
     );
-  }
-
-  private static <T> List<T> sort(Collection<? extends T> c) {
-    return c.stream().sorted(comparing(T::toString)).collect(toList());
   }
 
   private static String toString(Collection<?> c) {

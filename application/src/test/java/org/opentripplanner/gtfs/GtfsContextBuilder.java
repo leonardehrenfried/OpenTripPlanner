@@ -8,10 +8,10 @@ import org.opentripplanner.graph_builder.module.ValidateAndInterpolateStopTimesF
 import org.opentripplanner.graph_builder.module.geometry.GeometryProcessor;
 import org.opentripplanner.gtfs.graphbuilder.GtfsModule;
 import org.opentripplanner.gtfs.mapping.GTFSToTransitDataImportMapper;
-import org.opentripplanner.model.calendar.CalendarService;
 import org.opentripplanner.model.calendar.CalendarServiceData;
-import org.opentripplanner.model.calendar.impl.CalendarServiceImpl;
 import org.opentripplanner.model.impl.TransitDataImportBuilder;
+import org.opentripplanner.transit.model.calendar.DefaultTripCalendars;
+import org.opentripplanner.transit.model.calendar.TripCalendars;
 import org.opentripplanner.transit.model.framework.Deduplicator;
 import org.opentripplanner.transit.model.site.StopTransferPriority;
 import org.opentripplanner.transit.service.SiteRepository;
@@ -26,7 +26,7 @@ public class GtfsContextBuilder {
   private final String feedId;
 
   private final TransitDataImportBuilder transitBuilder;
-  private CalendarService calendarService = null;
+  private TripCalendars tripCalendars = null;
   private DataImportIssueStore issueStore = null;
   private Deduplicator deduplicator;
 
@@ -126,16 +126,18 @@ public class GtfsContextBuilder {
       transitBuilder,
       issueStore,
       deduplicator(),
-      calendarService().getServiceIds(),
+      tripCalendars().listServiceIds(),
       new GeometryProcessor(transitBuilder, 150, issueStore)
     ).run();
   }
 
-  private CalendarService calendarService() {
-    if (calendarService == null) {
-      calendarService = new CalendarServiceImpl(transitBuilder.buildCalendarServiceData());
+  private TripCalendars tripCalendars() {
+    if (tripCalendars == null) {
+      var calendars = new DefaultTripCalendars();
+      calendars.merge(transitBuilder.buildCalendarServiceData());
+      tripCalendars = calendars;
     }
-    return calendarService;
+    return tripCalendars;
   }
 
   private Deduplicator deduplicator() {
