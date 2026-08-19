@@ -15,7 +15,7 @@ import org.opentripplanner.osm.model.OsmNode;
 
 class OsmNodeStoreTest {
 
-  private static final double DELTA = 1e-7;
+  private static final double EPSILON = 1e-7;
 
   @Test
   void addAndGetRoundTripsCoordinates() {
@@ -24,8 +24,8 @@ class OsmNodeStoreTest {
 
     var retrieved = store.get(1);
     assertEquals(1, retrieved.getId());
-    assertEquals(52.5, retrieved.lat, DELTA);
-    assertEquals(13.4, retrieved.lon, DELTA);
+    assertEquals(52.5, retrieved.lat, EPSILON);
+    assertEquals(13.4, retrieved.lon, EPSILON);
   }
 
   @Test
@@ -64,8 +64,8 @@ class OsmNodeStoreTest {
     store.add(OsmNode.of().withId(1).withLatLon(9, 9).withTag("name", "second").build());
 
     var retrieved = store.get(1);
-    assertEquals(0, retrieved.lat, DELTA);
-    assertEquals(0, retrieved.lon, DELTA);
+    assertEquals(0, retrieved.lat, EPSILON);
+    assertEquals(0, retrieved.lon, EPSILON);
     assertEquals("first", retrieved.getTag("name"));
     assertEquals(1, store.size());
   }
@@ -169,8 +169,8 @@ class OsmNodeStoreTest {
     var coordinate = store.getCoordinate(1);
     var nodeCoordinate = store.get(1).getCoordinate();
 
-    assertEquals(nodeCoordinate.x, coordinate.x, DELTA);
-    assertEquals(nodeCoordinate.y, coordinate.y, DELTA);
+    assertEquals(nodeCoordinate.x, coordinate.x, EPSILON);
+    assertEquals(nodeCoordinate.y, coordinate.y, EPSILON);
   }
 
   @Test
@@ -192,7 +192,25 @@ class OsmNodeStoreTest {
   }
 
   private static void assertCoordinate(double lat, double lon, OsmNode node) {
-    assertEquals(lat, node.lat, DELTA);
-    assertEquals(lon, node.lon, DELTA);
+    assertEquals(lat, node.lat, EPSILON);
+    assertEquals(lon, node.lon, EPSILON);
+  }
+
+  @Test
+  void coordinatesWithMoreThanSevenDecimalDigitsAreRoundedHarmlessly() {
+    var store = new OsmNodeStore();
+    // OSM coordinates only have 7 decimal digits of precision (~1cm), matching the fixed-point
+    // encoding used internally, so extra digits beyond that are rounded away on storage - this is
+    // harmless since no valid OSM data ever carries that much (meaningless) extra precision.
+    store.add(OsmNode.of().withId(1).withLatLon(52.529371938, 13.419374729).build());
+    store.add(OsmNode.of().withId(2).withLatLon(52.449457231, 13.330484832).build());
+
+    var first = store.get(1);
+    assertEquals(52.5293719, first.lat, EPSILON);
+    assertEquals(13.4193747, first.lon, EPSILON);
+
+    var second = store.get(2);
+    assertEquals(52.4494572, second.lat, EPSILON);
+    assertEquals(13.3304848, second.lon, EPSILON);
   }
 }
