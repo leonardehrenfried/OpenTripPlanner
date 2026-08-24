@@ -1,8 +1,8 @@
 # Restrict Guava Usage
 
-Only Guava classes on the white-list enforced by the `GuavaArchitectureTest` may be used. Prefer the
-JDK or the OTP utils where they provide an equivalent, and extend the white-list deliberately when
-Guava is clearly the best option.
+Only Guava classes on the white-list enforced by Checkstyle's `ImportControl` check
+(`import-control.xml`) may be used. Prefer the JDK or the OTP utils where they provide an
+equivalent, and extend the white-list deliberately when Guava is clearly the best option.
 
 ### Context
 

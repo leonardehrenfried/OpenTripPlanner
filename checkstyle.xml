@@ -13,6 +13,9 @@
         </module>
         <module name="DefaultComesLast"/>
         <module name="EmptyStatement"/>
+        <module name="ImportControl">
+            <property name="file" value="${config_loc}/import-control.xml"/>
+        </module>
         <module name="NeedBraces"/>
         <module name="RedundantImport"/>
         <module name="SimplifyBooleanReturn"/>
