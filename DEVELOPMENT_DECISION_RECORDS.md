@@ -105,7 +105,8 @@ Prefer immutable types over mutable. Use builders where appropriate. See
 ## Restrict-Guava-Usage
 
 Use only Guava classes on the [white-list](doc/dev/decisionrecords/RestrictGuavaUsage.md) enforced
-by the `GuavaArchitectureTest`. Prefer the JDK or the OTP utils where they provide an equivalent.
+by Checkstyle's `ImportControl` check (`import-control.xml`). Prefer the JDK or the OTP utils where
+they provide an equivalent.
 
 ## GraphQL Best Practices - API Design
 
