@@ -81,9 +81,18 @@ public class IslandPruningModule implements GraphBuilderModule {
       parameters.adaptivePruningDistance()
     );
 
-    pruneIslands(TraverseMode.BICYCLE);
-    pruneIslands(TraverseMode.WALK);
-    pruneIslands(TraverseMode.CAR);
+    // The computation of the islands for each mode only reads the graph, so the three modes
+    // can safely be computed concurrently on the common ForkJoinPool. Applying the pruning
+    // decisions mutates shared edges and vertices, so that part is kept strictly sequential,
+    // in the same order as before.
+    List<TraverseMode> modes = List.of(TraverseMode.BICYCLE, TraverseMode.WALK, TraverseMode.CAR);
+    List<IslandComputation> computations = modes
+      .parallelStream()
+      .map(this::computeIslands)
+      .toList();
+    for (IslandComputation computation : computations) {
+      applyIslandPruning(computation);
+    }
 
     // reconnect stops that got disconnected
     if (streetLinkerModule != null) {
@@ -126,6 +135,16 @@ public class IslandPruningModule implements GraphBuilderModule {
   }
 
   /**
+   * The outcome of {@link #computeIslands}: the islands found for a single traverse mode and the
+   * edges found to be unreachable, ready to be handed to {@link #applyIslandPruning}.
+   */
+  private record IslandComputation(
+    TraverseMode traverseMode,
+    ArrayList<Subgraph> islands,
+    Map<Edge, Boolean> isolated
+  ) {}
+
+  /**
    * Island pruning strategy:
    * 1. Extract islands without using noThruTraffic edges at all.
    * 2. Then create expanded islands by accepting noThruTraffic edges, but do not jump across
@@ -135,13 +154,15 @@ public class IslandPruningModule implements GraphBuilderModule {
    * 4. Analyze small expanded islands (from step 2). Convert edges which are reachable only via
    *    noThruTraffic edges to noThruTraffic state. Remove traversal mode specific access from
    *    unreachable edges. Remove unconnected edges.
+   * <p>
+   * This method only reads the graph, it never mutates it, which is what allows
+   * {@link #buildGraph} to run it for every traverse mode concurrently.
    */
-  private void pruneIslands(TraverseMode traverseMode) {
+  private IslandComputation computeIslands(TraverseMode traverseMode) {
     LOG.debug("nothru pruning");
     Map<Vertex, Subgraph> subgraphs = new HashMap<>();
     Map<Vertex, Subgraph> extgraphs = new HashMap<>();
     Map<Vertex, ArrayList<Vertex>> neighborsForVertex = new HashMap<>();
-    Map<Edge, Boolean> isolated = new HashMap<>();
     ArrayList<Subgraph> islands = new ArrayList<>();
     int count;
 
@@ -162,7 +183,7 @@ public class IslandPruningModule implements GraphBuilderModule {
     LOG.info("Islands when {} noThruTraffic is ignored: {}", traverseMode, count);
 
     /* collect unreachable edges to a map */
-    processIslands(islands, isolated, true, traverseMode);
+    Map<Edge, Boolean> isolated = markIsolatedEdges(islands);
 
     extgraphs = new HashMap<>();
     islands = new ArrayList<>();
@@ -179,32 +200,92 @@ public class IslandPruningModule implements GraphBuilderModule {
 
     LOG.info("Total {} sub graphs found", islands.size());
 
-    count = processIslands(islands, isolated, false, traverseMode);
-    LOG.info("Modified {} islands", count);
+    return new IslandComputation(traverseMode, islands, isolated);
   }
 
-  private int processIslands(
+  /**
+   * Applies the pruning decisions computed by {@link #computeIslands}. This is where the graph
+   * is actually mutated (edges removed, permissions restricted), so unlike {@code computeIslands}
+   * it must not be run concurrently for different traverse modes.
+   */
+  private void applyIslandPruning(IslandComputation computation) {
+    int count = applyPruning(
+      computation.islands(),
+      computation.isolated(),
+      computation.traverseMode()
+    );
+    LOG.info("Modified {} {} islands", count, computation.traverseMode());
+  }
+
+  /**
+   * Records every edge that is reachable only through islands small enough to be pruning
+   * candidates. Read-only: nothing about the graph is mutated, only the returned map.
+   */
+  private Map<Edge, Boolean> markIsolatedEdges(ArrayList<Subgraph> islands) {
+    var stats = new PruningStats();
+    Map<Edge, Boolean> isolated = new HashMap<>();
+    for (Subgraph island : islandsToPrune(islands, stats)) {
+      for (Vertex v : island.streetVertices()) {
+        for (Edge e : v.getOutgoing()) {
+          if (e instanceof StreetEdge) {
+            isolated.put(e, true);
+            stats.incrementIsolated();
+          }
+        }
+      }
+    }
+    LOG.info("Detected {} isolated edges", stats.isolated());
+    return isolated;
+  }
+
+  /**
+   * Applies the pruning decision for {@code traverseMode}: converts edges reachable only via
+   * noThruTraffic to noThruTraffic, restricts or removes edges that are genuinely isolated
+   * (as recorded by {@link #markIsolatedEdges} in {@code isolated}), and unlinks stranded stops.
+   * This mutates the graph.
+   */
+  private int applyPruning(
     ArrayList<Subgraph> islands,
     Map<Edge, Boolean> isolated,
-    boolean markIsolated,
     TraverseMode traverseMode
   ) {
     var stats = new PruningStats();
-
-    Subgraph largest = null;
-    int maxSize = 0;
-
-    // Find largest sub graph
-    for (Subgraph island : islands) {
-      int streetCount = island.streetSize();
-      if (streetCount >= maxSize) {
-        maxSize = streetCount;
-        largest = island;
+    for (Subgraph island : islandsToPrune(islands, stats)) {
+      restrictOrRemoveIslandEdges(island, isolated, stats, traverseMode);
+      if (island.stopSize() > 0) {
+        stats.incrementIslandsWithStopsChanged();
       }
+      stats.incrementModifiedIslands();
     }
+    LOG.info("Number of islands with stops: {}", stats.islandsWithStops());
+    LOG.info("Modified connectivity of {} islands with stops", stats.islandsWithStopsChanged());
+    LOG.info("Removed {} edges", stats.removed());
+    LOG.info("Removed traversal mode from {} edges", stats.restricted());
+    LOG.info("Converted {} edges to noThruTraffic", stats.noThru());
+    issueStore.add(
+      new GraphConnectivity(
+        traverseMode,
+        islands.size(),
+        stats.islandsWithStops(),
+        stats.islandsWithStopsChanged(),
+        stats.removed(),
+        stats.restricted(),
+        stats.noThru()
+      )
+    );
+    return stats.modifiedIslands();
+  }
 
+  /**
+   * The islands below the configured size threshold for the current pruning pass, excluding the
+   * largest island (which is never pruned). Shared between {@link #markIsolatedEdges} and
+   * {@link #applyPruning} so both passes agree on exactly which islands qualify.
+   */
+  private List<Subgraph> islandsToPrune(ArrayList<Subgraph> islands, PruningStats stats) {
+    Subgraph largest = findLargestIsland(islands);
     double adaptivePruningFactor = parameters.adaptivePruningFactor();
     int adaptivePruningDistance = parameters.adaptivePruningDistance();
+    List<Subgraph> toPrune = new ArrayList<>();
 
     for (Subgraph island : islands) {
       if (island == largest) {
@@ -223,10 +304,7 @@ public class IslandPruningModule implements GraphBuilderModule {
             : 1.0;
 
           if (island.streetSize() * sizeCoeff < pruningThresholdWithStops) {
-            if (restrictOrRemove(island, isolated, stats, markIsolated, traverseMode)) {
-              stats.incrementIslandsWithStopsChanged();
-              stats.incrementModifiedIslands();
-            }
+            toPrune.add(island);
           }
         }
       } else {
@@ -238,34 +316,25 @@ public class IslandPruningModule implements GraphBuilderModule {
               adaptivePruningDistance
             : 1.0;
           if (island.streetSize() * sizeCoeff < pruningThresholdWithoutStops) {
-            if (restrictOrRemove(island, isolated, stats, markIsolated, traverseMode)) {
-              stats.incrementModifiedIslands();
-            }
+            toPrune.add(island);
           }
         }
       }
     }
-    if (markIsolated) {
-      LOG.info("Detected {} isolated edges", stats.isolated());
-    } else {
-      LOG.info("Number of islands with stops: {}", stats.islandsWithStops());
-      LOG.info("Modified connectivity of {} islands with stops", stats.islandsWithStopsChanged());
-      LOG.info("Removed {} edges", stats.removed());
-      LOG.info("Removed traversal mode from {} edges", stats.restricted());
-      LOG.info("Converted {} edges to noThruTraffic", stats.noThru());
-      issueStore.add(
-        new GraphConnectivity(
-          traverseMode,
-          islands.size(),
-          stats.islandsWithStops(),
-          stats.islandsWithStopsChanged(),
-          stats.removed(),
-          stats.restricted(),
-          stats.noThru()
-        )
-      );
+    return toPrune;
+  }
+
+  private Subgraph findLargestIsland(ArrayList<Subgraph> islands) {
+    Subgraph largest = null;
+    int maxSize = 0;
+    for (Subgraph island : islands) {
+      int streetCount = island.streetSize();
+      if (streetCount >= maxSize) {
+        maxSize = streetCount;
+        largest = island;
+      }
     }
-    return stats.modifiedIslands();
+    return largest;
   }
 
   private void collectNeighbourVertices(
@@ -350,11 +419,15 @@ public class IslandPruningModule implements GraphBuilderModule {
     return count;
   }
 
-  private boolean restrictOrRemove(
+  /**
+   * Converts edges of {@code island} that are reachable only via noThruTraffic to noThruTraffic,
+   * restricts or removes edges that are genuinely isolated (per {@code isolated}), and unlinks
+   * any stops stranded by pruning. Mutates the graph.
+   */
+  private void restrictOrRemoveIslandEdges(
     Subgraph island,
     Map<Edge, Boolean> isolated,
     PruningStats stats,
-    boolean markIsolated,
     TraverseMode traverseMode
   ) {
     int nothru = 0;
@@ -365,73 +438,65 @@ public class IslandPruningModule implements GraphBuilderModule {
       Collection<Edge> outgoing = new ArrayList<>(v.getOutgoing());
       for (Edge e : outgoing) {
         if (e instanceof StreetEdge) {
-          if (markIsolated) {
-            isolated.put(e, true);
-            stats.incrementIsolated();
-          } else {
-            StreetEdge pse = (StreetEdge) e;
-            if (!isolated.containsKey(e)) {
-              boolean changed = false;
+          StreetEdge pse = (StreetEdge) e;
+          if (!isolated.containsKey(e)) {
+            boolean changed = false;
 
-              // not a true island edge but has limited access
-              // so convert to noThruTraffic
-              if (traverseMode == TraverseMode.CAR) {
-                if (!pse.isMotorVehicleNoThruTraffic()) {
-                  pse.setMotorVehicleNoThruTraffic(true);
-                  changed = true;
-                }
-              } else if (traverseMode == TraverseMode.BICYCLE) {
-                if (!pse.isBicycleNoThruTraffic()) {
-                  pse.setBicycleNoThruTraffic(true);
-                  changed = true;
-                }
-              } else if (traverseMode == TraverseMode.WALK) {
-                if (!pse.isWalkNoThruTraffic()) {
-                  pse.setWalkNoThruTraffic(true);
-                  changed = true;
-                }
+            // not a true island edge but has limited access
+            // so convert to noThruTraffic
+            if (traverseMode == TraverseMode.CAR) {
+              if (!pse.isMotorVehicleNoThruTraffic()) {
+                pse.setMotorVehicleNoThruTraffic(true);
+                changed = true;
               }
-              if (changed) {
-                stats.incrementNoThru();
-                nothru++;
+            } else if (traverseMode == TraverseMode.BICYCLE) {
+              if (!pse.isBicycleNoThruTraffic()) {
+                pse.setBicycleNoThruTraffic(true);
+                changed = true;
               }
-            } else {
-              StreetTraversalPermission permission = pse.getPermission();
-              boolean changed = false;
-              if (traverseMode == TraverseMode.CAR) {
-                if (permission.allows(StreetTraversalPermission.CAR)) {
-                  permission = permission.remove(StreetTraversalPermission.CAR);
-                  changed = true;
-                }
-              } else if (traverseMode == TraverseMode.BICYCLE) {
-                if (permission.allows(StreetTraversalPermission.BICYCLE)) {
-                  permission = permission.remove(StreetTraversalPermission.BICYCLE);
-                  changed = true;
-                }
-              } else if (traverseMode == TraverseMode.WALK) {
-                if (permission.allows(StreetTraversalPermission.PEDESTRIAN)) {
-                  permission = permission.remove(StreetTraversalPermission.PEDESTRIAN);
-                  changed = true;
-                }
+            } else if (traverseMode == TraverseMode.WALK) {
+              if (!pse.isWalkNoThruTraffic()) {
+                pse.setWalkNoThruTraffic(true);
+                changed = true;
               }
-              if (changed) {
-                if (permission == StreetTraversalPermission.NONE) {
-                  graph.removeEdge(pse);
-                  stats.incrementRemoved();
-                  removed++;
-                } else {
-                  pse.setPermission(permission);
-                  stats.incrementRestricted();
-                  restricted++;
-                }
+            }
+            if (changed) {
+              stats.incrementNoThru();
+              nothru++;
+            }
+          } else {
+            StreetTraversalPermission permission = pse.getPermission();
+            boolean changed = false;
+            if (traverseMode == TraverseMode.CAR) {
+              if (permission.allows(StreetTraversalPermission.CAR)) {
+                permission = permission.remove(StreetTraversalPermission.CAR);
+                changed = true;
+              }
+            } else if (traverseMode == TraverseMode.BICYCLE) {
+              if (permission.allows(StreetTraversalPermission.BICYCLE)) {
+                permission = permission.remove(StreetTraversalPermission.BICYCLE);
+                changed = true;
+              }
+            } else if (traverseMode == TraverseMode.WALK) {
+              if (permission.allows(StreetTraversalPermission.PEDESTRIAN)) {
+                permission = permission.remove(StreetTraversalPermission.PEDESTRIAN);
+                changed = true;
+              }
+            }
+            if (changed) {
+              if (permission == StreetTraversalPermission.NONE) {
+                graph.removeEdge(pse);
+                stats.incrementRemoved();
+                removed++;
+              } else {
+                pse.setPermission(permission);
+                stats.incrementRestricted();
+                restricted++;
               }
             }
           }
         }
       }
-    }
-    if (markIsolated) {
-      return false;
     }
 
     if (traverseMode == TraverseMode.WALK) {
@@ -460,7 +525,6 @@ public class IslandPruningModule implements GraphBuilderModule {
       }
     }
     issueStore.add(new GraphIsland(island, nothru, restricted, removed, traverseMode.name()));
-    return true;
   }
 
   private Subgraph computeConnectedSubgraph(

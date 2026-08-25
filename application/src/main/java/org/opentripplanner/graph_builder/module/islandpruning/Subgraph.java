@@ -122,7 +122,7 @@ class Subgraph {
 
     return graph
       .findVertices(envelope)
-      .parallelStream()
+      .stream()
       .filter(vx -> !contains(vx))
       .mapToDouble(vx -> vertexDistanceFromSubgraph(vx, searchRadius))
       .min()
