@@ -147,11 +147,7 @@ public class IslandPruningModule implements GraphBuilderModule {
    * (as recorded by {@link IslandFinder#computeIslands} in {@code isolated}), and unlinks
    * stranded stops. This mutates the graph.
    */
-  private int applyPruning(
-    ArrayList<Subgraph> islands,
-    Set<Edge> isolated,
-    TraverseMode traverseMode
-  ) {
+  private int applyPruning(List<Subgraph> islands, Set<Edge> isolated, TraverseMode traverseMode) {
     var stats = new PruningStats();
     for (Subgraph island : islandFinder.islandsToPrune(islands, stats)) {
       restrictOrRemoveIslandEdges(island, isolated, stats, traverseMode);

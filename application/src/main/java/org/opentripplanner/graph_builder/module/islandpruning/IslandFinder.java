@@ -1,5 +1,7 @@
 package org.opentripplanner.graph_builder.module.islandpruning;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -53,8 +55,8 @@ class IslandFinder {
   IslandComputation computeIslands(TraverseMode traverseMode) {
     Map<Vertex, Subgraph> subgraphs = new HashMap<>();
     Map<Vertex, Subgraph> extgraphs = new HashMap<>();
-    Map<Vertex, ArrayList<Vertex>> neighborsForVertex = new HashMap<>();
-    ArrayList<Subgraph> islands = new ArrayList<>();
+    Multimap<Vertex, Vertex> neighborsForVertex = ArrayListMultimap.create();
+    List<Subgraph> islands = new ArrayList<>();
     int count;
 
     /* establish vertex neighbourhood without currently relevant noThruTrafficEdges */
@@ -177,7 +179,7 @@ class IslandFinder {
   }
 
   private void collectNeighbourVertices(
-    Map<Vertex, ArrayList<Vertex>> neighborsForVertex,
+    Multimap<Vertex, Vertex>neighborsForVertex,
     TraverseMode traverseMode,
     boolean shouldMatchNoThruType
   ) {
@@ -209,25 +211,21 @@ class IslandFinder {
         Arrays.stream(states)
           .map(State::getVertex)
           .forEach(out -> {
-            var vertexList = neighborsForVertex.computeIfAbsent(gv, k -> new ArrayList<>());
-            vertexList.add(out);
-
-            // note: this assumes that edges are bi-directional. Maybe explicit state traversal is needed for CAR mode.
-            vertexList = neighborsForVertex.computeIfAbsent(out, k -> new ArrayList<>());
-            vertexList.add(gv);
+            neighborsForVertex.put(gv, out);
+            neighborsForVertex.put(out, gv);
           });
       }
     }
   }
 
   private int collectSubGraphs(
-    Map<Vertex, ArrayList<Vertex>> neighborsForVertex,
+    Multimap<Vertex, Vertex>neighborsForVertex,
     // put new subgraphs here
     Map<Vertex, Subgraph> newgraphs,
     // optional isolation map from a previous round
     Map<Vertex, Subgraph> subgraphs,
     // final list of islands or null
-    ArrayList<Subgraph> islands
+    List<Subgraph> islands
   ) {
     int count = 0;
     for (Vertex gv : graph.getVertices()) {
@@ -259,7 +257,7 @@ class IslandFinder {
   }
 
   private Subgraph computeConnectedSubgraph(
-    Map<Vertex, ArrayList<Vertex>> neighborsForVertex,
+    Multimap<Vertex, Vertex>neighborsForVertex,
     Vertex startVertex,
     Map<Vertex, Subgraph> anchors,
     Map<Vertex, Subgraph> alreadyMapped
