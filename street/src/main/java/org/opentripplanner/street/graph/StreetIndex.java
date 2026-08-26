@@ -1,6 +1,5 @@
 package org.opentripplanner.street.graph;
 
-import java.util.BitSet;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;

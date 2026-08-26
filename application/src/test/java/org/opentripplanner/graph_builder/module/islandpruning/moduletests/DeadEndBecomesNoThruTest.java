@@ -44,11 +44,7 @@ class DeadEndBecomesNoThruTest {
 
     // Dead end has 2 street vertices (e, f), which is below the threshold of 3.
     var summarizer = IslandPruningEnvironment.of(a, b, c, d, e, f).prune(
-      IslandPruningParameters.of()
-        .withPruningThresholdIslandWithoutStops(3)
-        .withPruningThresholdIslandWithStops(3)
-        .withAdaptivePruningFactor(1)
-        .build()
+      IslandPruningParameters.DEFAULTS
     );
 
     assertWithMessage("Unexpected edges. Check graph at %s", summarizer.geoJsonUrl())
