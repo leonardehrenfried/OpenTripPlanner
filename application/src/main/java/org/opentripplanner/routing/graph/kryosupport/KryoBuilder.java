@@ -44,6 +44,12 @@ public final class KryoBuilder {
     // Allow serialization of unrecognized classes, for which we haven't manually set up a serializer.
     // We might actually want to manually register a serializer for every class, to be safe.
     kryo.setRegistrationRequired(false);
+    // Use a reference resolver that spreads identity hashes before bucketing, instead of Kryo's
+    // default MapReferenceResolver. See SpreadingIdentityReferenceResolver's javadoc: without
+    // this, a graph with hundreds of thousands of edges can turn a sub-second graph save into one
+    // taking several seconds, depending on how the JVM happens to have minted their identity
+    // hashes.
+    kryo.setReferenceResolver(new SpreadingIdentityReferenceResolver());
     kryo.setReferences(true);
     kryo.addDefaultSerializer(TPrimitiveHash.class, ExternalizableSerializer.class);
     kryo.register(TIntArrayList.class, new TIntArrayListSerializer());
