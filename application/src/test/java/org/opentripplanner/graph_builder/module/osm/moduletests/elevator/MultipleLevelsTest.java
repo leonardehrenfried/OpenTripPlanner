@@ -171,10 +171,10 @@ class MultipleLevelsTest {
     int streetEdgeCount = 8;
     assertEquals(expectedEdgeSet.size() + streetEdgeCount, graph.listCopyOfEdges().size());
 
-    ListUtils.ofIterable(graph.findEdges(ElevatorHopEdge.class))
-      .stream()
+    graph
+      .findEdges(ElevatorHopEdge.class)
       .forEach(edge -> elevatorHopEdgeLevels.put(edge, edge.getLevels()));
-    for (var edge : ListUtils.ofIterable(graph.findEdges(ElevatorHopEdge.class))) {
+    for (var edge : graph.findEdges(ElevatorHopEdge.class)) {
       assertEquals(edge.getLevels(), elevatorHopEdgeLevels.get(edge));
     }
   }
@@ -214,17 +214,13 @@ class MultipleLevelsTest {
     addElevatorBoardAndAlightEdges(edgeSet, osmVertex2, elevatorHopVertex2);
     addElevatorHopEdges(elevatorHopVertex1, elevatorHopVertex2, 2.5, edgeSet, null);
 
-    assertEquals(
-      edgeSet,
-      new HashSet<>(
-        graph
-          .listCopyOfEdges()
-          .stream()
-          .map(edge -> convertEdgeToVertexLabelString(edge))
-          .toList()
-      )
-    );
-    assertEquals(edgeSet.size(), graph.listCopyOfEdges().size());
+    assertThat(
+      graph
+        .listCopyOfEdges()
+        .stream()
+        .map(edge -> convertEdgeToVertexLabelString(edge))
+        .toList()
+    ).containsExactlyElementsIn(edgeSet);
   }
 
   @Test
@@ -257,16 +253,13 @@ class MultipleLevelsTest {
     addElevatorBoardAndAlightEdges(edgeSet, osmVertex2, elevatorHopVertex2);
     addElevatorHopEdges(elevatorHopVertex1, elevatorHopVertex2, 0, edgeSet, null);
 
-    assertEquals(
-      edgeSet,
-      new HashSet<>(
-        graph
-          .listCopyOfEdges()
-          .stream()
-          .map(edge -> convertEdgeToVertexLabelString(edge))
-          .toList()
-      )
-    );
+    assertThat(
+      graph
+        .listCopyOfEdges()
+        .stream()
+        .map(edge -> convertEdgeToVertexLabelString(edge))
+        .toList()
+    ).containsExactlyElementsIn(edgeSet);
     assertEquals(edgeSet.size(), graph.listCopyOfEdges().size());
   }
 
