@@ -2,6 +2,7 @@ package org.opentripplanner.osm;
 
 import crosby.binary.BinaryParser;
 import crosby.binary.Osmformat;
+import crosby.binary.file.FileBlockPosition;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ class OsmParser extends BinaryParser {
   private final OsmDatabase osmdb;
   private final Map<String, String> stringTable = new HashMap<>();
   private final DefaultOsmProvider provider;
+  private final BlockKindIndex blockKindIndex = new BlockKindIndex();
   private OsmParserPhase parsePhase;
 
   public OsmParser(OsmDatabase osmdb, DefaultOsmProvider provider) {
@@ -45,16 +47,31 @@ class OsmParser extends BinaryParser {
     return fromTable;
   }
 
-  @Override
-  public void complete() {
-    // Jump in circles
-  }
-
   /**
    * Set the phase to be parsed
    */
   public void setPhase(OsmParserPhase phase) {
     this.parsePhase = phase;
+    blockKindIndex.startPhase();
+  }
+
+  @Override
+  public boolean skipBlock(FileBlockPosition block) {
+    if (!"OSMData".equals(block.getType())) {
+      return super.skipBlock(block);
+    }
+    return blockKindIndex.shouldSkip(parsePhase);
+  }
+
+  @Override
+  public void parse(Osmformat.PrimitiveBlock block) {
+    blockKindIndex.recordIfIndexing(block);
+    super.parse(block);
+  }
+
+  @Override
+  public void complete() {
+    blockKindIndex.logSummary(parsePhase);
   }
 
   @Override

@@ -71,7 +71,12 @@ class ProgressTrackerInputStream extends InputStream {
 
   @Override
   public long skip(long n) throws IOException {
-    return delegate.skip(n);
+    long skipped = delegate.skip(n);
+    // Skipped bytes have still been consumed from the stream, so they must count towards
+    // progress just like read bytes - otherwise a reader that skips large parts of the
+    // stream (eg. to avoid decoding irrelevant data) makes progress look stalled.
+    progress.steps((int) Math.min(skipped, Integer.MAX_VALUE), logger);
+    return skipped;
   }
 
   @Override

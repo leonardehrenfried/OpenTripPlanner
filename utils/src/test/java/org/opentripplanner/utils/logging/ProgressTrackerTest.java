@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import org.junit.jupiter.api.Test;
 
 public class ProgressTrackerTest {
@@ -63,6 +66,18 @@ public class ProgressTrackerTest {
     if (time < QUIET_PERIOD) {
       assertFalse(breakOut, "No steps should log anything within the quiet period. Time: " + time);
     }
+  }
+
+  @Test
+  public void testSkipCountsTowardsProgress() throws IOException {
+    InputStream source = new ByteArrayInputStream(new byte[100]);
+    InputStream tracked = ProgressTracker.track("Pete", 1, 100, source, m -> msg = m);
+
+    long skipped = tracked.skip(60);
+    assertEquals(60, skipped);
+
+    tracked.close();
+    assertTrue(msg.startsWith("Pete progress tracking complete. 60 bytes done in"), msg);
   }
 
   void sleep10ms() {
