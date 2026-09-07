@@ -490,7 +490,6 @@
                         <sourceDirectory>src/main/java</sourceDirectory>
                         <sourceDirectory>src/test-fixtures/java</sourceDirectory>
                     </sourceDirectories>
-                    <propertyExpansion>config_loc=${maven.multiModuleProjectDirectory}</propertyExpansion>
                 </configuration>
                 <dependencies>
                     <dependency>
