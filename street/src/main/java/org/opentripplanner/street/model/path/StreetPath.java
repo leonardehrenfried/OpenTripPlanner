@@ -40,11 +40,8 @@ public class StreetPath {
    * way for that search direction.
    */
   public StreetPath(State endState) {
-    this(chronological(endState));
-  }
-
-  private StreetPath(ChronologicalPath path) {
-    this(path.states, path.edges);
+    var chronological = chronological(endState);
+    this(chronological.states, chronological.edges);
   }
 
   private record ChronologicalPath(List<State> states, List<Edge> edges) {}
@@ -76,16 +73,6 @@ public class StreetPath {
     return states.getLast().getTime();
   }
 
-  /// The start of the path in milliseconds
-  public Instant startTimeAccurate() {
-    return states.getFirst().getTimeAccurate();
-  }
-
-  /// The end of the path in milliseconds
-  public Instant endTimeAccurate() {
-    return states.getLast().getTimeAccurate();
-  }
-
   public double weight() {
     return states.getLast().weight - states.getFirst().weight;
   }
@@ -112,11 +99,6 @@ public class StreetPath {
   /// Get all the states of this path
   public List<State> states() {
     return states;
-  }
-
-  /// Get all the edges of this path
-  public List<Edge> edges() {
-    return edges;
   }
 
   /// Get the last state in the path

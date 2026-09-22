@@ -13,6 +13,7 @@ import org.opentripplanner.street.search.request.StreetSearchRequest;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.street.search.strategy.DominanceFunctions;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
+import org.opentripplanner.utils.collection.ListUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,6 +100,7 @@ public class CarpoolStreetRouter implements CarpoolRouter {
     }
 
     var streetPath = paths.getFirst();
-    return new GraphPath<>(streetPath.states(), streetPath.edges());
+    var edges = ListUtils.ofIterable(streetPath.lastState().listBackEdges());
+    return new GraphPath<>(streetPath.states(), edges);
   }
 }
