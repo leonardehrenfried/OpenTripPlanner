@@ -1,5 +1,6 @@
 package org.opentripplanner.graph_builder.module.boardinglocations;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.StreamSupport;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssue;
@@ -96,5 +97,13 @@ public record LinkedGraph(
 
   public DefaultOsmInfoGraphBuildService osmInfoService() {
     return new DefaultOsmInfoGraphBuildService(osmInfoRepository);
+  }
+
+  public Collection<String> summarizeEdges() {
+    return new GraphSummarizer(rawGraph).summarizeEdges();
+  }
+
+  public String geoJsonUrl() {
+    return new GraphSummarizer(rawGraph).geoJsonUrl();
   }
 }

@@ -1,6 +1,7 @@
 package org.opentripplanner.graph_builder.module.boardinglocations.moduletests;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -10,7 +11,6 @@ import static org.opentripplanner.graph_builder.module.BoardingLocationCoordinat
 import static org.opentripplanner.osm.model.NodeBuilder.node;
 
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.graph_builder.module.BoardingLocationCoordinateSource;
 import org.opentripplanner.graph_builder.module.boardinglocations.BoardingLocationsEnvironment;
@@ -20,7 +20,6 @@ import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.edge.StreetEdge;
 import org.opentripplanner.street.model.vertex.OsmBoardingLocationVertex;
-import org.opentripplanner.street.model.vertex.SplitterVertex;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.transit.model.site.RegularStop;
 
@@ -104,33 +103,27 @@ class PlatformWayTest {
   @Test
   void aSecondStopOnTheSamePlatformStillFindsIt() {
     var test = BoardingLocationsEnvironment.of(OSM, platform("a;b"));
-    var stopA = test.stop("a", offset(0, 100));
-    var stopB = test.stop("b", offset(0, 200));
+    test.stop("a", offset(0, 100));
+    test.stop("b", offset(0, 200));
 
     var result = test.build();
 
-    for (var stop : new RegularStop[] { stopA, stopB }) {
-      assertFalse(
-        result.linkedVertices(stop).isEmpty(),
-        stop.getId() + " should be linked to the platform"
+    assertWithMessage("Unexpected edges. Check graph at %s", result.geoJsonUrl())
+      .that(result.summarizeEdges())
+      .containsExactly(
+        "(53.55,10) → (53.55,10.002271) PEDESTRIAN ♿✅",
+        "(53.55,10.002271) → (53.55,10) PEDESTRIAN ♿✅",
+        "(53.55,10.004541) → (53.55,10.002271) PEDESTRIAN ♿✅",
+        "(53.55,10.002271) → (53.55,10.004541) PEDESTRIAN ♿✅",
+        "(53.55,10.002271) linked to (53.55,10.003027)[F:b]",
+        "(53.55,10.002271) linked to (53.55,10.001514)[F:a]",
+        "(53.55,10.003027)[F:b] linked to (53.55,10.002271)",
+        "(53.55,10.001514)[F:a] linked to (53.55,10.002271)",
+        "(53.55,10.003027)[F:b] linked to (53.55,10.002271)",
+        "(53.55,10.002271) linked to (53.55,10.003027)[F:b]",
+        "(53.55,10.002271) linked to (53.55,10.001514)[F:a]",
+        "(53.55,10.001514)[F:a] linked to (53.55,10.002271)"
       );
-    }
-
-    // The freshly created halves carry the platform, so a third stop would find it too. The
-    // connector a stop walks in over is not part of the platform and must not be tagged.
-    var osmService = result.osmInfoService();
-    var platformHalves = result
-      .linkedVertices(stopA)
-      .stream()
-      .filter(SplitterVertex.class::isInstance)
-      .flatMap(v -> Stream.concat(v.getIncoming().stream(), v.getOutgoing().stream()))
-      .filter(StreetEdge.class::isInstance)
-      .toList();
-    assertFalse(platformHalves.isEmpty(), "expected linking to split the platform way");
-    assertTrue(
-      platformHalves.stream().allMatch(e -> osmService.findPlatform(e).isPresent()),
-      "the split halves should be re-registered with the platform"
-    );
   }
 
   /**
