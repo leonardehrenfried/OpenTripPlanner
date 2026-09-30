@@ -200,17 +200,17 @@ public class TransfersReport {
       .orElse("");
   }
 
-  static class TxPoint {
+  private static class TxPoint {
 
-    private String operator = "";
-    private String type = "";
-    private String entityId = "";
-    private String loc = "";
-    private String trip = "";
-    private String route = "";
-    private Integer specificity = null;
-    private WgsCoordinate coordinate = null;
-    private int time = NOT_SET;
+    String operator = "";
+    String type = "";
+    String entityId = "";
+    String loc = "";
+    String trip = "";
+    String route = "";
+    Integer specificity = null;
+    WgsCoordinate coordinate = null;
+    int time = NOT_SET;
 
     String location() {
       return coordinate == null ? loc : loc + " " + coordinate;

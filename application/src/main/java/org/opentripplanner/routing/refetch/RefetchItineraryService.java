@@ -43,12 +43,8 @@ import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.transit.service.TransitService;
 import org.opentripplanner.transit.service.TransitServiceResolver;
 import org.opentripplanner.utils.collection.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class RefetchItineraryService {
-
-  private static final Logger LOG = LoggerFactory.getLogger(RefetchItineraryService.class);
 
   private final TransitService transitService;
   private final TransitAlertService transitAlertService;

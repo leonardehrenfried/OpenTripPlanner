@@ -27,6 +27,7 @@
             <property name="format" value="^\s*$"/>
         </module>
         <module name="UnusedLocalVariable"/>
+        <module name="UnusedPrivateField"/>
         <module name="PackageDeclaration">
             <property name="matchDirectoryStructure" value="true"/>
         </module>

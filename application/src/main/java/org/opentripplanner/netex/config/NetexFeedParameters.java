@@ -34,7 +34,6 @@ public class NetexFeedParameters implements DataSourceConfig {
   private static final Set<IgnorableFeature> IGNORED_FEATURES = Set.of(PARKING);
 
   private static final Set<String> FERRY_IDS_NOT_ALLOWED_FOR_BICYCLE = Collections.emptySet();
-  private static final Set<String> ROUTE_TO_CENTROID_STATION_IDS = Collections.emptySet();
 
   public static final NetexFeedParameters DEFAULT = new NetexFeedParameters();
 
