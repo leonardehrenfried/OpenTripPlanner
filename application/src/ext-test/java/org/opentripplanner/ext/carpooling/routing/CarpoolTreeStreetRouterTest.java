@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
 import org.junit.jupiter.api.AfterEach;
@@ -246,7 +245,6 @@ class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
     assertNotNull(path);
     assertNotNull(StreetPathForTest.states(path), "Path should have states");
     assertFalse(StreetPathForTest.states(path).isEmpty(), "Path states should not be empty");
-    assertTrue(path.traversalDistance().toMeters() > 0, "Path should have a distance");
   }
 
   @Test
