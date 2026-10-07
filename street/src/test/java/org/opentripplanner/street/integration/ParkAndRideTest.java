@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import org.opentripplanner.core.model.basic.Cost;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.model.StreetMode;
-import org.opentripplanner.street.model.path.StreetPath;
+import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.StreetVertex;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.EuclideanRemainingWeightHeuristic;
@@ -177,8 +177,7 @@ public abstract class ParkAndRideTest extends GraphRoutingTest {
       return List.of();
     }
 
-    return new StreetPath(state)
-      .states()
+    return StreetPathForTest.states(state)
       .stream()
       .map(s ->
         String.format(
