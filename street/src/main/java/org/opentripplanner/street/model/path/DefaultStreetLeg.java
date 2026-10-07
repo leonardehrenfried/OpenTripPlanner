@@ -123,11 +123,6 @@ final class DefaultStreetLeg implements StreetLeg {
   }
 
   @Override
-  public ElevationChange elevationChange() {
-    return path.calculateElevations();
-  }
-
-  @Override
   public List<StreetStep> steps() {
     if (steps == null) {
       steps = new StatesToStreetStepsMapper(
@@ -142,11 +137,6 @@ final class DefaultStreetLeg implements StreetLeg {
   @Override
   public boolean rentedVehicle() {
     return path.states().getFirst().isRentingVehicle();
-  }
-
-  @Override
-  public boolean arrivesWithRentedVehicleFromStation() {
-    return path.lastState().isRentingVehicleFromStation();
   }
 
   @Override
