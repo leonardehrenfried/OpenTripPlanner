@@ -24,6 +24,7 @@ import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.edge.StreetEdge;
 import org.opentripplanner.street.model.edge.StreetEdgeBuilder;
 import org.opentripplanner.street.model.path.StreetPath;
+import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.StreetVertex;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.EuclideanRemainingWeightHeuristic;
@@ -118,7 +119,7 @@ public class TurnCostTest {
 
     // The intersection traversal cost should be applied to the state *after*
     // the intersection itself.
-    List<State> states = path.states();
+    List<State> states = StreetPathForTest.states(path);
     assertEquals(5, states.size());
 
     assertEquals("maple_1st", states.get(0).getVertex().getLabelString());
@@ -143,7 +144,7 @@ public class TurnCostTest {
     // Without turn costs, this path costs 3x100 + 1x50 = 300.
     StreetPath path = checkForwardRouteDuration(StreetMode.CAR, topRight, bottomLeft, 350);
 
-    List<State> states = path.states();
+    List<State> states = StreetPathForTest.states(path);
     assertEquals(5, states.size());
 
     assertEquals("maple_1st", getParentLabelString(states.get(0).getVertex()));
@@ -161,7 +162,7 @@ public class TurnCostTest {
     // Since there are 3 turns, the total cost should be 380.
     StreetPath path = checkForwardRouteDuration(StreetMode.CAR, topRight, bottomLeft, 380);
 
-    List<State> states = path.states();
+    List<State> states = StreetPathForTest.states(path);
     assertEquals(5, states.size());
 
     assertEquals("maple_1st", getParentLabelString(states.get(0).getVertex()));
@@ -205,8 +206,8 @@ public class TurnCostTest {
       .getShortestPathTree();
     State state = tree.getState(bottomLeft);
     assertNotNull(state);
-    StreetPath path = new StreetPath(state);
-    List<State> states = path.states();
+    StreetPath path = StreetPath.of(state);
+    List<State> states = StreetPathForTest.states(path);
 
     // Without turn costs, this path costs 2x100 + 2x50 = 300.
     assertEquals(expectedDuration, states.getLast().getElapsedTimeSeconds());
