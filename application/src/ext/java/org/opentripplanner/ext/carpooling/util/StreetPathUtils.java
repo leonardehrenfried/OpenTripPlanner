@@ -2,20 +2,25 @@ package org.opentripplanner.ext.carpooling.util;
 
 import java.time.Duration;
 import javax.annotation.Nullable;
-import org.opentripplanner.ext.carpooling.model.GraphPath;
-import org.opentripplanner.street.model.edge.Edge;
-import org.opentripplanner.street.model.vertex.Vertex;
-import org.opentripplanner.street.search.state.State;
+import org.opentripplanner.street.model.path.StreetPath;
 
-public final class GraphPathUtils {
+public final class StreetPathUtils {
 
-  private GraphPathUtils() {}
+  private StreetPathUtils() {}
 
   /**
    * Returns the duration of the given path, or {@link Duration#ZERO} if the path is {@code null}.
    */
-  public static Duration durationOrZero(@Nullable GraphPath<State, Edge, Vertex> path) {
-    return path == null ? Duration.ZERO : Duration.ofSeconds(path.getDuration());
+  public static Duration durationOrZero(@Nullable StreetPath path) {
+    return path == null ? Duration.ZERO : duration(path);
+  }
+
+  /**
+   * Returns the duration of the given path, measured as the elapsed time of the search at the
+   * end of the path, rounded up to whole seconds.
+   */
+  public static Duration duration(StreetPath path) {
+    return Duration.ofSeconds(path.lastState().getElapsedTimeSeconds());
   }
 
   /**
@@ -23,8 +28,8 @@ public final class GraphPathUtils {
    * already accounts for the user's walk preferences (reluctance, safety factor, slope cost,
    * etc.) since it comes from the search that produced the path.
    */
-  public static double weightOrZero(@Nullable GraphPath<State, Edge, Vertex> path) {
-    return path == null ? 0 : path.getWeight();
+  public static double weightOrZero(@Nullable StreetPath path) {
+    return path == null ? 0 : path.lastState().getWeight();
   }
 
   /**
@@ -35,12 +40,12 @@ public final class GraphPathUtils {
    * @param stopDuration Duration added at each intermediate stop
    */
   public static Duration[] calculateCumulativeDurations(
-    GraphPath<State, Edge, Vertex>[] segments,
+    StreetPath[] segments,
     Duration stopDuration
   ) {
     Duration[] segmentDurations = new Duration[segments.length];
     for (int i = 0; i < segments.length; i++) {
-      segmentDurations[i] = Duration.ofSeconds(segments[i].getDuration());
+      segmentDurations[i] = duration(segments[i]);
     }
     return calculateCumulativeDurations(segmentDurations, stopDuration);
   }

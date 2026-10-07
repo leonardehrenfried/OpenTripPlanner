@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
 import org.junit.jupiter.api.AfterEach;
@@ -21,6 +22,7 @@ import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.linking.TemporaryVerticesContainer;
 import org.opentripplanner.street.model.vertex.IntersectionVertex;
 import org.opentripplanner.street.model.vertex.Vertex;
+import org.opentripplanner.street.search.state.State;
 
 class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
 
@@ -241,10 +243,9 @@ class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
     var path = router.route(vertexA, vertexC);
 
     assertNotNull(path);
-    assertNotNull(path.states, "Path should have states");
-    assertFalse(path.states.isEmpty(), "Path states should not be empty");
-    assertNotNull(path.edges, "Path should have edges");
-    assertFalse(path.edges.isEmpty(), "Path edges should not be empty");
+    assertNotNull(path.states(), "Path should have states");
+    assertFalse(path.states().isEmpty(), "Path states should not be empty");
+    assertTrue(path.distanceMeters() > 0, "Path should have a distance");
   }
 
   @Test
@@ -307,17 +308,18 @@ class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
     var path = router.route(vertexA, vertexD);
 
     assertNotNull(path, "Should find path from A to D");
-    assertEquals(3, path.edges.size(), "Path should have 3 edges (A->B, B->C, C->D)");
+    var edges = path.states().stream().skip(1).map(State::getBackEdge).toList();
+    assertEquals(3, edges.size(), "Path should have 3 edges (A->B, B->C, C->D)");
 
-    var edgeAB = path.edges.get(0);
+    var edgeAB = edges.get(0);
     assertEquals(vertexA, edgeAB.getFromVertex(), "First edge should start at A");
     assertEquals(vertexB, edgeAB.getToVertex(), "First edge should end at B");
 
-    var edgeBC = path.edges.get(1);
+    var edgeBC = edges.get(1);
     assertEquals(vertexB, edgeBC.getFromVertex(), "Second edge should start at B");
     assertEquals(vertexC, edgeBC.getToVertex(), "Second edge should end at C");
 
-    var edgeCD = path.edges.get(2);
+    var edgeCD = edges.get(2);
     assertEquals(vertexC, edgeCD.getFromVertex(), "Third edge should start at C");
     assertEquals(vertexD, edgeCD.getToVertex(), "Third edge should end at D");
   }

@@ -24,6 +24,7 @@ import org.opentripplanner.ext.carpooling.model.CarpoolLeg;
 import org.opentripplanner.ext.carpooling.model.CarpoolTripBuilder;
 import org.opentripplanner.ext.carpooling.routing.CarpoolAccessEgress;
 import org.opentripplanner.ext.carpooling.routing.CarpoolTreeStreetRouter;
+import org.opentripplanner.ext.carpooling.util.StreetPathUtils;
 import org.opentripplanner.model.GenericLocation;
 import org.opentripplanner.model.plan.leg.StreetLeg;
 import org.opentripplanner.routing.algorithm.GraphRoutingTest;
@@ -598,7 +599,7 @@ class DefaultCarpoolingServiceAccessEgressTest extends GraphRoutingTest {
         "cannot drive past D and the passenger has to walk the pedestrian-only side branch to T5"
     );
     assertTrue(
-      walkFromDropoff.getDuration() > 0,
+      StreetPathUtils.duration(walkFromDropoff).isPositive(),
       "Walk from dropoff to stopT5 should have positive duration"
     );
   }
@@ -662,16 +663,16 @@ class DefaultCarpoolingServiceAccessEgressTest extends GraphRoutingTest {
     var pathAToP2 = router.route(vertexA, vertexP2);
     assertNotNull(pathAToP2, "Should be able to route from A to P2");
     var drivingDurationAToP2 = Duration.between(
-      pathAToP2.states.getFirst().getTime(),
-      pathAToP2.states.getLast().getTime()
+      pathAToP2.states().getFirst().getTime(),
+      pathAToP2.states().getLast().getTime()
     );
     assertTrue(drivingDurationAToP2.toSeconds() > 1, "Driving duration to P2 should be positive");
 
     var pathP2ToIT3 = router.route(vertexP2, vertexIT3);
     assertNotNull(pathP2ToIT3, "Should be able to route from P2 to iT3");
     var drivingDurationP2ToIT3 = Duration.between(
-      pathP2ToIT3.states.getFirst().getTime(),
-      pathP2ToIT3.states.getLast().getTime()
+      pathP2ToIT3.states().getFirst().getTime(),
+      pathP2ToIT3.states().getLast().getTime()
     );
     assertTrue(
       drivingDurationP2ToIT3.toSeconds() > 0,
@@ -681,8 +682,8 @@ class DefaultCarpoolingServiceAccessEgressTest extends GraphRoutingTest {
     var pathP2ToIT4 = router.route(vertexP2, vertexIT4);
     assertNotNull(pathP2ToIT4, "Should be able to route from P2 to iT4");
     var drivingDurationP2ToIT4 = Duration.between(
-      pathP2ToIT4.states.getFirst().getTime(),
-      pathP2ToIT4.states.getLast().getTime()
+      pathP2ToIT4.states().getFirst().getTime(),
+      pathP2ToIT4.states().getLast().getTime()
     );
     assertTrue(
       drivingDurationP2ToIT4.toSeconds() > 0,
