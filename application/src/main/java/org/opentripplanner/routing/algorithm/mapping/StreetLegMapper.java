@@ -22,7 +22,6 @@ import org.opentripplanner.routing.api.request.via.ViaLocation;
 import org.opentripplanner.service.streetdetails.StreetDetailsService;
 import org.opentripplanner.service.vehiclerental.street.VehicleRentalPlaceVertex;
 import org.opentripplanner.street.geometry.WgsCoordinate;
-import org.opentripplanner.street.model.path.ElevationChange;
 import org.opentripplanner.street.model.path.ExternalEdgeLeg;
 import org.opentripplanner.street.model.path.StreetLeg;
 import org.opentripplanner.street.model.path.StreetLegPlace;
@@ -105,17 +104,12 @@ public class StreetLegMapper {
     RouteRequest request,
     @Nullable ZonedDateTime startTime
   ) {
-    var pathLegs = path.legs(ellipsoidToGeoidDifference);
-    var legs = mapLegs(pathLegs, request.listViaLocations(), startTime);
-
-    var elevationChange = pathLegs
-      .stream()
-      .map(StreetLeg::elevationChange)
-      .reduce(ElevationChange.ZERO, ElevationChange::plus);
-    var arrivedWithRentedVehicle =
-      !pathLegs.isEmpty() && pathLegs.getLast().arrivesWithRentedVehicleFromStation();
-
-    return LegsToItineraryMapper.map(legs, arrivedWithRentedVehicle, elevationChange);
+    var legs = map(path, request, startTime);
+    return LegsToItineraryMapper.map(
+      legs,
+      path.arrivesWithRentedVehicleFromStation(),
+      path.elevationChange()
+    );
   }
 
   private List<Leg> mapLegs(

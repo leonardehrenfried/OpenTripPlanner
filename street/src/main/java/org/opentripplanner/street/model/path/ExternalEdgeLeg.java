@@ -27,18 +27,12 @@ public record ExternalEdgeLeg(
   int generalizedCost,
   LineString geometry,
   boolean rentedVehicle,
-  boolean arrivesWithRentedVehicleFromStation,
   @Nullable String vehicleRentalNetwork
 ) implements StreetLeg {
   @Nullable
   @Override
   public ElevationProfile elevationProfile() {
     return null;
-  }
-
-  @Override
-  public ElevationChange elevationChange() {
-    return ElevationChange.ZERO;
   }
 
   @Override
