@@ -12,7 +12,7 @@ class StreetPathToLegsMapperTest {
   void singleLeg() {
     var state = TestStateBuilder.ofWalking().streetEdge().streetEdge().build();
 
-    var legs = new StreetPath(state).legs(0);
+    var legs = new DefaultStreetPath(state).legs(0);
 
     assertThat(legs).hasSize(1);
     var leg = (StreetLeg) legs.getFirst();
@@ -26,7 +26,7 @@ class StreetPathToLegsMapperTest {
   void carRentalPickUp() {
     var state = TestStateBuilder.ofCarRental().streetEdge().pickUpCarFromStation().build();
 
-    var legs = new StreetPath(state).legs(0);
+    var legs = new DefaultStreetPath(state).legs(0);
 
     assertThat(legs).hasSize(2);
     var walk = (StreetLeg) legs.get(0);
@@ -41,6 +41,6 @@ class StreetPathToLegsMapperTest {
   void noLegsForEmptyPath() {
     var state = TestStateBuilder.ofWalking().build();
 
-    assertThat(new StreetPath(state).legs(0)).isEmpty();
+    assertThat(new DefaultStreetPath(state).legs(0)).isEmpty();
   }
 }

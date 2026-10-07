@@ -212,7 +212,7 @@ public class CarpoolTreeStreetRouter implements CarpoolRouter {
     }
 
     var state = isReverse ? tree.getState(from) : tree.getState(to);
-    var path = state == null ? null : new StreetPath(state);
+    var path = state == null ? null : StreetPath.of(state);
     pathCache.put(key, path);
     return path;
   }
