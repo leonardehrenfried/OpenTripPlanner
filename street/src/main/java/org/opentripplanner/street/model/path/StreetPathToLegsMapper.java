@@ -50,7 +50,7 @@ class StreetPathToLegsMapper {
   /**
    * The legs are returned in the order they are traversed in the path.
    */
-  List<PathLeg> map(StreetPath path) {
+  List<PathLeg> map(DefaultStreetPath path) {
     List<PathLeg> legs = new ArrayList<>();
     DefaultStreetLeg previousStreetLeg = null;
     for (var subPath : slicePath(path)) {
@@ -72,14 +72,14 @@ class StreetPathToLegsMapper {
    * @param streetPath The path to slice of input states
    * @return A list of subpaths representing the final legs
    */
-  private static List<StreetPath> slicePath(StreetPath streetPath) {
+  private static List<DefaultStreetPath> slicePath(DefaultStreetPath streetPath) {
     var states = streetPath.states();
     // Trivial case
     if (states.stream().allMatch(state -> state.getBackMode() == null)) {
       return List.of();
     }
 
-    List<StreetPath> subPaths = new ArrayList<>();
+    List<DefaultStreetPath> subPaths = new ArrayList<>();
 
     int previousBreak = 0;
 
@@ -124,7 +124,7 @@ class StreetPathToLegsMapper {
     return subPaths;
   }
 
-  private static ExternalEdgeLeg mapExternalEdgeLeg(StreetPath path, ExternalLegEdge edge) {
+  private static ExternalEdgeLeg mapExternalEdgeLeg(DefaultStreetPath path, ExternalLegEdge edge) {
     var states = path.states();
     State fromState = states.get(0);
     State toState = states.get(1);

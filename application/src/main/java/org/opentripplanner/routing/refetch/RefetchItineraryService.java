@@ -311,7 +311,7 @@ public class RefetchItineraryService {
     return search
       .getPathsToTarget()
       .stream()
-      .min(Comparator.comparing(StreetPath::weight))
+      .min(Comparator.comparing(StreetPath::generalizedCost))
       .map(this::streetPathToLegs);
   }
 
@@ -357,7 +357,7 @@ public class RefetchItineraryService {
       .stream()
       .filter(pathTransfer -> pathTransfer.to.equals(to) && pathTransfer.getModes().contains(mode))
       .flatMap(pathTransfer -> mapPathTransferStreetPath(pathTransfer, transferRequest).stream())
-      .min(Comparator.comparing(StreetPath::weight))
+      .min(Comparator.comparing(StreetPath::generalizedCost))
       .map(this::streetPathToLegs);
   }
 

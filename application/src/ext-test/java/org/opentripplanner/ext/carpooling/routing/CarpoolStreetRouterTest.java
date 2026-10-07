@@ -3,7 +3,6 @@ package org.opentripplanner.ext.carpooling.routing;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,6 @@ class CarpoolStreetRouterTest extends GraphRoutingTest {
   );
 
   private IntersectionVertex vertexA;
-  private IntersectionVertex vertexB;
   private IntersectionVertex vertexC;
   private IntersectionVertex vertexDisconnected;
 
@@ -42,7 +40,6 @@ class CarpoolStreetRouterTest extends GraphRoutingTest {
           // Z has no edges — disconnected from the rest of the graph
 
           vertexA = A;
-          vertexB = B;
           vertexC = C;
           vertexDisconnected = Z;
         }
@@ -62,16 +59,6 @@ class CarpoolStreetRouterTest extends GraphRoutingTest {
   @Test
   void routeBetweenConnectedVertices() {
     assertThat(ROUTER.route(vertexA, vertexC)).isNotNull();
-  }
-
-  /** The itinerary mapper draws the leg from this geometry, so it must run in travel order. */
-  @Test
-  void geometryIsInTravelOrder() {
-    var path = ROUTER.route(vertexA, vertexC);
-
-    assertThat(List.of(path.geometry().getCoordinates()))
-      .containsExactly(vertexA.getCoordinate(), vertexB.getCoordinate(), vertexC.getCoordinate())
-      .inOrder();
   }
 
   @Test

@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.StreetTraversalPermission;
-import org.opentripplanner.street.model.path.StreetPath;
+import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.StreetVertex;
 import org.opentripplanner.street.model.vertex.TransitEntranceVertex;
 import org.opentripplanner.street.model.vertex.TransitStopVertex;
@@ -207,8 +207,7 @@ public class CarPickupTest extends GraphRoutingTest {
     var state = tree.getState(arriveBy ? fromVertex : toVertex);
 
     return state != null
-      ? new StreetPath(state)
-          .states()
+      ? StreetPathForTest.states(state)
           .stream()
           .map(s ->
             String.format(

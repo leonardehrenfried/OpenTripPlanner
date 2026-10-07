@@ -23,7 +23,7 @@ import org.opentripplanner.street.model.TurnRestrictionType;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.edge.StreetEdge;
 import org.opentripplanner.street.model.edge.StreetEdgeBuilder;
-import org.opentripplanner.street.model.path.StreetPath;
+import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.StreetVertex;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.EuclideanRemainingWeightHeuristic;
@@ -117,7 +117,7 @@ public class TurnRestrictionTest {
     // the shortest path is 1st to Main, Main to 2nd, 2nd to Broad and Broad until the
     // corner of Broad and 3rd.
 
-    List<State> states = new StreetPath(state).states();
+    List<State> states = StreetPathForTest.states(state);
     assertEquals(5, states.size());
 
     assertEquals("maple_1st", states.get(0).getVertex().getLabelString());
@@ -147,7 +147,7 @@ public class TurnRestrictionTest {
     // the shortest path is 1st to Main, Main to 2nd, 2nd to Broad and Broad until the
     // corner of Broad and 3rd.
 
-    List<State> states = new StreetPath(state).states();
+    List<State> states = StreetPathForTest.states(state);
     assertEquals(5, states.size());
 
     assertEquals("maple_1st", states.get(0).getVertex().getLabelString());
@@ -185,7 +185,7 @@ public class TurnRestrictionTest {
     // However, most of these turns are not allowed. Instead, the shortest allowed
     // path is 1st to Broad, Broad to 3rd.
 
-    List<State> states = new StreetPath(state).states();
+    List<State> states = StreetPathForTest.states(state);
     assertEquals(5, states.size());
 
     assertEquals("maple_1st", getParentLabelString(states.get(0).getVertex()));

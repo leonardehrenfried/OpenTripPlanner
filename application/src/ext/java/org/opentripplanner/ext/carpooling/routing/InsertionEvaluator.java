@@ -81,6 +81,7 @@ public class InsertionEvaluator {
    *
    * @return Array of routed segments, or null if any segment fails to route
    */
+  @SuppressWarnings("unchecked")
   private StreetPath[] routeSegments(List<Vertex> routePoints) {
     StreetPath[] segments = new StreetPath[routePoints.size() - 1];
 
