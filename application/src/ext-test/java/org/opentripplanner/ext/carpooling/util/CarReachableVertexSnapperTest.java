@@ -19,6 +19,7 @@ import org.opentripplanner.routing.linking.internal.VertexCreationService;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.linking.TemporaryVerticesContainer;
 import org.opentripplanner.street.model.StreetTraversalPermission;
+import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.IntersectionVertex;
 import org.opentripplanner.street.model.vertex.TemporaryVertex;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
@@ -115,7 +116,7 @@ class CarReachableVertexSnapperTest extends GraphRoutingTest {
     assertNotNull(result);
     assertEquals(C, result.vertex());
     assertNotNull(result.walkPath());
-    assertTrue(StreetPathUtils.duration(result.walkPath()).isPositive());
+    assertTrue(result.walkPath().duration().isPositive());
   }
 
   @Test
@@ -131,9 +132,9 @@ class CarReachableVertexSnapperTest extends GraphRoutingTest {
     assertEquals(C, result.vertex());
     assertNotNull(result.walkPath());
     // Walk path must be chronological: starts at C (the car-reachable vertex) and ends at A.
-    assertEquals(C, result.walkPath().states().getFirst().getVertex());
-    assertEquals(A, result.walkPath().states().getLast().getVertex());
-    assertTrue(StreetPathUtils.duration(result.walkPath()).isPositive());
+    assertEquals(C, StreetPathForTest.states(result.walkPath()).getFirst().getVertex());
+    assertEquals(A, StreetPathForTest.states(result.walkPath()).getLast().getVertex());
+    assertTrue(result.walkPath().duration().isPositive());
   }
 
   /**

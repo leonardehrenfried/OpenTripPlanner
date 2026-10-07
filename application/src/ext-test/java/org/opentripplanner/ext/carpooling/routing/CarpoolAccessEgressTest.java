@@ -19,6 +19,7 @@ import org.opentripplanner.model.GenericLocation;
 import org.opentripplanner.raptor.spi.RaptorConstants;
 import org.opentripplanner.raptor.spi.RaptorCostConverter;
 import org.opentripplanner.street.model.path.StreetPath;
+import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.transit.model._data.TransitRepositoryForTest;
 
 class CarpoolAccessEgressTest {
@@ -160,7 +161,7 @@ class CarpoolAccessEgressTest {
       EndpointLabel.forStop(stop)
     );
 
-    assertEquals(walkFromDropoff.lastState(), access.getFinalState());
+    assertEquals(StreetPathForTest.states(walkFromDropoff).getLast(), access.getFinalState());
   }
 
   /**
@@ -183,7 +184,7 @@ class CarpoolAccessEgressTest {
       EndpointLabel.forLocation(GenericLocation.fromCoordinate(59.92, 10.75, "Office"))
     );
 
-    assertEquals(walkToPickup.states().getFirst(), egress.getFinalState());
+    assertEquals(StreetPathForTest.states(walkToPickup).getFirst(), egress.getFinalState());
   }
 
   /**
@@ -202,7 +203,10 @@ class CarpoolAccessEgressTest {
       EndpointLabel.forStop(TransitRepositoryForTest.of().stop("Stop", 59.91, 10.74).build())
     );
 
-    assertEquals(access.sharedSegments().getLast().lastState(), access.getFinalState());
+    assertEquals(
+      StreetPathForTest.states(access.sharedSegments().getLast()).getLast(),
+      access.getFinalState()
+    );
   }
 
   /** A carpool passenger rides in the driver's car, never a station-rented vehicle. */

@@ -451,7 +451,7 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
       }
     }
     State[] states = transferStates.toArray(State[]::new);
-    var graphPath = new StreetPath(states[states.length - 1]);
+    var graphPath = StreetPath.of(states[states.length - 1]);
     return streetLegMapper.map(graphPath, request);
   }
 
@@ -499,7 +499,7 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
     return accessEgress
       .findOriginal(RoutingAccessEgress.class)
       .map(RoutingAccessEgress::getFinalState)
-      .map(StreetPath::new)
+      .map(StreetPath::of)
       .map(path -> streetLegMapper.map(path, request, startTime))
       .orElseThrow();
   }

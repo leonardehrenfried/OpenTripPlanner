@@ -7,10 +7,12 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import javax.annotation.Nullable;
 import org.opentripplanner.ext.flex.FlexibleTransitLeg;
 import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
 import org.opentripplanner.framework.time.ZoneIdFallback;
+import org.opentripplanner.model.plan.Itinerary;
 import org.opentripplanner.model.plan.Leg;
 import org.opentripplanner.model.plan.Place;
 import org.opentripplanner.model.plan.leg.StreetLeg;
@@ -21,6 +23,7 @@ import org.opentripplanner.routing.api.request.via.ViaLocation;
 import org.opentripplanner.service.streetdetails.StreetDetailsService;
 import org.opentripplanner.service.vehiclerental.street.VehicleRentalPlaceVertex;
 import org.opentripplanner.street.geometry.WgsCoordinate;
+import org.opentripplanner.street.model.path.ElevationChange;
 import org.opentripplanner.street.model.path.ExternalEdgeLeg;
 import org.opentripplanner.street.model.path.PathLeg;
 import org.opentripplanner.street.model.path.StreetLegPlace;
@@ -89,7 +92,45 @@ public class StreetLegMapper {
     List<ViaLocation> viaLocations,
     @Nullable ZonedDateTime startTime
   ) {
+    return mapLegs(path.legs(ellipsoidToGeoidDifference), viaLocations, startTime);
+  }
+
+  /**
+   * Generates an {@link Itinerary} consisting only of the legs of a {@link StreetPath}.
+   *
+   * @param startTime See {@link #map(StreetPath, RouteRequest, ZonedDateTime)}
+   * @return Empty if the path has no legs
+   */
+  public Optional<Itinerary> mapToItinerary(
+    StreetPath path,
+    RouteRequest request,
+    @Nullable ZonedDateTime startTime
+  ) {
     var pathLegs = path.legs(ellipsoidToGeoidDifference);
+    var legs = mapLegs(pathLegs, request.listViaLocations(), startTime);
+
+    var streetLegs = pathLegs
+      .stream()
+      .filter(org.opentripplanner.street.model.path.StreetLeg.class::isInstance)
+      .map(org.opentripplanner.street.model.path.StreetLeg.class::cast)
+      .toList();
+    var elevationChange = streetLegs
+      .stream()
+      .map(org.opentripplanner.street.model.path.StreetLeg::elevationChange)
+      .reduce(ElevationChange.ZERO, ElevationChange::plus);
+    var arrivedWithRentedVehicle =
+      !pathLegs.isEmpty() &&
+      pathLegs.getLast() instanceof org.opentripplanner.street.model.path.StreetLeg lastLeg &&
+      lastLeg.arrivesWithRentedVehicleFromStation();
+
+    return LegsToItineraryMapper.map(legs, arrivedWithRentedVehicle, elevationChange);
+  }
+
+  private List<Leg> mapLegs(
+    List<PathLeg> pathLegs,
+    List<ViaLocation> viaLocations,
+    @Nullable ZonedDateTime startTime
+  ) {
     if (pathLegs.isEmpty()) {
       return List.of();
     }

@@ -10,6 +10,7 @@ import org.opentripplanner.raptor.spi.RaptorConstants;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RoutingAccessEgress;
 import org.opentripplanner.routing.cost.CostLimit;
 import org.opentripplanner.street.model.path.StreetPath;
+import org.opentripplanner.street.model.path.StreetPathStates;
 import org.opentripplanner.street.search.state.State;
 
 /**
@@ -271,10 +272,10 @@ public class CarpoolAccessEgress implements RoutingAccessEgress {
   public State getFinalState() {
     if (startLabel.stop() != null) {
       var firstSegment = walkToPickup() != null ? walkToPickup() : sharedSegments().getFirst();
-      return firstSegment.states().getFirst();
+      return StreetPathStates.states(firstSegment).getFirst();
     }
     var lastSegment = walkFromDropoff() != null ? walkFromDropoff() : sharedSegments().getLast();
-    return lastSegment.lastState();
+    return StreetPathStates.states(lastSegment).getLast();
   }
 
   /** Always {@code false}: a carpool leg, by definition, contains a vehicle ride. */

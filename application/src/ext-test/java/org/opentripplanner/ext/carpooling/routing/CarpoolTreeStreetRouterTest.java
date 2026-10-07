@@ -20,6 +20,7 @@ import org.opentripplanner.routing.linking.VertexLinkerTestFactory;
 import org.opentripplanner.routing.linking.internal.VertexCreationService;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.linking.TemporaryVerticesContainer;
+import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.IntersectionVertex;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.state.State;
@@ -243,9 +244,9 @@ class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
     var path = router.route(vertexA, vertexC);
 
     assertNotNull(path);
-    assertNotNull(path.states(), "Path should have states");
-    assertFalse(path.states().isEmpty(), "Path states should not be empty");
-    assertTrue(path.distanceMeters() > 0, "Path should have a distance");
+    assertNotNull(StreetPathForTest.states(path), "Path should have states");
+    assertFalse(StreetPathForTest.states(path).isEmpty(), "Path states should not be empty");
+    assertTrue(path.traversalDistance().toMeters() > 0, "Path should have a distance");
   }
 
   @Test
@@ -308,7 +309,7 @@ class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
     var path = router.route(vertexA, vertexD);
 
     assertNotNull(path, "Should find path from A to D");
-    var edges = path.states().stream().skip(1).map(State::getBackEdge).toList();
+    var edges = StreetPathForTest.states(path).stream().skip(1).map(State::getBackEdge).toList();
     assertEquals(3, edges.size(), "Path should have 3 edges (A->B, B->C, C->D)");
 
     var edgeAB = edges.get(0);

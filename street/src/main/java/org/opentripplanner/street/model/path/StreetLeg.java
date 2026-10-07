@@ -34,6 +34,11 @@ public non-sealed interface StreetLeg extends PathLeg {
   ElevationProfile elevationProfile();
 
   /**
+   * The total elevation gained and lost along the leg.
+   */
+  ElevationChange elevationChange();
+
+  /**
    * The turn-by-turn directions of this leg.
    */
   List<StreetStep> steps();
@@ -42,6 +47,11 @@ public non-sealed interface StreetLeg extends PathLeg {
    * Whether the leg is traversed with a rented vehicle.
    */
   boolean rentedVehicle();
+
+  /**
+   * Whether the leg ends while still renting a vehicle picked up at a rental station.
+   */
+  boolean arrivesWithRentedVehicleFromStation();
 
   /**
    * The network of the rented vehicle, or null if no vehicle is rented or the network is unknown.

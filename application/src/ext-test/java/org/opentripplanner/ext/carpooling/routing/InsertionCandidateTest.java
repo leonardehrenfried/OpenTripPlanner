@@ -12,7 +12,6 @@ import static org.opentripplanner.ext.carpooling.CarpoolTripTestData.createSimpl
 import java.time.Duration;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.opentripplanner.ext.carpooling.util.StreetPathUtils;
 
 class InsertionCandidateTest {
 
@@ -151,8 +150,8 @@ class InsertionCandidateTest {
     var pickupPath = createStreetPath(Duration.ofMinutes(8));
     var sharedPath = createStreetPath(Duration.ofMinutes(15));
 
-    var pickupDuration = StreetPathUtils.duration(pickupPath);
-    var sharedDuration = StreetPathUtils.duration(sharedPath);
+    var pickupDuration = pickupPath.duration();
+    var sharedDuration = sharedPath.duration();
 
     var trip = createSimpleTrip(OSLO_CENTER, OSLO_NORTH);
     var candidate = new InsertionCandidate(
@@ -182,10 +181,10 @@ class InsertionCandidateTest {
     var shared0 = createStreetPath(Duration.ofMinutes(10));
     var shared1 = createStreetPath(Duration.ofMinutes(12));
 
-    var pickup0Duration = StreetPathUtils.duration(pickup0);
-    var pickup1Duration = StreetPathUtils.duration(pickup1);
-    var shared0Duration = StreetPathUtils.duration(shared0);
-    var shared1Duration = StreetPathUtils.duration(shared1);
+    var pickup0Duration = pickup0.duration();
+    var pickup1Duration = pickup1.duration();
+    var shared0Duration = shared0.duration();
+    var shared1Duration = shared1.duration();
 
     var trip = createSimpleTrip(OSLO_CENTER, OSLO_NORTH);
     var candidate = new InsertionCandidate(

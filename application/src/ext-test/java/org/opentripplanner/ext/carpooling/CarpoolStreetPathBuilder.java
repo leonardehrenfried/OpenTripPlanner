@@ -40,7 +40,7 @@ public class CarpoolStreetPathBuilder {
 
     builder.streetEdge("segment-0", distanceMeters);
 
-    return new StreetPath(builder.build());
+    return StreetPath.of(builder.build());
   }
 
   /**
