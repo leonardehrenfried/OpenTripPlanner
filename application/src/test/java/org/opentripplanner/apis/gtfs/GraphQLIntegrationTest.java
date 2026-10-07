@@ -63,7 +63,6 @@ import org.opentripplanner.model.plan.Leg;
 import org.opentripplanner.model.plan.Place;
 import org.opentripplanner.model.plan.leg.ScheduledTransitLeg;
 import org.opentripplanner.model.plan.leg.ViaLocationType;
-import org.opentripplanner.model.plan.walkstep.RelativeDirection;
 import org.opentripplanner.model.plan.walkstep.WalkStep;
 import org.opentripplanner.model.plan.walkstep.WalkStepBuilder;
 import org.opentripplanner.model.plan.walkstep.verticaltransportation.VerticalTransportationUseFactory;
@@ -102,6 +101,7 @@ import org.opentripplanner.standalone.config.framework.json.JsonSupport;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.model.edge.ElevatorAlightEdge;
 import org.opentripplanner.street.model.edge.ElevatorBoardEdge;
+import org.opentripplanner.street.model.path.step.RelativeDirection;
 import org.opentripplanner.street.search.state.TestStateBuilder;
 import org.opentripplanner.test.support.FilePatternSource;
 import org.opentripplanner.transfer.regular.TransferServiceTestFactory;
@@ -412,10 +412,7 @@ class GraphQLIntegrationTest {
     var step2 = walkStep("elevator")
       .withRelativeDirection(RelativeDirection.ELEVATOR)
       .withVerticalTransportationUse(
-        verticalTransportationUseFactory.createElevatorUse(
-          elevatorState.getBackState(),
-          elevatorAlightEdge
-        )
+        verticalTransportationUseFactory.createElevatorUse(elevatorBoardEdge, elevatorAlightEdge)
       )
       .build();
 
