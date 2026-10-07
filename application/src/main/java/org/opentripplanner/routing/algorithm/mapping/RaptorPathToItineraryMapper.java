@@ -31,6 +31,7 @@ import org.opentripplanner.raptor.api.path.PathLeg;
 import org.opentripplanner.raptor.api.path.RaptorPath;
 import org.opentripplanner.raptor.api.path.TransferPathLeg;
 import org.opentripplanner.raptor.api.path.TransitPathLeg;
+import org.opentripplanner.routing.algorithm.raptoradapter.transit.DefaultAccessEgress;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RaptorTransitData;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RoutingAccessEgress;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.TripSchedule;
@@ -175,7 +176,7 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
       .egress()
       .findOriginal(RoutingAccessEgress.class)
       .stream()
-      .anyMatch(leg -> leg.getFinalState().isRentingVehicleFromStation());
+      .anyMatch(RoutingAccessEgress::isRentingVehicleFromStation);
     builder.withArrivedAtDestinationWithRentedVehicle(arrivedOnRental);
 
     if (optimizedPath != null) {
@@ -497,9 +498,8 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
     ZonedDateTime startTime
   ) {
     return accessEgress
-      .findOriginal(RoutingAccessEgress.class)
-      .map(RoutingAccessEgress::getFinalState)
-      .map(StreetPath::of)
+      .findOriginal(DefaultAccessEgress.class)
+      .map(DefaultAccessEgress::streetPath)
       .map(path -> streetLegMapper.map(path, request, startTime))
       .orElseThrow();
   }

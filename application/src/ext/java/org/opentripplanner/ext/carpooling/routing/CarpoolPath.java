@@ -13,9 +13,8 @@ import org.opentripplanner.street.search.state.State;
  * A street path routed by the carpooling sandbox, like a walk to the pickup or a segment of the
  * driver's route.
  * <p>
- * Besides the {@link StreetPath} itself this keeps the endpoints of the path and the final state
- * of the street search that produced it. The endpoints are needed even if the path is empty, for
- * example when the pickup is at the driver's position.
+ * Besides the {@link StreetPath} itself this keeps the endpoints of the path, which are needed
+ * even if the path is empty, for example when the pickup is at the driver's position.
  */
 public final class CarpoolPath {
 
@@ -26,13 +25,13 @@ public final class CarpoolPath {
   private static final double NO_ELEVATION_OFFSET = 0;
 
   private final StreetPath path;
-  private final State searchState;
+  private final double weight;
   private final Vertex from;
   private final Vertex to;
 
   private CarpoolPath(State searchState) {
     this.path = StreetPath.of(searchState);
-    this.searchState = searchState;
+    this.weight = searchState.getWeight();
     var origin = searchOrigin(searchState).getVertex();
     if (searchState.getRequest().arriveBy()) {
       this.from = searchState.getVertex();
@@ -66,14 +65,6 @@ public final class CarpoolPath {
   }
 
   /**
-   * The final state of the street search that produced this path. For arriveBy searches this is
-   * the state at {@link #from()}, otherwise the state at {@link #to()}.
-   */
-  public State searchState() {
-    return searchState;
-  }
-
-  /**
    * The time it takes to traverse the path, see {@link StreetPath#duration()}.
    */
   public Duration duration() {
@@ -85,7 +76,7 @@ public final class CarpoolPath {
    * produced it, like walk reluctance.
    */
   public double weight() {
-    return searchState.getWeight();
+    return weight;
   }
 
   public LineString geometry() {

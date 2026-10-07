@@ -3,6 +3,7 @@ package org.opentripplanner.ext.carpooling.routing;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.opentripplanner.ext.carpooling.CarpoolPathBuilder.createCarpoolPath;
 import static org.opentripplanner.ext.carpooling.CarpoolTestCoordinates.OSLO_CENTER;
 import static org.opentripplanner.ext.carpooling.CarpoolTestCoordinates.OSLO_NORTH;
@@ -15,10 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.opentripplanner.core.model.basic.Cost;
 import org.opentripplanner.ext.carpooling.util.CarpoolPathUtils;
 import org.opentripplanner.framework.model.TimeAndCost;
-import org.opentripplanner.model.GenericLocation;
 import org.opentripplanner.raptor.spi.RaptorConstants;
 import org.opentripplanner.raptor.spi.RaptorCostConverter;
-import org.opentripplanner.transit.model._data.TransitRepositoryForTest;
 
 class CarpoolAccessEgressTest {
 
@@ -139,74 +138,9 @@ class CarpoolAccessEgressTest {
     assertThrows(IllegalStateException.class, () -> withPenalty.withPenalty(penalty));
   }
 
-  /**
-   * For an access the transit stop sits at the chain end, so the final state is the last state of
-   * the trailing walk from the dropoff to the stop.
-   */
-  @Test
-  void getFinalStateForAccessReturnsStateAtTransitStopChainEnd() {
-    var walkToPickup = createCarpoolPath(Duration.ofSeconds(80));
-    var walkFromDropoff = createCarpoolPath(Duration.ofSeconds(40));
-    var stop = TransitRepositoryForTest.of().stop("Central Station", 59.91, 10.74).build();
-
-    var access = newAccessEgress(
-      1_000,
-      walkToPickup,
-      Duration.ofSeconds(60),
-      walkFromDropoff,
-      1.0,
-      EndpointLabel.forLocation(GenericLocation.fromCoordinate(59.92, 10.75, "Home")),
-      EndpointLabel.forStop(stop)
-    );
-
-    assertEquals(walkFromDropoff.searchState(), access.getFinalState());
-  }
-
-  /**
-   * For an egress the transit stop sits at the chain start, so the final state is the first state
-   * of the leading walk from the stop to the pickup.
-   */
-  @Test
-  void getFinalStateForEgressReturnsStateAtTransitStopChainStart() {
-    var walkToPickup = createCarpoolPath(Duration.ofSeconds(80));
-    var walkFromDropoff = createCarpoolPath(Duration.ofSeconds(40));
-    var stop = TransitRepositoryForTest.of().stop("Central Station", 59.91, 10.74).build();
-
-    var egress = newAccessEgress(
-      1_000,
-      walkToPickup,
-      Duration.ofSeconds(60),
-      walkFromDropoff,
-      1.0,
-      EndpointLabel.forStop(stop),
-      EndpointLabel.forLocation(GenericLocation.fromCoordinate(59.92, 10.75, "Office"))
-    );
-
-    assertEquals(walkToPickup.searchState(), egress.getFinalState());
-  }
-
-  /**
-   * With no walks bracketing the ride, the final state falls back to the shared ride segment
-   * endpoint at the transit stop — the last shared segment's last state for an access.
-   */
-  @Test
-  void getFinalStateWithoutWalksFallsBackToSharedSegment() {
-    var access = newAccessEgress(
-      0,
-      null,
-      Duration.ofSeconds(300),
-      null,
-      1.0,
-      EndpointLabel.EMPTY,
-      EndpointLabel.forStop(TransitRepositoryForTest.of().stop("Stop", 59.91, 10.74).build())
-    );
-
-    assertEquals(access.sharedSegments().getLast().searchState(), access.getFinalState());
-  }
-
   /** A carpool passenger rides in the driver's car, never a station-rented vehicle. */
   @Test
-  void getFinalStateIsNotRentingVehicleFromStation() {
+  void isNotRentingVehicleFromStation() {
     var access = newAccessEgress(
       1_000,
       createCarpoolPath(Duration.ofSeconds(80)),
@@ -215,7 +149,21 @@ class CarpoolAccessEgressTest {
       1.0
     );
 
-    assertFalse(access.getFinalState().isRentingVehicleFromStation());
+    assertFalse(access.isRentingVehicleFromStation());
+  }
+
+  /** A carpool leg always contains the ride in the driver's car. */
+  @Test
+  void containsModeCar() {
+    var access = newAccessEgress(
+      1_000,
+      createCarpoolPath(Duration.ofSeconds(80)),
+      Duration.ofSeconds(60),
+      createCarpoolPath(Duration.ofSeconds(40)),
+      1.0
+    );
+
+    assertTrue(access.containsModeCar());
   }
 
   /**
