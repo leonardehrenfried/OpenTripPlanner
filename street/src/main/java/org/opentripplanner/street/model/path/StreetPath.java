@@ -3,14 +3,13 @@ package org.opentripplanner.street.model.path;
 import java.time.Duration;
 import java.util.List;
 import org.opentripplanner.core.model.basic.Cost;
-import org.opentripplanner.core.model.basic.Distance;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.search.state.State;
 
 /// A path within the street network, the result of a street search.
 ///
 /// The states of the search are deliberately not exposed. To get the details of the path, split
-/// it into [PathLeg]s using [#legs(double)].
+/// it into [StreetLeg]s using [#legs(double)].
 public interface StreetPath {
   /// Build a chronologically ordered path by following the back-state chain of `finalState` all
   /// the way back to the origin of the search. Paths from arriveBy searches are reversed, so the
@@ -31,9 +30,6 @@ public interface StreetPath {
   /// The time it takes to traverse the path, rounded up to whole seconds.
   Duration duration();
 
-  /// The distance traversed along the path.
-  Distance traversalDistance();
-
   /// Split this path into legs. Each change of street mode, like picking up a rental vehicle or
   /// parking a car, starts a new leg. Walking a bike does not.
   ///
@@ -43,5 +39,5 @@ public interface StreetPath {
   /// @param ellipsoidToGeoidDifference The difference between the ellipsoid and the geoid
   ///                                   elevation of the graph, applied to the elevations of the
   ///                                   legs if requested.
-  List<PathLeg> legs(double ellipsoidToGeoidDifference);
+  List<StreetLeg> legs(double ellipsoidToGeoidDifference);
 }

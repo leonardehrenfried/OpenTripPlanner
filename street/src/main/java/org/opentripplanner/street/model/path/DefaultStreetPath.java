@@ -11,7 +11,6 @@ import java.util.Objects;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.impl.PackedCoordinateSequence;
 import org.opentripplanner.core.model.basic.Cost;
-import org.opentripplanner.core.model.basic.Distance;
 import org.opentripplanner.street.geometry.GeometryUtils;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.edge.StreetEdge;
@@ -80,12 +79,7 @@ final class DefaultStreetPath implements StreetPath {
   }
 
   @Override
-  public Distance traversalDistance() {
-    return Distance.ofMeters(distanceMeters());
-  }
-
-  @Override
-  public List<PathLeg> legs(double ellipsoidToGeoidDifference) {
+  public List<StreetLeg> legs(double ellipsoidToGeoidDifference) {
     return new StreetPathToLegsMapper(ellipsoidToGeoidDifference).map(this);
   }
 

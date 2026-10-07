@@ -97,12 +97,7 @@ public final class CarpoolPath {
   }
 
   private List<StreetLeg> streetLegs() {
-    return path
-      .legs(NO_ELEVATION_OFFSET)
-      .stream()
-      .filter(StreetLeg.class::isInstance)
-      .map(StreetLeg.class::cast)
-      .toList();
+    return path.legs(NO_ELEVATION_OFFSET);
   }
 
   private static State searchOrigin(State state) {
