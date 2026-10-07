@@ -663,16 +663,16 @@ class DefaultCarpoolingServiceAccessEgressTest extends GraphRoutingTest {
     var pathAToP2 = router.route(vertexA, vertexP2);
     assertNotNull(pathAToP2, "Should be able to route from A to P2");
     var drivingDurationAToP2 = Duration.between(
-      StreetPathForTest.states(pathAToP2).getFirst().getTime(),
-      StreetPathForTest.states(pathAToP2).getLast().getTime()
+      StreetPathForTest.states(pathAToP2.streetPath()).getFirst().getTime(),
+      StreetPathForTest.states(pathAToP2.streetPath()).getLast().getTime()
     );
     assertTrue(drivingDurationAToP2.toSeconds() > 1, "Driving duration to P2 should be positive");
 
     var pathP2ToIT3 = router.route(vertexP2, vertexIT3);
     assertNotNull(pathP2ToIT3, "Should be able to route from P2 to iT3");
     var drivingDurationP2ToIT3 = Duration.between(
-      StreetPathForTest.states(pathP2ToIT3).getFirst().getTime(),
-      StreetPathForTest.states(pathP2ToIT3).getLast().getTime()
+      StreetPathForTest.states(pathP2ToIT3.streetPath()).getFirst().getTime(),
+      StreetPathForTest.states(pathP2ToIT3.streetPath()).getLast().getTime()
     );
     assertTrue(
       drivingDurationP2ToIT3.toSeconds() > 0,
@@ -682,8 +682,8 @@ class DefaultCarpoolingServiceAccessEgressTest extends GraphRoutingTest {
     var pathP2ToIT4 = router.route(vertexP2, vertexIT4);
     assertNotNull(pathP2ToIT4, "Should be able to route from P2 to iT4");
     var drivingDurationP2ToIT4 = Duration.between(
-      StreetPathForTest.states(pathP2ToIT4).getFirst().getTime(),
-      StreetPathForTest.states(pathP2ToIT4).getLast().getTime()
+      StreetPathForTest.states(pathP2ToIT4.streetPath()).getFirst().getTime(),
+      StreetPathForTest.states(pathP2ToIT4.streetPath()).getLast().getTime()
     );
     assertTrue(
       drivingDurationP2ToIT4.toSeconds() > 0,

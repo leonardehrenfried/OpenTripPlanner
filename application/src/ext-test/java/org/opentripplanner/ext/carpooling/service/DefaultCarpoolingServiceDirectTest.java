@@ -368,15 +368,15 @@ class DefaultCarpoolingServiceDirectTest extends GraphRoutingTest {
     var pathToPickup = router.route(vertexTripStart, vertexPickup);
     assertNotNull(pathToPickup, "Should route from trip start to pickup");
     var drivingToPickup = Duration.between(
-      StreetPathForTest.states(pathToPickup).getFirst().getTime(),
-      StreetPathForTest.states(pathToPickup).getLast().getTime()
+      StreetPathForTest.states(pathToPickup.streetPath()).getFirst().getTime(),
+      StreetPathForTest.states(pathToPickup.streetPath()).getLast().getTime()
     );
 
     var pathPickupToDropoff = router.route(vertexPickup, vertexDropoff);
     assertNotNull(pathPickupToDropoff, "Should route from pickup to dropoff");
     var drivingPickupToDropoff = Duration.between(
-      StreetPathForTest.states(pathPickupToDropoff).getFirst().getTime(),
-      StreetPathForTest.states(pathPickupToDropoff).getLast().getTime()
+      StreetPathForTest.states(pathPickupToDropoff.streetPath()).getFirst().getTime(),
+      StreetPathForTest.states(pathPickupToDropoff.streetPath()).getLast().getTime()
     );
 
     var request = buildDirectCarpoolRequest(passengerPickup, passengerDropoff, SEARCH_TIME);

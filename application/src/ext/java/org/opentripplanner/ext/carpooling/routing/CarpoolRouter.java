@@ -2,7 +2,6 @@ package org.opentripplanner.ext.carpooling.routing;
 
 import javax.annotation.Nullable;
 import org.opentripplanner.framework.application.OTPRequestTimeoutException;
-import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
 
 /**
@@ -20,5 +19,5 @@ public interface CarpoolRouter {
    *                                   instead of being reported as a {@code null} return.
    */
   @Nullable
-  StreetPath route(Vertex from, Vertex to);
+  CarpoolPath route(Vertex from, Vertex to);
 }

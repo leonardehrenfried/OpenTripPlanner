@@ -4,13 +4,11 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import javax.annotation.Nullable;
 import org.opentripplanner.ext.carpooling.model.CarpoolTrip;
-import org.opentripplanner.ext.carpooling.util.StreetPathUtils;
+import org.opentripplanner.ext.carpooling.util.CarpoolPathUtils;
 import org.opentripplanner.framework.model.TimeAndCost;
 import org.opentripplanner.raptor.spi.RaptorConstants;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RoutingAccessEgress;
 import org.opentripplanner.routing.cost.CostLimit;
-import org.opentripplanner.street.model.path.StreetPath;
-import org.opentripplanner.street.model.path.StreetPathStates;
 import org.opentripplanner.street.search.state.State;
 
 /**
@@ -94,14 +92,14 @@ public class CarpoolAccessEgress implements RoutingAccessEgress {
 
     var walkToPickup = insertionCandidate.walkToPickup();
     var walkFromDropoff = insertionCandidate.walkFromDropoff();
-    int walkSeconds = (int) (StreetPathUtils.durationOrZero(walkToPickup).getSeconds() +
-      StreetPathUtils.durationOrZero(walkFromDropoff).getSeconds());
+    int walkSeconds = (int) (CarpoolPathUtils.durationOrZero(walkToPickup).getSeconds() +
+      CarpoolPathUtils.durationOrZero(walkFromDropoff).getSeconds());
     int rideSeconds = (int) insertionCandidate.getPassengerRideDuration().getSeconds();
     this.durationInSeconds = walkSeconds + rideSeconds;
     this.passengerArrivalTime = passengerDepartureTime + this.durationInSeconds;
 
     double walkWeight =
-      StreetPathUtils.weightOrZero(walkToPickup) + StreetPathUtils.weightOrZero(walkFromDropoff);
+      CarpoolPathUtils.weightOrZero(walkToPickup) + CarpoolPathUtils.weightOrZero(walkFromDropoff);
     double totalWeight = walkWeight + insertionCandidate.getPassengerRideWeight(carpoolReluctance);
     this.c1 = CostLimit.toRaptorCost(totalWeight) + penalty.cost().toCentiSeconds();
   }
@@ -246,7 +244,7 @@ public class CarpoolAccessEgress implements RoutingAccessEgress {
    * The {@link RoutingAccessEgress#getFinalState()} contract expects the returned state to head a
    * {@link State#getBackState()} chain that reconstructs the <em>entire</em> street search — that
    * is the assumption behind callers such as {@code RaptorPathToItineraryMapper}, which wrap the
-   * state in a {@link org.opentripplanner.street.model.path.StreetPath} to rebuild the leg.
+   * state in a {@link org.opentripplanner.street.model.path.CarpoolPath} to rebuild the leg.
    * <p>
    * A carpool leg does not honour that assumption today. It is not one A* search but several
    * independent ones stitched together in the domain layer: an optional walk to the pickup, the
@@ -265,17 +263,17 @@ public class CarpoolAccessEgress implements RoutingAccessEgress {
    * direction-independent scalar checks performed on every access/egress — notably
    * {@link State#isRentingVehicleFromStation()}, which is always {@code false} since a passenger
    * rides in the driver's car rather than a station-rented vehicle. Do not wrap this state in a
-   * {@code StreetPath} expecting the full leg; that path would silently omit the ride and the
+   * {@code CarpoolPath} expecting the full leg; that path would silently omit the ride and the
    * other walk.
    */
   @Override
   public State getFinalState() {
     if (startLabel.stop() != null) {
       var firstSegment = walkToPickup() != null ? walkToPickup() : sharedSegments().getFirst();
-      return StreetPathStates.states(firstSegment).getFirst();
+      return firstSegment.searchState();
     }
     var lastSegment = walkFromDropoff() != null ? walkFromDropoff() : sharedSegments().getLast();
-    return StreetPathStates.states(lastSegment).getLast();
+    return lastSegment.searchState();
   }
 
   /** Always {@code false}: a carpool leg, by definition, contains a vehicle ride. */
@@ -296,7 +294,7 @@ public class CarpoolAccessEgress implements RoutingAccessEgress {
    * is needed.
    */
   @Nullable
-  public StreetPath walkToPickup() {
+  public CarpoolPath walkToPickup() {
     return insertionCandidate.walkToPickup();
   }
 
@@ -305,7 +303,7 @@ public class CarpoolAccessEgress implements RoutingAccessEgress {
    * intermediate stops the driver makes along the way for other passengers). Never empty for a
    * valid leg.
    */
-  public List<StreetPath> sharedSegments() {
+  public List<CarpoolPath> sharedSegments() {
     return insertionCandidate.getSharedSegments();
   }
 
@@ -315,7 +313,7 @@ public class CarpoolAccessEgress implements RoutingAccessEgress {
    * walk is needed.
    */
   @Nullable
-  public StreetPath walkFromDropoff() {
+  public CarpoolPath walkFromDropoff() {
     return insertionCandidate.walkFromDropoff();
   }
 

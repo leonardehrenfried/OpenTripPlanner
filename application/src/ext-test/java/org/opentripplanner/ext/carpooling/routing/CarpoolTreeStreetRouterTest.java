@@ -244,9 +244,12 @@ class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
     var path = router.route(vertexA, vertexC);
 
     assertNotNull(path);
-    assertNotNull(StreetPathForTest.states(path), "Path should have states");
-    assertFalse(StreetPathForTest.states(path).isEmpty(), "Path states should not be empty");
-    assertTrue(path.traversalDistance().toMeters() > 0, "Path should have a distance");
+    assertNotNull(StreetPathForTest.states(path.streetPath()), "Path should have states");
+    assertFalse(
+      StreetPathForTest.states(path.streetPath()).isEmpty(),
+      "Path states should not be empty"
+    );
+    assertTrue(path.distanceMeters() > 0, "Path should have a distance");
   }
 
   @Test
@@ -309,7 +312,11 @@ class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
     var path = router.route(vertexA, vertexD);
 
     assertNotNull(path, "Should find path from A to D");
-    var edges = StreetPathForTest.states(path).stream().skip(1).map(State::getBackEdge).toList();
+    var edges = StreetPathForTest.states(path.streetPath())
+      .stream()
+      .skip(1)
+      .map(State::getBackEdge)
+      .toList();
     assertEquals(3, edges.size(), "Path should have 3 edges (A->B, B->C, C->D)");
 
     var edgeAB = edges.get(0);

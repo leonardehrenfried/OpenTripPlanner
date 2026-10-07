@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.opentripplanner.ext.carpooling.CarpoolStreetPathBuilder.createStreetPath;
+import static org.opentripplanner.ext.carpooling.CarpoolPathBuilder.createCarpoolPath;
 import static org.opentripplanner.ext.carpooling.CarpoolTestCoordinates.OSLO_CENTER;
 import static org.opentripplanner.ext.carpooling.CarpoolTestCoordinates.OSLO_EAST;
 import static org.opentripplanner.ext.carpooling.CarpoolTestCoordinates.OSLO_MIDPOINT_NORTH;
@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Test;
 import org.opentripplanner.ext.carpooling.model.CarpoolTrip;
 import org.opentripplanner.ext.carpooling.util.BeelineEstimator;
 import org.opentripplanner.street.geometry.WgsCoordinate;
-import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.SimpleVertex;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.utils.collection.Pair;
@@ -126,7 +125,7 @@ class InsertionEvaluatorTest {
       deviationBudget
     );
 
-    var mockPath = createStreetPath(Duration.ofMinutes(4));
+    var mockPath = createCarpoolPath(Duration.ofMinutes(4));
     CarpoolRouter routingFunction = (from, to) -> mockPath;
 
     var result = findOptimalInsertion(
@@ -155,7 +154,7 @@ class InsertionEvaluatorTest {
   void findOptimalInsertion_oneValidPosition_returnsCandidate() {
     var trip = createTripWithDeviationBudget(Duration.ofMinutes(20), OSLO_CENTER, OSLO_NORTH);
 
-    var mockPath = createStreetPath();
+    var mockPath = createCarpoolPath();
 
     CarpoolRouter routingFunction = (from, to) -> mockPath;
 
@@ -172,7 +171,7 @@ class InsertionEvaluatorTest {
     var stop1 = createStopAt(OSLO_EAST);
     var trip = createTripWithStops(OSLO_CENTER, List.of(stop1), OSLO_NORTH);
 
-    var mockPath = createStreetPath(Duration.ofMinutes(3));
+    var mockPath = createCarpoolPath(Duration.ofMinutes(3));
 
     // Routing sequence:
     // 1. Baseline calculation (2 segments: OSLO_CENTER → OSLO_EAST → OSLO_NORTH) = mockPath x2
@@ -209,7 +208,7 @@ class InsertionEvaluatorTest {
     // Baseline is 2 segments * 5 min = 10 min
     // Modified route is 3 segments * 20 min = 60 min
     // Additional = 50 min, exceeds 5 min budget
-    var mockPath = createStreetPath(Duration.ofMinutes(20));
+    var mockPath = createCarpoolPath(Duration.ofMinutes(20));
 
     CarpoolRouter routingFunction = (from, to) -> mockPath;
 
@@ -225,7 +224,7 @@ class InsertionEvaluatorTest {
     var stop2 = createStopAt(OSLO_WEST);
     var trip = createTripWithStops(OSLO_CENTER, List.of(stop1, stop2), OSLO_NORTH);
 
-    var mockPath = createStreetPath();
+    var mockPath = createCarpoolPath();
 
     CarpoolRouter routingFunction = (from, to) -> mockPath;
 
@@ -264,25 +263,25 @@ class InsertionEvaluatorTest {
     var trip = createTripWithStops(OSLO_SOUTH, List.of(stop), OSLO_NORTH, Duration.ofMinutes(30));
     var tripWithVertices = createTripWithVertices(trip);
 
-    final Map<Pair<WgsCoordinate>, StreetPath> pathsMap = new HashMap<>(
+    final Map<Pair<WgsCoordinate>, CarpoolPath> pathsMap = new HashMap<>(
       Map.of(
         // Baseline segments
         new Pair<>(OSLO_SOUTH, OSLO_CENTER),
-        createStreetPath(Duration.ofMinutes(10)),
+        createCarpoolPath(Duration.ofMinutes(10)),
         new Pair<>(OSLO_CENTER, OSLO_NORTH),
-        createStreetPath(Duration.ofMinutes(10)),
+        createCarpoolPath(Duration.ofMinutes(10)),
         // Position (1,2) new segments
         new Pair<>(OSLO_SOUTH, OSLO_EAST),
-        createStreetPath(Duration.ofMinutes(8)),
+        createCarpoolPath(Duration.ofMinutes(8)),
         new Pair<>(OSLO_EAST, OSLO_WEST),
-        createStreetPath(Duration.ofMinutes(4)),
+        createCarpoolPath(Duration.ofMinutes(4)),
         new Pair<>(OSLO_WEST, OSLO_CENTER),
-        createStreetPath(Duration.ofMinutes(9)),
+        createCarpoolPath(Duration.ofMinutes(9)),
         // Position (2,3) new segments
         new Pair<>(OSLO_CENTER, OSLO_EAST),
-        createStreetPath(Duration.ofMinutes(3)),
+        createCarpoolPath(Duration.ofMinutes(3)),
         new Pair<>(OSLO_WEST, OSLO_NORTH),
-        createStreetPath(Duration.ofMinutes(5))
+        createCarpoolPath(Duration.ofMinutes(5))
       )
     );
 
@@ -309,7 +308,7 @@ class InsertionEvaluatorTest {
   void findOptimalInsertion_simpleTrip_hasExpectedStructure() {
     var trip = createTripWithDeviationBudget(Duration.ofMinutes(20), OSLO_CENTER, OSLO_NORTH);
 
-    var mockPath = createStreetPath();
+    var mockPath = createCarpoolPath();
 
     CarpoolRouter routingFunction = (from, to) -> mockPath;
 
@@ -334,18 +333,18 @@ class InsertionEvaluatorTest {
 
     // Create mock paths with DISTINCT durations for verification
     // Baseline: 1 segment (CENTER → NORTH) = 10 min
-    var baselinePath = createStreetPath(Duration.ofMinutes(10));
+    var baselinePath = createCarpoolPath(Duration.ofMinutes(10));
 
     // Modified route segments should have DIFFERENT durations
     // If baseline is incorrectly reused, we'd see 10 min for A→C segment
     // CENTER → EAST
-    var segmentAC = createStreetPath(Duration.ofMinutes(3));
+    var segmentAC = createCarpoolPath(Duration.ofMinutes(3));
     // EAST → MIDPOINT_NORTH
-    var segmentCD = createStreetPath(Duration.ofMinutes(2));
+    var segmentCD = createCarpoolPath(Duration.ofMinutes(2));
     // MIDPOINT_NORTH → NORTH
-    var segmentDB = createStreetPath(Duration.ofMinutes(4));
+    var segmentDB = createCarpoolPath(Duration.ofMinutes(4));
 
-    final Map<Pair<WgsCoordinate>, StreetPath> pathsMap = new HashMap<>(
+    final Map<Pair<WgsCoordinate>, CarpoolPath> pathsMap = new HashMap<>(
       Map.of(
         new Pair<>(OSLO_CENTER, OSLO_NORTH),
         baselinePath,
@@ -397,7 +396,7 @@ class InsertionEvaluatorTest {
     var stop1 = createStopAt(OSLO_EAST);
     var trip = createTripWithStops(OSLO_CENTER, List.of(stop1), OSLO_NORTHEAST);
 
-    var mockPath = createStreetPath(Duration.ofMinutes(3));
+    var mockPath = createCarpoolPath(Duration.ofMinutes(3));
 
     final int[] callCount = { 0 };
     CarpoolRouter carpoolRouter = (from, to) -> {
@@ -425,7 +424,7 @@ class InsertionEvaluatorTest {
 
     var trip = createTripWithDeviationBudget(Duration.ofMinutes(20), OSLO_CENTER, OSLO_NORTH);
 
-    var mockPath = createStreetPath(Duration.ofMinutes(5));
+    var mockPath = createCarpoolPath(Duration.ofMinutes(5));
 
     final int[] callCount = { 0 };
     CarpoolRouter carpoolRouter = (from, to) -> {

@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.Duration;
 import org.junit.jupiter.api.Test;
 
-class StreetPathUtilsTest {
+class CarpoolPathUtilsTest {
 
   private static final Duration TEN_MINUTES = Duration.ofMinutes(10);
   private static final Duration ONE_MINUTE = Duration.ofMinutes(1);
@@ -22,7 +22,7 @@ class StreetPathUtilsTest {
       TEN_MINUTES,
     };
 
-    Duration[] result = StreetPathUtils.calculateCumulativeDurations(segments, ONE_MINUTE);
+    Duration[] result = CarpoolPathUtils.calculateCumulativeDurations(segments, ONE_MINUTE);
 
     assertArrayEquals(
       new Duration[] {
@@ -42,7 +42,7 @@ class StreetPathUtilsTest {
   void calculateCumulativeDurations_noStopDelay() {
     Duration[] segments = { TEN_MINUTES, TEN_MINUTES, TEN_MINUTES };
 
-    Duration[] result = StreetPathUtils.calculateCumulativeDurations(segments, Duration.ZERO);
+    Duration[] result = CarpoolPathUtils.calculateCumulativeDurations(segments, Duration.ZERO);
 
     assertArrayEquals(
       new Duration[] {
@@ -59,7 +59,7 @@ class StreetPathUtilsTest {
   void calculateCumulativeDurations_singleSegment_noStopDelayApplied() {
     Duration[] segments = { TEN_MINUTES };
 
-    Duration[] result = StreetPathUtils.calculateCumulativeDurations(segments, ONE_MINUTE);
+    Duration[] result = CarpoolPathUtils.calculateCumulativeDurations(segments, ONE_MINUTE);
 
     assertArrayEquals(new Duration[] { Duration.ZERO, TEN_MINUTES }, result);
   }
@@ -68,7 +68,7 @@ class StreetPathUtilsTest {
   void calculateCumulativeDurations_twoSegments_stopDelayOnlyAtSecondPoint() {
     Duration[] segments = { TEN_MINUTES, TEN_MINUTES };
 
-    Duration[] result = StreetPathUtils.calculateCumulativeDurations(segments, ONE_MINUTE);
+    Duration[] result = CarpoolPathUtils.calculateCumulativeDurations(segments, ONE_MINUTE);
 
     assertArrayEquals(
       new Duration[] { Duration.ofMinutes(0), Duration.ofMinutes(10), Duration.ofMinutes(21) },
@@ -80,7 +80,7 @@ class StreetPathUtilsTest {
   void calculateCumulativeDurations_noSegments() {
     Duration[] segments = {};
 
-    Duration[] result = StreetPathUtils.calculateCumulativeDurations(segments, ONE_MINUTE);
+    Duration[] result = CarpoolPathUtils.calculateCumulativeDurations(segments, ONE_MINUTE);
 
     assertArrayEquals(new Duration[] { Duration.ZERO }, result);
   }
@@ -89,7 +89,7 @@ class StreetPathUtilsTest {
   void calculateCumulativeDurations_varyingSegmentDurations() {
     Duration[] segments = { Duration.ofMinutes(5), Duration.ofMinutes(15), Duration.ofMinutes(10) };
 
-    Duration[] result = StreetPathUtils.calculateCumulativeDurations(
+    Duration[] result = CarpoolPathUtils.calculateCumulativeDurations(
       segments,
       Duration.ofMinutes(2)
     );

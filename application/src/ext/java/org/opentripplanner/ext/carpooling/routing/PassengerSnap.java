@@ -1,7 +1,6 @@
 package org.opentripplanner.ext.carpooling.routing;
 
 import javax.annotation.Nullable;
-import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
 
 /**
@@ -17,6 +16,6 @@ import org.opentripplanner.street.model.vertex.Vertex;
 public record PassengerSnap(
   Vertex pickupVertex,
   Vertex dropoffVertex,
-  @Nullable StreetPath walkToPickup,
-  @Nullable StreetPath walkFromDropoff
+  @Nullable CarpoolPath walkToPickup,
+  @Nullable CarpoolPath walkFromDropoff
 ) {}

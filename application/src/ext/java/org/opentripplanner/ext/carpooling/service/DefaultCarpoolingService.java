@@ -33,7 +33,7 @@ import org.opentripplanner.ext.carpooling.routing.TripWithViableAccessEgress;
 import org.opentripplanner.ext.carpooling.routing.ViableAccessEgress;
 import org.opentripplanner.ext.carpooling.util.BeelineEstimator;
 import org.opentripplanner.ext.carpooling.util.CarReachableVertexSnapper;
-import org.opentripplanner.ext.carpooling.util.StreetPathUtils;
+import org.opentripplanner.ext.carpooling.util.CarpoolPathUtils;
 import org.opentripplanner.ext.carpooling.util.StreetVertexUtils;
 import org.opentripplanner.framework.model.TimeAndCost;
 import org.opentripplanner.model.GenericLocation;
@@ -711,7 +711,7 @@ public class DefaultCarpoolingService implements CarpoolingService {
         );
         return null;
       }
-      durations[leg] = StreetPathUtils.durationOrZero(path);
+      durations[leg] = CarpoolPathUtils.durationOrZero(path);
     }
     return durations;
   }
@@ -752,7 +752,7 @@ public class DefaultCarpoolingService implements CarpoolingService {
       .startTime()
       .plus(insertionCandidate.getDurationUntilPickupArrival());
     var passengerStartTime = carpoolPickupTime.minus(
-      StreetPathUtils.durationOrZero(insertionCandidate.walkToPickup())
+      CarpoolPathUtils.durationOrZero(insertionCandidate.walkToPickup())
     );
 
     var passengerDepartureTime = TimeUtils.toTransitTimeSeconds(

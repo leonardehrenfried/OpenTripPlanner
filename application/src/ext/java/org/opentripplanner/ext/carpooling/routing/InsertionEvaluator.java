@@ -1,6 +1,6 @@
 package org.opentripplanner.ext.carpooling.routing;
 
-import static org.opentripplanner.ext.carpooling.util.StreetPathUtils.calculateCumulativeDurations;
+import static org.opentripplanner.ext.carpooling.util.CarpoolPathUtils.calculateCumulativeDurations;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 import org.opentripplanner.ext.carpooling.constraints.PassengerDelayConstraints;
 import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.algorithm.raptoradapter.router.street.AccessEgressType;
-import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,14 +81,14 @@ public class InsertionEvaluator {
    * @return Array of routed segments, or null if any segment fails to route
    */
   @SuppressWarnings("unchecked")
-  private StreetPath[] routeSegments(List<Vertex> routePoints) {
-    StreetPath[] segments = new StreetPath[routePoints.size() - 1];
+  private CarpoolPath[] routeSegments(List<Vertex> routePoints) {
+    CarpoolPath[] segments = new CarpoolPath[routePoints.size() - 1];
 
     for (int i = 0; i < routePoints.size() - 1; i++) {
       var from = routePoints.get(i);
       var to = routePoints.get(i + 1);
 
-      StreetPath segment = carpoolRouter.route(from, to);
+      CarpoolPath segment = carpoolRouter.route(from, to);
       if (segment == null && baselineFallbackRouter != null) {
         segment = baselineFallbackRouter.route(from, to);
         if (segment != null) {
@@ -125,7 +124,7 @@ public class InsertionEvaluator {
       return List.of();
     }
 
-    StreetPath[] baselineSegments = routeSegments(tripWithVertices.vertices());
+    CarpoolPath[] baselineSegments = routeSegments(tripWithVertices.vertices());
     if (baselineSegments == null) {
       LOG.info("Could not route baseline segments for trip {}", tripWithVertices.trip().getId());
       return List.of();
@@ -187,7 +186,7 @@ public class InsertionEvaluator {
     List<InsertionPosition> viablePositions,
     PassengerSnap snap
   ) {
-    StreetPath[] baselineSegments = routeSegments(tripWithVertices.vertices());
+    CarpoolPath[] baselineSegments = routeSegments(tripWithVertices.vertices());
     if (baselineSegments == null) {
       LOG.info("Could not route baseline for trip {}", tripWithVertices.trip().getId());
       return null;
@@ -210,7 +209,7 @@ public class InsertionEvaluator {
     CarpoolTripWithVertices tripWithVertices,
     List<InsertionPosition> viablePositions,
     PassengerSnap snap,
-    StreetPath[] baselineSegments,
+    CarpoolPath[] baselineSegments,
     Duration[] cumulativeDurations,
     NearbyStop transitStop
   ) {
@@ -257,11 +256,11 @@ public class InsertionEvaluator {
     int pickupPos,
     int dropoffPos,
     PassengerSnap snap,
-    StreetPath[] baselineSegments,
+    CarpoolPath[] baselineSegments,
     Duration[] originalCumulativeDurations,
     NearbyStop transitStop
   ) {
-    List<StreetPath> modifiedSegments = buildModifiedSegments(
+    List<CarpoolPath> modifiedSegments = buildModifiedSegments(
       tripWithVertices.vertices(),
       baselineSegments,
       pickupPos,
@@ -275,7 +274,7 @@ public class InsertionEvaluator {
     }
 
     Duration[] modifiedCumulativeDurations = calculateCumulativeDurations(
-      modifiedSegments.toArray(new StreetPath[modifiedSegments.size()]),
+      modifiedSegments.toArray(new CarpoolPath[modifiedSegments.size()]),
       stopDuration
     );
     if (
@@ -307,22 +306,22 @@ public class InsertionEvaluator {
     );
   }
 
-  private List<StreetPath> buildModifiedSegments(
+  private List<CarpoolPath> buildModifiedSegments(
     List<Vertex> originalPoints,
-    StreetPath[] baselineSegments,
+    CarpoolPath[] baselineSegments,
     int pickupPos,
     int dropoffPos,
     Vertex passengerPickup,
     Vertex passengerDropoff
   ) {
-    List<StreetPath> segments = new ArrayList<>();
+    List<CarpoolPath> segments = new ArrayList<>();
 
     List<Vertex> modifiedPoints = new ArrayList<>(originalPoints);
     modifiedPoints.add(pickupPos, passengerPickup);
     modifiedPoints.add(dropoffPos, passengerDropoff);
 
     for (int i = 0; i < modifiedPoints.size() - 1; i++) {
-      StreetPath segment;
+      CarpoolPath segment;
 
       int baselineIndex = baselineSegmentIndex(i, pickupPos, dropoffPos);
       if (baselineIndex >= 0 && baselineIndex < baselineSegments.length) {

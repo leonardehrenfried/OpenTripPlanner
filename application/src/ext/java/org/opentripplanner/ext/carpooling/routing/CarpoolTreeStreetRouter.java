@@ -8,7 +8,6 @@ import org.opentripplanner.astar.strategy.DurationSkipEdgeStrategy;
 import org.opentripplanner.framework.application.OTPRequestTimeoutException;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.edge.Edge;
-import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.StreetSearchBuilder;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
@@ -42,7 +41,7 @@ public class CarpoolTreeStreetRouter implements CarpoolRouter {
   private final Map<Vertex, VertexRegistration> reverseRegistrations = new HashMap<>();
   private final Map<Vertex, ShortestPathTree<State, Edge, Vertex>> forwardTrees = new HashMap<>();
   private final Map<Vertex, ShortestPathTree<State, Edge, Vertex>> reverseTrees = new HashMap<>();
-  private final Map<Pair<Vertex>, StreetPath> pathCache = new HashMap<>();
+  private final Map<Pair<Vertex>, CarpoolPath> pathCache = new HashMap<>();
   private boolean routingStarted = false;
 
   public enum Direction {
@@ -185,7 +184,7 @@ public class CarpoolTreeStreetRouter implements CarpoolRouter {
    * tree does not reach the other endpoint within its search limit returns {@code null} as well.
    */
   @Override
-  public StreetPath route(Vertex from, Vertex to) {
+  public CarpoolPath route(Vertex from, Vertex to) {
     routingStarted = true;
 
     var key = new Pair<>(from, to);
@@ -205,7 +204,7 @@ public class CarpoolTreeStreetRouter implements CarpoolRouter {
     }
 
     var state = isReverse ? tree.getState(from) : tree.getState(to);
-    var path = state == null ? null : StreetPath.of(state);
+    var path = state == null ? null : CarpoolPath.of(state);
     pathCache.put(key, path);
     return path;
   }

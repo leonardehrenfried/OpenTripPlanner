@@ -3,44 +3,44 @@ package org.opentripplanner.ext.carpooling;
 import java.time.Duration;
 import java.util.List;
 import java.util.stream.IntStream;
-import org.opentripplanner.street.model.path.StreetPath;
+import org.opentripplanner.ext.carpooling.routing.CarpoolPath;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.street.search.state.TestStateBuilder;
 
 /**
- * Builder for creating StreetPath objects for carpooling tests using real State chains.
+ * Builder for creating CarpoolPath objects for carpooling tests using real State chains.
  * This replaces MockGraphPathFactory with OTP's preferred TestStateBuilder pattern.
  */
-public class CarpoolStreetPathBuilder {
+public class CarpoolPathBuilder {
 
   // Walking speed in m/s (OTP default from WalkPreferences)
   private static final double WALKING_SPEED_MPS = 1.33;
 
   /**
-   * Creates a StreetPath with default 5-minute duration.
+   * Creates a CarpoolPath with default 5-minute duration.
    */
-  public static StreetPath createStreetPath() {
-    return createStreetPath(Duration.ofMinutes(5));
+  public static CarpoolPath createCarpoolPath() {
+    return createCarpoolPath(Duration.ofMinutes(5));
   }
 
   /**
-   * Creates a StreetPath with specified duration using State chain.
+   * Creates a CarpoolPath with specified duration using State chain.
    * Uses a single edge with floor distance to avoid rounding errors: the edge traversal
    * applies ceiling when converting to milliseconds, and State.getTime() applies ceiling
    * when converting to seconds, so floor distance ensures the final second-precision
    * duration matches the requested value.
    *
    * @param duration Total duration for the path
-   * @return StreetPath with real State objects and accurate timing
+   * @return CarpoolPath with real State objects and accurate timing
    */
-  public static StreetPath createStreetPath(Duration duration) {
+  public static CarpoolPath createCarpoolPath(Duration duration) {
     var builder = TestStateBuilder.ofWalking();
 
     int distanceMeters = (int) (duration.toSeconds() * WALKING_SPEED_MPS);
 
     builder.streetEdge("segment-0", distanceMeters);
 
-    return StreetPath.of(builder.build());
+    return CarpoolPath.of(builder.build());
   }
 
   /**
@@ -50,9 +50,9 @@ public class CarpoolStreetPathBuilder {
    * @param count Number of paths to create
    * @return List of StreetPaths with incrementing durations
    */
-  public static List<StreetPath> createStreetPaths(int count) {
+  public static List<CarpoolPath> createCarpoolPaths(int count) {
     return IntStream.range(0, count)
-      .mapToObj(i -> createStreetPath(Duration.ofMinutes(5 + i)))
+      .mapToObj(i -> createCarpoolPath(Duration.ofMinutes(5 + i)))
       .toList();
   }
 }

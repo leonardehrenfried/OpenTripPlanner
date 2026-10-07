@@ -4,7 +4,6 @@ import org.opentripplanner.astar.strategy.DurationSkipEdgeStrategy;
 import org.opentripplanner.ext.carpooling.model.CarpoolTrip;
 import org.opentripplanner.framework.application.OTPRequestTimeoutException;
 import org.opentripplanner.street.model.StreetMode;
-import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.EuclideanRemainingWeightHeuristic;
 import org.opentripplanner.street.search.StreetSearchBuilder;
@@ -49,7 +48,7 @@ public class CarpoolStreetRouter implements CarpoolRouter {
   }
 
   @Override
-  public StreetPath route(Vertex from, Vertex to) {
+  public CarpoolPath route(Vertex from, Vertex to) {
     try {
       return carpoolRouting(from, to);
     } catch (OTPRequestTimeoutException e) {
@@ -76,7 +75,7 @@ public class CarpoolStreetRouter implements CarpoolRouter {
    * @return the first (best) path found, or null if no path reaches the destination within
    *         {@link CarpoolTrip#MAX_TRIP_DURATION}
    */
-  private StreetPath carpoolRouting(Vertex fromVertex, Vertex toVertex) {
+  private CarpoolPath carpoolRouting(Vertex fromVertex, Vertex toVertex) {
     var request = StreetSearchRequest.of().withMode(StreetMode.CAR).build();
     var streetSearch = StreetSearchBuilder.of()
       .withPreStartHook(OTPRequestTimeoutException::checkForTimeout)
@@ -90,12 +89,8 @@ public class CarpoolStreetRouter implements CarpoolRouter {
       .withFrom(fromVertex)
       .withTo(toVertex);
 
-    var paths = streetSearch.getPathsToTarget();
-
-    if (paths.isEmpty()) {
-      return null;
-    }
-
-    return paths.getFirst();
+    // The minimum weight dominance keeps a single state per vertex, the best one
+    var state = streetSearch.getShortestPathTree().getState(toVertex);
+    return state == null ? null : CarpoolPath.of(state);
   }
 }

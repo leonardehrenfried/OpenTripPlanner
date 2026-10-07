@@ -4,7 +4,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.algorithm.raptoradapter.router.street.AccessEgressType;
-import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
 
 /**
@@ -30,6 +29,6 @@ public record ViableAccessEgress(
   Vertex passengerVertex,
   AccessEgressType accessEgress,
   List<InsertionPosition> insertionPositions,
-  @Nullable StreetPath walkToPickup,
-  @Nullable StreetPath walkFromDropoff
+  @Nullable CarpoolPath walkToPickup,
+  @Nullable CarpoolPath walkFromDropoff
 ) {}
