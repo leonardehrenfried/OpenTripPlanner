@@ -3,8 +3,7 @@ package org.opentripplanner.place.nearbystopfinder;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -77,8 +76,8 @@ class StreetNearbyStopFinderTest extends GraphRoutingTest {
   @Test
   void findClosestStopsByCoordinate() {
     var nearbyStopFinder = StreetNearbyStopFinder.of(linkingContextFactory).build();
-    var ns1 = new NearbyStop(stopA.getId(), 0, null, null);
-    var ns2 = new NearbyStop(stopB.getId(), 100, null, null);
+    var ns1 = new NearbyStop(stopA.getId(), 0);
+    var ns2 = new NearbyStop(stopB.getId(), 100);
     var coordinate = ORIGIN.asJtsCoordinate();
 
     assertEquals(List.of(ns1), simplify(nearbyStopFinder.findNearbyStops(coordinate, 10)));
@@ -241,9 +240,8 @@ class StreetNearbyStopFinderTest extends GraphRoutingTest {
   void assertZeroDistanceStop(TransitStopVertex expected, NearbyStop nearbyStop) {
     assertEquals(expected.getId(), nearbyStop.stopId());
     assertEquals(0, nearbyStop.distance());
-    assertEquals(0, nearbyStop.edges().size());
-    assertEquals(expected, nearbyStop.state().getVertex());
-    assertNull(nearbyStop.state().getBackState());
+    assertTrue(nearbyStop.path().isEmpty());
+    assertEquals(expected, nearbyStop.vertex());
   }
 
   /**
@@ -256,15 +254,14 @@ class StreetNearbyStopFinderTest extends GraphRoutingTest {
   ) {
     assertEquals(expected.getId(), nearbyStop.stopId());
     assertEquals(expectedDistance, nearbyStop.distance());
-    assertEquals(expected, nearbyStop.state().getVertex());
-    assertFalse(nearbyStop.edges().isEmpty());
-    assertNotNull(nearbyStop.state().getBackState());
+    assertEquals(expected, nearbyStop.vertex());
+    assertFalse(nearbyStop.path().isEmpty());
   }
 
   private List<NearbyStop> simplify(List<NearbyStop> closestStops) {
     return closestStops
       .stream()
-      .map(ns -> new NearbyStop(ns.stopId(), ns.distance(), null, null))
+      .map(ns -> new NearbyStop(ns.stopId(), ns.distance()))
       .collect(Collectors.toList());
   }
 }

@@ -4,21 +4,17 @@ import java.util.Objects;
 import org.opentripplanner.framework.model.TimeAndCost;
 import org.opentripplanner.raptor.spi.RaptorConstants;
 import org.opentripplanner.routing.cost.CostLimit;
+import org.opentripplanner.street.model.path.DefaultStreetPath;
 import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.search.state.State;
 
 /**
  * Default implementation of the RaptorAccessEgress interface.
  * <p>
- * Implementation note: This class keeps the final A* state in search order, not in chronological
- * order. For egress searches this State is unreversed ({@code request.arriveBy() == true}) —
- * reversal is deferred to {@link #streetPath()}, which is only called for winning paths during
- * itinerary mapping. This avoids the cost of cloning and reversing the entire State chain for
- * every egress candidate.
- * <p>
- * The scalar values extracted below ({@code getElapsedTimeSeconds}, {@code getWeight},
- * {@code containsOnlyWalkMode}) are direction-independent and produce identical results on
- * both reversed and unreversed State chains.
+ * Implementation note: The street path is lazy. Duration, cost and the modes used are read from
+ * the final state of the street search without building the path. For egress searches
+ * ({@code request.arriveBy() == true}) building the path means reversing the whole state chain,
+ * which is deferred until the path is used, like when mapping a winning itinerary.
  */
 public class DefaultAccessEgress implements RoutingAccessEgress {
 
@@ -30,7 +26,7 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
   /** Keep this to be able to map back to itinerary */
   private final TimeAndCost penalty;
 
-  private final State finalState;
+  private final StreetPath path;
 
   /**
    * This is public to allow unit-tests full control over the field values.
@@ -40,24 +36,31 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
     int durationInSeconds,
     int generalizedCost,
     TimeAndCost penalty,
-    State finalState
+    StreetPath path
   ) {
     this.stop = stop;
     this.durationInSeconds = durationInSeconds;
     this.generalizedCost = generalizedCost;
     this.timePenalty = penalty.isZero() ? RaptorConstants.TIME_NOT_SET : penalty.timeInSeconds();
     this.penalty = penalty;
-    this.finalState = Objects.requireNonNull(finalState);
+    this.path = Objects.requireNonNull(path);
   }
 
-  public DefaultAccessEgress(int stop, State finalState) {
+  public DefaultAccessEgress(int stop, StreetPath path) {
     this(
       stop,
-      (int) finalState.getElapsedTimeSeconds(),
-      CostLimit.toRaptorCost(finalState.getWeight()),
+      (int) path.duration().toSeconds(),
+      CostLimit.toRaptorCost(path.generalizedCost()),
       TimeAndCost.ZERO,
-      finalState
+      path
     );
+  }
+
+  /**
+   * Create an access/egress from the final state of a street search.
+   */
+  public DefaultAccessEgress(int stop, State finalState) {
+    this(stop, new DefaultStreetPath(finalState));
   }
 
   /**
@@ -65,7 +68,7 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
    * cost are derived from the street search again, so any penalty of {@code other} is dropped.
    */
   protected DefaultAccessEgress(DefaultAccessEgress other) {
-    this(other.stop, other.finalState);
+    this(other.stop, other.path);
   }
 
   protected DefaultAccessEgress(DefaultAccessEgress other, TimeAndCost penalty) {
@@ -77,7 +80,7 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
       other.durationInSeconds(),
       other.c1() + penalty.cost().toCentiSeconds(),
       penalty,
-      other.finalState
+      other.path
     );
     if (other.penalty() != TimeAndCost.ZERO) {
       throw new IllegalStateException("Can not add penalty twice...");
@@ -110,26 +113,25 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
   }
 
   /**
-   * The street path of this access/egress in chronological order. The path is built on every
-   * call, so only call this for paths which are actually used, like when mapping an itinerary.
+   * The street path of this access/egress in chronological order.
    */
   public StreetPath streetPath() {
-    return StreetPath.of(finalState);
+    return path;
   }
 
   @Override
   public boolean isRentingVehicleFromStation() {
-    return finalState.isRentingVehicleFromStation();
+    return path.arrivesWithRentedVehicleFromStation();
   }
 
   @Override
   public boolean containsModeCar() {
-    return finalState.containsModeCar();
+    return path.containsModeCar();
   }
 
   @Override
   public boolean isWalkOnly() {
-    return finalState.containsOnlyWalkMode();
+    return path.containsOnlyWalkMode();
   }
 
   @Override

@@ -36,4 +36,10 @@ public interface FlexAccessEgressCallbackAdapter {
    * arrangement constraints.
    */
   boolean isDateActive(FlexServiceDate date, FlexTrip<?, ?> trip);
+
+  /**
+   * The walk speed of the request in meters per second. It is used to limit the length of the
+   * transfers to and from area stops.
+   */
+  double walkSpeed();
 }

@@ -1,9 +1,7 @@
 package org.opentripplanner.ext.flex.template;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
@@ -15,10 +13,8 @@ import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
 import org.opentripplanner.ext.flex.flexpathcalculator.FlexPathCalculator;
 import org.opentripplanner.ext.flex.trip.FlexTrip;
 import org.opentripplanner.place.api.NearbyStop;
-import org.opentripplanner.street.model.edge.Edge;
+import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
-import org.opentripplanner.street.search.state.EdgeTraverser;
-import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.transfer.regular.model.PathTransfer;
 import org.opentripplanner.transit.model.site.RegularStop;
 import org.opentripplanner.transit.model.site.StopLocation;
@@ -101,25 +97,22 @@ abstract class AbstractFlexTemplate {
   Stream<FlexAccessEgress> createFlexAccessEgressStream(FlexAccessEgressCallbackAdapter callback) {
     if (transferStop instanceof RegularStop stop) {
       var flexVertex = callback.getStopVertex(stop.getId());
-      return Stream.of(createFlexAccessEgress(new ArrayList<>(), flexVertex, stop)).filter(
-        Objects::nonNull
-      );
+      return Stream.of(createFlexAccessEgress(null, flexVertex, stop)).filter(Objects::nonNull);
     }
     // transferStop is Location Area/Line
     else {
       double maxDistanceMeters =
-        flexParameters.maxTransferDuration().getSeconds() *
-        accessEgress.state().getRequest().walk().speed();
+        flexParameters.maxTransferDuration().getSeconds() * callback.walkSpeed();
 
       return getTransfersFromTransferStop(callback)
         .stream()
         .filter(pathTransfer -> pathTransfer.getDistanceMeters() <= maxDistanceMeters)
         .filter(transfer -> getFinalStop(transfer) != null)
         .map(transfer -> {
-          var edges = getTransferEdges(transfer);
-          var flexVertex = getFlexVertex(edges.get(0));
+          var transferPath = transfer.getPath();
+          var flexVertex = getFlexVertex(transferPath);
           var finalStop = getFinalStop(transfer);
-          return createFlexAccessEgress(edges, flexVertex, finalStop);
+          return createFlexAccessEgress(transferPath, flexVertex, finalStop);
         })
         .filter(Objects::nonNull);
     }
@@ -141,12 +134,6 @@ abstract class AbstractFlexTemplate {
   }
 
   /**
-   * Get a list of edges used for transferring to and from the scheduled transit network. The edges
-   * should be in the order of traversal of the state in the NearbyStop
-   */
-  protected abstract List<Edge> getTransferEdges(PathTransfer transfer);
-
-  /**
    * Get the {@Link Stop} where the connection to the scheduled transit network is made.
    */
   protected abstract RegularStop getFinalStop(PathTransfer transfer);
@@ -162,14 +149,14 @@ abstract class AbstractFlexTemplate {
   /**
    * Get the {@Link Vertex} where the flex ride ends/begins for the access/egress.
    */
-  protected abstract Vertex getFlexVertex(Edge edge);
+  protected abstract Vertex getFlexVertex(StreetPath transferPath);
 
   /**
    * Break down the time spent on flex ride/path in access, trip and egress.
    */
   protected abstract FlexPathDurations calculateFlexPathDurations(
     FlexTripEdge flexEdge,
-    State state
+    StreetPath path
   );
 
   /**
@@ -180,7 +167,7 @@ abstract class AbstractFlexTemplate {
 
   @Nullable
   private FlexAccessEgress createFlexAccessEgress(
-    List<Edge> transferEdges,
+    @Nullable StreetPath transferPath,
     Vertex flexVertex,
     RegularStop stop
   ) {
@@ -194,16 +181,17 @@ abstract class AbstractFlexTemplate {
     // this code is a little repetitive but needed as a performance improvement. previously
     // the flex path was checked before this method was called. this meant that every path
     // was traversed twice, leading to a noticeable slowdown.
-    final var afterFlexState = flexEdge.traverse(accessEgress.state());
-    if (State.isEmpty(afterFlexState)) {
+    final var afterFlexPath = accessEgress.path().continueSearch(flexEdge);
+    if (afterFlexPath.isEmpty()) {
       return null;
     }
 
-    final var finalStateOpt = EdgeTraverser.traverseEdges(afterFlexState[0], transferEdges);
+    final var finalPathOpt =
+      transferPath == null ? afterFlexPath : afterFlexPath.get().continueSearch(transferPath);
 
-    return finalStateOpt
-      .map(finalState -> {
-        var durations = calculateFlexPathDurations(flexEdge, finalState);
+    return finalPathOpt
+      .map(finalPath -> {
+        var durations = calculateFlexPathDurations(flexEdge, finalPath);
 
         return new FlexAccessEgress(
           stop,
@@ -211,8 +199,8 @@ abstract class AbstractFlexTemplate {
           boardStopPosition,
           alightStopPosition,
           trip,
-          finalState,
-          transferEdges.isEmpty(),
+          finalPath,
+          transferPath == null || transferPath.isEmpty(),
           requestedBookingTime
         );
       })

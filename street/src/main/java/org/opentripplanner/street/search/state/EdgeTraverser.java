@@ -28,9 +28,20 @@ public class EdgeTraverser {
     if (edges.isEmpty()) {
       return Optional.empty();
     }
+    return createPath(edges.getFirst().getFromVertex(), edges, request);
+  }
 
+  /// Create a path from a start vertex, a set of edges and a street search request. If the list of
+  /// edges is empty, the path consists only of the start vertex.
+  ///
+  /// @return Empty if the edges can't be traversed using the given request
+  public static Optional<StreetPath> createPath(
+    Vertex start,
+    List<Edge> edges,
+    StreetSearchRequest request
+  ) {
     var states = new ArrayList<State>(edges.size() + 1);
-    var it = new StateIterator(createStartState(edges.getFirst().getFromVertex(), request), edges);
+    var it = new StateIterator(createStartState(start, request), edges);
     try {
       it.forEachRemaining(states::add);
     } catch (CouldNotTraverseException _) {

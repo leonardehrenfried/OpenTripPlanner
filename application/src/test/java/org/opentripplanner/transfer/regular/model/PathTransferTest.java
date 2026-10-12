@@ -16,8 +16,11 @@ import org.opentripplanner.raptor.spi.RaptorTransfer;
 import org.opentripplanner.routing.cost.CostLimit;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.StreetModelForTest;
+import org.opentripplanner.street.model.edge.Edge;
+import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.IntersectionVertex;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
+import org.opentripplanner.street.search.state.EdgeTraverser;
 import org.opentripplanner.transit.model.site.RegularStop;
 
 class PathTransferTest {
@@ -48,7 +51,7 @@ class PathTransferTest {
         S1,
         S2,
         edge.getDistanceMeters(),
-        List.of(edge),
+        path(edge),
         WALK_ONLY
       );
       assertTrue(veryLongTransfer.getDistanceMeters() > 1_000_000);
@@ -59,7 +62,7 @@ class PathTransferTest {
     @Test
     void allowLowCost() {
       var edge = StreetModelForTest.streetEdge(BERLIN_V, BRANDENBURG_GATE_V);
-      var transfer = new PathTransfer(S1, S2, edge.getDistanceMeters(), List.of(edge), WALK_ONLY);
+      var transfer = new PathTransfer(S1, S2, edge.getDistanceMeters(), path(edge), WALK_ONLY);
       assertTrue(transfer.getDistanceMeters() < 4000);
       final Optional<DefaultRaptorTransfer> raptorTransfer = transfer.asRaptorTransfer(
         StreetSearchRequest.of().build()
@@ -74,32 +77,36 @@ class PathTransferTest {
 
     @Test
     void overflow() {
-      var veryLongTransfer = new PathTransfer(S1, S2, Integer.MAX_VALUE, List.of(), WALK_ONLY);
+      var veryLongTransfer = new PathTransfer(S1, S2, Integer.MAX_VALUE, null, WALK_ONLY);
       assertMaxCost(veryLongTransfer.asRaptorTransfer(StreetSearchRequest.of().build()).get());
     }
 
     @Test
     void negativeCost() {
-      var veryLongTransfer = new PathTransfer(S1, S2, -5, List.of(), WALK_ONLY);
+      var veryLongTransfer = new PathTransfer(S1, S2, -5, null, WALK_ONLY);
       assertMaxCost(veryLongTransfer.asRaptorTransfer(StreetSearchRequest.of().build()).get());
     }
 
     @Test
     void limitMaxCost() {
-      var veryLongTransfer = new PathTransfer(S1, S2, 8_000_000, List.of(), WALK_ONLY);
+      var veryLongTransfer = new PathTransfer(S1, S2, 8_000_000, null, WALK_ONLY);
       // cost would be too high, so it will be capped before passing to RAPTOR
       assertMaxCost(veryLongTransfer.asRaptorTransfer(StreetSearchRequest.of().build()).get());
     }
 
     @Test
     void allowLowCost() {
-      var transfer = new PathTransfer(S1, S2, 200, List.of(), WALK_ONLY);
+      var transfer = new PathTransfer(S1, S2, 200, null, WALK_ONLY);
       final Optional<DefaultRaptorTransfer> raptorTransfer = transfer.asRaptorTransfer(
         StreetSearchRequest.of().build()
       );
       // cost is below max limit and should be included as is in RAPTOR
       assertBelowMaxCost(raptorTransfer.get());
     }
+  }
+
+  private static StreetPath path(Edge edge) {
+    return EdgeTraverser.createPath(List.of(edge), StreetSearchRequest.of().build()).orElseThrow();
   }
 
   private static void assertMaxCost(RaptorTransfer transfer) {

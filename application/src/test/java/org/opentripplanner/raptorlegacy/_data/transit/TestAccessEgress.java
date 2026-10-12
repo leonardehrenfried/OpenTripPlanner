@@ -7,6 +7,7 @@ import org.opentripplanner.core.model.i18n.I18NString;
 import org.opentripplanner.framework.model.TimeAndCost;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.DefaultAccessEgress;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RoutingAccessEgress;
+import org.opentripplanner.street.model.path.DefaultStreetPath;
 import org.opentripplanner.street.model.vertex.StreetLocation;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
 import org.opentripplanner.street.search.state.State;
@@ -118,7 +119,7 @@ public class TestAccessEgress {
         durationInSeconds,
         generalizedCost,
         TimeAndCost.ZERO,
-        lastState
+        new DefaultStreetPath(lastState)
       ) {
         // TODO - Use the domain type FlexAccessEgressAdapter here instead [if numberOfRides > 0]
         @Override

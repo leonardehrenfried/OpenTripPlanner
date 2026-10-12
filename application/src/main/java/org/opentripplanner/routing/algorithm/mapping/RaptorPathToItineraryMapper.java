@@ -42,12 +42,9 @@ import org.opentripplanner.service.streetdetails.StreetDetailsService;
 import org.opentripplanner.street.geometry.GeometryUtils;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.model.StreetMode;
-import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.search.TraverseMode;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
-import org.opentripplanner.street.search.state.State;
-import org.opentripplanner.street.search.state.StateEditor;
 import org.opentripplanner.streetadapter.StreetSearchRequestMapper;
 import org.opentripplanner.transfer.constrained.model.ConstrainedTransfer;
 import org.opentripplanner.transfer.regular.model.DefaultRaptorTransfer;
@@ -389,8 +386,8 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
     Place from,
     Place to
   ) {
-    List<Edge> edges = transfer.getEdges();
-    if (edges == null || edges.isEmpty()) {
+    var path = transfer.getPath();
+    if (path == null || path.isEmpty()) {
       return List.of(
         StreetLeg.of()
           .withMode(transferMode)
@@ -405,7 +402,7 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
           .build()
       );
     } else {
-      return mapTransferLegWithEdges(pathLeg.fromTime(), edges);
+      return mapTransferLegWithPath(pathLeg.fromTime(), path);
     }
   }
 
@@ -413,8 +410,8 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
     PathLeg<T> pathLeg,
     ViaCoordinateTransfer transfer
   ) {
-    var fromLegs = mapTransferLegWithEdges(pathLeg.fromTime(), transfer.fromEdges());
-    var toLegs = mapTransferLegWithEdges(pathLeg.toTime(), transfer.toEdges());
+    var fromLegs = mapTransferLegWithPath(pathLeg.fromTime(), transfer.fromPath());
+    var toLegs = mapTransferLegWithPath(pathLeg.toTime(), transfer.toPath());
 
     if (fromLegs.isEmpty() || toLegs.isEmpty()) {
       throw new IllegalStateException(
@@ -435,25 +432,18 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
     return ListUtils.combine(fromLegs, toLegs);
   }
 
-  private List<Leg> mapTransferLegWithEdges(int fromTime, List<Edge> edges) {
-    StateEditor se = new StateEditor(edges.getFirst().getFromVertex(), transferStreetRequest);
-    se.setTimeSeconds(createZonedDateTime(fromTime).toEpochSecond());
-
-    State s = se.makeState();
-    ArrayList<State> transferStates = new ArrayList<>();
-    transferStates.add(s);
-    for (Edge e : edges) {
-      var states = e.traverse(s);
-      if (State.isEmpty(states)) {
-        s = null;
-      } else {
-        transferStates.add(states[0]);
-        s = states[0];
-      }
-    }
-    State[] states = transferStates.toArray(State[]::new);
-    var graphPath = StreetPath.of(states[states.length - 1]);
-    return streetLegMapper.map(graphPath, request);
+  /**
+   * Traverse the pre-computed path of a transfer again with the transfer request, starting at the
+   * given time, and map it to legs.
+   */
+  private List<Leg> mapTransferLegWithPath(int fromTime, StreetPath path) {
+    var transferRequest = StreetSearchRequest.copyOf(transferStreetRequest)
+      .withStartTime(createZonedDateTime(fromTime).toInstant())
+      .build();
+    var transferPath = path
+      .reTraverse(transferRequest)
+      .orElseThrow(() -> new IllegalStateException("Can't traverse transfer path " + path));
+    return streetLegMapper.map(transferPath, request);
   }
 
   private Itinerary mapUnknownRaptorPath(RaptorPath<T> path) {

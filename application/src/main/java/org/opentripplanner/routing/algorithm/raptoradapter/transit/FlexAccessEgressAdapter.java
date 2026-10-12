@@ -13,7 +13,7 @@ public class FlexAccessEgressAdapter extends DefaultAccessEgress {
   private final FlexAccessEgress flexAccessEgress;
 
   public FlexAccessEgressAdapter(FlexAccessEgress flexAccessEgress) {
-    super(flexAccessEgress.stop().getIndex(), flexAccessEgress.lastState());
+    super(flexAccessEgress.stop().getIndex(), flexAccessEgress.path());
     this.flexAccessEgress = flexAccessEgress;
   }
 

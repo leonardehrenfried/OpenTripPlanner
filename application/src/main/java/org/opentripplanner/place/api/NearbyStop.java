@@ -1,53 +1,87 @@
 package org.opentripplanner.place.api;
 
 import java.time.Duration;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import javax.annotation.Nullable;
 import org.opentripplanner.core.model.id.FeedScopedId;
-import org.opentripplanner.place.nearbystopfinder.ChronologicalGraphPath;
-import org.opentripplanner.street.model.edge.Edge;
+import org.opentripplanner.street.model.path.DefaultStreetPath;
+import org.opentripplanner.street.model.path.StreetPath;
+import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.state.State;
 
 /**
- * A specific stop at a distance. Also includes a geometry and potentially a list of edges and a
- * state of how to reach the stop from the search origin
+ * A specific stop at a distance. Also includes the street path of how to reach the stop from the
+ * search origin, if the stop was found by a street search.
  */
 public class NearbyStop implements Comparable<NearbyStop> {
 
   private final FeedScopedId stopId;
   private final double distance;
 
-  private final List<Edge> edges;
-  private final State state;
+  /**
+   * The vertex where the street search reached the stop, or null if the stop was not found by a
+   * street search.
+   */
+  @Nullable
+  private final Vertex vertex;
 
-  public NearbyStop(FeedScopedId stopId, double distance, List<Edge> edges, State state) {
+  /**
+   * The street path between the search origin and the stop, or null if the stop was not found by
+   * a street search.
+   */
+  @Nullable
+  private final StreetPath path;
+
+  /**
+   * @param vertex The vertex where the street search reached the stop
+   * @param path   The street path between the search origin and the stop
+   */
+  public NearbyStop(
+    FeedScopedId stopId,
+    double distance,
+    @Nullable Vertex vertex,
+    @Nullable StreetPath path
+  ) {
     this.stopId = Objects.requireNonNull(stopId);
     this.distance = distance;
-    this.edges = edges;
-    this.state = state;
+    this.vertex = vertex;
+    this.path = path;
+  }
+
+  /**
+   * Create a NearbyStop which was not found by a street search, like with a straight-line search.
+   */
+  public NearbyStop(FeedScopedId stopId, double distance) {
+    this(stopId, distance, null, null);
+  }
+
+  /**
+   * Create a NearbyStop with a pre-computed street path, like a transfer between stops.
+   */
+  public NearbyStop(FeedScopedId stopId, double distance, @Nullable StreetPath path) {
+    this(stopId, distance, null, path);
   }
 
   /**
    * Given a State at a StopVertex, bundle the stop's id together with information about how far
-   * away it is and the geometry of the path leading up to the given State.
+   * away it is and the path leading up to the given State.
    */
   public static NearbyStop nearbyStopForState(State state, FeedScopedId stopId) {
-    var result = ChronologicalGraphPath.of(state);
-    return new NearbyStop(stopId, result.effectiveWalkDistance(), result.edges(), state);
+    var path = new DefaultStreetPath(state);
+    return new NearbyStop(stopId, path.traversalDistance(), state.getVertex(), path);
   }
 
   /**
    * Create a NearbyStop with zero distance and no edges.
    */
   public static NearbyStop ofZeroDistance(FeedScopedId stopId, State state) {
-    return new NearbyStop(stopId, 0d, Collections.emptyList(), state);
+    return new NearbyStop(stopId, 0d, state.getVertex(), new DefaultStreetPath(state));
   }
 
   /**
    * Return {@code true} if this instance has a lower weight/cost than the given {@code other}.
-   * If the state is not set, the distance is used for comparison instead. If the
+   * If the path is not set, the distance is used for comparison instead. If the
    * weight/cost/distance is equals (or worse) this method returns {@code false}.
    */
   public boolean isBetter(NearbyStop other) {
@@ -56,14 +90,14 @@ public class NearbyStop implements Comparable<NearbyStop> {
 
   @Override
   public int compareTo(NearbyStop that) {
-    if ((this.state == null) != (that.state == null)) {
+    if ((this.path == null) != (that.path == null)) {
       throw new IllegalStateException(
-        "Only NearbyStops which both contain or lack a state may be compared."
+        "Only NearbyStops which both contain or lack a path may be compared."
       );
     }
 
-    if (this.state != null) {
-      return (int) this.state.getWeight() - (int) that.state.getWeight();
+    if (this.path != null) {
+      return (int) this.path.generalizedCost() - (int) that.path.generalizedCost();
     }
     return (int) this.distance - (int) that.distance;
   }
@@ -72,12 +106,12 @@ public class NearbyStop implements Comparable<NearbyStop> {
    * Duration it took to reach the stop.
    */
   public Duration duration() {
-    return Duration.ofSeconds(state.getElapsedTimeSeconds());
+    return path.duration();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(stopId, distance, edges, state);
+    return Objects.hash(stopId, distance, path);
   }
 
   @Override
@@ -92,19 +126,17 @@ public class NearbyStop implements Comparable<NearbyStop> {
     return (
       Double.compare(that.distance, distance) == 0 &&
       stopId.equals(that.stopId) &&
-      Objects.equals(edges, that.edges) &&
-      Objects.equals(state, that.state)
+      Objects.equals(path, that.path)
     );
   }
 
   public String toString() {
     return String.format(
       Locale.ROOT,
-      "stop %s at %.1f meters%s%s",
+      "stop %s at %.1f meters%s",
       stopId,
       distance,
-      edges != null ? " (" + edges.size() + " edges)" : "",
-      state != null ? " w/state" : ""
+      path != null ? " w/path" : ""
     );
   }
 
@@ -116,11 +148,13 @@ public class NearbyStop implements Comparable<NearbyStop> {
     return distance;
   }
 
-  public List<Edge> edges() {
-    return edges;
+  @Nullable
+  public Vertex vertex() {
+    return vertex;
   }
 
-  public State state() {
-    return state;
+  @Nullable
+  public StreetPath path() {
+    return path;
   }
 }

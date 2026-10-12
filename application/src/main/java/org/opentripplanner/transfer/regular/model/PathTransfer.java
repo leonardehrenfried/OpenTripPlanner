@@ -2,17 +2,15 @@ package org.opentripplanner.transfer.regular.model;
 
 import java.io.Serializable;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Optional;
+import javax.annotation.Nullable;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.routing.cost.CostLimit;
 import org.opentripplanner.street.geometry.GeometryUtils;
 import org.opentripplanner.street.model.StreetMode;
-import org.opentripplanner.street.model.edge.Edge;
+import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
 import org.opentripplanner.street.search.request.WalkRequest;
-import org.opentripplanner.street.search.state.EdgeTraverser;
-import org.opentripplanner.street.search.state.StateEditor;
 import org.opentripplanner.transfer.constrained.model.ConstrainedTransfer;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.utils.tostring.ToStringBuilder;
@@ -34,7 +32,12 @@ public class PathTransfer implements Serializable {
 
   private final double distanceMeters;
 
-  private final List<Edge> edges;
+  /**
+   * The street path of the transfer, or null if the transfer has no path, like a straight-line
+   * transfer.
+   */
+  @Nullable
+  private final StreetPath path;
 
   private final EnumSet<StreetMode> modes;
 
@@ -42,13 +45,13 @@ public class PathTransfer implements Serializable {
     StopLocation from,
     StopLocation to,
     double distanceMeters,
-    List<Edge> edges,
+    @Nullable StreetPath path,
     EnumSet<StreetMode> modes
   ) {
     this.from = from;
     this.to = to;
     this.distanceMeters = distanceMeters;
-    this.edges = edges;
+    this.path = path;
     this.modes = modes;
   }
 
@@ -56,8 +59,9 @@ public class PathTransfer implements Serializable {
     return distanceMeters;
   }
 
-  public List<Edge> getEdges() {
-    return edges;
+  @Nullable
+  public StreetPath getPath() {
+    return path;
   }
 
   public EnumSet<StreetMode> getModes() {
@@ -68,14 +72,14 @@ public class PathTransfer implements Serializable {
   public PathTransfer withAddedMode(StreetMode mode) {
     EnumSet<StreetMode> newModes = EnumSet.copyOf(modes);
     newModes.add(mode);
-    return new PathTransfer(from, to, distanceMeters, edges, newModes);
+    return new PathTransfer(from, to, distanceMeters, path, newModes);
   }
 
   public LineString getGeometry() {
-    if (edges == null) {
+    if (path == null) {
       return GeometryUtils.getGeometryFactory().createLineString();
     } else {
-      return GeometryUtils.concatenateLineStrings(edges, Edge::getGeometry);
+      return path.geometry();
     }
   }
 
@@ -85,7 +89,7 @@ public class PathTransfer implements Serializable {
   }
 
   public Optional<DefaultRaptorTransfer> asRaptorTransfer(StreetSearchRequest request) {
-    if (edges == null || edges.isEmpty()) {
+    if (path == null || path.isEmpty()) {
       WalkRequest walkReq = request.walk();
       double durationSeconds = distanceMeters / walkReq.speed();
       return Optional.of(
@@ -98,19 +102,16 @@ public class PathTransfer implements Serializable {
       );
     }
 
-    StateEditor se = new StateEditor(edges.get(0).getFromVertex(), request);
-    se.setTimeSeconds(0);
-
-    var state = EdgeTraverser.traverseEdges(se.makeState(), edges);
-
-    return state.map(s ->
-      new DefaultRaptorTransfer(
-        to.getIndex(),
-        (int) s.getElapsedTimeSeconds(),
-        CostLimit.toRaptorCostWholeSeconds(s.getWeight()),
-        this
-      )
-    );
+    return path
+      .reTraverse(request)
+      .map(p ->
+        new DefaultRaptorTransfer(
+          to.getIndex(),
+          (int) p.duration().toSeconds(),
+          CostLimit.toRaptorCostWholeSeconds(p.generalizedCost()),
+          this
+        )
+      );
   }
 
   @Override
@@ -119,7 +120,7 @@ public class PathTransfer implements Serializable {
       .addObj("from", from)
       .addObj("to", to)
       .addNum("distance", distanceMeters)
-      .addColSize("edges", edges)
+      .addObj("path", path)
       .addColSize("modes", modes)
       .toString();
   }

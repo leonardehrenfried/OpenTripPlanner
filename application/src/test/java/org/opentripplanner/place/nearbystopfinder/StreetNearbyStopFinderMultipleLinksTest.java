@@ -3,8 +3,7 @@ package org.opentripplanner.place.nearbystopfinder;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.opentripplanner.place.nearbystopfinder.StreetNearbyStopFinderTest.sort;
 
 import java.time.Duration;
@@ -86,9 +85,8 @@ class StreetNearbyStopFinderMultipleLinksTest extends GraphRoutingTest {
   void assertZeroDistanceStop(TransitStopVertex expected, NearbyStop nearbyStop) {
     assertEquals(expected.getId(), nearbyStop.stopId());
     assertEquals(0, nearbyStop.distance());
-    assertEquals(0, nearbyStop.edges().size());
-    assertEquals(expected, nearbyStop.state().getVertex());
-    assertNull(nearbyStop.state().getBackState());
+    assertTrue(nearbyStop.path().isEmpty());
+    assertEquals(expected, nearbyStop.vertex());
   }
 
   /**
@@ -101,8 +99,7 @@ class StreetNearbyStopFinderMultipleLinksTest extends GraphRoutingTest {
   ) {
     assertEquals(expected.getId(), nearbyStop.stopId());
     assertEquals(expectedDistance, nearbyStop.distance());
-    assertEquals(expected, nearbyStop.state().getVertex());
-    assertFalse(nearbyStop.edges().isEmpty());
-    assertNotNull(nearbyStop.state().getBackState());
+    assertEquals(expected, nearbyStop.vertex());
+    assertFalse(nearbyStop.path().isEmpty());
   }
 }

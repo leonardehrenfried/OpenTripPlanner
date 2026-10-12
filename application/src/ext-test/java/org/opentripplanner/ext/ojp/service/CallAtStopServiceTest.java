@@ -20,6 +20,7 @@ import org.opentripplanner.place.nearbystopfinder.StraightLineNearbyStopFinder;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.model.StreetMode;
+import org.opentripplanner.street.model.path.DefaultStreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.state.TestStateBuilder;
 import org.opentripplanner.transit.model.TransitTestEnvironment;
@@ -99,13 +100,9 @@ class CallAtStopServiceTest {
     var finder = new NearbyStopFinder() {
       @Override
       public List<NearbyStop> findNearbyStops(Coordinate coordinate, double radiusMeters) {
+        var state = TestStateBuilder.ofWalking().streetEdge().build();
         return List.of(
-          new NearbyStop(
-            STOP_A.getId(),
-            100,
-            List.of(),
-            TestStateBuilder.ofWalking().streetEdge().build()
-          )
+          new NearbyStop(STOP_A.getId(), 100, state.getVertex(), new DefaultStreetPath(state))
         );
       }
 

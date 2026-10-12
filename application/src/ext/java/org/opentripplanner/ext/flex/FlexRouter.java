@@ -28,7 +28,6 @@ import org.opentripplanner.routing.algorithm.mapping.StreetLegMapper;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.service.streetdetails.StreetDetailsService;
 import org.opentripplanner.street.graph.Graph;
-import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.TransitStopVertex;
 import org.opentripplanner.transfer.regular.RegularTransferService;
 import org.opentripplanner.transfer.regular.model.PathTransfer;
@@ -76,7 +75,8 @@ public class FlexRouter {
     int additionalPastSearchDays,
     int additionalFutureSearchDays,
     Collection<NearbyStop> streetAccesses,
-    Collection<NearbyStop> streetEgresses
+    Collection<NearbyStop> streetEgresses,
+    double walkSpeed
   ) {
     this.graph = graph;
     this.transferService = transferService;
@@ -88,7 +88,7 @@ public class FlexRouter {
       filterRequest,
       transitService.getTripCalendars()::listServiceDates
     );
-    this.callbackService = new CallbackAdapter();
+    this.callbackService = new CallbackAdapter(walkSpeed);
     this.streetLegMapper = new StreetLegMapper(
       new TransitServiceResolver(transitService),
       transitService.getTimeZone(),
@@ -142,9 +142,7 @@ public class FlexRouter {
 
     for (DirectFlexPath it : directFlexPaths) {
       var startTime = startOfTime.plusSeconds(it.startTime());
-      streetLegMapper
-        .mapToItinerary(StreetPath.of(it.state()), request, startTime)
-        .ifPresent(itineraries::add);
+      streetLegMapper.mapToItinerary(it.path(), request, startTime).ifPresent(itineraries::add);
     }
     return itineraries;
   }
@@ -221,6 +219,12 @@ public class FlexRouter {
    */
   private class CallbackAdapter implements FlexAccessEgressCallbackAdapter {
 
+    private final double walkSpeed;
+
+    private CallbackAdapter(double walkSpeed) {
+      this.walkSpeed = walkSpeed;
+    }
+
     @Override
     public TransitStopVertex getStopVertex(FeedScopedId stopId) {
       return graph.getStopVertex(stopId);
@@ -244,6 +248,11 @@ public class FlexRouter {
     @Override
     public boolean isDateActive(FlexServiceDate date, FlexTrip<?, ?> trip) {
       return date.isTripRunning(trip);
+    }
+
+    @Override
+    public double walkSpeed() {
+      return walkSpeed;
     }
   }
 }

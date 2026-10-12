@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.annotation.Nullable;
 import org.opentripplanner.framework.application.OTPFeature;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
 import org.opentripplanner.graph_builder.issues.StopNotLinkedForTransfers;
@@ -25,7 +26,7 @@ import org.opentripplanner.place.nearbystopfinder.StreetNearbyStopFinder;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.model.StreetMode;
-import org.opentripplanner.street.model.edge.Edge;
+import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.TransitStopVertex;
 import org.opentripplanner.transfer.regular.TransferRepository;
 import org.opentripplanner.transfer.regular.model.PathTransfer;
@@ -276,13 +277,13 @@ public class DirectTransferGenerator implements GraphBuilderModule {
     Map<TransferKey, PathTransfer> distinctTransfers,
     StreetMode mode
   ) {
-    TransferKey transferKey = new TransferKey(from, to, sd.edges());
+    TransferKey transferKey = new TransferKey(from, to, sd.path());
     PathTransfer pathTransfer = distinctTransfers.get(transferKey);
     if (pathTransfer == null) {
       // If the PathTransfer can't be found, it is created.
       distinctTransfers.put(
         transferKey,
-        new PathTransfer(from, to, sd.distance(), sd.edges(), EnumSet.of(mode))
+        new PathTransfer(from, to, sd.distance(), sd.path(), EnumSet.of(mode))
       );
     } else {
       // If the PathTransfer is found, a new PathTransfer with the added mode is created.
@@ -552,5 +553,8 @@ public class DirectTransferGenerator implements GraphBuilderModule {
     Map<StreetMode, Duration> bikesAllowedStopDurationLimitForMode
   ) {}
 
-  private record TransferKey(StopLocation source, StopLocation target, List<Edge> edges) {}
+  /**
+   * Street paths are equal if they traverse the same edges.
+   */
+  private record TransferKey(StopLocation source, StopLocation target, @Nullable StreetPath path) {}
 }

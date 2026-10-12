@@ -14,7 +14,6 @@ import java.time.Month;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Coordinate;
@@ -325,15 +324,11 @@ class FlexTemplateFactoryTest {
    */
   private static NearbyStop nearbyStop(StopLocation transferPoint) {
     var id = "NearbyStop:" + transferPoint.getId().getId();
-    return new NearbyStop(
-      transferPoint.getId(),
-      0,
-      List.of(),
-      new State(
-        new StreetLocation(id, new Coordinate(0, 0), I18NString.of(id)),
-        StreetSearchRequest.of().build()
-      )
+    var state = new State(
+      new StreetLocation(id, new Coordinate(0, 0), I18NString.of(id)),
+      StreetSearchRequest.of().build()
     );
+    return NearbyStop.ofZeroDistance(transferPoint.getId(), state);
   }
 
   private static ScheduledDeviatedTrip scheduledDeviatedFlexTrip(String id, StopTime... stopTimes) {
