@@ -1,5 +1,6 @@
 package org.opentripplanner.graph_builder.module.osm.storage;
 
+import gnu.trove.impl.Constants;
 import gnu.trove.map.TLongByteMap;
 import gnu.trove.map.TLongLongMap;
 import gnu.trove.map.TLongObjectMap;
@@ -37,8 +38,21 @@ class OsmNodeStore {
    */
   private static final double FIXED_POINT_FACTOR = 1e7;
 
+  /**
+   * Returned by {@link #coordinatesById} for absent keys. No valid packed coordinate can have this
+   * value (it would need a fixed-point latitude of {@link Integer#MIN_VALUE}, far outside
+   * {@code [-90, 90]}), so lookups can test for it instead of doing a separate
+   * {@code containsKey()} probe.
+   */
+  private static final long NO_COORDINATE = Long.MIN_VALUE;
+
   /** Coordinates of all retained nodes, packed as two fixed-point ints in one long. */
-  private final TLongLongMap coordinatesById = new TLongLongHashMap();
+  private final TLongLongMap coordinatesById = new TLongLongHashMap(
+    Constants.DEFAULT_CAPACITY,
+    Constants.DEFAULT_LOAD_FACTOR,
+    Constants.DEFAULT_LONG_NO_ENTRY_VALUE,
+    NO_COORDINATE
+  );
 
   /**
    * Index into {@link #providers} of the provider of all retained nodes, minus one entry: nodes
@@ -79,10 +93,10 @@ class OsmNodeStore {
    */
   @Nullable
   OsmNode get(long id) {
-    if (!coordinatesById.containsKey(id)) {
+    long packedCoordinate = coordinatesById.get(id);
+    if (packedCoordinate == NO_COORDINATE) {
       return null;
     }
-    long packedCoordinate = coordinatesById.get(id);
     var provider = providers.get(nonDefaultProviderIndexById.get(id));
     var builder = OsmNode.of()
       .withId(id)
@@ -110,10 +124,10 @@ class OsmNodeStore {
    */
   @Nullable
   Coordinate getCoordinate(long id) {
-    if (!coordinatesById.containsKey(id)) {
+    long packedCoordinate = coordinatesById.get(id);
+    if (packedCoordinate == NO_COORDINATE) {
       return null;
     }
-    long packedCoordinate = coordinatesById.get(id);
     return new Coordinate(unpackLon(packedCoordinate), unpackLat(packedCoordinate));
   }
 
