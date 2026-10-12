@@ -229,23 +229,24 @@ class AccessEgressRouterTest extends GraphRoutingTest {
   }
 
   private String nearbyStopDescription(NearbyStop nearbyStop) {
-    if (nearbyStop.edges().isEmpty()) {
+    if (nearbyStop.path().isEmpty()) {
       return (
         "direct[" +
         transitRepository.getSiteRepository().getStopLocation(nearbyStop.stopId()).getName() +
         "]"
       );
     } else {
-      return "street[" + stateDescription(nearbyStop.state()) + "]";
+      return "street[" + pathDescription(nearbyStop) + "]";
     }
   }
 
-  private String stateDescription(State state) {
-    var last = state;
-    while (last.getBackState() != null) {
-      last = last.getBackState();
-    }
-    return last.getVertex().getName() + " -> " + state.getVertex().getName();
+  /**
+   * Describe the path in search order: from the search origin to the stop.
+   */
+  private String pathDescription(NearbyStop nearbyStop) {
+    var path = nearbyStop.path();
+    var origin = nearbyStop.vertex() == path.toVertex() ? path.fromVertex() : path.toVertex();
+    return origin.getName() + " -> " + nearbyStop.vertex().getName();
   }
 
   private void assertAcessEgresses(Set<String> expected, Collection<NearbyStop> actual) {

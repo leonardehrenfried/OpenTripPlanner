@@ -4,7 +4,7 @@ import static org.opentripplanner.model.StopTime.MISSING_VALUE;
 
 import java.util.Objects;
 import org.opentripplanner.ext.flex.trip.FlexTrip;
-import org.opentripplanner.street.search.state.State;
+import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.transit.model.site.RegularStop;
 import org.opentripplanner.transit.model.timetable.booking.RoutingBookingInfo;
 import org.opentripplanner.utils.tostring.ToStringBuilder;
@@ -16,7 +16,7 @@ public final class FlexAccessEgress {
   private final int boardStopPosition;
   private final int alightStopPosition;
   private final FlexTrip<?, ?> trip;
-  private final State lastState;
+  private final StreetPath path;
   private final boolean stopReachedOnBoard;
   private final RoutingBookingInfo routingBookingInfo;
 
@@ -26,7 +26,7 @@ public final class FlexAccessEgress {
     int boardStopPosition,
     int alightStopPosition,
     FlexTrip<?, ?> trip,
-    State lastState,
+    StreetPath path,
     boolean stopReachedOnBoard,
     int requestedBookingTime
   ) {
@@ -35,7 +35,7 @@ public final class FlexAccessEgress {
     this.boardStopPosition = boardStopPosition;
     this.alightStopPosition = alightStopPosition;
     this.trip = Objects.requireNonNull(trip);
-    this.lastState = lastState;
+    this.path = Objects.requireNonNull(path);
     this.stopReachedOnBoard = stopReachedOnBoard;
     this.routingBookingInfo = RoutingBookingInfo.of(
       requestedBookingTime,
@@ -47,8 +47,11 @@ public final class FlexAccessEgress {
     return stop;
   }
 
-  public State lastState() {
-    return lastState;
+  /**
+   * The street path of the whole access/egress, including the flex trip.
+   */
+  public StreetPath path() {
+    return path;
   }
 
   public boolean stopReachedOnBoard() {
@@ -98,7 +101,7 @@ public final class FlexAccessEgress {
       .addObj("durations", pathDurations)
       .addObj("stop", stop)
       .addObj("trip", trip.getId())
-      .addObj("lastState", lastState)
+      .addObj("path", path)
       .addBoolIfTrue("stopReachedOnBoard", stopReachedOnBoard)
       .toString();
   }

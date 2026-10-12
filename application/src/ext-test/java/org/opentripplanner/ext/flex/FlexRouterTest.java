@@ -144,7 +144,8 @@ class FlexRouterTest {
       0,
       2,
       List.of(),
-      List.of()
+      List.of(),
+      1.33
     );
   }
 

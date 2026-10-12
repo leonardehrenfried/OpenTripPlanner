@@ -35,6 +35,8 @@ import org.opentripplanner.street.model.edge.StreetEdgeBuilder;
 import org.opentripplanner.street.model.vertex.LabelledIntersectionVertex;
 import org.opentripplanner.street.model.vertex.StreetVertex;
 import org.opentripplanner.street.model.vertex.TransitStopVertex;
+import org.opentripplanner.street.search.request.StreetSearchRequest;
+import org.opentripplanner.street.search.state.EdgeTraverser;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
 import org.opentripplanner.transfer.constrained.model.ConstrainedTransfer;
 import org.opentripplanner.transfer.constrained.model.TransferConstraint;
@@ -509,7 +511,8 @@ public class RefetchItineraryServiceTest {
   public static PathTransfer makeTransfer(RegularStop from, RegularStop to, Graph graph) {
     var edges = findPath(from, to, graph);
     var length = edges.stream().mapToDouble(Edge::getDistanceMeters).sum();
-    return new PathTransfer(STOP_B, STOP_C, length, edges, EnumSet.of(StreetMode.WALK));
+    var path = EdgeTraverser.createPath(edges, StreetSearchRequest.of().build()).orElseThrow();
+    return new PathTransfer(STOP_B, STOP_C, length, path, EnumSet.of(StreetMode.WALK));
   }
 
   public static List<Edge> findPath(RegularStop from, RegularStop to, Graph graph) {

@@ -2,6 +2,7 @@ package org.opentripplanner.transfer.regular.index;
 
 import static java.util.stream.Collectors.toMap;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
@@ -20,7 +21,7 @@ public interface RaptorTransferIndex {
     StreetSearchRequest request
   ) {
     // We always want to parallelize the generation when OTP is starting up.
-    return new PreCachedRaptorTransferIndex(transfersByStopIndex, request, true);
+    return new PreCachedRaptorTransferIndex(transfersByStopIndex, atEpoch(request), true);
   }
 
   /**
@@ -30,13 +31,22 @@ public interface RaptorTransferIndex {
     List<List<PathTransfer>> transfersByStopIndex,
     StreetSearchRequest request
   ) {
+    var epochRequest = atEpoch(request);
     return OTPFeature.OnDemandRaptorTransfer.isOn()
-      ? new OnDemandRaptorTransferIndex(transfersByStopIndex, request)
+      ? new OnDemandRaptorTransferIndex(transfersByStopIndex, epochRequest)
       : new PreCachedRaptorTransferIndex(
           transfersByStopIndex,
-          request,
+          epochRequest,
           OTPFeature.ParallelRouting.isOn()
         );
+  }
+
+  /**
+   * The transfers do not depend on the time of the search, so they are always traversed starting
+   * at the epoch. This keeps the result independent of the request which created a cached index.
+   */
+  private static StreetSearchRequest atEpoch(StreetSearchRequest request) {
+    return StreetSearchRequest.copyOf(request).withStartTime(Instant.EPOCH).build();
   }
 
   static Collection<DefaultRaptorTransfer> getRaptorTransfers(

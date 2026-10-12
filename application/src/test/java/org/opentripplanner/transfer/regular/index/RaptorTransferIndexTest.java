@@ -49,7 +49,7 @@ class RaptorTransferIndexTest {
   ) {
     var from = RegularStop.of(FeedScopedId.of("F", "S"), () -> fromStop).build();
     var to = RegularStop.of(FeedScopedId.of("F", "S"), () -> toStop).build();
-    return new PathTransfer(from, to, meters, List.of(), streetModes);
+    return new PathTransfer(from, to, meters, null, streetModes);
   }
 
   @Test
