@@ -486,12 +486,7 @@ public class StopImpl implements GraphQLDataFetchers.GraphQLStop {
             .filter(transfer -> maxDistance == null || transfer.getDistanceMeters() < maxDistance)
             .filter(transfer -> transfer.to instanceof RegularStop)
             .map(transfer ->
-              new NearbyStop(
-                transfer.to.getId(),
-                transfer.getDistanceMeters(),
-                transfer.getEdges(),
-                null
-              )
+              new NearbyStop(transfer.to.getId(), transfer.getDistanceMeters(), transfer.getPath())
             )
             .collect(Collectors.toList());
         },

@@ -69,6 +69,11 @@ class ClosestTripTest {
       public boolean isDateActive(FlexServiceDate date, FlexTrip<?, ?> trip) {
         return true;
       }
+
+      @Override
+      public double walkSpeed() {
+        return 1.33;
+      }
     };
 
   @Test
@@ -96,7 +101,7 @@ class ClosestTripTest {
   private static Collection<ClosestTrip> closestTrips(Matcher<Trip> matcher) {
     return ClosestTrip.of(
       ADAPTER,
-      List.of(new NearbyStop(STOP.getId(), 100, List.of(), null)),
+      List.of(new NearbyStop(STOP.getId(), 100)),
       matcher,
       List.of(FSD),
       true

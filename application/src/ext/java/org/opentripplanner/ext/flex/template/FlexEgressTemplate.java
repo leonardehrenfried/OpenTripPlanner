@@ -1,7 +1,6 @@
 package org.opentripplanner.ext.flex.template;
 
 import java.util.Collection;
-import java.util.List;
 import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.ext.flex.FlexParameters;
 import org.opentripplanner.ext.flex.FlexPathDurations;
@@ -9,9 +8,8 @@ import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
 import org.opentripplanner.ext.flex.flexpathcalculator.FlexPathCalculator;
 import org.opentripplanner.ext.flex.trip.FlexTrip;
 import org.opentripplanner.place.api.NearbyStop;
-import org.opentripplanner.street.model.edge.Edge;
+import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
-import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.transfer.regular.model.PathTransfer;
 import org.opentripplanner.transit.model.site.RegularStop;
 import org.opentripplanner.transit.model.site.StopLocation;
@@ -40,10 +38,6 @@ class FlexEgressTemplate extends AbstractFlexTemplate {
     );
   }
 
-  protected List<Edge> getTransferEdges(PathTransfer transfer) {
-    return transfer.getEdges().reversed();
-  }
-
   protected RegularStop getFinalStop(PathTransfer transfer) {
     return transfer.from instanceof RegularStop regularStop ? regularStop : null;
   }
@@ -54,14 +48,14 @@ class FlexEgressTemplate extends AbstractFlexTemplate {
     return callback.getTransfersToStop(transferStop);
   }
 
-  protected Vertex getFlexVertex(Edge edge) {
-    return edge.getToVertex();
+  protected Vertex getFlexVertex(StreetPath transferPath) {
+    return transferPath.toVertex();
   }
 
-  protected FlexPathDurations calculateFlexPathDurations(FlexTripEdge flexEdge, State state) {
-    int postFlexTime = (int) accessEgress.state().getElapsedTimeSeconds();
+  protected FlexPathDurations calculateFlexPathDurations(FlexTripEdge flexEdge, StreetPath path) {
+    int postFlexTime = (int) accessEgress.path().duration().toSeconds();
     int edgeTimeInSeconds = flexEdge.getTimeInSeconds();
-    int preFlexTime = (int) state.getElapsedTimeSeconds() - postFlexTime - edgeTimeInSeconds;
+    int preFlexTime = (int) path.duration().toSeconds() - postFlexTime - edgeTimeInSeconds;
     return new FlexPathDurations(
       preFlexTime,
       edgeTimeInSeconds,
@@ -73,7 +67,7 @@ class FlexEgressTemplate extends AbstractFlexTemplate {
   protected FlexTripEdge getFlexEdge(Vertex flexFromVertex, FeedScopedId transferStopId) {
     var flexPath = calculator.calculateFlexPath(
       flexFromVertex,
-      accessEgress.state().getVertex(),
+      accessEgress.vertex(),
       boardStopPosition,
       alightStopPosition
     );
@@ -84,7 +78,7 @@ class FlexEgressTemplate extends AbstractFlexTemplate {
 
     return new FlexTripEdge(
       flexFromVertex,
-      accessEgress.state().getVertex(),
+      accessEgress.vertex(),
       transferStopId,
       accessEgress.stopId(),
       trip,
