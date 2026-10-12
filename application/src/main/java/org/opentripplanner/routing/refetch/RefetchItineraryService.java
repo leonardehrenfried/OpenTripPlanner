@@ -363,12 +363,11 @@ public class RefetchItineraryService {
     StreetSearchRequest transferRequest
   ) {
     var nearbyStop = transfers.findPath(from.getIndex(), to.getIndex());
-    var path = nearbyStop == null ? null : nearbyStop.path();
-    if (path == null || path.isEmpty()) {
+    if (nearbyStop == null || nearbyStop.path().isEmpty()) {
       // We don't support straight line transfers currently.
       return Optional.empty();
     }
-    return path.reTraverse(transferRequest).map(this::streetPathToLegs);
+    return nearbyStop.path().reTraverse(transferRequest).map(this::streetPathToLegs);
   }
 
   private List<Leg> streetPathToLegs(StreetPath path) {

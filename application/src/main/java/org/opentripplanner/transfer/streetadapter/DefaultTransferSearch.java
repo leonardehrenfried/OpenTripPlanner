@@ -160,7 +160,7 @@ final class DefaultTransferSearch implements TransferSearch<NearbyStop> {
   @Override
   public Optional<PathCriteria> computePathCriteria(NearbyStop nearbyStop) {
     var path = nearbyStop.path();
-    if (path == null || path.isEmpty()) {
+    if (path.isEmpty()) {
       double durationSeconds = nearbyStop.distance() / speedAlongStraightLine();
       int c1 = CostLimit.toRaptorCostWholeSeconds(durationSeconds * reluctance());
       return Optional.of(new PathCriteria(c1, (int) Math.ceil(durationSeconds)));
@@ -195,11 +195,10 @@ final class DefaultTransferSearch implements TransferSearch<NearbyStop> {
    * The path can be re-costed from its edges without them.
    */
   private static NearbyStop stripState(NearbyStop nearbyStop) {
-    var path = nearbyStop.path();
     return new NearbyStop(
       nearbyStop.stopId(),
       nearbyStop.distance(),
-      path == null ? null : path.withoutStates()
+      nearbyStop.path().withoutStates()
     );
   }
 
