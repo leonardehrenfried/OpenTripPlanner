@@ -14,6 +14,10 @@ import org.opentripplanner.street.search.state.State;
 /// The states of the search are deliberately not exposed. To get the details of the path, split
 /// it into [StreetLeg]s using [#legs(double)].
 public interface StreetPath {
+  /// A path which is not the result of a street search, used when there is no street path, like
+  /// for a stop found by a straight-line search. It has no edges, no vertices and no cost.
+  StreetPath EMPTY = EmptyStreetPath.INSTANCE;
+
   /// Build a chronologically ordered path by following the back-state chain of `finalState` all
   /// the way back to the origin of the search. Paths from arriveBy searches are reversed, so the
   /// path always runs forward in time.

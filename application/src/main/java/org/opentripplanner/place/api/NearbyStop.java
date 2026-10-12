@@ -27,10 +27,9 @@ public class NearbyStop implements Comparable<NearbyStop> {
   private final Vertex vertex;
 
   /**
-   * The street path between the search origin and the stop, or null if the stop was not found by
-   * a street search.
+   * The street path between the search origin and the stop, or {@link StreetPath#EMPTY} if the
+   * stop was not found by a street search.
    */
-  @Nullable
   private final StreetPath path;
 
   /**
@@ -41,25 +40,25 @@ public class NearbyStop implements Comparable<NearbyStop> {
     FeedScopedId stopId,
     double distance,
     @Nullable Vertex vertex,
-    @Nullable StreetPath path
+    StreetPath path
   ) {
     this.stopId = Objects.requireNonNull(stopId);
     this.distance = distance;
     this.vertex = vertex;
-    this.path = path;
+    this.path = Objects.requireNonNull(path);
   }
 
   /**
    * Create a NearbyStop which was not found by a street search, like with a straight-line search.
    */
   public NearbyStop(FeedScopedId stopId, double distance) {
-    this(stopId, distance, null, null);
+    this(stopId, distance, null, StreetPath.EMPTY);
   }
 
   /**
    * Create a NearbyStop with a pre-computed street path, like a transfer between stops.
    */
-  public NearbyStop(FeedScopedId stopId, double distance, @Nullable StreetPath path) {
+  public NearbyStop(FeedScopedId stopId, double distance, StreetPath path) {
     this(stopId, distance, null, path);
   }
 
@@ -90,13 +89,13 @@ public class NearbyStop implements Comparable<NearbyStop> {
 
   @Override
   public int compareTo(NearbyStop that) {
-    if ((this.path == null) != (that.path == null)) {
+    if (this.hasPath() != that.hasPath()) {
       throw new IllegalStateException(
         "Only NearbyStops which both contain or lack a path may be compared."
       );
     }
 
-    if (this.path != null) {
+    if (this.hasPath()) {
       return (int) this.path.generalizedCost() - (int) that.path.generalizedCost();
     }
     return (int) this.distance - (int) that.distance;
@@ -136,7 +135,7 @@ public class NearbyStop implements Comparable<NearbyStop> {
       "stop %s at %.1f meters%s",
       stopId,
       distance,
-      path != null ? " w/path" : ""
+      hasPath() ? " w/path" : ""
     );
   }
 
@@ -153,8 +152,11 @@ public class NearbyStop implements Comparable<NearbyStop> {
     return vertex;
   }
 
-  @Nullable
   public StreetPath path() {
     return path;
+  }
+
+  private boolean hasPath() {
+    return path != StreetPath.EMPTY;
   }
 }
