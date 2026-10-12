@@ -217,6 +217,6 @@ class TaxiRouterAccessEgressTest implements PlanTestConstants {
   }
 
   private static NearbyStop nearbyStop(RegularStop stop) {
-    return new NearbyStop(stop.getId(), 0, null, null);
+    return new NearbyStop(stop.getId(), 0);
   }
 }

@@ -34,7 +34,6 @@ import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.EuclideanRemainingWeightHeuristic;
 import org.opentripplanner.street.search.StreetSearchBuilder;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
-import org.opentripplanner.street.search.state.EdgeTraverser;
 import org.opentripplanner.street.search.strategy.DominanceFunctions;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
 import org.opentripplanner.streetadapter.StreetSearchRequestMapper;
@@ -45,7 +44,6 @@ import org.opentripplanner.transit.service.TransitService;
 import org.opentripplanner.transit.service.TransitServiceResolver;
 import org.opentripplanner.transit.transfer.regular.RegularTransferRepositorySnapshot;
 import org.opentripplanner.transit.transfer.regular.api.RegularTransfersService;
-import org.opentripplanner.utils.collection.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -364,12 +362,13 @@ public class RefetchItineraryService {
     StopLocation to,
     StreetSearchRequest transferRequest
   ) {
-    var path = transfers.findPath(from.getIndex(), to.getIndex());
-    if (path == null || CollectionUtils.isEmpty(path.edges())) {
+    var nearbyStop = transfers.findPath(from.getIndex(), to.getIndex());
+    var path = nearbyStop == null ? null : nearbyStop.path();
+    if (path == null || path.isEmpty()) {
       // We don't support straight line transfers currently.
       return Optional.empty();
     }
-    return EdgeTraverser.createPath(path.edges(), transferRequest).map(this::streetPathToLegs);
+    return path.reTraverse(transferRequest).map(this::streetPathToLegs);
   }
 
   private List<Leg> streetPathToLegs(StreetPath path) {

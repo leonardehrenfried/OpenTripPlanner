@@ -57,8 +57,8 @@ class RaptorRequestMapperTest {
     VIA_COORDINATE,
     VIA_FROM_STOP_INDEX,
     VIA_TO_STOP_INDEX,
-    List.of(),
-    List.of(),
+    null,
+    null,
     10,
     12.0
   );

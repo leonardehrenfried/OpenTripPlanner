@@ -54,6 +54,7 @@ import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.service.streetdetails.internal.DefaultStreetDetailsRepository;
 import org.opentripplanner.service.streetdetails.internal.DefaultStreetDetailsService;
 import org.opentripplanner.street.graph.Graph;
+import org.opentripplanner.street.model.path.DefaultStreetPath;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.street.search.state.TestStateBuilder;
 import org.opentripplanner.transit.dataimport.TimetableDataImport;
@@ -186,7 +187,7 @@ public class RaptorPathToItineraryMapperTest {
   void createItineraryWithOnBoardFlexAccess() {
     RaptorPathToItineraryMapper<TestTripSchedule> mapper = getRaptorPathToItineraryMapper(
       FixedRegularTransfers.of()
-        .add(S1, S2, new NearbyStop(S2.getId(), 0, List.of(), null))
+        .add(S1, S2, new NearbyStop(S2.getId(), 0))
         .snapshot()
         .forRequest(RouteRequest.defaultValue())
     );
@@ -204,7 +205,7 @@ public class RaptorPathToItineraryMapperTest {
       0,
       1,
       flexTrip,
-      state,
+      new DefaultStreetPath(state),
       true,
       RoutingBookingInfo.NOT_SET
     );
