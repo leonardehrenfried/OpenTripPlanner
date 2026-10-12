@@ -158,21 +158,22 @@ final class DefaultTransferSearch implements TransferSearch<NearbyStop> {
   }
 
   @Override
-  public Optional<PathCriteria> computePathCriteria(NearbyStop path) {
-    if (path.edges() == null || path.edges().isEmpty()) {
-      double durationSeconds = path.distance() / speedAlongStraightLine();
+  public Optional<PathCriteria> computePathCriteria(NearbyStop nearbyStop) {
+    var path = nearbyStop.path();
+    if (path == null || path.isEmpty()) {
+      double durationSeconds = nearbyStop.distance() / speedAlongStraightLine();
       int c1 = CostLimit.toRaptorCostWholeSeconds(durationSeconds * reluctance());
       return Optional.of(new PathCriteria(c1, (int) Math.ceil(durationSeconds)));
     }
 
-    var stateEditor = new StateEditor(path.edges().get(0).getFromVertex(), streetSearchRequest);
-    stateEditor.setTimeSeconds(0);
-    return EdgeTraverser.traverseEdges(stateEditor.makeState(), path.edges()).map(state ->
-      new PathCriteria(
-        CostLimit.toRaptorCostWholeSeconds(state.getWeight()),
-        (int) state.getElapsedTimeSeconds()
-      )
-    );
+    return path
+      .reTraverse(streetSearchRequest)
+      .map(p ->
+        new PathCriteria(
+          CostLimit.toRaptorCostWholeSeconds(p.generalizedCost()),
+          (int) p.duration().toSeconds()
+        )
+      );
   }
 
   @Override
@@ -190,12 +191,16 @@ final class DefaultTransferSearch implements TransferSearch<NearbyStop> {
   }
 
   /**
-   * Drop the live street-search {@link org.opentripplanner.street.search.state.State} of a path,
-   * {@link NearbyStop#state}: it is not {@link java.io.Serializable}, and a path can be re-costed
-   * from its {@code edges} and {@code distance} without it.
+   * Drop the street-search states of the path of a NearbyStop, so they can be garbage collected.
+   * The path can be re-costed from its edges without them.
    */
   private static NearbyStop stripState(NearbyStop nearbyStop) {
-    return new NearbyStop(nearbyStop.stopId(), nearbyStop.distance(), nearbyStop.edges(), null);
+    var path = nearbyStop.path();
+    return new NearbyStop(
+      nearbyStop.stopId(),
+      nearbyStop.distance(),
+      path == null ? null : path.withoutStates()
+    );
   }
 
   private static StreetMode mode(RouteRequest request) {

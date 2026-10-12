@@ -43,6 +43,6 @@ public class AccessEgressMapper {
       return null;
     }
 
-    return new DefaultAccessEgress(stop.getIndex(), nearbyStop.state());
+    return new DefaultAccessEgress(stop.getIndex(), nearbyStop.path());
   }
 }

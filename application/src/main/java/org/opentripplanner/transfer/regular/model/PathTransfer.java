@@ -2,11 +2,11 @@ package org.opentripplanner.transfer.regular.model;
 
 import java.io.Serializable;
 import java.util.EnumSet;
-import java.util.List;
+import org.jspecify.annotations.Nullable;
 import org.locationtech.jts.geom.LineString;
+import org.opentripplanner.street.api.path.StreetPath;
 import org.opentripplanner.street.geometry.GeometryUtils;
 import org.opentripplanner.street.model.StreetMode;
-import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.transfer.constrained.model.ConstrainedTransfer;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.utils.tostring.ToStringBuilder;
@@ -31,7 +31,12 @@ public class PathTransfer implements Serializable {
 
   private final double distanceMeters;
 
-  private final List<Edge> edges;
+  /**
+   * The street path of the transfer, or null if the transfer has no path, like a straight-line
+   * transfer.
+   */
+  @Nullable
+  private final StreetPath path;
 
   private final EnumSet<StreetMode> modes;
 
@@ -39,13 +44,13 @@ public class PathTransfer implements Serializable {
     StopLocation from,
     StopLocation to,
     double distanceMeters,
-    List<Edge> edges,
+    @Nullable StreetPath path,
     EnumSet<StreetMode> modes
   ) {
     this.from = from;
     this.to = to;
     this.distanceMeters = distanceMeters;
-    this.edges = edges;
+    this.path = path;
     this.modes = modes;
   }
 
@@ -53,8 +58,9 @@ public class PathTransfer implements Serializable {
     return distanceMeters;
   }
 
-  public List<Edge> getEdges() {
-    return edges;
+  @Nullable
+  public StreetPath getPath() {
+    return path;
   }
 
   public EnumSet<StreetMode> getModes() {
@@ -65,14 +71,14 @@ public class PathTransfer implements Serializable {
   public PathTransfer withAddedMode(StreetMode mode) {
     EnumSet<StreetMode> newModes = EnumSet.copyOf(modes);
     newModes.add(mode);
-    return new PathTransfer(from, to, distanceMeters, edges, newModes);
+    return new PathTransfer(from, to, distanceMeters, path, newModes);
   }
 
   public LineString getGeometry() {
-    if (edges == null) {
+    if (path == null) {
       return GeometryUtils.getGeometryFactory().createLineString();
     } else {
-      return GeometryUtils.concatenateLineStrings(edges, Edge::getGeometry);
+      return path.geometry();
     }
   }
 
@@ -82,7 +88,7 @@ public class PathTransfer implements Serializable {
       .addObj("from", from)
       .addObj("to", to)
       .addNum("distance", distanceMeters)
-      .addColSize("edges", edges)
+      .addObj("path", path)
       .addColSize("modes", modes)
       .toString();
   }

@@ -13,8 +13,6 @@ import org.opentripplanner.ext.flex.FlexParameters;
 import org.opentripplanner.ext.flex.flexpathcalculator.FlexPathCalculator;
 import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.street.model.vertex.Vertex;
-import org.opentripplanner.street.search.state.EdgeTraverser;
-import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.transit.model.filter.expr.Matcher;
 import org.opentripplanner.transit.model.timetable.Trip;
 import org.opentripplanner.transit.model.timetable.booking.RoutingBookingInfo;
@@ -105,7 +103,7 @@ public class FlexDirectPathFactory {
     int accessAlightStopPosition = accessTemplate.alightStopPosition;
     int requestedBookingTime = accessTemplate.requestedBookingTime;
 
-    var flexToVertex = egress.state().getVertex();
+    var flexToVertex = egress.vertex();
 
     if (!isRouteable(accessTemplate, flexToVertex)) {
       return Optional.empty();
@@ -117,16 +115,17 @@ public class FlexDirectPathFactory {
       return Optional.empty();
     }
 
-    final State[] afterFlexState = flexEdge.traverse(accessNearbyStop.state());
+    var finalPathOpt = accessNearbyStop
+      .path()
+      .continueSearch(flexEdge)
+      .flatMap(afterFlexPath -> afterFlexPath.continueSearch(egress.path()));
 
-    var finalStateOpt = EdgeTraverser.traverseEdges(afterFlexState[0], egress.edges());
-
-    if (finalStateOpt.isEmpty()) {
+    if (finalPathOpt.isEmpty()) {
       return Optional.empty();
     }
 
-    var finalState = finalStateOpt.get();
-    var flexDurations = accessTemplate.calculateFlexPathDurations(flexEdge, finalState);
+    var finalPath = finalPathOpt.get();
+    var flexDurations = accessTemplate.calculateFlexPathDurations(flexEdge, finalPath);
 
     int timeShift;
 
@@ -179,16 +178,16 @@ public class FlexDirectPathFactory {
       timeShift = flexDurations.mapToRouterDepartureTime(earliestDepartureTime);
     }
 
-    return Optional.of(new DirectFlexPath(timeShift, finalState));
+    return Optional.of(new DirectFlexPath(timeShift, finalPath));
   }
 
   protected boolean isRouteable(FlexAccessTemplate accessTemplate, Vertex flexVertex) {
-    if (accessTemplate.accessEgress.state().getVertex() == flexVertex) {
+    if (accessTemplate.accessEgress.vertex() == flexVertex) {
       return false;
     } else {
       return (
         accessTemplate.calculator.calculateFlexPath(
-          accessTemplate.accessEgress.state().getVertex(),
+          accessTemplate.accessEgress.vertex(),
           flexVertex,
           accessTemplate.boardStopPosition,
           accessTemplate.alightStopPosition

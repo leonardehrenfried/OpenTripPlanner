@@ -22,10 +22,14 @@ import org.opentripplanner.raptor.spi.RaptorCostConverter;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.cost.CostLimit;
 import org.opentripplanner.routing.linking.TransitStopVertexBuilderFactory;
+import org.opentripplanner.street.api.path.StreetPath;
+import org.opentripplanner.street.api.request.StreetSearchRequest;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.StreetModelForTest;
+import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.vertex.Vertex;
+import org.opentripplanner.street.search.state.EdgeTraverser;
 import org.opentripplanner.transit.transfer.regular.api.maxduration.AllowedMode;
 import org.opentripplanner.transit.transfer.regular.api.maxduration.BicycleMaxDurations;
 import org.opentripplanner.transit.transfer.regular.api.maxduration.CarMaxDuration;
@@ -183,7 +187,7 @@ class DefaultTransferSearchTest {
         intersectionVertex(Coordinates.BERLIN),
         intersectionVertex(Coordinates.BOSTON)
       );
-      var path = new NearbyStop(PLAIN, edge.getDistanceMeters(), List.of(edge), null);
+      var path = new NearbyStop(PLAIN, edge.getDistanceMeters(), streetPath(edge));
 
       assertThat(criteria(path).c1()).isEqualTo(MAX_RAPTOR_C1);
     }
@@ -194,7 +198,7 @@ class DefaultTransferSearchTest {
         intersectionVertex(Coordinates.BERLIN),
         intersectionVertex(Coordinates.BERLIN_BRANDENBURG_GATE)
       );
-      var path = new NearbyStop(PLAIN, edge.getDistanceMeters(), List.of(edge), null);
+      var path = new NearbyStop(PLAIN, edge.getDistanceMeters(), streetPath(edge));
 
       assertThat(criteria(path).c1()).isLessThan(MAX_RAPTOR_C1);
     }
@@ -223,8 +227,12 @@ class DefaultTransferSearchTest {
       return subject.computePathCriteria(path).orElseThrow();
     }
 
+    private static StreetPath streetPath(Edge edge) {
+      return EdgeTraverser.createPath(List.of(edge), StreetSearchRequest.of().build()).orElseThrow();
+    }
+
     private static NearbyStop withoutEdges(double distanceMeters) {
-      return new NearbyStop(PLAIN, distanceMeters, List.of(), null);
+      return new NearbyStop(PLAIN, distanceMeters);
     }
   }
 
@@ -232,12 +240,7 @@ class DefaultTransferSearchTest {
   @Nested
   class DurationAndCostOfAPathWithoutEdges {
 
-    private static final NearbyStop FIVE_HUNDRED_METERS = new NearbyStop(
-      PLAIN,
-      500.0,
-      List.of(),
-      null
-    );
+    private static final NearbyStop FIVE_HUNDRED_METERS = new NearbyStop(PLAIN, 500.0);
 
     @Test
     void aWalkPathUsesTheWalkSpeedDividedByTheDetourFactorAndTheWalkReluctance() {
@@ -326,7 +329,7 @@ class DefaultTransferSearchTest {
     private Duration durationLimit;
 
     FakeNearbyStopFinder add(FeedScopedId stopId, int durationSeconds) {
-      stops.add(new NearbyStop(stopId, durationSeconds, List.of(), null));
+      stops.add(new NearbyStop(stopId, durationSeconds));
       return this;
     }
 

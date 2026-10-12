@@ -331,7 +331,7 @@ class StreetLegMapperTest {
     assertSame(STOP_B, leg.to().stop);
     assertEquals(PATH_START.plus(delay), leg.startTime());
     assertEquals(PATH_START.plus(delay).plusSeconds(600), leg.endTime());
-    assertEquals(path.generalizedCost().toSeconds(), leg.generalizedCost());
+    assertEquals(path.generalizedCost(), leg.generalizedCost(), 1);
   }
 
   private static StreetPath path(TestStateBuilder builder) {

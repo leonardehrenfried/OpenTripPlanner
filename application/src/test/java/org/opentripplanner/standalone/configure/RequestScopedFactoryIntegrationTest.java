@@ -60,12 +60,7 @@ class RequestScopedFactoryIntegrationTest {
   private static final int AWAIT_COMMIT_POLL_INTERVAL_MS = 20;
   private static final int FROM_STOP = 0;
   private static final int TO_STOP = 1;
-  private static final NearbyStop PATH = new NearbyStop(
-    FeedScopedId.of("F", "B"),
-    100.0,
-    List.of(),
-    null
-  );
+  private static final NearbyStop PATH = new NearbyStop(FeedScopedId.of("F", "B"), 100.0);
 
   /**
    * Application-wide singletons, just exposed through the request scope for convenience: the same

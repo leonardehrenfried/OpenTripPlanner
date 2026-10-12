@@ -138,11 +138,11 @@ class StopImplTest {
   }
 
   private static PathTransfer flexTransfer(StopLocation from, StopLocation to, double distance) {
-    return new PathTransfer(from, to, distance, List.of(), EnumSet.of(StreetMode.WALK));
+    return new PathTransfer(from, to, distance, null, EnumSet.of(StreetMode.WALK));
   }
 
   private static NearbyStop path(RegularStop to, double distance) {
-    return new NearbyStop(to.getId(), distance, List.of(), null);
+    return new NearbyStop(to.getId(), distance);
   }
 
   private static List<FeedScopedId> toStopIds(Iterable<NearbyStop> transfers) {
