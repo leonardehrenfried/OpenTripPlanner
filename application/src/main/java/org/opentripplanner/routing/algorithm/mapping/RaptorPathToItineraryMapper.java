@@ -387,7 +387,7 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
     Place to
   ) {
     var path = transfer.getPath();
-    if (path == null || path.isEmpty()) {
+    if (path.isEmpty()) {
       return List.of(
         StreetLeg.of()
           .withMode(transferMode)
