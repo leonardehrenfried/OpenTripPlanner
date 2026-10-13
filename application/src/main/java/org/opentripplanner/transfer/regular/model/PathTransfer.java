@@ -2,10 +2,9 @@ package org.opentripplanner.transfer.regular.model;
 
 import java.io.Serializable;
 import java.util.EnumSet;
-import org.jspecify.annotations.Nullable;
+import java.util.Objects;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.street.api.path.StreetPath;
-import org.opentripplanner.street.geometry.GeometryUtils;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.transfer.constrained.model.ConstrainedTransfer;
 import org.opentripplanner.transit.model.site.StopLocation;
@@ -32,10 +31,9 @@ public class PathTransfer implements Serializable {
   private final double distanceMeters;
 
   /**
-   * The street path of the transfer, or null if the transfer has no path, like a straight-line
-   * transfer.
+   * The street path of the transfer, or {@link StreetPath#EMPTY} if the transfer has no path, like
+   * a straight-line transfer.
    */
-  @Nullable
   private final StreetPath path;
 
   private final EnumSet<StreetMode> modes;
@@ -44,13 +42,13 @@ public class PathTransfer implements Serializable {
     StopLocation from,
     StopLocation to,
     double distanceMeters,
-    @Nullable StreetPath path,
+    StreetPath path,
     EnumSet<StreetMode> modes
   ) {
     this.from = from;
     this.to = to;
     this.distanceMeters = distanceMeters;
-    this.path = path;
+    this.path = Objects.requireNonNull(path);
     this.modes = modes;
   }
 
@@ -58,7 +56,6 @@ public class PathTransfer implements Serializable {
     return distanceMeters;
   }
 
-  @Nullable
   public StreetPath getPath() {
     return path;
   }
@@ -75,11 +72,7 @@ public class PathTransfer implements Serializable {
   }
 
   public LineString getGeometry() {
-    if (path == null) {
-      return GeometryUtils.getGeometryFactory().createLineString();
-    } else {
-      return path.geometry();
-    }
+    return path.geometry();
   }
 
   @Override
