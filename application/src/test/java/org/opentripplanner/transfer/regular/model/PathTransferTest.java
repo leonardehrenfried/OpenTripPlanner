@@ -77,26 +77,32 @@ class PathTransferTest {
 
     @Test
     void overflow() {
-      var veryLongTransfer = new PathTransfer(S1, S2, Integer.MAX_VALUE, null, WALK_ONLY);
+      var veryLongTransfer = new PathTransfer(
+        S1,
+        S2,
+        Integer.MAX_VALUE,
+        StreetPath.EMPTY,
+        WALK_ONLY
+      );
       assertMaxCost(veryLongTransfer.asRaptorTransfer(StreetSearchRequest.of().build()).get());
     }
 
     @Test
     void negativeCost() {
-      var veryLongTransfer = new PathTransfer(S1, S2, -5, null, WALK_ONLY);
+      var veryLongTransfer = new PathTransfer(S1, S2, -5, StreetPath.EMPTY, WALK_ONLY);
       assertMaxCost(veryLongTransfer.asRaptorTransfer(StreetSearchRequest.of().build()).get());
     }
 
     @Test
     void limitMaxCost() {
-      var veryLongTransfer = new PathTransfer(S1, S2, 8_000_000, null, WALK_ONLY);
+      var veryLongTransfer = new PathTransfer(S1, S2, 8_000_000, StreetPath.EMPTY, WALK_ONLY);
       // cost would be too high, so it will be capped before passing to RAPTOR
       assertMaxCost(veryLongTransfer.asRaptorTransfer(StreetSearchRequest.of().build()).get());
     }
 
     @Test
     void allowLowCost() {
-      var transfer = new PathTransfer(S1, S2, 200, null, WALK_ONLY);
+      var transfer = new PathTransfer(S1, S2, 200, StreetPath.EMPTY, WALK_ONLY);
       final Optional<DefaultRaptorTransfer> raptorTransfer = transfer.asRaptorTransfer(
         StreetSearchRequest.of().build()
       );

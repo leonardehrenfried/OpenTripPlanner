@@ -43,8 +43,6 @@ public class StreetEdge
 
   private static final Logger LOG = LoggerFactory.getLogger(StreetEdge.class);
 
-  private static final double SAFEST_STREETS_SAFETY_FACTOR = 0.1;
-
   /** If you have more than 16 flags, increase flags to short or int */
   static final int BACK_FLAG_INDEX = 0;
   static final int ROUNDABOUT_FLAG_INDEX = 1;

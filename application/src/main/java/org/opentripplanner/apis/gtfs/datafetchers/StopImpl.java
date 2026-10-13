@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,7 +33,6 @@ import org.opentripplanner.routing.alertpatch.EntitySelector;
 import org.opentripplanner.routing.alertpatch.EntitySelector.StopAndRoute;
 import org.opentripplanner.routing.alertpatch.TransitAlert;
 import org.opentripplanner.routing.services.TransitAlertService;
-import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.transfer.regular.RegularTransferService;
 import org.opentripplanner.transit.model.framework.AbstractTransitEntity;
 import org.opentripplanner.transit.model.network.Route;
@@ -488,11 +486,7 @@ public class StopImpl implements GraphQLDataFetchers.GraphQLStop {
             .filter(transfer -> maxDistance == null || transfer.getDistanceMeters() < maxDistance)
             .filter(transfer -> transfer.to instanceof RegularStop)
             .map(transfer ->
-              new NearbyStop(
-                transfer.to.getId(),
-                transfer.getDistanceMeters(),
-                Objects.requireNonNullElse(transfer.getPath(), StreetPath.EMPTY)
-              )
+              new NearbyStop(transfer.to.getId(), transfer.getDistanceMeters(), transfer.getPath())
             )
             .collect(Collectors.toList());
         },

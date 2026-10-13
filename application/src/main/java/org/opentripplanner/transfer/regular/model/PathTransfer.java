@@ -2,8 +2,8 @@ package org.opentripplanner.transfer.regular.model;
 
 import java.io.Serializable;
 import java.util.EnumSet;
+import java.util.Objects;
 import java.util.Optional;
-import javax.annotation.Nullable;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.routing.cost.CostLimit;
 import org.opentripplanner.street.geometry.GeometryUtils;
@@ -32,11 +32,6 @@ public class PathTransfer implements Serializable {
 
   private final double distanceMeters;
 
-  /**
-   * The street path of the transfer, or null if the transfer has no path, like a straight-line
-   * transfer.
-   */
-  @Nullable
   private final StreetPath path;
 
   private final EnumSet<StreetMode> modes;
@@ -45,13 +40,13 @@ public class PathTransfer implements Serializable {
     StopLocation from,
     StopLocation to,
     double distanceMeters,
-    @Nullable StreetPath path,
+    StreetPath path,
     EnumSet<StreetMode> modes
   ) {
     this.from = from;
     this.to = to;
     this.distanceMeters = distanceMeters;
-    this.path = path;
+    this.path = Objects.requireNonNull(path);
     this.modes = modes;
   }
 
@@ -59,7 +54,6 @@ public class PathTransfer implements Serializable {
     return distanceMeters;
   }
 
-  @Nullable
   public StreetPath getPath() {
     return path;
   }
@@ -76,11 +70,7 @@ public class PathTransfer implements Serializable {
   }
 
   public LineString getGeometry() {
-    if (path == null) {
-      return GeometryUtils.getGeometryFactory().createLineString();
-    } else {
       return path.geometry();
-    }
   }
 
   /** Check if the given mode is a valid mode for the transfer. */
@@ -89,7 +79,7 @@ public class PathTransfer implements Serializable {
   }
 
   public Optional<DefaultRaptorTransfer> asRaptorTransfer(StreetSearchRequest request) {
-    if (path == null || path.isEmpty()) {
+    if (path.isEmpty()) {
       WalkRequest walkReq = request.walk();
       double durationSeconds = distanceMeters / walkReq.speed();
       return Optional.of(

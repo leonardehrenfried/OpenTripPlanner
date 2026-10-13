@@ -9,6 +9,7 @@ import com.google.common.collect.Multimap;
 import java.util.EnumSet;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.street.model.StreetMode;
+import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.transfer.regular.internal.DefaultTransferRepository;
 import org.opentripplanner.transfer.regular.model.PathTransfer;
 import org.opentripplanner.transit.model.site.StopLocation;
@@ -19,7 +20,7 @@ class FlexTransferIndexTest {
   public static final TestStopLocation S1 = new TestStopLocation(id("1"));
   public static final Multimap<StopLocation, PathTransfer> TRANSFERS = ImmutableMultimap.of(
     S1,
-    new PathTransfer(S1, S1, 100, null, EnumSet.of(StreetMode.WALK))
+    new PathTransfer(S1, S1, 100, StreetPath.EMPTY, EnumSet.of(StreetMode.WALK))
   );
 
   @Test
