@@ -17,6 +17,7 @@ import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.street.model.StreetMode;
+import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.transfer.regular.FlexTransferService;
 import org.opentripplanner.transfer.regular.TransferServiceTestFactory;
 import org.opentripplanner.transfer.regular.model.PathTransfer;
@@ -138,7 +139,7 @@ class StopImplTest {
   }
 
   private static PathTransfer flexTransfer(StopLocation from, StopLocation to, double distance) {
-    return new PathTransfer(from, to, distance, null, EnumSet.of(StreetMode.WALK));
+    return new PathTransfer(from, to, distance, StreetPath.EMPTY, EnumSet.of(StreetMode.WALK));
   }
 
   private static NearbyStop path(RegularStop to, double distance) {
