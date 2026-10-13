@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.street.model.StreetMode;
+import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
 import org.opentripplanner.transfer.regular.model.DefaultRaptorTransfer;
 import org.opentripplanner.transfer.regular.model.PathTransfer;
@@ -49,7 +50,7 @@ class RaptorTransferIndexTest {
   ) {
     var from = RegularStop.of(FeedScopedId.of("F", "S"), () -> fromStop).build();
     var to = RegularStop.of(FeedScopedId.of("F", "S"), () -> toStop).build();
-    return new PathTransfer(from, to, meters, null, streetModes);
+    return new PathTransfer(from, to, meters, StreetPath.EMPTY, streetModes);
   }
 
   @Test
