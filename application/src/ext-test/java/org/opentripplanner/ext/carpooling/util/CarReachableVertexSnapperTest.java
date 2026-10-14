@@ -19,7 +19,6 @@ import org.opentripplanner.routing.linking.internal.VertexCreationService;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.linking.TemporaryVerticesContainer;
 import org.opentripplanner.street.model.StreetTraversalPermission;
-import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.IntersectionVertex;
 import org.opentripplanner.street.model.vertex.TemporaryVertex;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
@@ -132,8 +131,8 @@ class CarReachableVertexSnapperTest extends GraphRoutingTest {
     assertEquals(C, result.vertex());
     assertNotNull(result.walkPath());
     // Walk path must be chronological: starts at C (the car-reachable vertex) and ends at A.
-    assertEquals(C, StreetPathForTest.states(result.walkPath()).getFirst().getVertex());
-    assertEquals(A, StreetPathForTest.states(result.walkPath()).getLast().getVertex());
+    assertEquals(C, result.walkPath().fromVertex());
+    assertEquals(A, result.walkPath().toVertex());
     assertTrue(result.walkPath().duration().isPositive());
   }
 
@@ -295,8 +294,8 @@ class CarReachableVertexSnapperTest extends GraphRoutingTest {
     assertNotNull(highResult);
     assertNotNull(lowResult.walkPath());
     assertNotNull(highResult.walkPath());
-    double lowWeight = StreetPathUtils.weightOrZero(lowResult.walkPath());
-    double highWeight = StreetPathUtils.weightOrZero(highResult.walkPath());
+    double lowWeight = lowResult.walkPath().generalizedCost();
+    double highWeight = highResult.walkPath().generalizedCost();
     assertTrue(lowWeight > 1, "Expected non-trivial low-reluctance weight, got " + lowWeight);
     assertTrue(highWeight > 1, "Expected non-trivial high-reluctance weight, got " + highWeight);
     assertTrue(

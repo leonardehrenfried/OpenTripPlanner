@@ -1,7 +1,6 @@
 package org.opentripplanner.ext.carpooling.routing;
 
 import java.util.Objects;
-import org.opentripplanner.ext.carpooling.util.StreetPathUtils;
 import org.opentripplanner.street.model.path.StreetPath;
 
 /**
@@ -30,9 +29,9 @@ final class PathSegment implements RoutedSegment {
   public String toString() {
     return (
       "PathSegment{" +
-      StreetPathUtils.firstVertex(path) +
+      path.fromVertex() +
       " -> " +
-      StreetPathUtils.lastVertex(path) +
+      path.toVertex() +
       ", " +
       durationSeconds() +
       "s}"
