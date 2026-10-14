@@ -25,7 +25,6 @@ import org.opentripplanner.framework.model.TimeAndCost;
 import org.opentripplanner.model.GenericLocation;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.model.path.StreetPath;
-import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.transit.model._data.TransitRepositoryForTest;
 import org.opentripplanner.transit.model.organization.ContactInfo;
 import org.opentripplanner.transit.model.site.RegularStop;
@@ -73,8 +72,9 @@ class CarpoolItineraryMapperTest {
   private static final double CARPOOL_RELUCTANCE = 1.0;
 
   /**
-   * Every StreetPath produced by {@link org.opentripplanner.ext.carpooling.CarpoolStreetPathBuilder}
-   * has a single outgoing street edge named "segment-0", so the FIRST vertex of each path
+   * Every StreetPath produced by
+   * {@link org.opentripplanner.ext.carpooling.CarpoolStreetPathBuilder} has a single outgoing
+   * street edge named "segment-0", so the FIRST vertex of each path
    * (which carries that edge as outgoing) resolves to that name via
    * {@link org.opentripplanner.street.model.vertex.StreetVertex#getIntersectionName()}.
    */

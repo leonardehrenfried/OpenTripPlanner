@@ -33,7 +33,6 @@ import org.opentripplanner.routing.api.request.request.StreetRequest;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.StreetTraversalPermission;
-import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.IntersectionVertex;
 import org.opentripplanner.street.model.vertex.TransitStopVertex;
 import org.opentripplanner.street.search.TraverseMode;
@@ -662,18 +661,12 @@ class DefaultCarpoolingServiceAccessEgressTest extends GraphRoutingTest {
 
     var pathAToP2 = router.route(vertexA, vertexP2);
     assertNotNull(pathAToP2, "Should be able to route from A to P2");
-    var drivingDurationAToP2 = Duration.between(
-      StreetPathForTest.states(pathAToP2).getFirst().getTime(),
-      StreetPathForTest.states(pathAToP2).getLast().getTime()
-    );
+    var drivingDurationAToP2 = pathAToP2.duration();
     assertTrue(drivingDurationAToP2.toSeconds() > 1, "Driving duration to P2 should be positive");
 
     var pathP2ToIT3 = router.route(vertexP2, vertexIT3);
     assertNotNull(pathP2ToIT3, "Should be able to route from P2 to iT3");
-    var drivingDurationP2ToIT3 = Duration.between(
-      StreetPathForTest.states(pathP2ToIT3).getFirst().getTime(),
-      StreetPathForTest.states(pathP2ToIT3).getLast().getTime()
-    );
+    var drivingDurationP2ToIT3 = pathP2ToIT3.duration();
     assertTrue(
       drivingDurationP2ToIT3.toSeconds() > 0,
       "Driving duration from P2 to iT3 should be positive"
@@ -681,10 +674,7 @@ class DefaultCarpoolingServiceAccessEgressTest extends GraphRoutingTest {
 
     var pathP2ToIT4 = router.route(vertexP2, vertexIT4);
     assertNotNull(pathP2ToIT4, "Should be able to route from P2 to iT4");
-    var drivingDurationP2ToIT4 = Duration.between(
-      StreetPathForTest.states(pathP2ToIT4).getFirst().getTime(),
-      StreetPathForTest.states(pathP2ToIT4).getLast().getTime()
-    );
+    var drivingDurationP2ToIT4 = pathP2ToIT4.duration();
     assertTrue(
       drivingDurationP2ToIT4.toSeconds() > 0,
       "Driving duration from P2 to iT4 should be positive"

@@ -156,7 +156,7 @@ public record InsertionCandidate(
   private static Duration totalSegmentDuration(List<StreetPath> segments, Duration stopDuration) {
     long segmentSeconds = segments
       .stream()
-      .mapToLong(p -> p.duration().toSeconds())
+      .mapToLong(s -> s.duration().toSeconds())
       .sum();
     return Duration.ofSeconds(segmentSeconds).plus(
       stopDuration.multipliedBy(Math.max(0, segments.size() - 1))

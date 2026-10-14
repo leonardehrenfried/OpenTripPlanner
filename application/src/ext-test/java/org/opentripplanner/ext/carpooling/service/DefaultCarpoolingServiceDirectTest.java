@@ -25,7 +25,6 @@ import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.api.request.request.StreetRequest;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.model.StreetMode;
-import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.IntersectionVertex;
 import org.opentripplanner.transit.model.organization.ContactInfo;
 
@@ -367,17 +366,11 @@ class DefaultCarpoolingServiceDirectTest extends GraphRoutingTest {
 
     var pathToPickup = router.route(vertexTripStart, vertexPickup);
     assertNotNull(pathToPickup, "Should route from trip start to pickup");
-    var drivingToPickup = Duration.between(
-      StreetPathForTest.states(pathToPickup).getFirst().getTime(),
-      StreetPathForTest.states(pathToPickup).getLast().getTime()
-    );
+    var drivingToPickup = pathToPickup.duration();
 
     var pathPickupToDropoff = router.route(vertexPickup, vertexDropoff);
     assertNotNull(pathPickupToDropoff, "Should route from pickup to dropoff");
-    var drivingPickupToDropoff = Duration.between(
-      StreetPathForTest.states(pathPickupToDropoff).getFirst().getTime(),
-      StreetPathForTest.states(pathPickupToDropoff).getLast().getTime()
-    );
+    var drivingPickupToDropoff = pathPickupToDropoff.duration();
 
     var request = buildDirectCarpoolRequest(passengerPickup, passengerDropoff, SEARCH_TIME);
     var stopDuration = request.preferences().car().pickupTime();

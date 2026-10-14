@@ -1,17 +1,21 @@
 package org.opentripplanner.ext.carpooling.util;
 
 import java.time.Duration;
-import java.util.List;
 import javax.annotation.Nullable;
-import org.locationtech.jts.geom.LineString;
-import org.opentripplanner.street.geometry.GeometryUtils;
-import org.opentripplanner.street.model.edge.Edge;
+import org.opentripplanner.street.model.path.StreetLeg;
 import org.opentripplanner.street.model.path.StreetPath;
-import org.opentripplanner.street.model.path.StreetPathStates;
-import org.opentripplanner.street.model.vertex.Vertex;
-import org.opentripplanner.street.search.state.State;
 
+/**
+ * Helpers for reading the duration and A* weight of {@link StreetPath} segments, where a missing
+ * segment counts as zero, and for turning a sequence of segment durations into cumulative arrival
+ * times with a stop delay at each intermediate stop.
+ */
 public final class StreetPathUtils {
+
+  /**
+   * The paths are only used for their distance, so the elevation offset does not matter.
+   */
+  private static final double NO_ELEVATION_OFFSET = 0;
 
   private StreetPathUtils() {}
 
@@ -28,7 +32,14 @@ public final class StreetPathUtils {
    * etc.) since it comes from the search that produced the path.
    */
   public static double weightOrZero(@Nullable StreetPath path) {
-    return path == null ? 0 : StreetPathStates.states(path).getLast().getWeight();
+    return path == null ? 0 : path.generalizedCost();
+  }
+
+  /**
+   * Returns the distance of the given path in meters, the sum of the distances of its edges.
+   */
+  public static double distanceMeters(StreetPath path) {
+    return path.legs(NO_ELEVATION_OFFSET).stream().mapToDouble(StreetLeg::distanceMeters).sum();
   }
 
   /**
@@ -83,35 +94,5 @@ public final class StreetPathUtils {
     }
 
     return cumulativeDurations;
-  }
-
-  /**
-   * The geometry of all the given paths concatenated.
-   */
-  public static LineString geometry(List<StreetPath> paths) {
-    return GeometryUtils.concatenateLineStrings(edges(paths), Edge::getGeometry);
-  }
-
-  /**
-   * The sum of the distances of all edges in the given paths.
-   */
-  public static double distanceMeters(List<StreetPath> paths) {
-    return edges(paths).stream().mapToDouble(Edge::getDistanceMeters).sum();
-  }
-
-  public static Vertex firstVertex(StreetPath path) {
-    return StreetPathStates.states(path).getFirst().getVertex();
-  }
-
-  public static Vertex lastVertex(StreetPath path) {
-    return StreetPathStates.states(path).getLast().getVertex();
-  }
-
-  private static List<Edge> edges(List<StreetPath> paths) {
-    return paths
-      .stream()
-      .flatMap(path -> StreetPathStates.states(path).stream().skip(1))
-      .map(State::getBackEdge)
-      .toList();
   }
 }

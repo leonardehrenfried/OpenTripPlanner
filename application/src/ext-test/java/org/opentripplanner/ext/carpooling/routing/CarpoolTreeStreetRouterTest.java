@@ -1,5 +1,6 @@
 package org.opentripplanner.ext.carpooling.routing;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.Duration;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,10 +21,9 @@ import org.opentripplanner.routing.linking.VertexLinkerTestFactory;
 import org.opentripplanner.routing.linking.internal.VertexCreationService;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.linking.TemporaryVerticesContainer;
-import org.opentripplanner.street.model.path.StreetPathForTest;
+import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.IntersectionVertex;
 import org.opentripplanner.street.model.vertex.Vertex;
-import org.opentripplanner.street.search.state.State;
 
 class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
 
@@ -243,8 +244,7 @@ class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
     var path = router.route(vertexA, vertexC);
 
     assertNotNull(path);
-    assertNotNull(StreetPathForTest.states(path), "Path should have states");
-    assertFalse(StreetPathForTest.states(path).isEmpty(), "Path states should not be empty");
+    assertFalse(path.isEmpty(), "Path should have at least one edge");
   }
 
   @Test
@@ -300,26 +300,31 @@ class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
     return vertex;
   }
 
+  /** The itinerary mapper draws the leg from this geometry, so it must run in travel order. */
   @Test
-  void routeFromAToDContainsExpectedEdges() {
+  void forwardTreeGeometryIsInTravelOrder() {
     router.addVertex(vertexA, CarpoolTreeStreetRouter.Direction.FROM, SEARCH_LIMIT);
 
-    var path = router.route(vertexA, vertexD);
+    assertGeometryRunsFromAToD(router.route(vertexA, vertexD));
+  }
 
-    assertNotNull(path, "Should find path from A to D");
-    var edges = StreetPathForTest.states(path).stream().skip(1).map(State::getBackEdge).toList();
-    assertEquals(3, edges.size(), "Path should have 3 edges (A->B, B->C, C->D)");
+  /** A reverse tree is rooted at the destination, so its paths must be flipped to travel order. */
+  @Test
+  void reverseTreeGeometryIsInTravelOrder() {
+    router.addVertex(vertexD, CarpoolTreeStreetRouter.Direction.TO, SEARCH_LIMIT);
 
-    var edgeAB = edges.get(0);
-    assertEquals(vertexA, edgeAB.getFromVertex(), "First edge should start at A");
-    assertEquals(vertexB, edgeAB.getToVertex(), "First edge should end at B");
+    assertGeometryRunsFromAToD(router.route(vertexA, vertexD));
+  }
 
-    var edgeBC = edges.get(1);
-    assertEquals(vertexB, edgeBC.getFromVertex(), "Second edge should start at B");
-    assertEquals(vertexC, edgeBC.getToVertex(), "Second edge should end at C");
-
-    var edgeCD = edges.get(2);
-    assertEquals(vertexC, edgeCD.getFromVertex(), "Third edge should start at C");
-    assertEquals(vertexD, edgeCD.getToVertex(), "Third edge should end at D");
+  private void assertGeometryRunsFromAToD(StreetPath path) {
+    assertThat(path).isNotNull();
+    assertThat(List.of(path.geometry().getCoordinates()))
+      .containsExactly(
+        vertexA.getCoordinate(),
+        vertexB.getCoordinate(),
+        vertexC.getCoordinate(),
+        vertexD.getCoordinate()
+      )
+      .inOrder();
   }
 }
