@@ -3,7 +3,7 @@ package org.opentripplanner.transfer.regular.model;
 import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.Optional;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.routing.cost.CostLimit;
 import org.opentripplanner.street.geometry.GeometryUtils;

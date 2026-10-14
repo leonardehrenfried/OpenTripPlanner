@@ -25,7 +25,6 @@ import org.opentripplanner.framework.model.TimeAndCost;
 import org.opentripplanner.model.GenericLocation;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.model.path.StreetPath;
-import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.transit.model._data.TransitRepositoryForTest;
 import org.opentripplanner.transit.model.organization.ContactInfo;
 import org.opentripplanner.transit.model.site.RegularStop;

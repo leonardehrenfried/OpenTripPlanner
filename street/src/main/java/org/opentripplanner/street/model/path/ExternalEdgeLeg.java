@@ -2,7 +2,7 @@ package org.opentripplanner.street.model.path;
 
 import java.time.Instant;
 import java.util.List;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.street.model.edge.ExternalLegEdge;
 import org.opentripplanner.street.model.elevation.ElevationProfile;

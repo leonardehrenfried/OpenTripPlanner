@@ -710,7 +710,7 @@ public class DefaultCarpoolingService implements CarpoolingService {
         );
         return null;
       }
-      durations[leg] = StreetPathUtils.durationOrZero(path);
+      durations[leg] = path.duration();
     }
     return durations;
   }

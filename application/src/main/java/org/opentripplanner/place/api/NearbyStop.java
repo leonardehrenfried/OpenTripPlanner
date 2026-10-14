@@ -3,7 +3,7 @@ package org.opentripplanner.place.api;
 import java.time.Duration;
 import java.util.Locale;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.street.model.path.DefaultStreetPath;
 import org.opentripplanner.street.model.path.StreetPath;
