@@ -21,13 +21,13 @@ import org.opentripplanner.model.plan.Itinerary;
 import org.opentripplanner.model.plan.Leg;
 import org.opentripplanner.model.plan.Place;
 import org.opentripplanner.model.plan.leg.StreetLeg;
+import org.opentripplanner.street.geometry.GeometryUtils;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.StreetVertex;
 import org.opentripplanner.street.model.vertex.TemporaryStreetLocation;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.TraverseMode;
-import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.transit.model.organization.ContactInfo;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.transit.model.timetable.booking.BookingInfo;
@@ -157,8 +157,12 @@ public class CarpoolItineraryMapper {
       .withEndTime(endTime)
       .withFrom(fromPlace)
       .withTo(toPlace)
-      .withGeometry(StreetPathUtils.geometry(pathsWithNewPassenger))
-      .withDistanceMeters(StreetPathUtils.distanceMeters(pathsWithNewPassenger))
+      .withGeometry(
+        GeometryUtils.concatenateLineStrings(pathsWithNewPassenger, StreetPath::geometry)
+      )
+      .withDistanceMeters(
+        pathsWithNewPassenger.stream().mapToDouble(StreetPathUtils::distanceMeters).sum()
+      )
       .withGeneralizedCost((int) rideWeight)
       .withPickupBookingInfo(bookingInfo)
       .build();
@@ -177,9 +181,9 @@ public class CarpoolItineraryMapper {
       .withEndTime(endTime)
       .withFrom(fromPlace)
       .withTo(toPlace)
-      .withGeometry(StreetPathUtils.geometry(List.of(walkPath)))
-      .withDistanceMeters(StreetPathUtils.distanceMeters(List.of(walkPath)))
-      .withGeneralizedCost((int) StreetPathUtils.weightOrZero(walkPath))
+      .withGeometry(walkPath.geometry())
+      .withDistanceMeters(StreetPathUtils.distanceMeters(walkPath))
+      .withGeneralizedCost((int) walkPath.generalizedCost())
       .build();
   }
 
@@ -237,15 +241,13 @@ public class CarpoolItineraryMapper {
     EndpointLabel endLabel,
     @Nullable BookingInfo bookingInfo
   ) {
-    Vertex pickupVertex = StreetPathUtils.firstVertex(pathsWithNewPassenger.getFirst());
-    Vertex dropoffVertex = StreetPathUtils.lastVertex(pathsWithNewPassenger.getLast());
+    Vertex pickupVertex = pathsWithNewPassenger.getFirst().fromVertex();
+    Vertex dropoffVertex = pathsWithNewPassenger.getLast().toVertex();
     Place pickupPlace = makePlace(pickupVertex);
     Place dropoffPlace = makePlace(dropoffVertex);
 
-    Vertex startBoundaryVertex =
-      walkToPickup != null ? StreetPathUtils.firstVertex(walkToPickup) : pickupVertex;
-    Vertex endBoundaryVertex =
-      walkFromDropoff != null ? StreetPathUtils.lastVertex(walkFromDropoff) : dropoffVertex;
+    Vertex startBoundaryVertex = walkToPickup != null ? walkToPickup.fromVertex() : pickupVertex;
+    Vertex endBoundaryVertex = walkFromDropoff != null ? walkFromDropoff.toVertex() : dropoffVertex;
 
     Place itineraryStart = boundaryPlace(startLabel, ORIGIN_DEFAULT_NAME, startBoundaryVertex);
     Place itineraryEnd = boundaryPlace(endLabel, DESTINATION_DEFAULT_NAME, endBoundaryVertex);
@@ -341,11 +343,11 @@ public class CarpoolItineraryMapper {
   }
 
   private static WgsCoordinate boardingCoordinate(List<StreetPath> pathsWithNewPassenger) {
-    return StreetPathUtils.firstVertex(pathsWithNewPassenger.getFirst()).toWgsCoordinate();
+    return pathsWithNewPassenger.getFirst().fromVertex().toWgsCoordinate();
   }
 
   private static WgsCoordinate alightingCoordinate(List<StreetPath> pathsWithNewPassenger) {
-    return StreetPathUtils.lastVertex(pathsWithNewPassenger.getLast()).toWgsCoordinate();
+    return pathsWithNewPassenger.getLast().toVertex().toWgsCoordinate();
   }
 
   /**

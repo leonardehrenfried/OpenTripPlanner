@@ -8,7 +8,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.ext.carpooling.CarpoolingParameters;
-import org.opentripplanner.ext.carpooling.util.StreetPathUtils;
 import org.opentripplanner.framework.application.OTPRequestTimeoutException;
 import org.opentripplanner.routing.algorithm.GraphRoutingTest;
 import org.opentripplanner.street.geometry.WgsCoordinate;
@@ -72,7 +71,7 @@ class CarpoolStreetRouterTest extends GraphRoutingTest {
   void geometryIsInTravelOrder() {
     var path = ROUTER.route(vertexA, vertexC).path();
 
-    assertThat(List.of(StreetPathUtils.geometry(List.of(path)).getCoordinates()))
+    assertThat(List.of(path.geometry().getCoordinates()))
       .containsExactly(vertexA.getCoordinate(), vertexB.getCoordinate(), vertexC.getCoordinate())
       .inOrder();
   }

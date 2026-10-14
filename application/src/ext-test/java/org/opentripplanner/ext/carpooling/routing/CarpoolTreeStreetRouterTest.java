@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
 import java.util.List;
@@ -17,7 +16,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.TestOtpModel;
 import org.opentripplanner.ext.carpooling.routing.CarpoolTreeStreetRouter.TargetReach;
-import org.opentripplanner.ext.carpooling.util.StreetPathUtils;
 import org.opentripplanner.ext.carpooling.util.StreetVertexUtils;
 import org.opentripplanner.framework.application.OTPRequestTimeoutException;
 import org.opentripplanner.routing.algorithm.GraphRoutingTest;
@@ -25,7 +23,6 @@ import org.opentripplanner.routing.linking.VertexLinkerTestFactory;
 import org.opentripplanner.routing.linking.internal.VertexCreationService;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.linking.TemporaryVerticesContainer;
-import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.IntersectionVertex;
 import org.opentripplanner.street.model.vertex.Vertex;
 
@@ -293,9 +290,7 @@ class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
     var segment = router.route(vertexA, vertexC);
 
     assertNotNull(segment);
-    var path = segment.path();
-    assertFalse(StreetPathForTest.states(path).isEmpty(), "Path states should not be empty");
-    assertTrue(StreetPathForTest.states(path).size() > 1, "Path should have at least one edge");
+    assertFalse(segment.path().isEmpty(), "Path should have at least one edge");
   }
 
   @Test
@@ -383,7 +378,7 @@ class CarpoolTreeStreetRouterTest extends GraphRoutingTest {
 
   private void assertGeometryRunsFromAToD(RoutedSegment segment) {
     assertThat(segment).isNotNull();
-    assertThat(List.of(StreetPathUtils.geometry(List.of(segment.path())).getCoordinates()))
+    assertThat(List.of(segment.path().geometry().getCoordinates()))
       .containsExactly(
         vertexA.getCoordinate(),
         vertexB.getCoordinate(),
