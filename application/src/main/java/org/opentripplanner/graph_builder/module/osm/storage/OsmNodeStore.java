@@ -38,7 +38,14 @@ class OsmNodeStore {
   private static final double FIXED_POINT_FACTOR = 1e7;
 
   /** Coordinates of all retained nodes, packed as two fixed-point ints in one long. */
-  private final TLongLongMap coordinatesById = new TLongLongHashMap();
+  private static final long NO_COORDINATE = Long.MIN_VALUE;
+
+  private final TLongLongMap coordinatesById = new TLongLongHashMap(
+    gnu.trove.impl.Constants.DEFAULT_CAPACITY,
+    gnu.trove.impl.Constants.DEFAULT_LOAD_FACTOR,
+    gnu.trove.impl.Constants.DEFAULT_LONG_NO_ENTRY_VALUE,
+    NO_COORDINATE
+  );
 
   /**
    * Index into {@link #providers} of the provider of all retained nodes, minus one entry: nodes
@@ -79,11 +86,13 @@ class OsmNodeStore {
    */
   @Nullable
   OsmNode get(long id) {
-    if (!coordinatesById.containsKey(id)) {
+    long packedCoordinate = coordinatesById.get(id);
+    if (packedCoordinate == NO_COORDINATE) {
       return null;
     }
-    long packedCoordinate = coordinatesById.get(id);
-    var provider = providers.get(nonDefaultProviderIndexById.get(id));
+    var provider = providers.get(
+      nonDefaultProviderIndexById.isEmpty() ? 0 : nonDefaultProviderIndexById.get(id)
+    );
     var builder = OsmNode.of()
       .withId(id)
       .withLatLon(unpackLat(packedCoordinate), unpackLon(packedCoordinate));

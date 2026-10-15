@@ -1033,7 +1033,7 @@ public abstract class OsmEntity {
 
   @Override
   public int hashCode() {
-    return Objects.hash(getClass(), id);
+    return 31 * getClass().hashCode() + Long.hashCode(id);
   }
 
   @Override

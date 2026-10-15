@@ -1,6 +1,5 @@
 package org.opentripplanner.osm;
 
-import crosby.binary.file.ParallelBlockInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
@@ -37,7 +36,10 @@ public class DefaultOsmProvider implements OsmProvider {
   private final WayPropertySet wayPropertySet;
   /// since reading from disk is still serial, this only controls how many threads _decode_ the zip
   /// stream. past 3-4, more threads don't make it faster anymore.
-  private final int decodeParallelism = Math.min(4, Runtime.getRuntime().availableProcessors());
+  private final int decodeParallelism = Integer.getInteger(
+    "otp.osm.decodeParallelism",
+    Math.min(4, Runtime.getRuntime().availableProcessors())
+  );
   private final ExecutorService executorService = Executors.newFixedThreadPool(decodeParallelism);
   private byte[] cachedBytes = null;
 
@@ -103,15 +105,11 @@ public class DefaultOsmProvider implements OsmProvider {
 
   private void parsePhase(OsmParser parser, OsmParserPhase phase) {
     parser.setPhase(phase);
-    try (
-      var in = new ParallelBlockInputStream(
-        createInputStream(phase),
+    try (var in = createInputStream(phase)) {
+      new ParallelPbfReader(in, executorService, decodeParallelism).process(
         parser,
-        executorService,
-        decodeParallelism
-      )
-    ) {
-      in.process();
+        parser::skipDataBlock
+      );
     } catch (Exception e) {
       LOG.error(e.getMessage(), e);
     }

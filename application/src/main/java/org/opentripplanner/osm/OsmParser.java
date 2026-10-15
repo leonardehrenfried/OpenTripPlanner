@@ -2,6 +2,7 @@ package org.opentripplanner.osm;
 
 import crosby.binary.BinaryParser;
 import crosby.binary.Osmformat;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,20 @@ class OsmParser extends BinaryParser {
   private final DefaultOsmProvider provider;
   private OsmParserPhase parsePhase;
 
+  /**
+   * Which file blocks (by position in the file) contain nodes/ways/relations. Recorded during the
+   * first, complete pass over the file and used to skip (without decompressing or parsing) the
+   * blocks that are irrelevant to the later phases.
+   */
+  private final BitSet blocksWithNodes = new BitSet();
+  private final BitSet blocksWithWays = new BitSet();
+  private final BitSet blocksWithRelations = new BitSet();
+  private boolean blockContentKnown = false;
+
+  /** Internalized strings of the current block's string table, filled lazily. */
+  private String[] blockStrings = new String[0];
+  private int handleBlockIndex = 0;
+
   public OsmParser(OsmDatabase osmdb, DefaultOsmProvider provider) {
     this.osmdb = Objects.requireNonNull(osmdb);
     this.provider = Objects.requireNonNull(provider);
@@ -45,6 +60,16 @@ class OsmParser extends BinaryParser {
     return fromTable;
   }
 
+  /** Returns the internalized string with the given id from the current block's string table. */
+  private String string(int id) {
+    String s = blockStrings[id];
+    if (s == null) {
+      s = internalize(getStringById(id));
+      blockStrings[id] = s;
+    }
+    return s;
+  }
+
   @Override
   public void complete() {
     // Jump in circles
@@ -54,7 +79,44 @@ class OsmParser extends BinaryParser {
    * Set the phase to be parsed
    */
   public void setPhase(OsmParserPhase phase) {
+    if (handleBlockIndex > 0) {
+      blockContentKnown = true;
+    }
+    handleBlockIndex = 0;
     this.parsePhase = phase;
+  }
+
+  /**
+   * Whether the data block with the given index in the file can be skipped in the current phase.
+   */
+  boolean skipDataBlock(int index) {
+    if (!blockContentKnown) {
+      return false;
+    }
+    return !switch (parsePhase) {
+      case Relations -> blocksWithRelations.get(index);
+      case Ways -> blocksWithWays.get(index);
+      case Nodes -> blocksWithNodes.get(index);
+    };
+  }
+
+  void parse(int index, Osmformat.PrimitiveBlock block) {
+    handleBlockIndex++;
+    if (!blockContentKnown) {
+      for (var group : block.getPrimitivegroupList()) {
+        if (group.hasDense() || group.getNodesCount() > 0) {
+          blocksWithNodes.set(index);
+        }
+        if (group.getWaysCount() > 0) {
+          blocksWithWays.set(index);
+        }
+        if (group.getRelationsCount() > 0) {
+          blocksWithRelations.set(index);
+        }
+      }
+    }
+    blockStrings = new String[block.getStringtable().getSCount()];
+    parse(block);
   }
 
   @Override
@@ -67,8 +129,8 @@ class OsmParser extends BinaryParser {
       OsmRelationBuilder builder = OsmRelation.of().withId(i.getId()).withOsmProvider(provider);
 
       for (int j = 0; j < i.getKeysCount(); j++) {
-        String key = internalize(getStringById(i.getKeys(j)));
-        String value = internalize(getStringById(i.getVals(j)));
+        String key = string(i.getKeys(j));
+        String value = string(i.getVals(j));
         builder.addTag(key, value);
       }
 
@@ -80,7 +142,7 @@ class OsmParser extends BinaryParser {
         relMember.setRef(mid);
         lastMid = mid;
 
-        relMember.setRole(internalize(getStringById(i.getRolesSid(j))));
+        relMember.setRole(string(i.getRolesSid(j)));
 
         if (i.getTypes(j) == Osmformat.Relation.MemberType.NODE) {
           relMember.setType(OsmMemberType.NODE);
@@ -120,18 +182,28 @@ class OsmParser extends BinaryParser {
       lastLon = lon;
       long id = nodes.getId(i) + lastId;
       lastId = id;
+      boolean hasTags = nodes.getKeysValsCount() > 0 && nodes.getKeysVals(j) != 0;
+      if (!hasTags) {
+        if (nodes.getKeysValsCount() > 0) {
+          // Skip over the '0' delimiter.
+          j++;
+        }
+        if (!osmdb.isTaglessNodeNeeded(id)) {
+          continue;
+        }
+      }
       double latf = parseLat(lat);
       double lonf = parseLon(lon);
 
       var builder = OsmNode.of().withId(id).withOsmProvider(provider).withLatLon(latf, lonf);
       // If empty, assume that nothing here has keys or vals.
-      if (nodes.getKeysValsCount() > 0) {
+      if (hasTags) {
         while (nodes.getKeysVals(j) != 0) {
           int keyid = nodes.getKeysVals(j++);
           int valid = nodes.getKeysVals(j++);
 
-          String key = internalize(getStringById(keyid));
-          String value = internalize(getStringById(valid));
+          String key = string(keyid);
+          String value = string(valid);
           builder.withTag(key, value);
         }
         // Skip over the '0' delimiter.
@@ -155,8 +227,8 @@ class OsmParser extends BinaryParser {
         .withLatLon(parseLat(i.getLat()), parseLon(i.getLon()));
 
       for (int j = 0; j < i.getKeysCount(); j++) {
-        String key = internalize(getStringById(i.getKeys(j)));
-        String value = internalize(getStringById(i.getVals(j)));
+        String key = string(i.getKeys(j));
+        String value = string(i.getVals(j));
         builder.withTag(key, value);
       }
 
@@ -174,8 +246,8 @@ class OsmParser extends BinaryParser {
       OsmWayBuilder builder = OsmWay.of().withId(i.getId()).withOsmProvider(provider);
 
       for (int j = 0; j < i.getKeysCount(); j++) {
-        String key = internalize(getStringById(i.getKeys(j)));
-        String value = internalize(getStringById(i.getVals(j)));
+        String key = string(i.getKeys(j));
+        String value = string(i.getVals(j));
         builder.withTag(key, value);
       }
 

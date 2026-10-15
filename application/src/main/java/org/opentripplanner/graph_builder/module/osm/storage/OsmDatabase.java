@@ -90,6 +90,9 @@ public class OsmDatabase {
   /* Set of all node IDs of kept areas. Needed to mark which nodes to keep in stage 3. */
   private final TLongSet areaNodeIds = new TLongHashSet();
 
+  /* Union of waysNodeIds and areaNodeIds, optimized for lookups in ascending id order. */
+  private SortedLongSet neededNodeIds = SortedLongSet.union(new TLongHashSet(), new TLongHashSet());
+
   /**
    * Track which vertical levels OSM entities belong to.
    * Level information can be set for ways, nodes and relations.
@@ -240,6 +243,14 @@ public class OsmDatabase {
     return areas;
   }
 
+  /**
+   * Whether a node without tags with the given id would be kept by {@link #addNode}. Lets the
+   * parser skip building the (vast majority of) nodes that are not used by any way or area.
+   */
+  public boolean isTaglessNodeNeeded(long nodeId) {
+    return neededNodeIds.contains(nodeId);
+  }
+
   public boolean isNodeBelongsToWay(Long nodeId) {
     return waysNodeIds.contains(nodeId);
   }
@@ -354,6 +365,13 @@ public class OsmDatabase {
       waysNodeIds
     );
     markNodesForKeeping(areaWaysById.valueCollection(), areaNodeIds);
+    neededNodeIds = SortedLongSet.union(waysNodeIds, areaNodeIds);
+    LOG.info(
+      "Nodes to keep: {} (ways: {}, areas: {})",
+      neededNodeIds.size(),
+      waysNodeIds.size(),
+      areaNodeIds.size()
+    );
   }
 
   public void doneThirdPhaseNodes() {
