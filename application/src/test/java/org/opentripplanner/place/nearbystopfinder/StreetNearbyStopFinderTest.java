@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.algorithm.GraphRoutingTest;
 import org.opentripplanner.routing.api.request.RouteRequest;
@@ -22,7 +23,6 @@ import org.opentripplanner.routing.linking.internal.VertexCreationService;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.vertex.TransitStopVertex;
-import org.opentripplanner.street.model.vertex.Vertex;
 
 class StreetNearbyStopFinderTest extends GraphRoutingTest {
 
@@ -182,10 +182,8 @@ class StreetNearbyStopFinderTest extends GraphRoutingTest {
   void testIgnoreStops() {
     var durationLimit = Duration.ofMinutes(10);
     var maxStopCount = 0;
-    Set<Vertex> ignore = Set.of(stopA, stopB);
-    var finder = StreetNearbyStopFinder.of(linkingContextFactory)
-      .withIgnoreVertices(ignore)
-      .build();
+    Set<FeedScopedId> ignore = Set.of(stopA.getId(), stopB.getId());
+    var finder = StreetNearbyStopFinder.of(linkingContextFactory).withIgnoreStops(ignore).build();
 
     var sortedNearbyStops = sort(
       finder.findNearbyStops(
@@ -207,10 +205,8 @@ class StreetNearbyStopFinderTest extends GraphRoutingTest {
   void testIgnoreStopsWithMaxStops() {
     var durationLimit = Duration.ofMinutes(10);
     var maxStopCount = 1;
-    Set<Vertex> ignore = Set.of(stopA, stopB);
-    var finder = StreetNearbyStopFinder.of(linkingContextFactory)
-      .withIgnoreVertices(ignore)
-      .build();
+    Set<FeedScopedId> ignore = Set.of(stopA.getId(), stopB.getId());
+    var finder = StreetNearbyStopFinder.of(linkingContextFactory).withIgnoreStops(ignore).build();
 
     var sortedNearbyStops = sort(
       finder.findNearbyStops(
