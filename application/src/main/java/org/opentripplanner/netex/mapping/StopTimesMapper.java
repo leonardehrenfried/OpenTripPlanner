@@ -8,7 +8,9 @@ import jakarta.xml.bind.JAXBElement;
 import java.math.BigInteger;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
@@ -121,6 +123,7 @@ class StopTimesMapper {
   ) {
     StopTimesMapperResult result = new StopTimesMapperResult();
     List<String> scheduledStopPointIds = new ArrayList<>();
+    Map<String, StopPointInJourneyPattern> stopPointsById = stopPointsById(journeyPattern);
 
     for (int i = 0; i < passingTimes.size(); i++) {
       TimetabledPassingTime currentPassingTime = passingTimes.get(i);
@@ -130,7 +133,7 @@ class StopTimesMapper {
         .getValue()
         .getRef();
 
-      StopPointInJourneyPattern stopPoint = findStopPoint(pointInJourneyPattern, journeyPattern);
+      StopPointInJourneyPattern stopPoint = stopPointsById.get(pointInJourneyPattern);
 
       StopLocation stop = lookUpStopLocation(stopPoint);
 
@@ -227,6 +230,26 @@ class StopTimesMapper {
       }
     }
     return null;
+  }
+
+  /**
+   * Index the stop points of the journey pattern by id, so a trip with n stops can be mapped in
+   * O(n) instead of searching the pattern for each passing time. If an id occurs more than once,
+   * the first stop point wins - the same as {@link #findStopPoint}.
+   */
+  private static Map<String, StopPointInJourneyPattern> stopPointsById(
+    JourneyPattern_VersionStructure journeyPattern
+  ) {
+    var points = journeyPattern
+      .getPointsInSequence()
+      .getPointInJourneyPatternOrStopPointInJourneyPatternOrTimingPointInJourneyPattern();
+    Map<String, StopPointInJourneyPattern> stopPointsById = new HashMap<>(points.size() * 2);
+    for (PointInLinkSequence_VersionedChildStructure point : points) {
+      if (point instanceof StopPointInJourneyPattern stopPoint) {
+        stopPointsById.putIfAbsent(stopPoint.getId(), stopPoint);
+      }
+    }
+    return stopPointsById;
   }
 
   private static int calculateOtpTime(
