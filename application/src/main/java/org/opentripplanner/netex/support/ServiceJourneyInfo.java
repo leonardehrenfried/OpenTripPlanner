@@ -35,7 +35,7 @@ public class ServiceJourneyInfo {
    * Sort the timetabled passing times according to their order in the journey pattern.
    */
   public List<StopTimeAdaptor> orderedTimetabledPassingTimeInfos() {
-    Map<TimetabledPassingTime, Boolean> stopFlexibility = stopFlexibility();
+    Map<String, String> scheduledStopPointIdByStopPointId = scheduledStopPointIdByStopPointId();
 
     Map<String, Integer> stopPointIdToOrder = journeyPattern
       .getPointsInSequence()
@@ -52,34 +52,24 @@ public class ServiceJourneyInfo {
         )
       )
       .map(timetabledPassingTime ->
-        StopTimeAdaptor.of(timetabledPassingTime, stopFlexibility.get(timetabledPassingTime))
+        StopTimeAdaptor.of(
+          timetabledPassingTime,
+          isAreaStop(timetabledPassingTime, scheduledStopPointIdByStopPointId)
+        )
       )
       .toList();
   }
 
   /**
-   * Map a timetabledPassingTime to true if its stop is a stop area, false otherwise.
+   * Return true if the stop of the timetabledPassingTime is a stop area, false otherwise.
    */
-  private Map<TimetabledPassingTime, Boolean> stopFlexibility() {
-    Map<String, String> scheduledStopPointIdByStopPointId = scheduledStopPointIdByStopPointId();
-
-    return serviceJourney
-      .getPassingTimes()
-      .getTimetabledPassingTime()
-      .stream()
-      .collect(
-        Collectors.toMap(
-          timetabledPassingTime -> timetabledPassingTime,
-          timetabledPassingTime ->
-            netexEntityIndex
-              .getFlexibleStopPlaceByStopPointRef()
-              .containsKey(
-                scheduledStopPointIdByStopPointId.get(
-                  timetabledPassingTime.getPointInJourneyPatternRef().getValue().getRef()
-                )
-              )
-        )
-      );
+  private boolean isAreaStop(
+    TimetabledPassingTime timetabledPassingTime,
+    Map<String, String> scheduledStopPointIdByStopPointId
+  ) {
+    return netexEntityIndex
+      .getFlexibleStopPlaceByStopPointRef()
+      .containsKey(scheduledStopPointIdByStopPointId.get(stopPointId(timetabledPassingTime)));
   }
 
   /**

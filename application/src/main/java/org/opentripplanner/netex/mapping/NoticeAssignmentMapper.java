@@ -30,8 +30,14 @@ class NoticeAssignmentMapper {
 
   private final FeedScopedIdFactory idFactory;
 
-  private final Multimap<String, TimetabledPassingTime> passingTimeByStopPointId =
-    ArrayListMultimap.create();
+  private final Collection<ServiceJourney> serviceJourneys;
+
+  /**
+   * Created lazily, it is only needed if there are notice assignments and indexing all passing
+   * times is expensive.
+   */
+  @Nullable
+  private Multimap<String, TimetabledPassingTime> passingTimeByStopPointId;
 
   private final ReadOnlyHierarchicalMap<String, org.rutebanken.netex.model.Notice> noticesById;
 
@@ -60,13 +66,7 @@ class NoticeAssignmentMapper {
     this.routesById = routesById;
     this.tripsById = tripsById;
     this.stopTimesByNetexId = stopTimesByNetexId;
-
-    // Index passing time by stopPoint id
-    for (ServiceJourney sj : serviceJourneys) {
-      for (TimetabledPassingTime it : sj.getPassingTimes().getTimetabledPassingTime()) {
-        passingTimeByStopPointId.put(it.getPointInJourneyPatternRef().getValue().getRef(), it);
-      }
-    }
+    this.serviceJourneys = serviceJourneys;
   }
 
   Multimap<AbstractTransitEntity, Notice> map(NoticeAssignment noticeAssignment) {
@@ -89,7 +89,7 @@ class NoticeAssignmentMapper {
 
     // Special case for StopPointInJourneyPattern. The OTP model do not have this element, so
     // we attach the notice to all StopTimes for the pattern at the given stop.
-    Collection<TimetabledPassingTime> times = passingTimeByStopPointId.get(noticedObjectId);
+    Collection<TimetabledPassingTime> times = passingTimeByStopPointId().get(noticedObjectId);
     if (times != null && !times.isEmpty()) {
       for (TimetabledPassingTime time : times) {
         addStopTimeNotice(noticiesByEntity, time.getId(), otpNotice);
@@ -140,5 +140,17 @@ class NoticeAssignmentMapper {
       return;
     }
     map.put(stopTime.getId(), notice);
+  }
+
+  private Multimap<String, TimetabledPassingTime> passingTimeByStopPointId() {
+    if (passingTimeByStopPointId == null) {
+      passingTimeByStopPointId = ArrayListMultimap.create();
+      for (ServiceJourney sj : serviceJourneys) {
+        for (TimetabledPassingTime it : sj.getPassingTimes().getTimetabledPassingTime()) {
+          passingTimeByStopPointId.put(it.getPointInJourneyPatternRef().getValue().getRef(), it);
+        }
+      }
+    }
+    return passingTimeByStopPointId;
   }
 }
