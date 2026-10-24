@@ -1,7 +1,8 @@
 package org.opentripplanner.netex.validation;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
-import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
+import org.opentripplanner.graph_builder.issue.api.DataImportIssue;
 import org.opentripplanner.netex.index.NetexEntityIndex;
 import org.opentripplanner.netex.index.hierarchy.AbstractHierarchicalMap;
 
@@ -18,15 +19,19 @@ import org.opentripplanner.netex.index.hierarchy.AbstractHierarchicalMap;
 public class Validator {
 
   private final NetexEntityIndex index;
-  private final DataImportIssueStore issueStore;
+  private final Consumer<DataImportIssue> issueConsumer;
 
-  private Validator(NetexEntityIndex index, DataImportIssueStore issueStore) {
+  private Validator(NetexEntityIndex index, Consumer<DataImportIssue> issueConsumer) {
     this.index = index;
-    this.issueStore = issueStore;
+    this.issueConsumer = issueConsumer;
   }
 
-  public static void validate(NetexEntityIndex index, DataImportIssueStore issueStore) {
-    new Validator(index, issueStore).run();
+  /**
+   * Validate the entities in the current level of the index, and remove invalid entities. Entities
+   * in parent levels are only read, so levels with the same parent can be validated in parallel.
+   */
+  public static void validate(NetexEntityIndex index, Consumer<DataImportIssue> issueConsumer) {
+    new Validator(index, issueConsumer).run();
   }
 
   private void run() {
@@ -48,7 +53,7 @@ public class Validator {
     AbstractHMapValidationRule<K, V> rule
   ) {
     rule.setup(index.readOnlyView());
-    map.validate(rule, issueStore::add);
+    map.validate(rule, issueConsumer);
   }
 
   /**
@@ -58,6 +63,6 @@ public class Validator {
     AbstractHierarchicalMap<K, V> map,
     Supplier<AbstractHMapValidationRule<K, V>> ruleSupplier
   ) {
-    map.validate(() -> ruleSupplier.get().setup(index.readOnlyView()), issueStore::add);
+    map.validate(() -> ruleSupplier.get().setup(index.readOnlyView()), issueConsumer);
   }
 }
