@@ -3,9 +3,7 @@ package org.opentripplanner.netex;
 import jakarta.xml.bind.JAXBException;
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import org.opentripplanner.core.model.deduplicator.DeduplicatorService;
 import org.opentripplanner.core.model.id.FeedScopedId;
@@ -18,7 +16,7 @@ import org.opentripplanner.netex.config.NetexFeedParameters;
 import org.opentripplanner.netex.index.NetexEntityIndex;
 import org.opentripplanner.netex.loader.GroupEntries;
 import org.opentripplanner.netex.loader.NetexDataSourceHierarchy;
-import org.opentripplanner.netex.loader.NetexXmlDocumentPrefetcher;
+import org.opentripplanner.netex.loader.NetexFileLoader;
 import org.opentripplanner.netex.loader.parser.NetexDocumentParser;
 import org.opentripplanner.netex.mapping.NetexMapper;
 import org.opentripplanner.netex.validation.Validator;
@@ -41,14 +39,20 @@ public class NetexBundle implements Closeable {
   private static final Logger LOG = LoggerFactory.getLogger(NetexBundle.class);
 
   /**
-   * The number of threads parsing XML files ahead of the loading, see
-   * {@link NetexXmlDocumentPrefetcher}. Past 4 the gain is small, since the loading on the main
-   * thread becomes the bottleneck, while more parsed documents are kept in memory.
+   * The number of threads loading files ahead of the mapping, see {@link NetexFileLoader}. Past 4
+   * the gain is small, since the mapping on the main thread becomes the bottleneck.
    */
-  private static final int XML_PARSE_PARALLELISM = Math.min(
+  private static final int LOADER_PARALLELISM = Math.min(
     4,
     Runtime.getRuntime().availableProcessors()
   );
+
+  /**
+   * The limits for the files loaded ahead of the mapping. Most files are small, so the workers need
+   * many files to stay busy. The size limit bounds the memory used by the parsed documents.
+   */
+  private static final int LOADER_MAX_FILES_AHEAD = 64;
+  private static final long LOADER_MAX_BYTES_AHEAD = 128_000_000;
 
   private final CompositeDataSource source;
 
@@ -68,7 +72,7 @@ public class NetexBundle implements Closeable {
   private DataImportIssueStore issueStore;
   /** maps the NeTEx XML document to OTP transit model. */
   private NetexMapper mapper;
-  private NetexXmlDocumentPrefetcher xmlParser;
+  private NetexFileLoader fileLoader;
 
   public NetexBundle(
     String feedId,
@@ -137,46 +141,45 @@ public class NetexBundle implements Closeable {
 
   /** Load all files entries in the bundle */
   private void loadFileEntries() {
-    try (var parser = new NetexXmlDocumentPrefetcher(entriesInLoadOrder(), XML_PARSE_PARALLELISM)) {
-      xmlParser = parser;
+    try (
+      var loader = new NetexFileLoader(
+        hierarchy,
+        ignoredFeatures,
+        LOADER_PARALLELISM,
+        LOADER_MAX_FILES_AHEAD,
+        LOADER_MAX_BYTES_AHEAD
+      )
+    ) {
+      fileLoader = loader;
       loadFileEntriesInOrder();
     } finally {
-      xmlParser = null;
+      fileLoader = null;
     }
     mapper.finishUp();
     NetexDocumentParser.finishUp();
   }
 
-  /**
-   * All entries in the order they are loaded by {@link #loadFileEntriesInOrder()}, this is the
-   * order the XML documents are parsed in.
-   */
-  private List<DataSource> entriesInLoadOrder() {
-    List<DataSource> entries = new ArrayList<>();
-    hierarchy.sharedEntries().forEach(entries::add);
-    for (GroupEntries group : hierarchy.groups()) {
-      entries.addAll(group.sharedEntries());
-      entries.addAll(group.independentEntries());
-    }
-    return entries;
-  }
-
   private void loadFileEntriesInOrder() {
     // Load global shared files
-    loadFilesThenMapToTransitRepository("shared file", hierarchy.sharedEntries());
+    loadSharedFiles("shared file", hierarchy.sharedEntries());
+    validateIndex();
+    mapIndexToTransitRepository();
 
     for (GroupEntries group : hierarchy.groups()) {
       LOG.info("reading group {}", group.name());
 
       scopeInputData(() -> {
         // Load shared group files
-        loadFilesThenMapToTransitRepository("shared group file", group.sharedEntries());
+        loadSharedFiles("shared group file", group.sharedEntries());
+        validateIndex();
+        // The independent files in the group are loaded and validated in parallel from now on
+        fileLoader.groupIndexReady(group, index);
+        mapIndexToTransitRepository();
 
         for (DataSource entry : group.independentEntries()) {
-          scopeInputData(() -> {
-            // Load each independent file in group
-            loadFilesThenMapToTransitRepository("group file", List.of(entry));
-          });
+          var loaded = loadGroupFile(entry);
+          loaded.issues().forEach(issueStore::add);
+          scopeLoadedInputData(loaded.index(), this::mapIndexToTransitRepository);
         }
       });
     }
@@ -187,7 +190,18 @@ public class NetexBundle implements Closeable {
    * of the index.
    */
   private void scopeInputData(Runnable task) {
-    index = index.push();
+    scopeLoadedInputData(index.push(), task);
+  }
+
+  /**
+   * Same as {@link #scopeInputData(Runnable)}, but with a new index that is already created as a
+   * child of the current index.
+   */
+  private void scopeLoadedInputData(NetexEntityIndex childIndex, Runnable task) {
+    if (childIndex.pop() != index) {
+      throw new IllegalStateException("The index is not a child of the current index");
+    }
+    index = childIndex;
     mapper = mapper.push();
     task.run();
     mapper = mapper.pop();
@@ -195,35 +209,40 @@ public class NetexBundle implements Closeable {
   }
 
   /**
-   * Load a set of files and map the entries to OTP Transit model after the loading is complete. It
-   * is important to do this in 2 steps to be able to link references. An attempt to map each entry,
-   * when read, would lead to missing references, since the order entries are read is not enforced
-   * in any way.
+   * Load a set of files into the current index. The entries are mapped to the OTP Transit model
+   * after the loading is complete. It is important to do this in 2 steps to be able to link
+   * references. An attempt to map each entry, when read, would lead to missing references, since
+   * the order entries are read is not enforced in any way.
    */
-  private void loadFilesThenMapToTransitRepository(
-    String fileDescription,
-    Iterable<DataSource> entries
-  ) {
+  private void loadSharedFiles(String fileDescription, Iterable<DataSource> entries) {
     for (DataSource entry : entries) {
-      // Load entry and store it in the index
-      loadSingeFileEntry(fileDescription, entry);
+      try {
+        LOG.info("reading entity {}: {}", fileDescription, entry.name());
+        PublicationDeliveryStructure doc = fileLoader.nextSharedFile(entry);
+        NetexDocumentParser.parseAndPopulateIndex(index, doc, ignoredFeatures);
+      } catch (JAXBException e) {
+        throw new RuntimeException(e.getMessage(), e);
+      }
     }
-
-    // Validate input data, and remove invalid data
-    Validator.validate(index, issueStore);
-
-    // map current NeTEx objects into the OTP Transit Model
-    mapper.mapNetexToOtp(index.readOnlyView());
   }
 
-  /** Load a single entry and store it in the index for later */
-  private void loadSingeFileEntry(String fileDescription, DataSource entry) {
+  /** Load an independent group file into its own level of the index, and validate it. */
+  private NetexFileLoader.LoadedGroupFile loadGroupFile(DataSource entry) {
     try {
-      LOG.info("reading entity {}: {}", fileDescription, entry.name());
-      PublicationDeliveryStructure doc = xmlParser.next(entry);
-      NetexDocumentParser.parseAndPopulateIndex(index, doc, ignoredFeatures);
+      LOG.info("reading entity group file: {}", entry.name());
+      return fileLoader.nextGroupFile(entry);
     } catch (JAXBException e) {
       throw new RuntimeException(e.getMessage(), e);
     }
+  }
+
+  /** Validate input data, and remove invalid data */
+  private void validateIndex() {
+    Validator.validate(index, issueStore::add);
+  }
+
+  /** map current NeTEx objects into the OTP Transit Model */
+  private void mapIndexToTransitRepository() {
+    mapper.mapNetexToOtp(index.readOnlyView());
   }
 }
