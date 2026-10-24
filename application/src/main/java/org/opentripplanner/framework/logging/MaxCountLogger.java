@@ -1,5 +1,6 @@
 package org.opentripplanner.framework.logging;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 
 /**
@@ -24,7 +25,7 @@ import org.slf4j.Logger;
 public class MaxCountLogger extends AbstractFilterLogger {
 
   private static final int MAX_COUNT = 10;
-  private int count = 0;
+  private final AtomicInteger count = new AtomicInteger();
 
   private MaxCountLogger(Logger delegate) {
     super(delegate);
@@ -44,13 +45,12 @@ public class MaxCountLogger extends AbstractFilterLogger {
    */
   public void logTotal(String message) {
     if (mute()) {
-      getDelegate().warn("TOTAL: {} - {}", count, message);
+      getDelegate().warn("TOTAL: {} - {}", count.get(), message);
     }
   }
 
   @Override
   boolean mute() {
-    ++count;
-    return count > MAX_COUNT;
+    return count.incrementAndGet() > MAX_COUNT;
   }
 }
