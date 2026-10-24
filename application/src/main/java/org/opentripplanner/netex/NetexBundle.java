@@ -3,6 +3,7 @@ package org.opentripplanner.netex;
 import jakarta.xml.bind.JAXBException;
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +18,7 @@ import org.opentripplanner.netex.config.NetexFeedParameters;
 import org.opentripplanner.netex.index.NetexEntityIndex;
 import org.opentripplanner.netex.loader.GroupEntries;
 import org.opentripplanner.netex.loader.NetexDataSourceHierarchy;
-import org.opentripplanner.netex.loader.NetexXmlParser;
+import org.opentripplanner.netex.loader.NetexXmlDocumentPrefetcher;
 import org.opentripplanner.netex.loader.parser.NetexDocumentParser;
 import org.opentripplanner.netex.mapping.NetexMapper;
 import org.opentripplanner.netex.validation.Validator;
@@ -39,6 +40,16 @@ public class NetexBundle implements Closeable {
 
   private static final Logger LOG = LoggerFactory.getLogger(NetexBundle.class);
 
+  /**
+   * The number of threads parsing XML files ahead of the loading, see
+   * {@link NetexXmlDocumentPrefetcher}. Past 4 the gain is small, since the loading on the main
+   * thread becomes the bottleneck, while more parsed documents are kept in memory.
+   */
+  private static final int XML_PARSE_PARALLELISM = Math.min(
+    4,
+    Runtime.getRuntime().availableProcessors()
+  );
+
   private final CompositeDataSource source;
 
   private final NetexDataSourceHierarchy hierarchy;
@@ -57,7 +68,7 @@ public class NetexBundle implements Closeable {
   private DataImportIssueStore issueStore;
   /** maps the NeTEx XML document to OTP transit model. */
   private NetexMapper mapper;
-  private NetexXmlParser xmlParser;
+  private NetexXmlDocumentPrefetcher xmlParser;
 
   public NetexBundle(
     String feedId,
@@ -92,8 +103,7 @@ public class NetexBundle implements Closeable {
 
     this.issueStore = issueStore;
 
-    // init parser and mapper
-    xmlParser = new NetexXmlParser();
+    // init mapper
     mapper = new NetexMapper(
       transitBuilder,
       feedId,
@@ -127,6 +137,31 @@ public class NetexBundle implements Closeable {
 
   /** Load all files entries in the bundle */
   private void loadFileEntries() {
+    try (var parser = new NetexXmlDocumentPrefetcher(entriesInLoadOrder(), XML_PARSE_PARALLELISM)) {
+      xmlParser = parser;
+      loadFileEntriesInOrder();
+    } finally {
+      xmlParser = null;
+    }
+    mapper.finishUp();
+    NetexDocumentParser.finishUp();
+  }
+
+  /**
+   * All entries in the order they are loaded by {@link #loadFileEntriesInOrder()}, this is the
+   * order the XML documents are parsed in.
+   */
+  private List<DataSource> entriesInLoadOrder() {
+    List<DataSource> entries = new ArrayList<>();
+    hierarchy.sharedEntries().forEach(entries::add);
+    for (GroupEntries group : hierarchy.groups()) {
+      entries.addAll(group.sharedEntries());
+      entries.addAll(group.independentEntries());
+    }
+    return entries;
+  }
+
+  private void loadFileEntriesInOrder() {
     // Load global shared files
     loadFilesThenMapToTransitRepository("shared file", hierarchy.sharedEntries());
 
@@ -145,8 +180,6 @@ public class NetexBundle implements Closeable {
         }
       });
     }
-    mapper.finishUp();
-    NetexDocumentParser.finishUp();
   }
 
   /**
@@ -187,7 +220,7 @@ public class NetexBundle implements Closeable {
   private void loadSingeFileEntry(String fileDescription, DataSource entry) {
     try {
       LOG.info("reading entity {}: {}", fileDescription, entry.name());
-      PublicationDeliveryStructure doc = xmlParser.parseXmlDoc(entry.asInputStream());
+      PublicationDeliveryStructure doc = xmlParser.next(entry);
       NetexDocumentParser.parseAndPopulateIndex(index, doc, ignoredFeatures);
     } catch (JAXBException e) {
       throw new RuntimeException(e.getMessage(), e);

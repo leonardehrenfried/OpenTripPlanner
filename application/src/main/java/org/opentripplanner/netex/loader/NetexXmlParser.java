@@ -10,7 +10,10 @@ import java.io.InputStream;
 import org.glassfish.jaxb.runtime.v2.runtime.Coordinator;
 import org.rutebanken.netex.model.PublicationDeliveryStructure;
 
-/** Simple wrapper to perform typesafe xml parsing and simple error handling. */
+/**
+ * Simple wrapper to perform typesafe xml parsing and simple error handling. An instance is not
+ * thread-safe, use one per thread.
+ */
 public class NetexXmlParser {
 
   /** used to parse the XML. */
@@ -37,12 +40,30 @@ public class NetexXmlParser {
   /** factory method for unmarshaller */
   private static Unmarshaller createUnmarshaller() {
     try {
-      return JAXBContext.newInstance(PublicationDeliveryStructure.class).createUnmarshaller();
+      return ContextHolder.CONTEXT.createUnmarshaller();
     } catch (JAXBException e) {
       // This is a programming error - not expected!
       // We abort early and also allow for this to happen in the constructor;
       // Which in other cases would be considered bad practice.
       throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * The JAXB context is expensive to create and thread-safe, so it is shared by all parsers. An
+   * unmarshaller is not thread-safe, so each parser has its own.
+   */
+  private static class ContextHolder {
+
+    private static final JAXBContext CONTEXT = createContext();
+
+    private static JAXBContext createContext() {
+      try {
+        return JAXBContext.newInstance(PublicationDeliveryStructure.class);
+      } catch (JAXBException e) {
+        // This is a programming error - not expected!
+        throw new RuntimeException(e);
+      }
     }
   }
 
