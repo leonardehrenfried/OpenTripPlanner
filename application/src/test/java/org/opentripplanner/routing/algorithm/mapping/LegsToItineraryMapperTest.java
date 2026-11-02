@@ -10,7 +10,7 @@ import org.opentripplanner._support.time.ZoneIds;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.service.streetdetails.internal.DefaultStreetDetailsRepository;
 import org.opentripplanner.service.streetdetails.internal.DefaultStreetDetailsService;
-import org.opentripplanner.street.model.path.StreetPath;
+import org.opentripplanner.street.model.path.DefaultStreetPath;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.street.search.state.TestStateBuilder;
 import org.opentripplanner.transit.service.NoopSiteResolver;
@@ -40,7 +40,7 @@ class LegsToItineraryMapperTest {
       new DefaultStreetDetailsService(new DefaultStreetDetailsRepository()),
       1
     );
-    var path = StreetPath.of(state);
+    var path = DefaultStreetPath.of(state);
     var legs = mapper.map(path, RouteRequest.defaultValue());
     var itin = LegsToItineraryMapper.map(legs, false, null).get();
     assertFalse(itin.isSearchWindowAware());

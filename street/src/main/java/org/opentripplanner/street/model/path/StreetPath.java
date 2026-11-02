@@ -7,7 +7,6 @@ import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
-import org.opentripplanner.street.search.state.State;
 
 /// A path within the street network, the result of a street search.
 ///
@@ -17,13 +16,6 @@ public interface StreetPath {
   /// A path which is not the result of a street search, used when there is no street path, like
   /// for a stop found by a straight-line search. It has no edges, no vertices and no cost.
   StreetPath EMPTY = EmptyStreetPath.INSTANCE;
-
-  /// Build a chronologically ordered path by following the back-state chain of `finalState` all
-  /// the way back to the origin of the search. Paths from arriveBy searches are reversed, so the
-  /// path always runs forward in time.
-  static StreetPath of(State finalState) {
-    return new DefaultStreetPath(finalState);
-  }
 
   /// The generalized cost (A* weight) of traversing the path.
   double generalizedCost();
