@@ -241,6 +241,14 @@ public class GeometryProcessor {
         if (segment.index < minSegmentIndex) {
           continue;
         }
+        // The best distance is never smaller than the snap distance, so a segment certainly
+        // farther away than the best segment is neither within the snap distance nor a better
+        // fallback, and computing its exact distance can be skipped.
+        if (
+          !isFlexTrip && bestSegment != null && segment.isCertainlyFartherThan(coord, bestDistance)
+        ) {
+          continue;
+        }
         double distance = segment.distance(coord);
         if (distance < maxStopToShapeSnapDistance || isFlexTrip) {
           stopSegments.add(segment);
@@ -384,9 +392,12 @@ public class GeometryProcessor {
       }
       List<IndexedLineSegment> firstContinuousSegments = continuousSegments.getFirst();
       var bestMatch = firstContinuousSegments.getFirst();
+      var bestMatchDistance = bestMatch.distance(stopCoord);
       for (var segment : firstContinuousSegments) {
-        if (segment.distance(stopCoord) < bestMatch.distance(stopCoord)) {
+        var distance = segment.distance(stopCoord);
+        if (distance < bestMatchDistance) {
           bestMatch = segment;
+          bestMatchDistance = distance;
         }
       }
       // we found one!
