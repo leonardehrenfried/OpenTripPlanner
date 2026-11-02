@@ -99,6 +99,13 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
     this.traversalDistance = finalState.getTraversalDistanceMeters();
   }
 
+  /// Build a chronologically ordered path by following the back-state chain of `finalState` all
+  /// the way back to the origin of the search. Paths from arriveBy searches are reversed, so the
+  /// path always runs forward in time.
+  public static StreetPath of(State finalState) {
+    return new DefaultStreetPath(finalState);
+  }
+
   private static void validate(List<State> states, List<Edge> edges) {
     if (states.isEmpty()) {
       throw new IllegalArgumentException("A path needs at least one state");

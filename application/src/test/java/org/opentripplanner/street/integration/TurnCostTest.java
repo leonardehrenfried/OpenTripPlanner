@@ -23,6 +23,7 @@ import org.opentripplanner.street.model.TurnRestrictionType;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.edge.StreetEdge;
 import org.opentripplanner.street.model.edge.StreetEdgeBuilder;
+import org.opentripplanner.street.model.path.DefaultStreetPath;
 import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.StreetVertex;
@@ -206,7 +207,7 @@ public class TurnCostTest {
       .getShortestPathTree();
     State state = tree.getState(bottomLeft);
     assertNotNull(state);
-    StreetPath path = StreetPath.of(state);
+    StreetPath path = DefaultStreetPath.of(state);
     List<State> states = StreetPathForTest.states(path);
 
     // Without turn costs, this path costs 2x100 + 2x50 = 300.

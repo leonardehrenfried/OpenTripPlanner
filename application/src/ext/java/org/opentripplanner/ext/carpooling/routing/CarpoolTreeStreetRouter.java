@@ -11,6 +11,7 @@ import org.opentripplanner.astar.strategy.DurationSkipEdgeStrategy;
 import org.opentripplanner.framework.application.OTPRequestTimeoutException;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.edge.Edge;
+import org.opentripplanner.street.model.path.DefaultStreetPath;
 import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.StreetSearchBuilder;
@@ -313,7 +314,7 @@ public class CarpoolTreeStreetRouter implements CarpoolRouter {
     @Override
     public StreetPath path() {
       if (path == null) {
-        path = StreetPath.of(arrival);
+        path = DefaultStreetPath.of(arrival);
       }
       return path;
     }
