@@ -9,13 +9,14 @@ import org.opentripplanner.street.model.elevation.ElevationProfile;
 import org.opentripplanner.street.model.path.step.StreetStep;
 import org.opentripplanner.street.search.TraverseMode;
 
-/**
- * A leg consisting of a single {@link ExternalLegEdge}. The street module does not know what the
- * edge represents, so it is up to the caller to turn it into something meaningful.
- * <p>
- * The values are taken from the states before and after traversing the edge. An external edge
- * has no elevation data and no turn-by-turn directions.
- */
+/// A leg consisting of a single [ExternalLegEdge]. The street module does not know what the
+/// edge represents, so it is up to the caller to turn it into something meaningful.
+///
+/// The values are taken from the states before and after traversing the edge. An external edge
+/// has no elevation data and no turn-by-turn directions.
+///
+/// This is an intermediate class that we want to refactor away.
+@Deprecated
 public record ExternalEdgeLeg(
   ExternalLegEdge edge,
   TraverseMode mode,
