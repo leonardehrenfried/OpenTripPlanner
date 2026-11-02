@@ -6,8 +6,10 @@ import static org.opentripplanner.core.model.id.FeedScopedIdForTestFactory.id;
 import static org.opentripplanner.graph_builder.issue.api.DataImportIssueStore.NOOP;
 import static org.opentripplanner.street.geometry.GeometryUtils.makeLineString;
 import static org.opentripplanner.street.geometry.SphericalDistanceLibrary.distance;
+import static org.opentripplanner.street.geometry.SphericalDistanceLibrary.fastLength;
 import static org.opentripplanner.street.geometry.SphericalDistanceLibrary.moveMeters;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -15,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineString;
 import org.opentest4j.AssertionFailedError;
 import org.opentripplanner.core.model.id.FeedScopedId;
@@ -322,6 +325,60 @@ class GeometryProcessorTest {
     );
 
     assertLineStringWithinTolerance(expected, linestrings);
+  }
+
+  /**
+   * A shape with many short segments, like real-world shapes, going north and returning south on
+   * the other side of the road, 2 m apart. Most segments are far away from each stop, which exercises
+   * skipping them without computing their exact distance.
+   */
+  @Test
+  void denseOutAndBackShape() {
+    var builder = new TransitDataImportBuilder(REPO, NOOP);
+    var trip = TransitRepositoryForTest.trip("t").withShapeId(SHAPE_ID).build();
+
+    // every 0.001 degrees (~111 m), north to 0.3 on the right side, then back south on the left
+    var shapePoints = new ArrayList<ShapePoint>();
+    for (int i = 0; i <= 300; i++) {
+      shapePoints.add(new ShapePoint(shapePoints.size(), i / 1000.0, -9e-6, null));
+    }
+    for (int i = 300; i >= 0; i--) {
+      shapePoints.add(new ShapePoint(shapePoints.size(), i / 1000.0, 9e-6, null));
+    }
+    builder.getShapePoints().put(SHAPE_ID, shapePoints);
+
+    // 100 m west of the shape, so the segments of both sides of the road are within snap distance
+    var offTheShape = TEST_MODEL.stop("Z").withCoordinate(0.2, -0.0009).build();
+    var stops = List.of(STOP_A, STOP_BL, offTheShape, STOP_BR, STOP_A);
+    var stopTimes = IntStream.range(0, stops.size())
+      .mapToObj(index -> TEST_MODEL.stopTime(trip, index, stops.get(index)))
+      .toList();
+    builder.getStopTimesSortedByTrip().put(trip, stopTimes);
+
+    var issueStore = new DefaultDataImportIssueStore();
+    var processor = new GeometryProcessor(builder, 150, 0.0, issueStore);
+    var hops = processor.createHopGeometries(trip);
+
+    assertThat(issueStore.listIssues()).isEmpty();
+    assertThat(hops).hasSize(4);
+    assertHop(hops.get(0), new Coordinate(-9e-6, 0), new Coordinate(-9e-6, 0.1), 11_120);
+    assertHop(hops.get(1), new Coordinate(-9e-6, 0.1), new Coordinate(-9e-6, 0.2), 11_120);
+    // via the turnaround at 0.3, and back on the other side of the road
+    assertHop(hops.get(2), new Coordinate(-9e-6, 0.2), new Coordinate(9e-6, 0.1), 33_360);
+    assertHop(hops.get(3), new Coordinate(9e-6, 0.1), new Coordinate(9e-6, 0), 11_120);
+  }
+
+  private static void assertHop(
+    LineString hop,
+    Coordinate expectedStart,
+    Coordinate expectedEnd,
+    double expectedLengthMeters
+  ) {
+    assertThat(distance(hop.getCoordinateN(0), expectedStart)).isLessThan(TOLERANCE);
+    assertThat(distance(hop.getCoordinateN(hop.getNumPoints() - 1), expectedEnd)).isLessThan(
+      TOLERANCE
+    );
+    assertThat(fastLength(hop)).isWithin(100).of(expectedLengthMeters);
   }
 
   @Test

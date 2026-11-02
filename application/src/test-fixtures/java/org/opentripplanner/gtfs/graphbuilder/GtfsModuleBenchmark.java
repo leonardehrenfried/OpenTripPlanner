@@ -9,12 +9,15 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import org.opentripplanner.core.model.time.LocalDateRange;
 import org.opentripplanner.framework.io.HttpHeaders;
 import org.opentripplanner.framework.io.OtpHttpClientFactory;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.transit.dataimport.TimetableDataImport;
+import org.opentripplanner.transit.model.network.TripPattern;
 import org.opentripplanner.transit.service.SiteRepository;
 import org.opentripplanner.transit.service.TransitRepository;
 import org.opentripplanner.utils.time.DurationUtils;
@@ -94,6 +97,30 @@ public class GtfsModuleBenchmark {
       patterns.size(),
       trips
     );
+    System.out.printf("Hop geometry checksum: %016x%n", hopGeometryChecksum(patterns));
+  }
+
+  /**
+   * A checksum over the coordinates of all hop geometries, to verify that an optimization does not
+   * change the generated geometries. The patterns are sorted by id, so the checksum does not depend
+   * on iteration order.
+   */
+  private static long hopGeometryChecksum(Collection<TripPattern> patterns) {
+    long checksum = 0;
+    var sorted = patterns
+      .stream()
+      .sorted(Comparator.comparing(p -> p.getId().toString()))
+      .toList();
+    for (TripPattern pattern : sorted) {
+      for (int i = 0; i < pattern.numberOfStops() - 1; i++) {
+        var sequence = pattern.getHopGeometry(i).getCoordinateSequence();
+        for (int j = 0; j < sequence.size(); j++) {
+          checksum = 31 * checksum + Double.doubleToLongBits(sequence.getX(j));
+          checksum = 31 * checksum + Double.doubleToLongBits(sequence.getY(j));
+        }
+      }
+    }
+    return checksum;
   }
 
   private static long usedHeapBytes() {
