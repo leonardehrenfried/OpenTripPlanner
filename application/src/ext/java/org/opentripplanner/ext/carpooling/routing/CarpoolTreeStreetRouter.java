@@ -8,6 +8,7 @@ import org.opentripplanner.astar.strategy.DurationSkipEdgeStrategy;
 import org.opentripplanner.framework.application.OTPRequestTimeoutException;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.edge.Edge;
+import org.opentripplanner.street.model.path.DefaultStreetPath;
 import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.StreetSearchBuilder;
@@ -212,7 +213,7 @@ public class CarpoolTreeStreetRouter implements CarpoolRouter {
     }
 
     var state = isReverse ? tree.getState(from) : tree.getState(to);
-    var path = state == null ? null : StreetPath.of(state);
+    var path = state == null ? null : DefaultStreetPath.of(state);
     pathCache.put(key, path);
     return path;
   }

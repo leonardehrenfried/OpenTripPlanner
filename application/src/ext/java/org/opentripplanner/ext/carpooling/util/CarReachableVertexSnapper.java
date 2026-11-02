@@ -14,6 +14,7 @@ import org.opentripplanner.street.geometry.SphericalDistanceLibrary;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.edge.StreetEdge;
+import org.opentripplanner.street.model.path.DefaultStreetPath;
 import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.StreetSearchBuilder;
@@ -197,7 +198,7 @@ public final class CarReachableVertexSnapper {
       return null;
     }
 
-    var path = StreetPath.of(best);
+    var path = DefaultStreetPath.of(best);
     // A zero-duration path means the snap landed on a zero-cost temporary hop — no real walk.
     if (path.duration().isZero()) {
       return new SnapResult(best.getVertex(), null);
