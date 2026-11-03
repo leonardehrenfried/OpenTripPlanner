@@ -169,12 +169,22 @@ class OsmParser extends BinaryParser {
       lastLon = lon;
       long id = nodes.getId(i) + lastId;
       lastId = id;
+      boolean hasTags = nodes.getKeysValsCount() > 0 && nodes.getKeysVals(j) != 0;
+      if (!hasTags) {
+        if (nodes.getKeysValsCount() > 0) {
+          // Skip over the '0' delimiter.
+          j++;
+        }
+        if (!osmdb.isTaglessNodeNeeded(id)) {
+          continue;
+        }
+      }
       double latf = parseLat(lat);
       double lonf = parseLon(lon);
 
       var builder = OsmNode.of().withId(id).withOsmProvider(provider).withLatLon(latf, lonf);
       // If empty, assume that nothing here has keys or vals.
-      if (nodes.getKeysValsCount() > 0) {
+      if (hasTags) {
         while (nodes.getKeysVals(j) != 0) {
           int keyid = nodes.getKeysVals(j++);
           int valid = nodes.getKeysVals(j++);
