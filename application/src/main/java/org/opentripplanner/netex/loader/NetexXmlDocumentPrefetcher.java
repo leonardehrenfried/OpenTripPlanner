@@ -13,8 +13,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.opentripplanner.datastore.api.DataSource;
 import org.rutebanken.netex.model.PublicationDeliveryStructure;
 
@@ -47,7 +45,10 @@ public class NetexXmlDocumentPrefetcher implements Closeable {
     }
     this.entries = List.copyOf(entries).iterator();
     this.maxDocumentsAhead = parallelism;
-    this.executor = Executors.newFixedThreadPool(parallelism, new ParserThreadFactory());
+    this.executor = Executors.newFixedThreadPool(
+      parallelism,
+      Thread.ofPlatform().name("netex-xml-parser-", 1).daemon().factory()
+    );
   }
 
   /**
@@ -112,16 +113,4 @@ public class NetexXmlDocumentPrefetcher implements Closeable {
   }
 
   private record PendingDocument(DataSource entry, Future<PublicationDeliveryStructure> document) {}
-
-  private static class ParserThreadFactory implements ThreadFactory {
-
-    private final AtomicInteger counter = new AtomicInteger();
-
-    @Override
-    public Thread newThread(Runnable task) {
-      var thread = new Thread(task, "netex-xml-parser-" + counter.incrementAndGet());
-      thread.setDaemon(true);
-      return thread;
-    }
-  }
 }
