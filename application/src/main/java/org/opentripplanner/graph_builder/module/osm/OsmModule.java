@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.IntStream;
 import javax.annotation.Nullable;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineString;
@@ -343,7 +344,22 @@ public class OsmModule implements GraphBuilderModule {
 
     ProgressTracker progress = ProgressTracker.track("Build street graph", 5_000, wayCount);
     LOG.info(progress.startMessage());
-    WAY: for (OsmWay way : osmdb.getWays()) {
+    // Car speeds only depend on the way and the direction, and matching them against the speed
+    // pickers is expensive, so compute them upfront in parallel.
+    List<OsmWay> ways = List.copyOf(osmdb.getWays());
+    float[] forwardCarSpeeds = new float[ways.size()];
+    float[] backwardCarSpeeds = new float[ways.size()];
+    IntStream.range(0, ways.size())
+      .parallel()
+      .forEach(i -> {
+        var way = ways.get(i);
+        var tagMapper = way.getOsmProvider().getOsmTagMapper();
+        forwardCarSpeeds[i] = tagMapper.getCarSpeedForWay(way, FORWARD, issueStore);
+        backwardCarSpeeds[i] = tagMapper.getCarSpeedForWay(way, BACKWARD, issueStore);
+      });
+
+    WAY: for (int wayIndex = 0; wayIndex < ways.size(); wayIndex++) {
+      OsmWay way = ways.get(wayIndex);
       BidirectionalWayProperties wayData = wayPropertiesIndex.forWay(way.getId());
 
       var forwardPermission = wayData.forward().getPermission();
@@ -388,6 +404,9 @@ public class OsmModule implements GraphBuilderModule {
         lastLat = node.lat;
         lastLevel = level;
       }
+
+      float forwardCarSpeed = forwardCarSpeeds[wayIndex];
+      float backwardCarSpeed = backwardCarSpeeds[wayIndex];
 
       IntersectionVertex fromVertex = null;
       IntersectionVertex toVertex = null;
@@ -505,6 +524,8 @@ public class OsmModule implements GraphBuilderModule {
             i,
             forwardPermission,
             backwardPermission,
+            forwardCarSpeed,
+            backwardCarSpeed,
             lineString
           );
 
@@ -651,6 +672,8 @@ public class OsmModule implements GraphBuilderModule {
     int index,
     StreetTraversalPermission forwardPermission,
     StreetTraversalPermission backwardPermission,
+    float forwardCarSpeed,
+    float backwardCarSpeed,
     LineString geometry
   ) {
     // No point in returning edges that can't be traversed by anyone.
@@ -671,6 +694,7 @@ public class OsmModule implements GraphBuilderModule {
         index,
         length,
         forwardPermission,
+        forwardCarSpeed,
         geometry,
         FORWARD
       );
@@ -683,6 +707,7 @@ public class OsmModule implements GraphBuilderModule {
         index,
         length,
         backwardPermission,
+        backwardCarSpeed,
         backGeometry,
         BACKWARD
       );
@@ -700,6 +725,7 @@ public class OsmModule implements GraphBuilderModule {
     int index,
     double length,
     StreetTraversalPermission permissions,
+    float carSpeed,
     LineString geometry,
     TraverseDirection direction
   ) {
@@ -717,11 +743,6 @@ public class OsmModule implements GraphBuilderModule {
         label = label.intern();
         return I18NString.of(label);
       });
-
-    float carSpeed = way
-      .getOsmProvider()
-      .getOsmTagMapper()
-      .getCarSpeedForWay(way, direction, issueStore);
 
     StreetEdgeBuilder<?> seb = new StreetEdgeBuilder<>()
       .withFromVertex(fromVertex)
