@@ -38,6 +38,8 @@ class OsmParser extends BinaryParser {
   private final BitSet blocksWithRelations = new BitSet();
   private boolean blockContentKnown = false;
 
+  /** Internalized strings of the current block's string table, filled lazily. */
+  private String[] blockStrings = new String[0];
   private int handleBlockIndex = 0;
 
   public OsmParser(OsmDatabase osmdb, DefaultOsmProvider provider) {
@@ -56,6 +58,16 @@ class OsmParser extends BinaryParser {
       return s;
     }
     return fromTable;
+  }
+
+  /** Returns the internalized string with the given id from the current block's string table. */
+  private String string(int id) {
+    String s = blockStrings[id];
+    if (s == null) {
+      s = internalize(getStringById(id));
+      blockStrings[id] = s;
+    }
+    return s;
   }
 
   @Override
@@ -103,6 +115,7 @@ class OsmParser extends BinaryParser {
         }
       }
     }
+    blockStrings = new String[block.getStringtable().getSCount()];
     parse(block);
   }
 
@@ -116,8 +129,8 @@ class OsmParser extends BinaryParser {
       OsmRelationBuilder builder = OsmRelation.of().withId(i.getId()).withOsmProvider(provider);
 
       for (int j = 0; j < i.getKeysCount(); j++) {
-        String key = internalize(getStringById(i.getKeys(j)));
-        String value = internalize(getStringById(i.getVals(j)));
+        String key = string(i.getKeys(j));
+        String value = string(i.getVals(j));
         builder.addTag(key, value);
       }
 
@@ -129,7 +142,7 @@ class OsmParser extends BinaryParser {
         relMember.setRef(mid);
         lastMid = mid;
 
-        relMember.setRole(internalize(getStringById(i.getRolesSid(j))));
+        relMember.setRole(string(i.getRolesSid(j)));
 
         if (i.getTypes(j) == Osmformat.Relation.MemberType.NODE) {
           relMember.setType(OsmMemberType.NODE);
@@ -189,8 +202,8 @@ class OsmParser extends BinaryParser {
           int keyid = nodes.getKeysVals(j++);
           int valid = nodes.getKeysVals(j++);
 
-          String key = internalize(getStringById(keyid));
-          String value = internalize(getStringById(valid));
+          String key = string(keyid);
+          String value = string(valid);
           builder.withTag(key, value);
         }
         // Skip over the '0' delimiter.
@@ -214,8 +227,8 @@ class OsmParser extends BinaryParser {
         .withLatLon(parseLat(i.getLat()), parseLon(i.getLon()));
 
       for (int j = 0; j < i.getKeysCount(); j++) {
-        String key = internalize(getStringById(i.getKeys(j)));
-        String value = internalize(getStringById(i.getVals(j)));
+        String key = string(i.getKeys(j));
+        String value = string(i.getVals(j));
         builder.withTag(key, value);
       }
 
@@ -233,8 +246,8 @@ class OsmParser extends BinaryParser {
       OsmWayBuilder builder = OsmWay.of().withId(i.getId()).withOsmProvider(provider);
 
       for (int j = 0; j < i.getKeysCount(); j++) {
-        String key = internalize(getStringById(i.getKeys(j)));
-        String value = internalize(getStringById(i.getVals(j)));
+        String key = string(i.getKeys(j));
+        String value = string(i.getVals(j));
         builder.withTag(key, value);
       }
 
