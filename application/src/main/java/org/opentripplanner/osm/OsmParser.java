@@ -2,7 +2,6 @@ package org.opentripplanner.osm;
 
 import crosby.binary.BinaryParser;
 import crosby.binary.Osmformat;
-import crosby.binary.file.FileBlockPosition;
 import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
@@ -80,12 +79,12 @@ class OsmParser extends BinaryParser {
     this.parsePhase = phase;
   }
 
-  @Override
-  public boolean skipBlock(FileBlockPosition block) {
-    if ("OSMData".equals(block.getType())) {
-      return skipDataBlock(nextDataBlockIndex++);
-    }
-    return super.skipBlock(block);
+  /**
+   * Whether the next data block of the file can be skipped in the current phase. Must be called
+   * once for every data block, in file order, before the block is decompressed or parsed.
+   */
+  boolean skipNextDataBlock() {
+    return skipDataBlock(nextDataBlockIndex++);
   }
 
   @Override
