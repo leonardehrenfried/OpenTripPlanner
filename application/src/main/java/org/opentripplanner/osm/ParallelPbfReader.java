@@ -11,6 +11,7 @@ import java.util.ArrayDeque;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.function.IntPredicate;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
@@ -37,9 +38,14 @@ class ParallelPbfReader {
     this.maxInFlight = 2 * parallelism;
   }
 
-  void process(OsmParser parser) throws IOException {
+  /**
+   * @param skipDataBlock tested with the index of each data block in the file; blocks for which
+   *                      it returns true are skipped without being decompressed or parsed.
+   */
+  void process(OsmParser parser, IntPredicate skipDataBlock) throws IOException {
     var in = new DataInputStream(new BufferedInputStream(input, 1 << 16));
     var queue = new ArrayDeque<Future<DecodedBlock>>();
+    int index = 0;
     while (true) {
       int headerSize;
       try {
@@ -48,9 +54,14 @@ class ParallelPbfReader {
         break;
       }
       var header = Fileformat.BlobHeader.parseFrom(in.readNBytes(headerSize));
+      int blockIndex = index++;
       String type = header.getType();
+      if (OSM_DATA.equals(type) && skipDataBlock.test(blockIndex)) {
+        in.skipNBytes(header.getDatasize());
+        continue;
+      }
       byte[] blob = in.readNBytes(header.getDatasize());
-      queue.add(executor.submit(() -> decode(type, blob)));
+      queue.add(executor.submit(() -> decode(blockIndex, type, blob)));
       while (queue.size() >= maxInFlight) {
         handle(parser, take(queue));
       }
@@ -65,7 +76,7 @@ class ParallelPbfReader {
     if (block.header() != null) {
       parser.parse(block.header());
     } else if (block.data() != null) {
-      parser.parse(block.data());
+      parser.parse(block.index(), block.data());
     }
   }
 
@@ -80,7 +91,7 @@ class ParallelPbfReader {
     }
   }
 
-  private static DecodedBlock decode(String type, byte[] blobBytes) throws Exception {
+  private static DecodedBlock decode(int index, String type, byte[] blobBytes) throws Exception {
     var blob = Fileformat.Blob.parseFrom(blobBytes);
     byte[] raw;
     if (blob.hasRaw()) {
@@ -91,9 +102,9 @@ class ParallelPbfReader {
       throw new IOException("Unsupported PBF blob compression: " + blob.getDataCase());
     }
     return switch (type) {
-      case OSM_HEADER -> new DecodedBlock(Osmformat.HeaderBlock.parseFrom(raw), null);
-      case OSM_DATA -> new DecodedBlock(null, Osmformat.PrimitiveBlock.parseFrom(raw));
-      default -> new DecodedBlock(null, null);
+      case OSM_HEADER -> new DecodedBlock(index, Osmformat.HeaderBlock.parseFrom(raw), null);
+      case OSM_DATA -> new DecodedBlock(index, null, Osmformat.PrimitiveBlock.parseFrom(raw));
+      default -> new DecodedBlock(index, null, null);
     };
   }
 
@@ -112,5 +123,9 @@ class ParallelPbfReader {
     return raw;
   }
 
-  private record DecodedBlock(Osmformat.HeaderBlock header, Osmformat.PrimitiveBlock data) {}
+  private record DecodedBlock(
+    int index,
+    Osmformat.HeaderBlock header,
+    Osmformat.PrimitiveBlock data
+  ) {}
 }

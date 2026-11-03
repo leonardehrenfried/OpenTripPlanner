@@ -2,6 +2,7 @@ package org.opentripplanner.osm;
 
 import crosby.binary.BinaryParser;
 import crosby.binary.Osmformat;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,18 @@ class OsmParser extends BinaryParser {
   private final Map<String, String> stringTable = new HashMap<>();
   private final DefaultOsmProvider provider;
   private OsmParserPhase parsePhase;
+
+  /**
+   * Which file blocks (by position in the file) contain nodes/ways/relations. Recorded during the
+   * first, complete pass over the file and used to skip (without decompressing or parsing) the
+   * blocks that are irrelevant to the later phases.
+   */
+  private final BitSet blocksWithNodes = new BitSet();
+  private final BitSet blocksWithWays = new BitSet();
+  private final BitSet blocksWithRelations = new BitSet();
+  private boolean blockContentKnown = false;
+
+  private int handleBlockIndex = 0;
 
   public OsmParser(OsmDatabase osmdb, DefaultOsmProvider provider) {
     this.osmdb = Objects.requireNonNull(osmdb);
@@ -54,7 +67,43 @@ class OsmParser extends BinaryParser {
    * Set the phase to be parsed
    */
   public void setPhase(OsmParserPhase phase) {
+    if (handleBlockIndex > 0) {
+      blockContentKnown = true;
+    }
+    handleBlockIndex = 0;
     this.parsePhase = phase;
+  }
+
+  /**
+   * Whether the data block with the given index in the file can be skipped in the current phase.
+   */
+  boolean skipDataBlock(int index) {
+    if (!blockContentKnown) {
+      return false;
+    }
+    return !switch (parsePhase) {
+      case Relations -> blocksWithRelations.get(index);
+      case Ways -> blocksWithWays.get(index);
+      case Nodes -> blocksWithNodes.get(index);
+    };
+  }
+
+  void parse(int index, Osmformat.PrimitiveBlock block) {
+    handleBlockIndex++;
+    if (!blockContentKnown) {
+      for (var group : block.getPrimitivegroupList()) {
+        if (group.hasDense() || group.getNodesCount() > 0) {
+          blocksWithNodes.set(index);
+        }
+        if (group.getWaysCount() > 0) {
+          blocksWithWays.set(index);
+        }
+        if (group.getRelationsCount() > 0) {
+          blocksWithRelations.set(index);
+        }
+      }
+    }
+    parse(block);
   }
 
   @Override

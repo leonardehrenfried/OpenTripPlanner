@@ -106,7 +106,10 @@ public class DefaultOsmProvider implements OsmProvider {
   private void parsePhase(OsmParser parser, OsmParserPhase phase) {
     parser.setPhase(phase);
     try (var in = createInputStream(phase)) {
-      new ParallelPbfReader(in, executorService, decodeParallelism).process(parser);
+      new ParallelPbfReader(in, executorService, decodeParallelism).process(
+        parser,
+        parser::skipDataBlock
+      );
     } catch (Exception e) {
       LOG.error(e.getMessage(), e);
     }
