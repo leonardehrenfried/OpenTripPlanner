@@ -7,14 +7,15 @@ import static org.opentripplanner.core.model.id.FeedScopedIdForTestFactory.id;
 import static org.opentripplanner.ext.fares.model.FareModelForTest.ANY_FARE_OFFER;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.core.model.i18n.I18NString;
-import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
 import org.opentripplanner.ext.flex.flexpathcalculator.FlexPath;
+import org.opentripplanner.ext.flex.path.FlexStreetPath;
 import org.opentripplanner.model.plan.Emission;
 import org.opentripplanner.model.plan.PlanTestConstants;
 import org.opentripplanner.routing.alertpatch.TransitAlert;
@@ -23,7 +24,7 @@ import org.opentripplanner.street.model.StreetModelForTest;
 
 class FlexibleTransitLegTest implements PlanTestConstants {
 
-  private static final FlexTripEdge EDGE = new FlexTripEdge(
+  private static final FlexStreetPath FLEX_PATH = new FlexStreetPath(
     StreetModelForTest.intersectionVertex(1, 1),
     StreetModelForTest.intersectionVertex(2, 2),
     A.stop.getId(),
@@ -33,7 +34,9 @@ class FlexibleTransitLegTest implements PlanTestConstants {
     2,
     LocalDate.of(2025, 1, 15),
     new FlexPath(1000, 600, () -> GeometryUtils.makeLineString(1, 1, 2, 2)),
-    FlexParameters.defaultValues()
+    FlexParameters.defaultValues(),
+    Instant.parse("2025-01-15T12:00:00Z"),
+    false
   );
   private static final TransitAlert ALERT = TransitAlert.of(id("alert"))
     .withHeaderText(I18NString.of("alert 1"))
@@ -48,7 +51,7 @@ class FlexibleTransitLegTest implements PlanTestConstants {
     var leg = new FlexibleTransitLegBuilder()
       .withStartTime(START_TIME)
       .withEndTime(END_TIME)
-      .withFlexTripEdge(EDGE)
+      .withFlexStreetPath(FLEX_PATH)
       .withFromStop(A.stop)
       .withToStop(B.stop)
       .build();
@@ -62,7 +65,7 @@ class FlexibleTransitLegTest implements PlanTestConstants {
     assertThrows(expectedType, () -> new FlexibleTransitLegBuilder().withStartTime(null).build());
     assertThrows(expectedType, () -> new FlexibleTransitLegBuilder().withEndTime(null).build());
     assertThrows(expectedType, () ->
-      new FlexibleTransitLegBuilder().withFlexTripEdge(null).build()
+      new FlexibleTransitLegBuilder().withFlexStreetPath(null).build()
     );
     assertThrows(expectedType, () -> new FlexibleTransitLegBuilder().withFromStop(null).build());
     assertThrows(expectedType, () -> new FlexibleTransitLegBuilder().withToStop(null).build());
@@ -77,7 +80,7 @@ class FlexibleTransitLegTest implements PlanTestConstants {
     var leg = new FlexibleTransitLegBuilder()
       .withStartTime(START_TIME)
       .withEndTime(END_TIME)
-      .withFlexTripEdge(EDGE)
+      .withFlexStreetPath(FLEX_PATH)
       .withFromStop(A.stop)
       .withToStop(B.stop)
       .withFareProducts(List.of(ANY_FARE_OFFER))
@@ -87,7 +90,7 @@ class FlexibleTransitLegTest implements PlanTestConstants {
 
     var copy = leg.copyOf().build();
 
-    assertEquals(EDGE, copy.flexTripEdge());
+    assertEquals(FLEX_PATH, copy.flexStreetPath());
     assertEquals(START_TIME, copy.startTime());
     assertEquals(END_TIME, copy.endTime());
     assertEquals(Set.of(ALERT), copy.listTransitAlerts());
@@ -100,7 +103,7 @@ class FlexibleTransitLegTest implements PlanTestConstants {
     var leg = new FlexibleTransitLegBuilder()
       .withStartTime(START_TIME)
       .withEndTime(END_TIME)
-      .withFlexTripEdge(EDGE)
+      .withFlexStreetPath(FLEX_PATH)
       .withFromStop(A.stop)
       .withToStop(B.stop)
       .withFareProducts(List.of(ANY_FARE_OFFER))

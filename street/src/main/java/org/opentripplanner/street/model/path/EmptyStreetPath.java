@@ -1,6 +1,7 @@
 package org.opentripplanner.street.model.path;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import org.locationtech.jts.geom.LineString;
@@ -26,6 +27,16 @@ enum EmptyStreetPath implements StreetPath {
   @Override
   public Duration duration() {
     return Duration.ZERO;
+  }
+
+  @Override
+  public Instant startTime() {
+    throw new UnsupportedOperationException(NO_SEARCH_MESSAGE);
+  }
+
+  @Override
+  public Instant endTime() {
+    throw new UnsupportedOperationException(NO_SEARCH_MESSAGE);
   }
 
   @Override
@@ -60,6 +71,11 @@ enum EmptyStreetPath implements StreetPath {
 
   @Override
   public Optional<StreetPath> continueSearch(StreetPath path) {
+    throw new UnsupportedOperationException(NO_SEARCH_MESSAGE);
+  }
+
+  @Override
+  public Optional<StreetPath> continueSearchAfter(Duration gap, StreetPath path) {
     throw new UnsupportedOperationException(NO_SEARCH_MESSAGE);
   }
 

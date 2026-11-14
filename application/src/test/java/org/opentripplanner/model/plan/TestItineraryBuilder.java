@@ -19,8 +19,8 @@ import org.opentripplanner.core.model.i18n.I18NString;
 import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.ext.flex.FlexParameters;
 import org.opentripplanner.ext.flex.FlexibleTransitLeg;
-import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
 import org.opentripplanner.ext.flex.flexpathcalculator.DirectFlexPathCalculator;
+import org.opentripplanner.ext.flex.path.FlexStreetPath;
 import org.opentripplanner.ext.flex.trip.UnscheduledTrip;
 import org.opentripplanner.ext.ridehailing.model.RideEstimate;
 import org.opentripplanner.ext.ridehailing.model.RideHailingLeg;
@@ -242,7 +242,7 @@ public class TestItineraryBuilder implements PlanTestConstants {
       toStopPos
     );
 
-    var edge = new FlexTripEdge(
+    var flexStreetPath = new FlexStreetPath(
       fromv,
       tov,
       lastPlace.stop.getId(),
@@ -252,11 +252,13 @@ public class TestItineraryBuilder implements PlanTestConstants {
       toStopPos,
       serviceDate,
       flexPath,
-      FlexParameters.defaultValues()
+      FlexParameters.defaultValues(),
+      newTime(start).toInstant(),
+      false
     );
 
     FlexibleTransitLeg leg = FlexibleTransitLeg.of()
-      .withFlexTripEdge(edge)
+      .withFlexStreetPath(flexStreetPath)
       .withFromStop(lastPlace.stop)
       .withToStop(to.stop)
       .withStartTime(newTime(start))
