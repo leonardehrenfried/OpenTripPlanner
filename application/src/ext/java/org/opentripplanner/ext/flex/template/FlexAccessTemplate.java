@@ -1,11 +1,12 @@
 package org.opentripplanner.ext.flex.template;
 
 import java.util.Collection;
+import org.jspecify.annotations.Nullable;
 import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.ext.flex.FlexParameters;
 import org.opentripplanner.ext.flex.FlexPathDurations;
-import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
 import org.opentripplanner.ext.flex.flexpathcalculator.FlexPathCalculator;
+import org.opentripplanner.ext.flex.path.FlexStreetPath;
 import org.opentripplanner.ext.flex.trip.FlexTrip;
 import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.street.api.path.StreetPath;
@@ -52,19 +53,19 @@ class FlexAccessTemplate extends AbstractFlexTemplate {
     return transferPath.fromVertex();
   }
 
-  protected FlexPathDurations calculateFlexPathDurations(FlexTripEdge flexEdge, StreetPath path) {
+  protected FlexPathDurations calculateFlexPathDurations(FlexStreetPath flexPath, StreetPath path) {
     int preFlexTime = (int) accessEgress.path().duration().toSeconds();
-    int edgeTimeInSeconds = flexEdge.getTimeInSeconds();
-    int postFlexTime = (int) path.duration().toSeconds() - preFlexTime - edgeTimeInSeconds;
+    int flexTimeInSeconds = flexPath.durationSeconds();
+    int postFlexTime = (int) path.duration().toSeconds() - preFlexTime - flexTimeInSeconds;
     return new FlexPathDurations(
       preFlexTime,
-      edgeTimeInSeconds,
+      flexTimeInSeconds,
       postFlexTime,
       secondsFromStartOfTime
     );
   }
 
-  protected FlexTripEdge getFlexEdge(Vertex flexToVertex, FeedScopedId transferStopId) {
+  protected FlexStreetPath getFlexPath(Vertex flexToVertex, FeedScopedId transferStopId) {
     var flexPath = calculator.calculateFlexPath(
       accessEgress.vertex(),
       flexToVertex,
@@ -76,7 +77,7 @@ class FlexAccessTemplate extends AbstractFlexTemplate {
       return null;
     }
 
-    return new FlexTripEdge(
+    return new FlexStreetPath(
       accessEgress.vertex(),
       flexToVertex,
       accessEgress.stopId(),
@@ -86,7 +87,15 @@ class FlexAccessTemplate extends AbstractFlexTemplate {
       alightStopPosition,
       serviceDate,
       flexPath,
-      flexParameters
+      flexParameters,
+      accessEgress.path().endTime(),
+      false
     );
+  }
+
+  protected StreetPath combinePaths(FlexStreetPath flexPath, @Nullable StreetPath transferPath) {
+    return transferPath == null
+      ? StreetPath.concat(accessEgress.path(), flexPath)
+      : StreetPath.concat(accessEgress.path(), flexPath, transferPath);
   }
 }

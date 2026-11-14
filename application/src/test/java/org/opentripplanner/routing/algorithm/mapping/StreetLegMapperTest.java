@@ -27,8 +27,8 @@ import org.opentripplanner.core.model.i18n.I18NString;
 import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.ext.flex.FlexParameters;
 import org.opentripplanner.ext.flex.FlexibleTransitLeg;
-import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
 import org.opentripplanner.ext.flex.flexpathcalculator.FlexPath;
+import org.opentripplanner.ext.flex.path.FlexStreetPath;
 import org.opentripplanner.model.plan.VertexType;
 import org.opentripplanner.model.plan.leg.StreetLeg;
 import org.opentripplanner.model.plan.leg.ViaLocationType;
@@ -44,18 +44,14 @@ import org.opentripplanner.service.vehiclerental.model.TestVehicleRentalStationB
 import org.opentripplanner.street.api.path.DefaultStreetPath;
 import org.opentripplanner.street.api.path.StreetPath;
 import org.opentripplanner.street.api.path.step.RelativeDirection;
-import org.opentripplanner.street.api.request.StreetSearchRequest;
 import org.opentripplanner.street.geometry.GeometryUtils;
 import org.opentripplanner.street.geometry.WgsCoordinate;
-import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.StreetModelForTest;
 import org.opentripplanner.street.model.edge.StreetTransitEntranceLink;
 import org.opentripplanner.street.model.edge.TemporaryFreeEdge;
 import org.opentripplanner.street.model.vertex.StreetVertex;
 import org.opentripplanner.street.model.vertex.TemporaryStreetLocation;
-import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.TraverseMode;
-import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.street.search.state.TestStateBuilder;
 import org.opentripplanner.transit.model._data.TransitRepositoryForTest;
 import org.opentripplanner.transit.model.site.Entrance;
@@ -308,7 +304,8 @@ class StreetLegMapperTest {
 
   @Test
   void flex() {
-    var edge = new FlexTripEdge(
+    var geometry = GeometryUtils.makeLineString(1, 1, 2, 2);
+    var path = new FlexStreetPath(
       StreetModelForTest.intersectionVertex(1, 1),
       StreetModelForTest.intersectionVertex(2, 2),
       STOP_A.getId(),
@@ -317,17 +314,18 @@ class StreetLegMapperTest {
       1,
       2,
       LocalDate.of(2023, 4, 18),
-      new FlexPath(1000, 600, () -> GeometryUtils.makeLineString(1, 1, 2, 2)),
-      FlexParameters.defaultValues()
+      new FlexPath(1000, 600, () -> geometry),
+      FlexParameters.defaultValues(),
+      PATH_START.toInstant(),
+      false
     );
-    var path = DefaultStreetPath.of(edge.traverse(flexState(edge.getFromVertex()))[0]);
     var delay = Duration.ofMinutes(5);
 
     var legs = mapper.map(path, RouteRequest.defaultValue(), PATH_START.plus(delay));
 
     assertThat(legs).hasSize(1);
     var leg = assertInstanceOf(FlexibleTransitLeg.class, legs.getFirst());
-    assertEquals(edge.getGeometry(), leg.legGeometry());
+    assertEquals(geometry, leg.legGeometry());
     assertSame(STOP_A, leg.from().stop);
     assertSame(STOP_B, leg.to().stop);
     assertEquals(PATH_START.plus(delay), leg.startTime());
@@ -348,16 +346,6 @@ class StreetLegMapperTest {
       .filter(s -> s.getRelativeDirection() == direction)
       .findFirst()
       .orElseThrow();
-  }
-
-  private static State flexState(Vertex vertex) {
-    return new State(
-      vertex,
-      StreetSearchRequest.of()
-        .withMode(StreetMode.FLEXIBLE)
-        .withStartTime(PATH_START.toInstant())
-        .build()
-    );
   }
 
   private static class TestSiteResolver extends NoopSiteResolver {

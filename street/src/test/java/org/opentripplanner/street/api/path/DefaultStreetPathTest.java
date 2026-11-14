@@ -93,6 +93,30 @@ class DefaultStreetPathTest {
     assertEquals(5.0, subPath.distanceMeters());
   }
 
+  @Test
+  void continueSearchAfter() {
+    var path = new DefaultStreetPath(
+      startState()
+        .testEdge(b -> b.withDurationSeconds(10).withWeight(10))
+        .build()
+    );
+    var other = new DefaultStreetPath(
+      startState()
+        .testEdge(b -> b.withDurationSeconds(5).withWeight(5))
+        .testEdge(b -> b.withDurationSeconds(5).withWeight(5))
+        .build()
+    );
+
+    var result = path.continueSearchAfter(Duration.ofSeconds(60), other).orElseThrow();
+
+    assertEquals(other.fromVertex(), result.fromVertex());
+    assertEquals(other.toVertex(), result.toVertex());
+    assertEquals(START_TIME.plusSeconds(70), result.startTime());
+    assertEquals(START_TIME.plusSeconds(80), result.endTime());
+    assertEquals(Duration.ofSeconds(10), result.duration());
+    assertEquals(10.0, result.generalizedCost());
+  }
+
   private TestStateBuilder startState() {
     var request = StreetSearchRequest.of()
       .withStartTime(START_TIME)

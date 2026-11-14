@@ -9,8 +9,8 @@ import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.ext.flex.FlexAccessEgress;
 import org.opentripplanner.ext.flex.FlexParameters;
 import org.opentripplanner.ext.flex.FlexPathDurations;
-import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
 import org.opentripplanner.ext.flex.flexpathcalculator.FlexPathCalculator;
+import org.opentripplanner.ext.flex.path.FlexStreetPath;
 import org.opentripplanner.ext.flex.trip.FlexTrip;
 import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.street.api.path.StreetPath;
@@ -155,15 +155,24 @@ abstract class AbstractFlexTemplate {
    * Break down the time spent on flex ride/path in access, trip and egress.
    */
   protected abstract FlexPathDurations calculateFlexPathDurations(
-    FlexTripEdge flexEdge,
+    FlexStreetPath flexPath,
     StreetPath path
   );
 
   /**
-   * Get the FlexTripEdge for the flex ride.
+   * Get the path of the flex ride, or null if the trip can't be used between the vertices.
    */
   @Nullable
-  protected abstract FlexTripEdge getFlexEdge(Vertex flexFromVertex, FeedScopedId transferStopId);
+  protected abstract FlexStreetPath getFlexPath(Vertex flexVertex, FeedScopedId transferStopId);
+
+  /**
+   * Combine the path to/from the access/egress stop, the flex ride and the transfer path into a
+   * single path in chronological order.
+   */
+  protected abstract StreetPath combinePaths(
+    FlexStreetPath flexPath,
+    @Nullable StreetPath transferPath
+  );
 
   @Nullable
   private FlexAccessEgress createFlexAccessEgress(
@@ -171,39 +180,35 @@ abstract class AbstractFlexTemplate {
     Vertex flexVertex,
     RegularStop stop
   ) {
-    var flexEdge = getFlexEdge(flexVertex, transferStop.getId());
+    var flexPath = getFlexPath(flexVertex, transferStop.getId());
 
     // Drop non-routable and very short(<10s) trips
-    if (flexEdge == null || flexEdge.getTimeInSeconds() < MIN_FLEX_TRIP_DURATION_SECONDS) {
+    if (flexPath == null || flexPath.durationSeconds() < MIN_FLEX_TRIP_DURATION_SECONDS) {
       return null;
     }
 
-    // this code is a little repetitive but needed as a performance improvement. previously
-    // the flex path was checked before this method was called. this meant that every path
-    // was traversed twice, leading to a noticeable slowdown.
-    final var afterFlexPath = accessEgress.path().continueSearch(flexEdge);
-    if (afterFlexPath.isEmpty()) {
-      return null;
+    StreetPath traversedTransferPath = null;
+    if (transferPath != null) {
+      // The street search continues along the transfer path after the flex ride
+      traversedTransferPath = accessEgress
+        .path()
+        .continueSearchAfter(flexPath.duration(), transferPath)
+        .orElse(null);
+      if (traversedTransferPath == null) {
+        return null;
+      }
     }
 
-    final var finalPathOpt =
-      transferPath == null ? afterFlexPath : afterFlexPath.get().continueSearch(transferPath);
-
-    return finalPathOpt
-      .map(finalPath -> {
-        var durations = calculateFlexPathDurations(flexEdge, finalPath);
-
-        return new FlexAccessEgress(
-          stop,
-          durations,
-          boardStopPosition,
-          alightStopPosition,
-          trip,
-          finalPath,
-          transferPath == null || transferPath.isEmpty(),
-          requestedBookingTime
-        );
-      })
-      .orElse(null);
+    var finalPath = combinePaths(flexPath, traversedTransferPath);
+    return new FlexAccessEgress(
+      stop,
+      calculateFlexPathDurations(flexPath, finalPath),
+      boardStopPosition,
+      alightStopPosition,
+      trip,
+      finalPath,
+      transferPath == null || transferPath.isEmpty(),
+      requestedBookingTime
+    );
   }
 }

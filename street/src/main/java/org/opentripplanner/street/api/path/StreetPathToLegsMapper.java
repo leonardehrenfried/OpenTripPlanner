@@ -6,9 +6,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import org.opentripplanner.service.vehiclerental.street.VehicleRentalEdge;
-import org.opentripplanner.street.model.edge.ExternalLegEdge;
 import org.opentripplanner.street.search.state.State;
-import org.opentripplanner.utils.lang.IntUtils;
 
 /**
  * Splits a {@link StreetPath} into {@link StreetLeg}s. If the whole path is traversed with a
@@ -55,21 +53,15 @@ class StreetPathToLegsMapper {
     List<StreetLeg> legs = new ArrayList<>();
     DefaultStreetLeg previousStreetLeg = null;
     for (var slice : slicePath(path)) {
-      var subPath = slice.path();
-      if (subPath.states().get(1).getBackEdge() instanceof ExternalLegEdge externalEdge) {
-        legs.add(mapExternalEdgeLeg(subPath, externalEdge));
-        previousStreetLeg = null;
-      } else {
-        var leg = new DefaultStreetLeg(
-          subPath,
-          slice.startTime(),
-          slice.extraWeight(),
-          previousStreetLeg,
-          ellipsoidToGeoidDifference
-        );
-        legs.add(leg);
-        previousStreetLeg = leg;
-      }
+      var leg = new DefaultStreetLeg(
+        slice.path(),
+        slice.startTime(),
+        slice.extraWeight(),
+        previousStreetLeg,
+        ellipsoidToGeoidDifference
+      );
+      legs.add(leg);
+      previousStreetLeg = leg;
     }
     return List.copyOf(legs);
   }
@@ -97,9 +89,6 @@ class StreetPathToLegsMapper {
       var backState = states.get(i);
       var forwardState = states.get(i + 1);
 
-      var externalEdgeChange =
-        forwardState.getBackEdge() instanceof ExternalLegEdge ||
-        backState.getBackEdge() instanceof ExternalLegEdge;
       var rentalChange =
         isRentalPickUp(backState) ||
         isRentalStationDropOff(backState) ||
@@ -107,7 +96,7 @@ class StreetPathToLegsMapper {
       var parkingChange = backState.isVehicleParked() != forwardState.isVehicleParked();
       var carPickupChange = backState.getCarPickupState() != forwardState.getCarPickupState();
 
-      if (parkingChange || externalEdgeChange || rentalChange || carPickupChange) {
+      if (parkingChange || rentalChange || carPickupChange) {
         int nextBreak = i;
 
         if (nextBreak > previousBreak) {
@@ -140,26 +129,6 @@ class StreetPathToLegsMapper {
     }
 
     return slices;
-  }
-
-  private static ExternalEdgeLeg mapExternalEdgeLeg(DefaultStreetPath path, ExternalLegEdge edge) {
-    var states = path.states();
-    State fromState = states.get(0);
-    State toState = states.get(1);
-    var backEdge = toState.getBackEdge();
-    return new ExternalEdgeLeg(
-      edge,
-      toState.getBackMode(),
-      fromState.getTime(),
-      toState.getTime(),
-      StreetLegPlace.of(fromState),
-      StreetLegPlace.of(toState),
-      backEdge.getDistanceMeters(),
-      IntUtils.round(toState.getWeight() - fromState.getWeight()),
-      backEdge::getGeometry,
-      fromState.isRentingVehicle(),
-      fromState.isRentingVehicle() ? fromState.getVehicleRentalNetwork() : null
-    );
   }
 
   /**

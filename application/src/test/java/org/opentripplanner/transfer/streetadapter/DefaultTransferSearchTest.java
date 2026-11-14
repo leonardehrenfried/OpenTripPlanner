@@ -228,7 +228,10 @@ class DefaultTransferSearchTest {
     }
 
     private static StreetPath streetPath(Edge edge) {
-      return EdgeTraverser.createPath(List.of(edge), StreetSearchRequest.of().build()).orElseThrow();
+      return EdgeTraverser.createPath(
+        List.of(edge),
+        StreetSearchRequest.of().build()
+      ).orElseThrow();
     }
 
     private static NearbyStop withoutEdges(double distanceMeters) {

@@ -109,23 +109,23 @@ public class FlexDirectPathFactory {
       return Optional.empty();
     }
 
-    var flexEdge = accessTemplate.getFlexEdge(flexToVertex, egress.stopId());
+    var flexPath = accessTemplate.getFlexPath(flexToVertex, egress.stopId());
 
-    if (flexEdge == null) {
+    if (flexPath == null) {
       return Optional.empty();
     }
 
-    var finalPathOpt = accessNearbyStop
+    // The street search continues along the egress path after the flex ride
+    var egressPath = accessNearbyStop
       .path()
-      .continueSearch(flexEdge)
-      .flatMap(afterFlexPath -> afterFlexPath.continueSearch(egress.path()));
+      .continueSearchAfter(flexPath.duration(), egress.path());
 
-    if (finalPathOpt.isEmpty()) {
+    if (egressPath.isEmpty()) {
       return Optional.empty();
     }
 
-    var finalPath = finalPathOpt.get();
-    var flexDurations = accessTemplate.calculateFlexPathDurations(flexEdge, finalPath);
+    var finalPath = accessTemplate.combinePaths(flexPath, egressPath.get());
+    var flexDurations = accessTemplate.calculateFlexPathDurations(flexPath, finalPath);
 
     int timeShift;
 
