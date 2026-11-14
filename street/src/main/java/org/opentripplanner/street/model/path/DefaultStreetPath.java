@@ -21,6 +21,7 @@ import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
 import org.opentripplanner.street.search.state.EdgeTraverser;
 import org.opentripplanner.street.search.state.State;
+import org.opentripplanner.street.search.state.StateEditor;
 
 /// A [StreetPath] backed by the states of a street search.
 ///
@@ -41,6 +42,14 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
   /// this state runs backward in time. Null if the path was deserialized.
   @Nullable
   private final transient State searchState;
+
+  /// The start and end time of the path with millisecond precision. Null if the path was
+  /// deserialized.
+  @Nullable
+  private final transient Instant startTime;
+
+  @Nullable
+  private final transient Instant endTime;
 
   /// The states in chronological order, built lazily for paths created from a search.
   @Nullable
@@ -67,6 +76,8 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
     this.fromVertex = first.getVertex();
     this.toVertex = last.getVertex();
     this.arriveBy = false;
+    this.startTime = timeOf(first);
+    this.endTime = timeOf(last);
     this.generalizedCost = last.getWeight() - first.getWeight();
     long millis = Math.abs(last.getTimeMilliseconds() - first.getTimeMilliseconds());
     this.duration = Duration.ofSeconds((millis + 999L) / 1000L);
@@ -94,6 +105,8 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
     this.edges = list;
     this.fromVertex = arriveBy ? finalState.getVertex() : origin.getVertex();
     this.toVertex = arriveBy ? origin.getVertex() : finalState.getVertex();
+    this.startTime = timeOf(arriveBy ? finalState : origin);
+    this.endTime = timeOf(arriveBy ? origin : finalState);
     this.generalizedCost = finalState.getWeight();
     this.duration = Duration.ofSeconds(finalState.getElapsedTimeSeconds());
     this.traversalDistance = finalState.getTraversalDistanceMeters();
@@ -103,6 +116,8 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
   private DefaultStreetPath(DefaultStreetPath other) {
     this.searchState = null;
     this.states = null;
+    this.startTime = other.startTime;
+    this.endTime = other.endTime;
     this.edges = other.edges;
     this.fromVertex = other.fromVertex;
     this.toVertex = other.toVertex;
@@ -138,6 +153,16 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
   @Override
   public Duration duration() {
     return duration;
+  }
+
+  @Override
+  public Instant startTime() {
+    return requireTime(startTime);
+  }
+
+  @Override
+  public Instant endTime() {
+    return requireTime(endTime);
   }
 
   @Override
@@ -179,6 +204,25 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
   @Override
   public StreetPath withoutStates() {
     return searchState == null ? this : new DefaultStreetPath(this);
+  }
+
+  @Override
+  public Optional<StreetPath> continueSearchAfter(Duration gap, StreetPath path) {
+    var searchState = requireSearchState();
+    // A search can only start at a whole second. The time of the state is rounded in the
+    // direction of the search, the same way as the times of the legs.
+    var restartTime = arriveBy ? searchState.getTime().minus(gap) : searchState.getTime().plus(gap);
+    var request = StreetSearchRequest.copyOf(searchState.getRequest())
+      .withStartTime(restartTime)
+      .build();
+    var startState = new StateEditor(
+      arriveBy ? path.toVertex() : path.fromVertex(),
+      request
+    ).makeState();
+    var pathEdges = ((DefaultStreetPath) path).edges();
+    return EdgeTraverser.traverseEdges(startState, arriveBy ? pathEdges.reversed() : pathEdges).map(
+      DefaultStreetPath::new
+    );
   }
 
   @Override
@@ -231,16 +275,6 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
   @Override
   public String toString() {
     return "DefaultStreetPath{" + fromVertex + " -> " + toVertex + ", " + duration + "}";
-  }
-
-  /// The start of the path in seconds
-  Instant startTime() {
-    return states().getFirst().getTime();
-  }
-
-  /// The end of the path in seconds
-  Instant endTime() {
-    return states().getLast().getTime();
   }
 
   double weight() {
@@ -332,6 +366,17 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
     var subStates = states().subList(startIdx, endIdx);
     var subEdges = edges.subList(startIdx, endIdx - 1);
     return new DefaultStreetPath(subStates, subEdges);
+  }
+
+  private static Instant timeOf(State state) {
+    return Instant.ofEpochMilli(state.getTimeMilliseconds());
+  }
+
+  private static Instant requireTime(@Nullable Instant time) {
+    if (time == null) {
+      throw new IllegalStateException(NO_STATES_MESSAGE);
+    }
+    return time;
   }
 
   private State requireSearchState() {

@@ -84,7 +84,7 @@ final class DefaultStreetLeg implements StreetLeg {
 
   @Override
   public Instant endTime() {
-    return path.endTime();
+    return path.lastState().getTime();
   }
 
   @Override
@@ -123,7 +123,7 @@ final class DefaultStreetLeg implements StreetLeg {
   }
 
   @Override
-  public List<StreetStep> steps() {
+  public List<StreetStep> computeSteps() {
     if (steps == null) {
       steps = new StatesToStreetStepsMapper(
         path.states(),
@@ -151,7 +151,7 @@ final class DefaultStreetLeg implements StreetLeg {
     if (previous == null) {
       return null;
     }
-    var previousSteps = previous.steps();
+    var previousSteps = previous.computeSteps();
     return previousSteps.isEmpty() ? null : previousSteps.getLast();
   }
 }

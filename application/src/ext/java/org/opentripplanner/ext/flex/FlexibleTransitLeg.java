@@ -10,7 +10,7 @@ import org.jspecify.annotations.Nullable;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.core.model.accessibility.Accessibility;
 import org.opentripplanner.core.model.i18n.I18NString;
-import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
+import org.opentripplanner.ext.flex.path.FlexStreetPath;
 import org.opentripplanner.model.PickDrop;
 import org.opentripplanner.model.fare.FareOffer;
 import org.opentripplanner.model.plan.Emission;
@@ -38,7 +38,7 @@ import org.opentripplanner.utils.tostring.ToStringBuilder;
  */
 public class FlexibleTransitLeg implements TransitLeg {
 
-  private final FlexTripEdge edge;
+  private final FlexStreetPath flexPath;
 
   private final StopLocation fromStop;
 
@@ -57,7 +57,7 @@ public class FlexibleTransitLeg implements TransitLeg {
   private final List<FareOffer> fareOffers;
 
   FlexibleTransitLeg(FlexibleTransitLegBuilder builder) {
-    this.edge = Objects.requireNonNull(builder.flexTripEdge());
+    this.flexPath = Objects.requireNonNull(builder.flexStreetPath());
     this.fromStop = Objects.requireNonNull(builder.fromStop());
     this.toStop = Objects.requireNonNull(builder.toStop());
     this.startTime = TimeUtils.normalize(builder.startTime());
@@ -97,12 +97,12 @@ public class FlexibleTransitLeg implements TransitLeg {
 
   @Override
   public Trip trip() {
-    return edge.getFlexTrip().getTrip();
+    return flexPath.flexTrip().getTrip();
   }
 
   @Override
   public Accessibility tripWheelchairAccessibility() {
-    return edge.getFlexTrip().getTrip().getWheelchairBoarding();
+    return flexPath.flexTrip().getTrip().getWheelchairBoarding();
   }
 
   @Override
@@ -137,7 +137,7 @@ public class FlexibleTransitLeg implements TransitLeg {
 
   @Override
   public double distanceMeters() {
-    return DoubleUtils.roundTo2Decimals(edge.getDistanceMeters());
+    return DoubleUtils.roundTo2Decimals(flexPath.distanceMeters());
   }
 
   @Override
@@ -152,17 +152,17 @@ public class FlexibleTransitLeg implements TransitLeg {
 
   @Override
   public LocalDate serviceDate() {
-    return edge.serviceDate();
+    return flexPath.serviceDate();
   }
 
   @Override
   public Place from() {
-    return Place.forFlexStop(fromStop, edge.getFromVertex());
+    return Place.forFlexStop(fromStop, flexPath.fromVertex());
   }
 
   @Override
   public Place to() {
-    return Place.forFlexStop(toStop, edge.getToVertex());
+    return Place.forFlexStop(toStop, flexPath.toVertex());
   }
 
   @Override
@@ -172,7 +172,7 @@ public class FlexibleTransitLeg implements TransitLeg {
 
   @Override
   public LineString legGeometry() {
-    return edge.getGeometry();
+    return flexPath.geometry();
   }
 
   @Override
@@ -187,32 +187,32 @@ public class FlexibleTransitLeg implements TransitLeg {
 
   @Override
   public PickDrop boardRule() {
-    return edge.getFlexTrip().getBoardRule(boardStopPosInPattern());
+    return flexPath.flexTrip().getBoardRule(boardStopPosInPattern());
   }
 
   @Override
   public PickDrop alightRule() {
-    return edge.getFlexTrip().getAlightRule(alightStopPosInPattern());
+    return flexPath.flexTrip().getAlightRule(alightStopPosInPattern());
   }
 
   @Override
   public BookingInfo dropOffBookingInfo() {
-    return edge.getFlexTrip().getDropOffBookingInfo(alightStopPosInPattern());
+    return flexPath.flexTrip().getDropOffBookingInfo(alightStopPosInPattern());
   }
 
   @Override
   public BookingInfo pickupBookingInfo() {
-    return edge.getFlexTrip().getPickupBookingInfo(boardStopPosInPattern());
+    return flexPath.flexTrip().getPickupBookingInfo(boardStopPosInPattern());
   }
 
   @Override
   public Integer boardStopPosInPattern() {
-    return edge.boardStopPosInPattern();
+    return flexPath.boardStopPosInPattern();
   }
 
   @Override
   public Integer alightStopPosInPattern() {
-    return edge.alightStopPosInPattern();
+    return flexPath.alightStopPosInPattern();
   }
 
   @Override
@@ -280,7 +280,7 @@ public class FlexibleTransitLeg implements TransitLeg {
     return toStop;
   }
 
-  FlexTripEdge flexTripEdge() {
-    return edge;
+  FlexStreetPath flexStreetPath() {
+    return flexPath;
   }
 }

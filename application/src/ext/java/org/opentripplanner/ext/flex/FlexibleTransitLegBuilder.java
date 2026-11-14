@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
+import org.opentripplanner.ext.flex.path.FlexStreetPath;
 import org.opentripplanner.model.fare.FareOffer;
 import org.opentripplanner.model.plan.Emission;
 import org.opentripplanner.routing.alertpatch.TransitAlert;
@@ -14,7 +14,7 @@ import org.opentripplanner.transit.model.site.StopLocation;
 
 public class FlexibleTransitLegBuilder {
 
-  private FlexTripEdge flexTripEdge;
+  private FlexStreetPath flexStreetPath;
   private StopLocation fromStop;
   private StopLocation toStop;
   private ZonedDateTime startTime;
@@ -27,7 +27,7 @@ public class FlexibleTransitLegBuilder {
   FlexibleTransitLegBuilder() {}
 
   FlexibleTransitLegBuilder(FlexibleTransitLeg original) {
-    flexTripEdge = original.flexTripEdge();
+    flexStreetPath = original.flexStreetPath();
     fromStop = original.fromStop();
     toStop = original.toStop();
     startTime = original.startTime();
@@ -38,13 +38,13 @@ public class FlexibleTransitLegBuilder {
     emissionPerPerson = original.emissionPerPerson();
   }
 
-  public FlexibleTransitLegBuilder withFlexTripEdge(FlexTripEdge flexTripEdge) {
-    this.flexTripEdge = flexTripEdge;
+  public FlexibleTransitLegBuilder withFlexStreetPath(FlexStreetPath flexStreetPath) {
+    this.flexStreetPath = flexStreetPath;
     return this;
   }
 
-  public FlexTripEdge flexTripEdge() {
-    return flexTripEdge;
+  public FlexStreetPath flexStreetPath() {
+    return flexStreetPath;
   }
 
   public FlexibleTransitLegBuilder withFromStop(StopLocation stop) {

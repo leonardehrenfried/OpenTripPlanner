@@ -511,7 +511,10 @@ public class RefetchItineraryServiceTest {
   ) {
     var edges = findPath(from, to, graph);
     var length = edges.stream().mapToDouble(Edge::getDistanceMeters).sum();
-    var streetPath = EdgeTraverser.createPath(edges, StreetSearchRequest.of().build()).orElseThrow();
+    var streetPath = EdgeTraverser.createPath(
+      edges,
+      StreetSearchRequest.of().build()
+    ).orElseThrow();
     var path = new NearbyStop(to.getId(), length, streetPath);
     return FixedRegularTransfers.of().add(from, to, path).snapshot();
   }

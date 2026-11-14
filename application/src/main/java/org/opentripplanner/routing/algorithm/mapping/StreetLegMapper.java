@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 import org.jspecify.annotations.Nullable;
 import org.opentripplanner.ext.flex.FlexibleTransitLeg;
-import org.opentripplanner.ext.flex.edgetype.FlexTripEdge;
+import org.opentripplanner.ext.flex.path.FlexStreetLeg;
 import org.opentripplanner.framework.time.ZoneIdFallback;
 import org.opentripplanner.model.plan.Itinerary;
 import org.opentripplanner.model.plan.Leg;
@@ -22,7 +22,6 @@ import org.opentripplanner.routing.api.request.via.ViaLocation;
 import org.opentripplanner.service.streetdetails.StreetDetailsService;
 import org.opentripplanner.service.vehiclerental.street.VehicleRentalPlaceVertex;
 import org.opentripplanner.street.geometry.WgsCoordinate;
-import org.opentripplanner.street.model.path.ExternalEdgeLeg;
 import org.opentripplanner.street.model.path.StreetLeg;
 import org.opentripplanner.street.model.path.StreetLegPlace;
 import org.opentripplanner.street.model.path.StreetPath;
@@ -128,8 +127,8 @@ public class StreetLegMapper {
   }
 
   private Leg mapLeg(StreetLeg pathLeg, List<ViaLocation> viaLocations, @Nullable Duration delay) {
-    if (pathLeg instanceof ExternalEdgeLeg externalEdgeLeg) {
-      return mapFlexLeg(externalEdgeLeg, delay);
+    if (pathLeg instanceof FlexStreetLeg flexLeg) {
+      return mapFlexLeg(flexLeg, delay);
     }
     return mapStreetLeg(pathLeg, viaLocations, delay);
   }
@@ -149,7 +148,7 @@ public class StreetLegMapper {
       .withGeneralizedCost(leg.generalizedCost())
       .withGeometry(leg.geometry())
       .withElevationProfile(leg.elevationProfile())
-      .withWalkSteps(leg.steps().stream().map(this::mapStep).toList())
+      .withWalkSteps(leg.computeSteps().stream().map(this::mapStep).toList())
       .withRentedVehicle(leg.rentedVehicle())
       .withWalkingBike(false);
 
@@ -159,14 +158,12 @@ public class StreetLegMapper {
     return builder.build();
   }
 
-  private Leg mapFlexLeg(ExternalEdgeLeg leg, @Nullable Duration delay) {
-    if (!(leg.edge() instanceof FlexTripEdge flexEdge)) {
-      throw new IllegalArgumentException("Unknown external edge: " + leg.edge());
-    }
+  private Leg mapFlexLeg(FlexStreetLeg leg, @Nullable Duration delay) {
+    var flexPath = leg.path();
     return FlexibleTransitLeg.of()
-      .withFlexTripEdge(flexEdge)
-      .withFromStop(siteResolver.getStopLocation(flexEdge.fromStopId()))
-      .withToStop(siteResolver.getStopLocation(flexEdge.toStopId()))
+      .withFlexStreetPath(flexPath)
+      .withFromStop(siteResolver.getStopLocation(flexPath.fromStopId()))
+      .withToStop(siteResolver.getStopLocation(flexPath.toStopId()))
       .withStartTime(timeWithDelay(leg.startTime(), delay))
       .withEndTime(timeWithDelay(leg.endTime(), delay))
       .withGeneralizedCost(leg.generalizedCost())
