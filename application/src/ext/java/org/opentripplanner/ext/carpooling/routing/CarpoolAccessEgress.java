@@ -238,12 +238,6 @@ public class CarpoolAccessEgress implements RoutingAccessEgress {
     return endLabel;
   }
 
-  /** Always {@code false}: a passenger rides in the driver's car, not a station-rented vehicle. */
-  @Override
-  public boolean isRentingVehicleFromStation() {
-    return false;
-  }
-
   /** Always {@code false}: a carpool leg, by definition, contains a vehicle ride. */
   @Override
   public boolean isWalkOnly() {

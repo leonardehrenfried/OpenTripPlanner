@@ -7,6 +7,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import org.jspecify.annotations.Nullable;
 import org.opentripplanner.core.model.basic.Cost;
 import org.opentripplanner.core.model.i18n.NonLocalizedString;
@@ -164,7 +165,10 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
 
     // Map egress leg
     EgressPathLeg<T> egressPathLeg = pathLeg.asEgressLeg();
-    var egressLegs = mapEgressLeg(egressPathLeg);
+    // Building the street path of an egress reverses the search states, so it is built only once
+    // and used for both the legs and the rental status at the destination
+    var egressPath = streetPath(egressPathLeg.egress());
+    var egressLegs = mapEgressLeg(egressPathLeg, egressPath);
     legs.addAll(egressLegs);
 
     var generalizedCost = Cost.costOfCentiSeconds(path.c1()).normalize();
@@ -177,11 +181,9 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
       .withEgressPenalty(egressPenalty);
 
     // Map general itinerary fields
-    var arrivedOnRental = egressPathLeg
-      .egress()
-      .findOriginal(RoutingAccessEgress.class)
-      .stream()
-      .anyMatch(RoutingAccessEgress::isRentingVehicleFromStation);
+    var arrivedOnRental = egressPath
+      .map(StreetPath::arrivesWithRentedVehicleFromStation)
+      .orElse(false);
     builder.withArrivedAtDestinationWithRentedVehicle(arrivedOnRental);
 
     if (optimizedPath != null) {
@@ -221,7 +223,10 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
     }
 
     int fromTime = accessPathLeg.fromTime();
-    var legs = mapAccessEgressToLegs(accessPathLeg.access(), createZonedDateTime(fromTime));
+    var legs = mapAccessEgressToLegs(
+      streetPath(accessPathLeg.access()).orElseThrow(),
+      createZonedDateTime(fromTime)
+    );
     if (taxiService != null && request.journey().access().mode() == StreetMode.TAXI) {
       return taxiService.decorateAccessEgressLegs(
         legs,
@@ -377,7 +382,7 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
     return regularTransfers.findPath(fromStop, toStop);
   }
 
-  private List<Leg> mapEgressLeg(EgressPathLeg<T> egressPathLeg) {
+  private List<Leg> mapEgressLeg(EgressPathLeg<T> egressPathLeg, Optional<StreetPath> egressPath) {
     if (isFree(egressPathLeg)) {
       return List.of();
     }
@@ -388,7 +393,7 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
     }
 
     var startTime = createZonedDateTime(egressPathLeg.fromTime());
-    var legs = mapAccessEgressToLegs(egressPathLeg.egress(), startTime);
+    var legs = mapAccessEgressToLegs(egressPath.orElseThrow(), startTime);
     if (taxiService != null && request.journey().egress().mode() == StreetMode.TAXI) {
       return taxiService.decorateAccessEgressLegs(
         legs,
@@ -510,15 +515,19 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
     );
   }
 
-  private List<Leg> mapAccessEgressToLegs(
-    RaptorAccessEgress accessEgress,
-    ZonedDateTime startTime
-  ) {
+  private List<Leg> mapAccessEgressToLegs(StreetPath path, ZonedDateTime startTime) {
+    return streetLegMapper.map(path, request, startTime);
+  }
+
+  /**
+   * The street path of an access or egress, or empty if it isn't based on a street path, like
+   * carpooling. Building the path is expensive for egress, see
+   * {@link DefaultAccessEgress#streetPath()}.
+   */
+  private static Optional<StreetPath> streetPath(RaptorAccessEgress accessEgress) {
     return accessEgress
       .findOriginal(DefaultAccessEgress.class)
-      .map(DefaultAccessEgress::streetPath)
-      .map(path -> streetLegMapper.map(path, request, startTime))
-      .orElseThrow();
+      .map(DefaultAccessEgress::streetPath);
   }
 
   private TimeAndCost mapAccessEgressPenalty(RaptorAccessEgress accessEgress) {

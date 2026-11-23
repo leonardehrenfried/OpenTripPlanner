@@ -65,14 +65,6 @@ public final class RoutingStartOnBoardAccess
     return this;
   }
 
-  /**
-   * On-board access does not originate from a street search, so no vehicle is rented.
-   */
-  @Override
-  public boolean isRentingVehicleFromStation() {
-    return false;
-  }
-
   @Override
   public boolean equals(Object obj) {
     if (obj == this) {

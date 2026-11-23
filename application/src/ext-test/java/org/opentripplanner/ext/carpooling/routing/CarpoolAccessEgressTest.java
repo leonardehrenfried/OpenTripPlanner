@@ -1,7 +1,6 @@
 package org.opentripplanner.ext.carpooling.routing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.opentripplanner.ext.carpooling.CarpoolStreetPathBuilder.createSegment;
 import static org.opentripplanner.ext.carpooling.CarpoolStreetPathBuilder.createStreetPath;
@@ -139,20 +138,6 @@ class CarpoolAccessEgressTest {
     var withPenalty = subject.withPenalty(penalty);
 
     assertThrows(IllegalStateException.class, () -> withPenalty.withPenalty(penalty));
-  }
-
-  /** A carpool passenger rides in the driver's car, never a station-rented vehicle. */
-  @Test
-  void isNotRentingVehicleFromStation() {
-    var access = newAccessEgress(
-      1_000,
-      createStreetPath(Duration.ofSeconds(80)),
-      Duration.ofSeconds(60),
-      createStreetPath(Duration.ofSeconds(40)),
-      1.0
-    );
-
-    assertFalse(access.isRentingVehicleFromStation());
   }
 
   @Test
