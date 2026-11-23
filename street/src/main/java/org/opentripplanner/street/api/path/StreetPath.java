@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.street.api.request.StreetSearchRequest;
-import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.vertex.Vertex;
 
 /// A path within the street network, the result of a street search.
@@ -63,13 +62,6 @@ public interface StreetPath {
   ///
   /// @return Empty if the edges can't be traversed using the given request
   Optional<StreetPath> reTraverse(StreetSearchRequest request);
-
-  /// Continue the street search which produced this path by traversing the given edge. For paths
-  /// from arriveBy searches the edge is traversed backward in time, so it is added in front of
-  /// the path.
-  ///
-  /// @return Empty if the edge can't be traversed
-  Optional<StreetPath> continueSearch(Edge edge);
 
   /// Continue the street search which produced this path along the edges of the given path. For
   /// paths from arriveBy searches the edges are traversed backward in time, so the given path is

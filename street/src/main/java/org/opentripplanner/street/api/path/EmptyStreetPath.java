@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.street.api.request.StreetSearchRequest;
 import org.opentripplanner.street.geometry.GeometryUtils;
-import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.vertex.Vertex;
 
 /// A path which is not the result of a street search, see [StreetPath#EMPTY].
@@ -62,11 +61,6 @@ enum EmptyStreetPath implements StreetPath {
   @Override
   public Optional<StreetPath> reTraverse(StreetSearchRequest request) {
     return Optional.of(this);
-  }
-
-  @Override
-  public Optional<StreetPath> continueSearch(Edge edge) {
-    throw new UnsupportedOperationException(NO_SEARCH_MESSAGE);
   }
 
   @Override
