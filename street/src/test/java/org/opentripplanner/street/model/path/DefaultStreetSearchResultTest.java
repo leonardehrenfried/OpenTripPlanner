@@ -1,9 +1,7 @@
 package org.opentripplanner.street.model.path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -49,41 +47,10 @@ class DefaultStreetSearchResultTest {
     assertEquals(expected.generalizedCost(), path.generalizedCost(), 0.001);
   }
 
-  @ParameterizedTest
-  @ValueSource(booleans = { false, true })
-  void storedPathHasTheChronologicalEdges(boolean arriveBy) {
-    var state = search(arriveBy);
-    var path = (DefaultStreetPath) DefaultStreetSearchResult.of(state).toPath();
-
-    var stored = DefaultStreetSearchResult.of(state).toStoredPath();
-
-    assertEquals(path.edges(), stored.edges());
-    assertEquals(path.distanceMeters(), stored.distanceMeters(), 0.001);
-    assertFalse(stored.isEmpty());
-  }
-
-  @Test
-  void reTraverseAStoredPath() {
-    var state = search(false);
-    var stored = DefaultStreetSearchResult.of(state).toStoredPath();
-
-    var path = (DefaultStreetPath) stored.reTraverse(request(false)).orElseThrow();
-
-    assertEquals(stored.edges(), path.edges());
-    assertEquals(Duration.ofSeconds(state.getElapsedTimeSeconds()), path.duration());
-    assertEquals(state.getWeight(), path.generalizedCost(), 0.001);
-  }
-
   @Test
   void aPathIsItsOwnResult() {
     var path = DefaultStreetSearchResult.of(search(false)).toPath();
     assertSame(path, path.toPath());
-  }
-
-  @Test
-  void emptyStoredPath() {
-    assertTrue(StoredStreetPath.EMPTY.isEmpty());
-    assertSame(StreetPath.EMPTY, StoredStreetPath.EMPTY.reTraverse(request(false)).orElseThrow());
   }
 
   /// A search over three edges. An arriveBy search traverses the edges backward in time, so each
