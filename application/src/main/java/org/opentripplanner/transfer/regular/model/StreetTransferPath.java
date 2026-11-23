@@ -47,13 +47,6 @@ public final class StreetTransferPath implements Serializable {
   }
 
   /**
-   * Create a transfer without a street path, like a straight-line transfer.
-   */
-  public StreetTransferPath(FeedScopedId stopId, double distance) {
-    this(stopId, distance, StreetPath.EMPTY);
-  }
-
-  /**
    * Create the transfer to a stop found by a street search. The states of the search are dropped.
    */
   public static StreetTransferPath of(NearbyStop nearbyStop) {
