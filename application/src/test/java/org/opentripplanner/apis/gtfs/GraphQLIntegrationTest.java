@@ -457,7 +457,6 @@ class GraphQLIntegrationTest {
     var step4 = walkStep("stairs")
       .withRelativeDirection(RelativeDirection.CONTINUE)
       .withVerticalTransportationUse(verticalTransportationUseFactory.createStairsUse(stairsEdge))
-      .withEdges(List.of(stairsEdge))
       .build();
 
     var escalatorState = TestStateBuilder.ofWalking().escalatorEdge().build();
@@ -468,7 +467,7 @@ class GraphQLIntegrationTest {
       .withVerticalTransportationUse(
         verticalTransportationUseFactory.createEscalatorUse(escalatorEdge)
       );
-    var step5 = walkStepBuilder.withEdges(List.of(escalatorEdge)).build();
+    var step5 = walkStepBuilder.build();
 
     var entitySelector = new EntitySelector.Stop(A.stop.getId());
     var stationEntitySelector = new EntitySelector.Stop(OMEGA.getId());

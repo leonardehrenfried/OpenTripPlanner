@@ -324,8 +324,6 @@ public class StatesToStreetStepsMapper {
     // increment the total length for this step
     current.addDistance(edge.getDistanceMeters());
     lastAngle = DirectionUtils.getLastAngle(geom);
-
-    current.addEdge(edge);
   }
 
   private static boolean isShortContinueOnDerivedName(
@@ -603,7 +601,6 @@ public class StatesToStreetStepsMapper {
 
     lastAngle = DirectionUtils.getLastAngle(geom);
     distance = edge.getDistanceMeters();
-    current.addEdge(edge);
   }
 
   private void createAndSaveEscalatorWalkStep(
@@ -622,7 +619,6 @@ public class StatesToStreetStepsMapper {
 
     lastAngle = DirectionUtils.getLastAngle(geom);
     distance = edge.getDistanceMeters();
-    current.addEdge(edge);
   }
 
   private void createAndSaveStationEntranceWalkStep(
@@ -679,7 +675,6 @@ public class StatesToStreetStepsMapper {
 
     lastAngle = DirectionUtils.getLastAngle(edge.getGeometry());
     distance = edge.getDistanceMeters();
-    current.addEdge(edge);
   }
 
   private StreetStepBuilder createWalkStep(State forwardState, State backState) {

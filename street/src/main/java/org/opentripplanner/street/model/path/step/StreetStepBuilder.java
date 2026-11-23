@@ -1,7 +1,5 @@
 package org.opentripplanner.street.model.path.step;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.jspecify.annotations.Nullable;
 import org.opentripplanner.core.model.i18n.I18NString;
 import org.opentripplanner.street.geometry.WgsCoordinate;
@@ -32,7 +30,6 @@ public class StreetStepBuilder {
   private boolean stayOn = false;
   private boolean crossing;
   private double distance = 0;
-  private final List<Edge> edges = new ArrayList<>();
 
   StreetStepBuilder() {}
 
@@ -124,11 +121,6 @@ public class StreetStepBuilder {
     return this;
   }
 
-  public StreetStepBuilder addEdge(Edge edge) {
-    this.edges.add(edge);
-    return this;
-  }
-
   @Nullable
   public String directionTextNoParens() {
     var str = directionText.toString();
@@ -209,10 +201,6 @@ public class StreetStepBuilder {
 
   boolean stayOn() {
     return stayOn;
-  }
-
-  List<Edge> edges() {
-    return edges;
   }
 
   public StreetStep build() {

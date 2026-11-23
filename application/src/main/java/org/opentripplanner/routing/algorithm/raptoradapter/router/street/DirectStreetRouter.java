@@ -8,7 +8,6 @@ import org.opentripplanner.ext.dataoverlay.configuration.DataOverlayParameterBin
 import org.opentripplanner.ext.dataoverlay.routing.DataOverlayContext;
 import org.opentripplanner.framework.application.OTPRequestTimeoutException;
 import org.opentripplanner.model.plan.Itinerary;
-import org.opentripplanner.routing.algorithm.mapping.ItinerariesHelper;
 import org.opentripplanner.routing.algorithm.mapping.StreetLegMapper;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.error.PathNotFoundException;
@@ -73,11 +72,7 @@ public class DirectStreetRouter {
       for (var path : paths) {
         streetLegMapper.mapToItinerary(path, request, null).ifPresent(itineraries::add);
       }
-      return ItinerariesHelper.decorateItinerariesWithRequestData(
-        itineraries,
-        request.journey().wheelchair(),
-        request.preferences().wheelchair()
-      );
+      return itineraries;
     } catch (PathNotFoundException e) {
       return Collections.emptyList();
     }
