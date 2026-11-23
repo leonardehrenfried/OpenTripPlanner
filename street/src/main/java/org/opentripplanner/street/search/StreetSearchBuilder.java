@@ -15,7 +15,7 @@ import org.opentripplanner.astar.spi.SearchTerminationStrategy;
 import org.opentripplanner.astar.spi.SkipEdgeStrategy;
 import org.opentripplanner.astar.spi.TraverseVisitor;
 import org.opentripplanner.street.model.edge.Edge;
-import org.opentripplanner.street.model.path.DefaultStreetPath;
+import org.opentripplanner.street.model.path.DefaultStreetSearchResult;
 import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
@@ -114,7 +114,9 @@ public class StreetSearchBuilder {
     return buildAstar().getShortestPathTree();
   }
 
-  /// Run the street search, returning all paths found
+  /// Run the street search, returning all paths found. The paths are built for every final state,
+  /// which reverses the states for arriveBy searches, so this is meant for searches whose paths are
+  /// all used, like direct street routing.
   ///
   /// All final states share the same search anchor time (the request's start/arriveBy time), so
   /// sorting by elapsed time is equivalent to sorting by arrival time ascending (depart-after) or
@@ -122,7 +124,7 @@ public class StreetSearchBuilder {
   public List<StreetPath> getPathsToTarget() {
     return StreamUtils.ofIterable(buildAstar().listFinalStates())
       .sorted(Comparator.comparingLong(State::getElapsedTimeSeconds))
-      .map(DefaultStreetPath::of)
+      .map(state -> DefaultStreetSearchResult.of(state).toPath())
       .toList();
   }
 

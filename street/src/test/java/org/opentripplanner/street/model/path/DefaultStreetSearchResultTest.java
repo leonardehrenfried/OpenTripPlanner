@@ -5,11 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.StreetModelFactory;
+import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.edge.TestEdge;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
 import org.opentripplanner.street.search.state.State;
@@ -29,7 +32,7 @@ class DefaultStreetSearchResultTest {
     assertEquals(state.getWeight(), subject.generalizedCost());
     assertEquals(Duration.ofSeconds(state.getElapsedTimeSeconds()), subject.duration());
     assertSame(state.getVertex(), subject.finalVertex());
-    var path = new DefaultStreetPath(state);
+    var path = StreetPathForTest.path(state);
     assertEquals(path.startTime(), subject.startTime());
     assertEquals(path.endTime(), subject.endTime());
   }
@@ -37,18 +40,21 @@ class DefaultStreetSearchResultTest {
   @ParameterizedTest
   @ValueSource(booleans = { false, true })
   void toPathIsChronological(boolean arriveBy) {
-    var state = search(arriveBy);
-    var expected = new DefaultStreetPath(state);
+    var edgesInSearchOrder = new ArrayList<Edge>();
+    var state = search(arriveBy, edgesInSearchOrder);
 
     var path = (DefaultStreetPath) DefaultStreetSearchResult.of(state).toPath();
 
-    assertEquals(expected.edges(), path.edges());
-    assertEquals(expected.fromVertex(), path.fromVertex());
-    assertEquals(expected.toVertex(), path.toVertex());
-    assertEquals(expected.startTime(), path.startTime());
-    assertEquals(expected.endTime(), path.endTime());
-    assertEquals(expected.duration(), path.duration());
-    assertEquals(expected.generalizedCost(), path.generalizedCost(), 0.001);
+    // An arriveBy search traverses the edges backward in time
+    var chronologicalEdges = arriveBy ? edgesInSearchOrder.reversed() : edgesInSearchOrder;
+    assertEquals(chronologicalEdges, path.edges());
+    assertEquals(chronologicalEdges.getFirst().getFromVertex(), path.fromVertex());
+    assertEquals(chronologicalEdges.getLast().getToVertex(), path.toVertex());
+    var start = arriveBy ? START_TIME.minusSeconds(25) : START_TIME;
+    assertEquals(start, path.startTime());
+    assertEquals(start.plusSeconds(25), path.endTime());
+    assertEquals(Duration.ofSeconds(25), path.duration());
+    assertEquals(25, path.generalizedCost(), 0.001);
   }
 
   @Test
@@ -58,7 +64,7 @@ class DefaultStreetSearchResultTest {
         .testEdge(b -> b.withDurationSeconds(10).withWeight(10))
         .build()
     );
-    var other = new DefaultStreetPath(
+    var other = StreetPathForTest.path(
       TestStateBuilder.of(request(false))
         .testEdge(b -> b.withDurationSeconds(5).withWeight(5))
         .testEdge(b -> b.withDurationSeconds(5).withWeight(5))
@@ -88,7 +94,7 @@ class DefaultStreetSearchResultTest {
     );
     var alongPath = result.continueSearchAfter(
       Duration.ofSeconds(60),
-      new DefaultStreetPath(otherState)
+      StreetPathForTest.path(otherState)
     );
 
     assertEquals(
@@ -121,6 +127,11 @@ class DefaultStreetSearchResultTest {
   /// A search over three edges. An arriveBy search traverses the edges backward in time, so each
   /// edge leads to the vertex the search is at.
   private static State search(boolean arriveBy) {
+    return search(arriveBy, new ArrayList<>());
+  }
+
+  /// @param edgesInSearchOrder collects the traversed edges in the order of the search
+  private static State search(boolean arriveBy, List<Edge> edgesInSearchOrder) {
     var state = new State(StreetModelFactory.intersectionVertex(0, 0), request(arriveBy));
     int[][] steps = { { 10, 10 }, { 5, 5 }, { 10, 10 } };
     for (int i = 0; i < steps.length; i++) {
@@ -132,6 +143,7 @@ class DefaultStreetSearchResultTest {
         .withWeight(step[0])
         .withDistanceMeters(step[1])
         .build();
+      edgesInSearchOrder.add(edge);
       state = edge.traverse(state)[0];
     }
     return state;

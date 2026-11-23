@@ -5,8 +5,6 @@ import static org.opentripplanner.street.model.path.ElevationProfileEncoder.enco
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,25 +20,19 @@ import org.opentripplanner.street.search.request.StreetSearchRequest;
 import org.opentripplanner.street.search.state.EdgeTraverser;
 import org.opentripplanner.street.search.state.State;
 
-/// A [StreetPath] backed by the states of a street search.
+/// A [StreetPath] backed by the states of a street search, in chronological order.
 ///
-/// The edges, the endpoints and the cost, duration and distance are computed when the path is
-/// created. The chronologically ordered states are only built when they are needed, for example to
-/// create the legs. This matters for arriveBy searches, where building the states means reversing
-/// the whole state chain.
+/// The path is always chronological: the states of an arriveBy search are reversed before the path
+/// is created, see [DefaultStreetSearchResult#toPath()].
 ///
-/// The path is serializable, so it can be stored in the graph, for example as part of a transfer.
-/// The states are not serialized, so a deserialized path only offers what can be computed from the
-/// edges. Use [#reTraverse(StreetSearchRequest)] to get a complete path for a specific request.
+/// A path may have no states, see [#withoutStates()], for example when it is stored in the graph as
+/// part of a transfer. The states are also not serialized. A path without states only offers what
+/// can be computed from the edges. Use [#reTraverse(StreetSearchRequest)] to get a complete path
+/// for a specific request.
 public final class DefaultStreetPath implements StreetPath, Serializable {
 
   private static final String NO_STATES_MESSAGE =
-    "The states of a deserialized path are not available. Use reTraverse() to create them.";
-
-  /// The final state of the search in search order. For arriveBy searches the back-state chain of
-  /// this state runs backward in time. Null if the path was deserialized.
-  @Nullable
-  private final transient State searchState;
+    "The path has no states, it was stored or deserialized. Use reTraverse() to create them.";
 
   /// The start and end time of the path with millisecond precision. Null if the path was
   /// deserialized.
@@ -50,16 +42,15 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
   @Nullable
   private final transient Instant endTime;
 
-  /// The states in chronological order, built lazily for paths created from a search.
+  /// The states in chronological order, or null if the path has no states.
   @Nullable
-  private transient List<State> states;
+  private final transient List<State> states;
 
   /// The edges in chronological order.
   private final List<Edge> edges;
 
   private final Vertex fromVertex;
   private final Vertex toVertex;
-  private final boolean arriveBy;
   private final double generalizedCost;
   private final Duration duration;
   private final double traversalDistance;
@@ -69,46 +60,16 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
     validate(states, edges);
     var first = states.getFirst();
     var last = states.getLast();
-    this.searchState = last;
     this.states = states;
     this.edges = edges;
     this.fromVertex = first.getVertex();
     this.toVertex = last.getVertex();
-    this.arriveBy = false;
     this.startTime = timeOf(first);
     this.endTime = timeOf(last);
     this.generalizedCost = last.getWeight() - first.getWeight();
     long millis = Math.abs(last.getTimeMilliseconds() - first.getTimeMilliseconds());
     this.duration = Duration.ofSeconds((millis + 999L) / 1000L);
     this.traversalDistance = last.getTraversalDistanceMeters() - first.getTraversalDistanceMeters();
-  }
-
-  /// Create a path from the final state of a street search, following the back-state chain all
-  /// the way back to the origin of the search. Paths from arriveBy searches are reversed, so the
-  /// path always runs forward in time.
-  public DefaultStreetPath(State finalState) {
-    this.searchState = Objects.requireNonNull(finalState);
-    this.arriveBy = finalState.getRequest().arriveBy();
-
-    // Collect the edges and find the origin of the search without building the states
-    var list = new ArrayList<Edge>();
-    var origin = finalState;
-    while (origin.getBackState() != null) {
-      list.add(origin.getBackEdge());
-      origin = origin.getBackState();
-    }
-    // The back-state chain of a depart-after search runs backward in time
-    if (!arriveBy) {
-      Collections.reverse(list);
-    }
-    this.edges = list;
-    this.fromVertex = arriveBy ? finalState.getVertex() : origin.getVertex();
-    this.toVertex = arriveBy ? origin.getVertex() : finalState.getVertex();
-    this.startTime = timeOf(arriveBy ? finalState : origin);
-    this.endTime = timeOf(arriveBy ? origin : finalState);
-    this.generalizedCost = finalState.getWeight();
-    this.duration = Duration.ofSeconds(finalState.getElapsedTimeSeconds());
-    this.traversalDistance = finalState.getTraversalDistanceMeters();
   }
 
   /// Copy the given path without its states.
@@ -136,9 +97,7 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
     Duration duration,
     double traversalDistance
   ) {
-    this.searchState = null;
     this.states = null;
-    this.arriveBy = false;
     this.fromVertex = fromVertex;
     this.toVertex = toVertex;
     this.edges = edges;
@@ -147,13 +106,6 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
     this.generalizedCost = generalizedCost;
     this.duration = duration;
     this.traversalDistance = traversalDistance;
-  }
-
-  /// Build a chronologically ordered path by following the back-state chain of `finalState` all
-  /// the way back to the origin of the search. Paths from arriveBy searches are reversed, so the
-  /// path always runs forward in time.
-  public static StreetPath of(State finalState) {
-    return new DefaultStreetPath(finalState);
   }
 
   private static void validate(List<State> states, List<Edge> edges) {
@@ -214,7 +166,7 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
 
   @Override
   public StreetPath withoutStates() {
-    return searchState == null ? this : new DefaultStreetPath(this);
+    return states == null ? this : new DefaultStreetPath(this);
   }
 
   @Override
@@ -245,12 +197,12 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
 
   @Override
   public boolean containsOnlyWalkMode() {
-    return requireSearchState().containsOnlyWalkMode();
+    return lastState().containsOnlyWalkMode();
   }
 
   @Override
   public boolean containsModeCar() {
-    return requireSearchState().containsModeCar();
+    return lastState().containsModeCar();
   }
 
   /// Two paths are equal if they traverse the same edges.
@@ -281,13 +233,7 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
   /// Get all the states of this path in chronological order
   List<State> states() {
     if (states == null) {
-      var state = arriveBy ? requireSearchState().reverse() : requireSearchState();
-      var list = new ArrayList<State>();
-      for (State s : state.listBackStates()) {
-        list.add(s);
-      }
-      Collections.reverse(list);
-      states = list;
+      throw new IllegalStateException(NO_STATES_MESSAGE);
     }
     return states;
   }
@@ -369,12 +315,5 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
       throw new IllegalStateException(NO_STATES_MESSAGE);
     }
     return time;
-  }
-
-  private State requireSearchState() {
-    if (searchState == null) {
-      throw new IllegalStateException(NO_STATES_MESSAGE);
-    }
-    return searchState;
   }
 }
