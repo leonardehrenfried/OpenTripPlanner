@@ -21,7 +21,6 @@ import org.opentripplanner.street.model.elevation.ElevationProfile;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.state.EdgeTraverser;
 import org.opentripplanner.street.search.state.State;
-import org.opentripplanner.street.search.state.StateEditor;
 
 /// A [StreetPath] backed by the states of a street search.
 ///
@@ -114,17 +113,40 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
 
   /// Copy the given path without its states.
   private DefaultStreetPath(DefaultStreetPath other) {
+    this(
+      other.fromVertex,
+      other.toVertex,
+      other.edges,
+      other.startTime,
+      other.endTime,
+      other.generalizedCost,
+      other.duration,
+      other.traversalDistance
+    );
+  }
+
+  /// Create a chronological path without states, from what is known about a street search.
+  DefaultStreetPath(
+    Vertex fromVertex,
+    Vertex toVertex,
+    List<Edge> edges,
+    Instant startTime,
+    Instant endTime,
+    double generalizedCost,
+    Duration duration,
+    double traversalDistance
+  ) {
     this.searchState = null;
     this.states = null;
-    this.startTime = other.startTime;
-    this.endTime = other.endTime;
-    this.edges = other.edges;
-    this.fromVertex = other.fromVertex;
-    this.toVertex = other.toVertex;
-    this.arriveBy = other.arriveBy;
-    this.generalizedCost = other.generalizedCost;
-    this.duration = other.duration;
-    this.traversalDistance = other.traversalDistance;
+    this.arriveBy = false;
+    this.fromVertex = fromVertex;
+    this.toVertex = toVertex;
+    this.edges = edges;
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.generalizedCost = generalizedCost;
+    this.duration = duration;
+    this.traversalDistance = traversalDistance;
   }
 
   /// Build a chronologically ordered path by following the back-state chain of `finalState` all
@@ -191,33 +213,8 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
   }
 
   @Override
-  public Optional<StreetPath> continueSearch(StreetPath path) {
-    var pathEdges = ((DefaultStreetPath) path).edges();
-    return continueSearchAlong(arriveBy ? pathEdges.reversed() : pathEdges);
-  }
-
-  @Override
   public StreetPath withoutStates() {
     return searchState == null ? this : new DefaultStreetPath(this);
-  }
-
-  @Override
-  public Optional<StreetPath> continueSearchAfter(Duration gap, StreetPath path) {
-    var searchState = requireSearchState();
-    // A search can only start at a whole second. The time of the state is rounded in the
-    // direction of the search, the same way as the times of the legs.
-    var restartTime = arriveBy ? searchState.getTime().minus(gap) : searchState.getTime().plus(gap);
-    var request = StreetSearchRequest.copyOf(searchState.getRequest())
-      .withStartTime(restartTime)
-      .build();
-    var startState = new StateEditor(
-      arriveBy ? path.toVertex() : path.fromVertex(),
-      request
-    ).makeState();
-    var pathEdges = ((DefaultStreetPath) path).edges();
-    return EdgeTraverser.traverseEdges(startState, arriveBy ? pathEdges.reversed() : pathEdges).map(
-      DefaultStreetPath::new
-    );
   }
 
   @Override
@@ -379,11 +376,5 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
       throw new IllegalStateException(NO_STATES_MESSAGE);
     }
     return searchState;
-  }
-
-  private Optional<StreetPath> continueSearchAlong(List<Edge> edgesInSearchOrder) {
-    return EdgeTraverser.traverseEdges(requireSearchState(), edgesInSearchOrder).map(
-      DefaultStreetPath::new
-    );
   }
 }

@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.street.api.path.StreetPath;
+import org.opentripplanner.street.api.path.StreetSearchResult;
 
 /**
  * The street path of a regular transfer to a stop, as it is stored in the graph.
@@ -23,10 +24,11 @@ public final class StreetTransferPath implements Serializable {
   /**
    * @param stopId   the stop the transfer leads to
    * @param distance the distance of the transfer in meters
-   * @param path     the street path of the transfer, or {@link StreetPath#EMPTY} if it has no path,
-   *                 like a straight-line transfer
+   * @param path     the street path or search result of the transfer, or {@link StreetPath#EMPTY}
+   *                 if it has no path, like a straight-line transfer. Only the path without the
+   *                 search states is kept.
    */
-  public StreetTransferPath(FeedScopedId stopId, double distance, StreetPath path) {
+  public StreetTransferPath(FeedScopedId stopId, double distance, StreetSearchResult path) {
     this.stopId = Objects.requireNonNull(stopId);
     this.distance = distance;
     this.path = Objects.requireNonNull(path).withoutStates();
@@ -43,7 +45,7 @@ public final class StreetTransferPath implements Serializable {
    * Create the transfer to a stop found by a street search. The states of the search are dropped.
    */
   public static StreetTransferPath of(NearbyStop nearbyStop) {
-    return new StreetTransferPath(nearbyStop.stopId(), nearbyStop.distance(), nearbyStop.path());
+    return new StreetTransferPath(nearbyStop.stopId(), nearbyStop.distance(), nearbyStop.result());
   }
 
   /** The stop the transfer leads to. */

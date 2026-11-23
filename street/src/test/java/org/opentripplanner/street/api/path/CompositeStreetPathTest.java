@@ -3,7 +3,6 @@ package org.opentripplanner.street.api.path;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -16,10 +15,10 @@ class CompositeStreetPathTest {
 
   private static final Instant START_TIME = Instant.parse("2007-12-03T10:15:30.00Z");
 
-  private static final StreetPath FIRST = new DefaultStreetPath(
+  private static final DefaultStreetSearchResult FIRST = DefaultStreetSearchResult.of(
     startState().streetEdge().streetEdge().build()
   );
-  private static final StreetPath SECOND = FIRST.continueSearchAfter(
+  private static final StreetSearchResult SECOND = FIRST.continueSearchAfter(
     Duration.ofSeconds(60),
     new DefaultStreetPath(startState().streetEdge().build())
   ).orElseThrow();
@@ -53,8 +52,8 @@ class CompositeStreetPathTest {
 
   @Test
   void vertices() {
-    assertEquals(FIRST.fromVertex(), SUBJECT.fromVertex());
-    assertEquals(SECOND.toVertex(), SUBJECT.toVertex());
+    assertEquals(FIRST.toPath().fromVertex(), SUBJECT.fromVertex());
+    assertEquals(SECOND.toPath().toVertex(), SUBJECT.toVertex());
     assertFalse(SUBJECT.isEmpty());
   }
 
@@ -63,19 +62,14 @@ class CompositeStreetPathTest {
     var legs = SUBJECT.computeLegs(0);
 
     assertThat(legs).hasSize(2);
-    assertEquals(FIRST.computeLegs(0).getFirst().startTime(), legs.get(0).startTime());
-    assertEquals(SECOND.computeLegs(0).getFirst().startTime(), legs.get(1).startTime());
+    assertEquals(FIRST.toPath().computeLegs(0).getFirst().startTime(), legs.get(0).startTime());
+    assertEquals(SECOND.toPath().computeLegs(0).getFirst().startTime(), legs.get(1).startTime());
   }
 
   @Test
   void modes() {
     assertThat(SUBJECT.containsOnlyWalkMode()).isTrue();
     assertThat(SUBJECT.containsModeCar()).isFalse();
-  }
-
-  @Test
-  void searchCannotBeContinued() {
-    assertThrows(UnsupportedOperationException.class, () -> SUBJECT.continueSearch(FIRST));
   }
 
   private static TestStateBuilder startState() {

@@ -1,7 +1,5 @@
 package org.opentripplanner.street.api.path;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import org.locationtech.jts.geom.LineString;
@@ -19,18 +17,12 @@ public interface StreetPath extends StreetSearchResult {
   /// for a stop found by a straight-line search. It has no edges, no vertices and no cost.
   StreetPath EMPTY = EmptyStreetPath.INSTANCE;
 
-  /// Combine paths which follow each other in time into a single path, for example a walk, a ride
+  /// Combine paths or search results which follow each other in time into a single path, for example a walk, a ride
   /// on a flexible trip and another walk. Each path must start where and when the previous one
   /// ends.
-  static StreetPath concat(StreetPath... paths) {
-    return new CompositeStreetPath(List.of(paths));
+  static StreetPath concat(StreetSearchResult... parts) {
+    return new CompositeStreetPath(List.of(parts));
   }
-
-  /// The time the path starts, with millisecond precision.
-  Instant startTime();
-
-  /// The time the path ends, with millisecond precision.
-  Instant endTime();
 
   /// The total elevation gained and lost along the path.
   ElevationChange elevationChange();
@@ -55,32 +47,6 @@ public interface StreetPath extends StreetSearchResult {
   ///
   /// @return Empty if the edges can't be traversed using the given request
   Optional<StreetPath> reTraverse(StreetSearchRequest request);
-
-  /// Continue the street search which produced this path along the edges of the given path. For
-  /// paths from arriveBy searches the edges are traversed backward in time, so the given path is
-  /// added in front of this path.
-  ///
-  /// @return Empty if the edges can't be traversed
-  Optional<StreetPath> continueSearch(StreetPath path);
-
-  /// A copy of this path without the states of the search, keeping only what can be computed from
-  /// the edges. Use this for paths which are kept for a long time, like transfers, so that the
-  /// search states can be garbage collected. Use [#reTraverse(StreetSearchRequest)] to get a
-  /// complete path again.
-  StreetPath withoutStates();
-
-  /// Continue the street search which produced this path along the edges of the given path, after
-  /// a gap which is not part of the street network, like a ride on a flexible trip. The search is
-  /// restarted with the same request at the start of `path`, `gap` after this path ends. For paths
-  /// from arriveBy searches it is restarted at the end of `path`, `gap` before this path starts.
-  /// Since a search starts at a whole second, the time this path ends (starts) is rounded up (down)
-  /// to whole seconds first.
-  ///
-  /// Unlike [#continueSearch(StreetPath)], the returned path contains only the edges of `path`.
-  /// Use [#concat(StreetPath...)] to combine it with this path and the gap.
-  ///
-  /// @return Empty if the edges can't be traversed
-  Optional<StreetPath> continueSearchAfter(Duration gap, StreetPath path);
 
   /// The vertex where the path starts, in chronological order.
   Vertex fromVertex();

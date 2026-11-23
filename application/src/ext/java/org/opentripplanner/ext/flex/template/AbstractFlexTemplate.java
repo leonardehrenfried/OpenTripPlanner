@@ -13,7 +13,9 @@ import org.opentripplanner.ext.flex.flexpathcalculator.FlexPathCalculator;
 import org.opentripplanner.ext.flex.path.FlexStreetPath;
 import org.opentripplanner.ext.flex.trip.FlexTrip;
 import org.opentripplanner.place.api.NearbyStop;
+import org.opentripplanner.street.api.path.DefaultStreetSearchResult;
 import org.opentripplanner.street.api.path.StreetPath;
+import org.opentripplanner.street.api.path.StreetSearchResult;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.transfer.regular.model.PathTransfer;
 import org.opentripplanner.transit.model.site.RegularStop;
@@ -171,8 +173,23 @@ abstract class AbstractFlexTemplate {
    */
   protected abstract StreetPath combinePaths(
     FlexStreetPath flexPath,
-    @Nullable StreetPath transferPath
+    @Nullable StreetSearchResult transferPath
   );
+
+  /**
+   * The result of the street search which found the access/egress stop, so the search can be
+   * continued after the flex ride.
+   */
+  protected static DefaultStreetSearchResult streetSearchResult(NearbyStop nearbyStop) {
+    if (nearbyStop.result() instanceof DefaultStreetSearchResult result) {
+      return result;
+    }
+    throw new IllegalStateException(
+      "The flex access/egress stop %s was not found by a street search.".formatted(
+        nearbyStop.stopId()
+      )
+    );
+  }
 
   @Nullable
   private FlexAccessEgress createFlexAccessEgress(
@@ -187,11 +204,10 @@ abstract class AbstractFlexTemplate {
       return null;
     }
 
-    StreetPath traversedTransferPath = null;
+    StreetSearchResult traversedTransferPath = null;
     if (transferPath != null) {
       // The street search continues along the transfer path after the flex ride
-      traversedTransferPath = accessEgress
-        .path()
+      traversedTransferPath = streetSearchResult(accessEgress)
         .continueSearchAfter(flexPath.duration(), transferPath)
         .orElse(null);
       if (traversedTransferPath == null) {

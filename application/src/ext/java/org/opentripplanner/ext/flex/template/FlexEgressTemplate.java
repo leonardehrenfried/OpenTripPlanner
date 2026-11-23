@@ -10,6 +10,7 @@ import org.opentripplanner.ext.flex.path.FlexStreetPath;
 import org.opentripplanner.ext.flex.trip.FlexTrip;
 import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.street.api.path.StreetPath;
+import org.opentripplanner.street.api.path.StreetSearchResult;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.transfer.regular.model.PathTransfer;
 import org.opentripplanner.transit.model.site.RegularStop;
@@ -54,7 +55,7 @@ class FlexEgressTemplate extends AbstractFlexTemplate {
   }
 
   protected FlexPathDurations calculateFlexPathDurations(FlexStreetPath flexPath, StreetPath path) {
-    int postFlexTime = (int) accessEgress.path().duration().toSeconds();
+    int postFlexTime = (int) accessEgress.duration().toSeconds();
     int flexTimeInSeconds = flexPath.durationSeconds();
     int preFlexTime = (int) path.duration().toSeconds() - postFlexTime - flexTimeInSeconds;
     return new FlexPathDurations(
@@ -88,14 +89,17 @@ class FlexEgressTemplate extends AbstractFlexTemplate {
       serviceDate,
       flexPath,
       flexParameters,
-      accessEgress.path().startTime().minusSeconds(flexPath.durationSeconds),
+      accessEgress.result().startTime().minusSeconds(flexPath.durationSeconds),
       true
     );
   }
 
-  protected StreetPath combinePaths(FlexStreetPath flexPath, @Nullable StreetPath transferPath) {
+  protected StreetPath combinePaths(
+    FlexStreetPath flexPath,
+    @Nullable StreetSearchResult transferPath
+  ) {
     return transferPath == null
-      ? StreetPath.concat(flexPath, accessEgress.path())
-      : StreetPath.concat(transferPath, flexPath, accessEgress.path());
+      ? StreetPath.concat(flexPath, accessEgress.result())
+      : StreetPath.concat(transferPath, flexPath, accessEgress.result());
   }
 }

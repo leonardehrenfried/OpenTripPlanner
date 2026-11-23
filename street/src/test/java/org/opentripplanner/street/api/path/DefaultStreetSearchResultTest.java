@@ -13,6 +13,7 @@ import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.StreetModelFactory;
 import org.opentripplanner.street.model.edge.TestEdge;
 import org.opentripplanner.street.search.state.State;
+import org.opentripplanner.street.search.state.TestStateBuilder;
 
 class DefaultStreetSearchResultTest {
 
@@ -28,6 +29,9 @@ class DefaultStreetSearchResultTest {
     assertEquals(state.getWeight(), subject.generalizedCost());
     assertEquals(Duration.ofSeconds(state.getElapsedTimeSeconds()), subject.duration());
     assertSame(state.getVertex(), subject.finalVertex());
+    var path = new DefaultStreetPath(state);
+    assertEquals(path.startTime(), subject.startTime());
+    assertEquals(path.endTime(), subject.endTime());
   }
 
   @ParameterizedTest
@@ -45,6 +49,67 @@ class DefaultStreetSearchResultTest {
     assertEquals(expected.endTime(), path.endTime());
     assertEquals(expected.duration(), path.duration());
     assertEquals(expected.generalizedCost(), path.generalizedCost(), 0.001);
+  }
+
+  @Test
+  void continueSearchAfter() {
+    var result = DefaultStreetSearchResult.of(
+      TestStateBuilder.of(request(false))
+        .testEdge(b -> b.withDurationSeconds(10).withWeight(10))
+        .build()
+    );
+    var other = new DefaultStreetPath(
+      TestStateBuilder.of(request(false))
+        .testEdge(b -> b.withDurationSeconds(5).withWeight(5))
+        .testEdge(b -> b.withDurationSeconds(5).withWeight(5))
+        .build()
+    );
+
+    var continued = result.continueSearchAfter(Duration.ofSeconds(60), other).orElseThrow();
+
+    var path = continued.toPath();
+    assertEquals(other.fromVertex(), path.fromVertex());
+    assertEquals(other.toVertex(), path.toVertex());
+    assertEquals(START_TIME.plusSeconds(70), continued.startTime());
+    assertEquals(START_TIME.plusSeconds(80), continued.endTime());
+    assertEquals(Duration.ofSeconds(10), continued.duration());
+    assertEquals(10.0, continued.generalizedCost());
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = { false, true })
+  void continueSearchAfterAlongASearchResult(boolean arriveBy) {
+    var result = DefaultStreetSearchResult.of(search(arriveBy));
+    var otherState = search(arriveBy);
+
+    var alongResult = result.continueSearchAfter(
+      Duration.ofSeconds(60),
+      DefaultStreetSearchResult.of(otherState)
+    );
+    var alongPath = result.continueSearchAfter(
+      Duration.ofSeconds(60),
+      new DefaultStreetPath(otherState)
+    );
+
+    assertEquals(
+      ((DefaultStreetPath) alongPath.orElseThrow().toPath()).edges(),
+      ((DefaultStreetPath) alongResult.orElseThrow().toPath()).edges()
+    );
+  }
+
+  @ParameterizedTest
+  @ValueSource(booleans = { false, true })
+  void withoutStatesIsChronological(boolean arriveBy) {
+    var state = search(arriveBy);
+    var expected = (DefaultStreetPath) DefaultStreetSearchResult.of(state).toPath();
+
+    var path = (DefaultStreetPath) DefaultStreetSearchResult.of(state).withoutStates();
+
+    assertEquals(expected.edges(), path.edges());
+    assertEquals(expected.fromVertex(), path.fromVertex());
+    assertEquals(expected.toVertex(), path.toVertex());
+    assertEquals(expected.startTime(), path.startTime());
+    assertEquals(expected.endTime(), path.endTime());
   }
 
   @Test

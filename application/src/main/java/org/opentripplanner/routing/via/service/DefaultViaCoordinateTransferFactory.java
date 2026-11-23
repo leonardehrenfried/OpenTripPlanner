@@ -58,10 +58,10 @@ public class DefaultViaCoordinateTransferFactory implements ViaCoordinateTransfe
             coordinate,
             transitService.getStopLocation(from.stopId()).getIndex(),
             transitService.getStopLocation(to.stopId()).getIndex(),
-            from.path(),
-            to.path(),
-            (int) (from.path().duration().toSeconds() + to.path().duration().toSeconds()),
-            from.path().generalizedCost() + to.path().generalizedCost()
+            from.result(),
+            to.result(),
+            (int) (from.duration().toSeconds() + to.duration().toSeconds()),
+            from.result().generalizedCost() + to.result().generalizedCost()
           )
         );
       }

@@ -4,6 +4,7 @@ import org.opentripplanner.raptor.api.model.RaptorValueType;
 import org.opentripplanner.raptor.spi.RaptorTransfer;
 import org.opentripplanner.routing.cost.CostLimit;
 import org.opentripplanner.street.api.path.StreetPath;
+import org.opentripplanner.street.api.path.StreetSearchResult;
 import org.opentripplanner.street.geometry.WgsCoordinate;
 import org.opentripplanner.utils.time.DurationUtils;
 
@@ -21,8 +22,8 @@ public class ViaCoordinateTransfer implements RaptorTransfer {
   private final WgsCoordinate coordinate;
   private final int fromStopIndex;
   private final int toStopIndex;
-  private final StreetPath fromPath;
-  private final StreetPath toPath;
+  private final StreetSearchResult fromPath;
+  private final StreetSearchResult toPath;
   private final int durationInSeconds;
   private final int raptorCost;
 
@@ -43,8 +44,8 @@ public class ViaCoordinateTransfer implements RaptorTransfer {
     WgsCoordinate coordinate,
     int fromStopIndex,
     int toStopIndex,
-    StreetPath fromPath,
-    StreetPath toPath,
+    StreetSearchResult fromPath,
+    StreetSearchResult toPath,
     int durationInSeconds,
     double generalizedCostInSeconds
   ) {
@@ -66,17 +67,19 @@ public class ViaCoordinateTransfer implements RaptorTransfer {
   }
 
   /**
-   * The street path from the from-stop to the via coordinate.
+   * The street path from the from-stop to the via coordinate. It is built on every call, which may
+   * be expensive, so only call it when mapping an itinerary.
    */
   public StreetPath fromPath() {
-    return fromPath;
+    return fromPath.toPath();
   }
 
   /**
-   * The street path from the via coordinate to the to-stop.
+   * The street path from the via coordinate to the to-stop. It is built on every call, which may be
+   * expensive, so only call it when mapping an itinerary.
    */
   public StreetPath toPath() {
-    return toPath;
+    return toPath.toPath();
   }
 
   @Override

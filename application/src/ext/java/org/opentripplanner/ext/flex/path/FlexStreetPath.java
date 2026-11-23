@@ -163,16 +163,6 @@ public final class FlexStreetPath implements StreetPath, Serializable {
   }
 
   @Override
-  public Optional<StreetPath> continueSearch(StreetPath path) {
-    throw new UnsupportedOperationException(NOT_SUPPORTED_MESSAGE);
-  }
-
-  @Override
-  public Optional<StreetPath> continueSearchAfter(Duration gap, StreetPath path) {
-    throw new UnsupportedOperationException(NOT_SUPPORTED_MESSAGE);
-  }
-
-  @Override
   public Vertex fromVertex() {
     return fromVertex;
   }

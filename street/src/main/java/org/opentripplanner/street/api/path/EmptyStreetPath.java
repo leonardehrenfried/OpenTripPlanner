@@ -64,18 +64,8 @@ enum EmptyStreetPath implements StreetPath {
   }
 
   @Override
-  public Optional<StreetPath> continueSearch(StreetPath path) {
-    throw new UnsupportedOperationException(NO_SEARCH_MESSAGE);
-  }
-
-  @Override
   public StreetPath withoutStates() {
     return this;
-  }
-
-  @Override
-  public Optional<StreetPath> continueSearchAfter(Duration gap, StreetPath path) {
-    throw new UnsupportedOperationException(NO_SEARCH_MESSAGE);
   }
 
   @Override
