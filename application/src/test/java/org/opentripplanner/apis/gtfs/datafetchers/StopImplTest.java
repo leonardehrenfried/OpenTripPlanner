@@ -21,6 +21,7 @@ import org.opentripplanner.street.model.path.StreetPath;
 import org.opentripplanner.transfer.regular.FlexTransferService;
 import org.opentripplanner.transfer.regular.TransferServiceTestFactory;
 import org.opentripplanner.transfer.regular.model.PathTransfer;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.model.TransitTestEnvironment;
 import org.opentripplanner.transit.model.TransitTestEnvironmentBuilder;
 import org.opentripplanner.transit.model.site.AreaStop;
@@ -40,12 +41,14 @@ class StopImplTest {
   private final AreaStop AREA = envBuilder.areaStop("Area");
   private final AreaStop AREA_2 = envBuilder.areaStop("Area2");
 
-  private final RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> regularTransfers =
-    FixedRegularTransfers.of()
-      .add(STOP_A, STOP_B, path(STOP_B, 100))
-      .add(STOP_A, STOP_C, path(STOP_C, 50))
-      .add(STOP_B, STOP_C, path(STOP_C, 70))
-      .snapshot();
+  private final RegularTransferRepositorySnapshot<
+    StreetTransferPath,
+    RouteRequest
+  > regularTransfers = FixedRegularTransfers.of()
+    .add(STOP_A, STOP_B, path(STOP_B, 100))
+    .add(STOP_A, STOP_C, path(STOP_C, 50))
+    .add(STOP_B, STOP_C, path(STOP_C, 70))
+    .snapshot();
 
   private final FlexTransferService flexTransfers = flexTransfers(
     flexTransfer(AREA, STOP_B, 120),
@@ -142,8 +145,8 @@ class StopImplTest {
     return new PathTransfer(from, to, distance, StreetPath.EMPTY, EnumSet.of(StreetMode.WALK));
   }
 
-  private static NearbyStop path(RegularStop to, double distance) {
-    return new NearbyStop(to.getId(), distance);
+  private static StreetTransferPath path(RegularStop to, double distance) {
+    return new StreetTransferPath(to.getId(), distance);
   }
 
   private static List<FeedScopedId> toStopIds(Iterable<NearbyStop> transfers) {

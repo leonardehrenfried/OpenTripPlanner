@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import org.jspecify.annotations.Nullable;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.raptor.data.transfers.regular.RaptorRegularTransferService;
 import org.opentripplanner.raptor.spi.RaptorTransfer;
 import org.opentripplanner.routing.api.request.RouteRequest;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.transfer.regular.api.RegularTransfersService;
 import org.opentripplanner.transit.transfer.regular.api.report.RegularTransferCacheMetrics;
 import org.opentripplanner.transit.transfer.regular.api.report.RegularTransferCacheReport;
@@ -22,11 +22,11 @@ public final class NoRegularTransfers {
 
   private NoRegularTransfers() {}
 
-  public static RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> snapshot() {
+  public static RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest> snapshot() {
     return SNAPSHOT;
   }
 
-  public static RegularTransfersService<NearbyStop> transfers() {
+  public static RegularTransfersService<StreetTransferPath> transfers() {
     return TRANSFERS;
   }
 
@@ -46,7 +46,7 @@ public final class NoRegularTransfers {
     }
   };
 
-  private static final RegularTransfersService<NearbyStop> TRANSFERS =
+  private static final RegularTransfersService<StreetTransferPath> TRANSFERS =
     new RegularTransfersService<>() {
       @Override
       public RaptorRegularTransferService raptorTransfers() {
@@ -55,69 +55,71 @@ public final class NoRegularTransfers {
 
       @Nullable
       @Override
-      public NearbyStop findPath(int fromStop, int toStop) {
+      public StreetTransferPath findPath(int fromStop, int toStop) {
         return null;
       }
 
       @Override
-      public Collection<NearbyStop> findPathsFrom(int fromStop) {
+      public Collection<StreetTransferPath> findPathsFrom(int fromStop) {
         return List.of();
       }
     };
 
-  private static final RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> SNAPSHOT =
-    new RegularTransferRepositorySnapshot<>() {
-      @Override
-      public RegularTransfersService<NearbyStop> forRequest(RouteRequest request) {
-        return TRANSFERS;
-      }
+  private static final RegularTransferRepositorySnapshot<
+    StreetTransferPath,
+    RouteRequest
+  > SNAPSHOT = new RegularTransferRepositorySnapshot<>() {
+    @Override
+    public RegularTransfersService<StreetTransferPath> forRequest(RouteRequest request) {
+      return TRANSFERS;
+    }
 
-      @Override
-      public void warmUp() {}
+    @Override
+    public void warmUp() {}
 
-      @Override
-      public RegularTransferCacheReport cacheReport() {
-        return RegularTransferCacheReport.DISABLED;
-      }
+    @Override
+    public RegularTransferCacheReport cacheReport() {
+      return RegularTransferCacheReport.DISABLED;
+    }
 
-      @Override
-      public RegularTransferCacheMetrics cacheMetrics() {
-        return new RegularTransferCacheMetrics() {
-          @Override
-          public long size() {
-            return 0;
-          }
+    @Override
+    public RegularTransferCacheMetrics cacheMetrics() {
+      return new RegularTransferCacheMetrics() {
+        @Override
+        public long size() {
+          return 0;
+        }
 
-          @Override
-          public long hitCount() {
-            return 0;
-          }
+        @Override
+        public long hitCount() {
+          return 0;
+        }
 
-          @Override
-          public long missCount() {
-            return 0;
-          }
+        @Override
+        public long missCount() {
+          return 0;
+        }
 
-          @Override
-          public long putCount() {
-            return 0;
-          }
+        @Override
+        public long putCount() {
+          return 0;
+        }
 
-          @Override
-          public long evictionCount() {
-            return 0;
-          }
+        @Override
+        public long evictionCount() {
+          return 0;
+        }
 
-          @Override
-          public long loadFailureCount() {
-            return 0;
-          }
+        @Override
+        public long loadFailureCount() {
+          return 0;
+        }
 
-          @Override
-          public long totalLoadTimeNanos() {
-            return 0;
-          }
-        };
-      }
-    };
+        @Override
+        public long totalLoadTimeNanos() {
+          return 0;
+        }
+      };
+    }
+  };
 }

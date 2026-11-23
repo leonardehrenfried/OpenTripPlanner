@@ -27,7 +27,6 @@ import org.opentripplanner.model.StopTime;
 import org.opentripplanner.model.plan.Leg;
 import org.opentripplanner.model.plan.leg.ScheduledTransitLeg;
 import org.opentripplanner.model.plan.leg.StreetLeg;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.raptor.api.model.RaptorAccessEgress;
 import org.opentripplanner.raptor.api.path.AccessPathLeg;
 import org.opentripplanner.raptor.api.path.EgressPathLeg;
@@ -57,6 +56,7 @@ import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.model.path.DefaultStreetPath;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.street.search.state.TestStateBuilder;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.dataimport.TimetableDataImport;
 import org.opentripplanner.transit.model._data.TransitRepositoryForTest;
 import org.opentripplanner.transit.model.framework.Deduplicator;
@@ -187,7 +187,7 @@ public class RaptorPathToItineraryMapperTest {
   void createItineraryWithOnBoardFlexAccess() {
     RaptorPathToItineraryMapper<TestTripSchedule> mapper = getRaptorPathToItineraryMapper(
       FixedRegularTransfers.of()
-        .add(S1, S2, new NearbyStop(S2.getId(), 0))
+        .add(S1, S2, new StreetTransferPath(S2.getId(), 0))
         .snapshot()
         .forRequest(RouteRequest.defaultValue())
     );
@@ -322,7 +322,7 @@ public class RaptorPathToItineraryMapperTest {
   }
 
   private RaptorPathToItineraryMapper<TestTripSchedule> getRaptorPathToItineraryMapper(
-    RegularTransfersService<NearbyStop> regularTransfers
+    RegularTransfersService<StreetTransferPath> regularTransfers
   ) {
     Instant dateTime = LocalDateTime.of(2022, Month.OCTOBER, 10, 12, 0, 0)
       .atZone(ZoneIds.STOCKHOLM)

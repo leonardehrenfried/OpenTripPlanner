@@ -18,7 +18,6 @@ import org.opentripplanner.framework.application.OtpAppException;
 import org.opentripplanner.framework.transaction.TimetableSnapshotParameters;
 import org.opentripplanner.gbfs.network.GbfsNetworkOverrides;
 import org.opentripplanner.model.plan.Itinerary;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.raptor.configure.RaptorConfig;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RaptorTransitData;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.TransitTuningParameters;
@@ -44,6 +43,7 @@ import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.transfer.configure.StreetTransferFactory;
 import org.opentripplanner.transfer.regular.TransferRepository;
 import org.opentripplanner.transfer.regular.TransferServiceTestFactory;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.dataimport.TimetableDataImport;
 import org.opentripplanner.transit.repository.DefaultTimetableRepository;
 import org.opentripplanner.transit.repository.TimetableRepository;
@@ -101,7 +101,7 @@ public class SpeedTest {
     TimetableDataImport timetableDataImport,
     TransferRepository transferRepository,
     TransferParameters<RouteRequest> transferProfiles,
-    RegularTransferBuildRepository<NearbyStop> regularTransferBuildRepository
+    RegularTransferBuildRepository<StreetTransferPath> regularTransferBuildRepository
   ) {
     this.opts = opts;
     this.config = config;

@@ -18,7 +18,6 @@ import org.opentripplanner.model.plan.Place;
 import org.opentripplanner.model.plan.leg.ScheduledTransitLeg;
 import org.opentripplanner.model.plan.legreference.LegReference;
 import org.opentripplanner.model.plan.legreference.ScheduledTransitLegReference;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.algorithm.mapping.StreetLegMapper;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.api.request.via.ViaLocation;
@@ -39,6 +38,7 @@ import org.opentripplanner.street.service.StreetLimitationParametersService;
 import org.opentripplanner.streetadapter.StreetSearchRequestMapper;
 import org.opentripplanner.transfer.constrained.ConstrainedTransferService;
 import org.opentripplanner.transfer.constrained.model.ConstrainedTransfer;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.transit.service.TransitService;
 import org.opentripplanner.transit.service.TransitServiceResolver;
@@ -54,7 +54,10 @@ public class RefetchItineraryService {
   private final TransitService transitService;
   private final TransitAlertService transitAlertService;
   private final ConstrainedTransferService constrainedTransferService;
-  private final RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> regularTransfers;
+  private final RegularTransferRepositorySnapshot<
+    StreetTransferPath,
+    RouteRequest
+  > regularTransfers;
   private final Graph graph;
   private final LinkingContextFactory linkingContextFactory;
   private final StreetLegMapper streetLegMapper;
@@ -64,7 +67,7 @@ public class RefetchItineraryService {
     Graph graph,
     TransitService transitService,
     TransitAlertService transitAlertService,
-    RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> regularTransfers,
+    RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest> regularTransfers,
     StreetDetailsService streetDetailsService,
     LinkingContextFactory linkingContextFactory,
     StreetLimitationParametersService streetLimitationParametersService
@@ -357,7 +360,7 @@ public class RefetchItineraryService {
   /// The transfer is read from the regular transfers of the request, the same path that the
   /// router uses for the itinerary.
   private Optional<List<Leg>> transfer(
-    RegularTransfersService<NearbyStop> transfers,
+    RegularTransfersService<StreetTransferPath> transfers,
     StopLocation from,
     StopLocation to,
     StreetSearchRequest transferRequest

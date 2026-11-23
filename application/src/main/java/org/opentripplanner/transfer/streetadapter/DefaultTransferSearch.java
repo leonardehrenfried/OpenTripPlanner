@@ -17,6 +17,7 @@ import org.opentripplanner.street.search.request.StreetSearchRequest;
 import org.opentripplanner.street.search.state.EdgeTraverser;
 import org.opentripplanner.street.search.state.StateEditor;
 import org.opentripplanner.streetadapter.StreetSearchRequestMapper;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.transfer.regular.api.maxduration.MaxDurationsPreference;
 import org.opentripplanner.transit.transfer.regular.spi.AllowedModesLookup;
 import org.opentripplanner.transit.transfer.regular.spi.PathCriteria;
@@ -39,7 +40,7 @@ import org.opentripplanner.transit.transfer.regular.spi.TransferSearch;
  * two stops they connect. There is no street search from a stop without transfers. Re-costing a
  * path is not limited.
  */
-final class DefaultTransferSearch implements TransferSearch<NearbyStop> {
+final class DefaultTransferSearch implements TransferSearch<StreetTransferPath> {
 
   private static final int NO_STOP_COUNT_LIMIT = 0;
 
@@ -84,7 +85,7 @@ final class DefaultTransferSearch implements TransferSearch<NearbyStop> {
   }
 
   @Override
-  public Collection<TransferPath<NearbyStop>> findNearbyStops(
+  public Collection<TransferPath<StreetTransferPath>> findNearbyStops(
     FeedScopedId fromStop,
     MaxDurationsPreference maxDurations
   ) {
@@ -114,8 +115,8 @@ final class DefaultTransferSearch implements TransferSearch<NearbyStop> {
       .stream()
       .filter(nearbyStop -> !nearbyStop.stopId().equals(fromStop))
       .filter(nearbyStop -> isTransferTarget.test(nearbyStop.stopId()))
-      .map(DefaultTransferSearch::stripState)
-      .<TransferPath<NearbyStop>>mapMulti((path, consumer) ->
+      .map(StreetTransferPath::of)
+      .<TransferPath<StreetTransferPath>>mapMulti((path, consumer) ->
         computePathCriteria(path)
           .filter(criteria ->
             maxDurations.accepts(
@@ -158,10 +159,10 @@ final class DefaultTransferSearch implements TransferSearch<NearbyStop> {
   }
 
   @Override
-  public Optional<PathCriteria> computePathCriteria(NearbyStop nearbyStop) {
-    var path = nearbyStop.path();
+  public Optional<PathCriteria> computePathCriteria(StreetTransferPath transfer) {
+    var path = transfer.path();
     if (path.isEmpty()) {
-      double durationSeconds = nearbyStop.distance() / speedAlongStraightLine();
+      double durationSeconds = transfer.distance() / speedAlongStraightLine();
       int c1 = CostLimit.toRaptorCostWholeSeconds(durationSeconds * reluctance());
       return Optional.of(new PathCriteria(c1, (int) Math.ceil(durationSeconds)));
     }
@@ -187,18 +188,6 @@ final class DefaultTransferSearch implements TransferSearch<NearbyStop> {
       criteria.durationInSeconds(),
       allowedModes.modesAt(fromStop),
       allowedModes.modesAt(toStop)
-    );
-  }
-
-  /**
-   * Drop the street-search states of the path of a NearbyStop, so they can be garbage collected.
-   * The path can be re-costed from its edges without them.
-   */
-  private static NearbyStop stripState(NearbyStop nearbyStop) {
-    return new NearbyStop(
-      nearbyStop.stopId(),
-      nearbyStop.distance(),
-      nearbyStop.path().withoutStates()
     );
   }
 

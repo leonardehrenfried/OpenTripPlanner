@@ -17,9 +17,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.TestOtpModel;
 import org.opentripplanner.framework.application.OTPFeature;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.standalone.api.TestServerContext;
 import org.opentripplanner.standalone.config.OtpConfigLoader;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.speed_test.model.SpeedTestProfile;
 import org.opentripplanner.transit.speed_test.model.testcase.TestStatus;
 import org.opentripplanner.transit.speed_test.options.SpeedTestCmdLineOpts;
@@ -40,7 +40,7 @@ public class SpeedIntegrationTest {
   private static final File BASE_DIR = Path.of("src", "test", "resources", "speedtest").toFile();
 
   private static TestOtpModel model;
-  private static RegularTransferBuildRepository<NearbyStop> regularTransferBuildRepository;
+  private static RegularTransferBuildRepository<StreetTransferPath> regularTransferBuildRepository;
 
   @BeforeAll
   static void setup() {

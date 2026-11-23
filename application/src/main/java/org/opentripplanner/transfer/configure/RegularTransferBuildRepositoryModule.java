@@ -3,7 +3,7 @@ package org.opentripplanner.transfer.configure;
 import dagger.Module;
 import dagger.Provides;
 import jakarta.inject.Singleton;
-import org.opentripplanner.place.api.NearbyStop;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.transfer.regular.RegularTransferBuildRepository;
 import org.opentripplanner.transit.transfer.regular.configure.RegularTransferFactory;
 
@@ -12,7 +12,7 @@ public class RegularTransferBuildRepositoryModule {
 
   @Provides
   @Singleton
-  public RegularTransferBuildRepository<NearbyStop> provideRegularTransferBuildRepository() {
+  public RegularTransferBuildRepository<StreetTransferPath> provideRegularTransferBuildRepository() {
     return RegularTransferFactory.createBuildRepository();
   }
 }

@@ -33,6 +33,7 @@ import org.opentripplanner.routing.alertpatch.EntitySelector;
 import org.opentripplanner.routing.alertpatch.EntitySelector.StopAndRoute;
 import org.opentripplanner.routing.alertpatch.TransitAlert;
 import org.opentripplanner.routing.services.TransitAlertService;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.model.framework.AbstractTransitEntity;
 import org.opentripplanner.transit.model.network.Route;
 import org.opentripplanner.transit.model.network.TripPattern;
@@ -501,7 +502,8 @@ public class StopImpl implements GraphQLDataFetchers.GraphQLStop {
         .regularTransfers()
         .forRequest(context.defaultRouteRequest())
         .findPathsFrom(stop.getIndex())
-        .stream();
+        .stream()
+        .map(StreetTransferPath::toNearbyStop);
     }
     return context
       .transferService()

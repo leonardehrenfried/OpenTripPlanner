@@ -47,7 +47,6 @@ import org.opentripplanner.netex.NetexModule;
 import org.opentripplanner.netex.configure.NetexConfigure;
 import org.opentripplanner.osm.DefaultOsmProvider;
 import org.opentripplanner.osm.OsmProvider;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.api.request.preference.WalkPreferences;
 import org.opentripplanner.routing.fares.FareServiceFactory;
 import org.opentripplanner.service.osminfo.OsmInfoGraphBuildRepository;
@@ -64,6 +63,7 @@ import org.opentripplanner.transfer.dataimport.RegularTransitTransferGenerator;
 import org.opentripplanner.transfer.dataimport.StopsAllowedForModes;
 import org.opentripplanner.transfer.dataimport.StopsVisitedByPatterns;
 import org.opentripplanner.transfer.regular.TransferRepository;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.dataimport.TimetableDataImport;
 import org.opentripplanner.transit.model.framework.Deduplicator;
 import org.opentripplanner.transit.service.TransitRepository;
@@ -359,7 +359,7 @@ public class GraphBuilderModules {
     TransitRepository transitRepository,
     StopsVisitedByPatterns stopsVisitedByPatterns,
     StopsAllowedForModes stopsAllowedForModes,
-    RegularTransferBuildRepository<NearbyStop> regularTransferBuildRepository,
+    RegularTransferBuildRepository<StreetTransferPath> regularTransferBuildRepository,
     @Nullable FlexIndex flexIndex
   ) {
     // The generator is created when the transfers are generated, after the transit data import

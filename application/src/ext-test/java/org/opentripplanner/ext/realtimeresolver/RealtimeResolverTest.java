@@ -19,7 +19,6 @@ import org.opentripplanner.model.plan.Leg;
 import org.opentripplanner.model.plan.Place;
 import org.opentripplanner.model.plan.leg.ScheduledTransitLeg;
 import org.opentripplanner.model.plan.leg.StreetLeg;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.alertpatch.AlertCalendar;
 import org.opentripplanner.routing.alertpatch.EntitySelector;
 import org.opentripplanner.routing.alertpatch.TransitAlert;
@@ -37,6 +36,7 @@ import org.opentripplanner.street.linking.VertexLinker;
 import org.opentripplanner.street.linking.VisibilityMode;
 import org.opentripplanner.street.search.TraverseMode;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.model.TransitTestEnvironment;
 import org.opentripplanner.transit.model.TransitTestEnvironmentBuilder;
 import org.opentripplanner.transit.model.TripInput;
@@ -127,7 +127,7 @@ class RealtimeResolverTest {
 
   // Setup transfers
   private static final RegularTransferRepositorySnapshot<
-    NearbyStop,
+    StreetTransferPath,
     RouteRequest
   > REGULAR_TRANSFERS = createRegularTransfers(STOP_B, STOP_C, GRAPH);
 

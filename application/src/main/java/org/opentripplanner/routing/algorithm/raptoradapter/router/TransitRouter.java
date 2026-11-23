@@ -18,7 +18,6 @@ import org.opentripplanner.ext.sorlandsbanen.SorlandsbanenNorwayService;
 import org.opentripplanner.ext.taxi.TaxiService;
 import org.opentripplanner.framework.application.OTPFeature;
 import org.opentripplanner.model.plan.Itinerary;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.raptor.RaptorService;
 import org.opentripplanner.raptor.api.path.RaptorPath;
 import org.opentripplanner.raptor.api.response.RaptorResponse;
@@ -46,6 +45,7 @@ import org.opentripplanner.routing.via.ViaCoordinateTransferFactory;
 import org.opentripplanner.service.streetdetails.StreetDetailsService;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.transfer.regular.FlexTransferService;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.model.framework.EntityNotFoundException;
 import org.opentripplanner.transit.model.network.grouppriority.TransitGroupPriorityService;
 import org.opentripplanner.transit.model.site.StopLocation;
@@ -64,7 +64,7 @@ public class TransitRouter {
   private final MeterRegistry meterRegistry;
   private final StreetDetailsService streetDetailsService;
   private final FlexTransferService transferService;
-  private final RegularTransfersService<NearbyStop> regularTransfers;
+  private final RegularTransfersService<StreetTransferPath> regularTransfers;
   private final FlexParameters flexParameters;
   private final List<RideHailingService> rideHailingServices;
 
@@ -95,7 +95,7 @@ public class TransitRouter {
     MeterRegistry meterRegistry,
     StreetDetailsService streetDetailsService,
     FlexTransferService transferService,
-    RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> regularTransfers,
+    RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest> regularTransfers,
     FlexParameters flexParameters,
     List<RideHailingService> rideHailingServices,
     @Nullable DataOverlayParameterBindings dataOverlayParameterBindings,
@@ -139,7 +139,7 @@ public class TransitRouter {
     MeterRegistry meterRegistry,
     StreetDetailsService streetDetailsService,
     FlexTransferService transferService,
-    RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> regularTransfers,
+    RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest> regularTransfers,
     FlexParameters flexParameters,
     List<RideHailingService> rideHailingServices,
     @Nullable DataOverlayParameterBindings dataOverlayParameterBindings,

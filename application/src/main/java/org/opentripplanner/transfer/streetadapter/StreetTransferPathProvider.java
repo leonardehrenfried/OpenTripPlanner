@@ -13,6 +13,7 @@ import org.opentripplanner.place.nearbystopfinder.StraightLineNearbyStopFinder;
 import org.opentripplanner.place.nearbystopfinder.StreetNearbyStopFinder;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.street.graph.Graph;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.service.TransitRepository;
 import org.opentripplanner.transit.transfer.regular.spi.AllowedModesLookup;
 import org.opentripplanner.transit.transfer.regular.spi.TransferPathProvider;
@@ -25,7 +26,9 @@ import org.opentripplanner.transit.transfer.regular.spi.TransferSearch;
  * {@link RegularTransferPreferencesMapper}. {@link #searchFor} creates the
  * {@link DefaultTransferSearch} of a request, with the street search, once per request.
  */
-public class StreetTransferPathProvider implements TransferPathProvider<NearbyStop, RouteRequest> {
+public class StreetTransferPathProvider
+  implements TransferPathProvider<StreetTransferPath, RouteRequest>
+{
 
   private final Graph graph;
   private final NearbyStopFinder nearbyStopFinder;
@@ -108,7 +111,7 @@ public class StreetTransferPathProvider implements TransferPathProvider<NearbySt
   }
 
   @Override
-  public TransferSearch<NearbyStop> searchFor(RouteRequest request) {
+  public TransferSearch<StreetTransferPath> searchFor(RouteRequest request) {
     return new DefaultTransferSearch(
       graph,
       nearbyStopFinder,
