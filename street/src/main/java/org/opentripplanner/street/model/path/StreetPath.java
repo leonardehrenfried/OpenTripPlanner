@@ -35,6 +35,9 @@ public interface StreetPath extends StreetSearchResult {
   /// The total elevation gained and lost along the path.
   ElevationChange elevationChange();
 
+  /// Whether the path ends while still renting a vehicle picked up at a rental station.
+  boolean arrivesWithRentedVehicleFromStation();
+
   /// Split this path into legs. Each change of street mode, like picking up a rental vehicle or
   /// parking a car, starts a new leg. Walking a bike does not.
   ///

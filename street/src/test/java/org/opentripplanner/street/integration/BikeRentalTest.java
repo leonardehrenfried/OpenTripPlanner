@@ -20,7 +20,6 @@ import org.opentripplanner.service.vehiclerental.street.VehicleRentalPlaceVertex
 import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.model.StreetTraversalPermission;
 import org.opentripplanner.street.model.edge.StreetEdge;
-import org.opentripplanner.street.model.path.DefaultStreetSearchResult;
 import org.opentripplanner.street.model.path.StreetPathForTest;
 import org.opentripplanner.street.model.vertex.StreetVertex;
 import org.opentripplanner.street.model.vertex.TemporaryStreetLocation;
@@ -690,13 +689,6 @@ public class BikeRentalTest extends GraphRoutingTest {
     if (state == null) {
       return null;
     }
-
-    var result = DefaultStreetSearchResult.of(state);
-    assertEquals(
-      result.toPath().arrivesWithRentedVehicleFromStation(),
-      result.arrivesWithRentedVehicleFromStation(),
-      "rental arrival without reversing the state chain"
-    );
 
     return StreetPathForTest.states(state)
       .stream()

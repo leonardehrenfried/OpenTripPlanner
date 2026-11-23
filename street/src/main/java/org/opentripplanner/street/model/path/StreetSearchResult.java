@@ -31,10 +31,6 @@ public interface StreetSearchResult {
   /// True if all edges are traversed on foot.
   boolean containsOnlyWalkMode();
 
-  /// Whether the path ends, in chronological order, while still renting a vehicle picked up at a
-  /// rental station, so the vehicle is kept at the destination.
-  boolean arrivesWithRentedVehicleFromStation();
-
   /// The chronological path. This may be expensive, see the class documentation.
   StreetPath toPath();
 }
