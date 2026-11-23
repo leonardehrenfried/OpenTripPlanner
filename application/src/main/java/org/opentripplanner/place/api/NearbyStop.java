@@ -16,8 +16,8 @@ import org.opentripplanner.street.search.state.State;
  * street search, it also includes the result of that search.
  * <p>
  * The cost and duration of the result are cheap to read, so there can be many nearby stops. The
- * street path is only built by {@link #path()}, for the stops which are used, like when mapping an
- * itinerary.
+ * street path is only built by {@link StreetSearchResult#toPath()}, for the stops which are used,
+ * like when mapping an itinerary.
  */
 public class NearbyStop implements Comparable<NearbyStop> {
 
@@ -164,15 +164,6 @@ public class NearbyStop implements Comparable<NearbyStop> {
    */
   public StreetSearchResult result() {
     return result;
-  }
-
-  /**
-   * The street path between the search origin and the stop. Building it is expensive for stops
-   * found by an arriveBy search, see {@link StreetSearchResult#toPath()}, so only call it for stops
-   * which are used.
-   */
-  public StreetPath path() {
-    return result.toPath();
   }
 
   private boolean hasPath() {
