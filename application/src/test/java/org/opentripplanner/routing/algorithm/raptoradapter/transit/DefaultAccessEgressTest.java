@@ -137,10 +137,12 @@ class DefaultAccessEgressTest {
   }
 
   @Test
-  void isRentingVehicleFromStation() {
-    assertFalse(subject.isRentingVehicleFromStation());
+  void arrivesWithRentedVehicleFromStation() {
+    assertFalse(subject.streetPath().arrivesWithRentedVehicleFromStation());
     var rentalState = TestStateBuilder.ofCarRental().streetEdge().pickUpCarFromStation().build();
-    assertTrue(new DefaultAccessEgress(0, rentalState).isRentingVehicleFromStation());
+    assertTrue(
+      new DefaultAccessEgress(0, rentalState).streetPath().arrivesWithRentedVehicleFromStation()
+    );
   }
 
   @Test

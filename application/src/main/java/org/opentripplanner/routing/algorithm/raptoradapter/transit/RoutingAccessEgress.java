@@ -17,13 +17,6 @@ public interface RoutingAccessEgress extends RaptorAccessEgress {
   RoutingAccessEgress withPenalty(TimeAndCost penalty);
 
   /**
-   * Return true if the access/egress ends while still renting a vehicle picked up at a rental
-   * station. For an egress this means the passenger arrives at the destination with the rented
-   * vehicle.
-   */
-  boolean isRentingVehicleFromStation();
-
-  /**
    * Return true if all edges are traversed on foot.
    */
   boolean isWalkOnly();
