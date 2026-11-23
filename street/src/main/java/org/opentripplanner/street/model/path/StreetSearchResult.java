@@ -1,6 +1,7 @@
 package org.opentripplanner.street.model.path;
 
 import java.time.Duration;
+import java.time.Instant;
 
 /// What is known about a way through the street network without building its chronological
 /// [StreetPath].
@@ -22,6 +23,12 @@ public interface StreetSearchResult {
   /// The time it takes to traverse the path, rounded up to whole seconds.
   Duration duration();
 
+  /// The time the path starts, with millisecond precision.
+  Instant startTime();
+
+  /// The time the path ends, with millisecond precision.
+  Instant endTime();
+
   /// The distance traversed along the path in meters.
   double traversalDistance();
 
@@ -33,4 +40,10 @@ public interface StreetSearchResult {
 
   /// The chronological path. This may be expensive, see the class documentation.
   StreetPath toPath();
+
+  /// The chronological path without the states of the search, keeping only what can be computed
+  /// from the edges. Unlike [#toPath()] this is cheap, it never reverses the states. Use it for
+  /// paths which are kept for a long time, like transfers, so that the search states can be
+  /// garbage collected. Use [StreetPath#reTraverse] to get a complete path again.
+  StreetPath withoutStates();
 }

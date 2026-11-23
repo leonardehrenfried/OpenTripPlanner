@@ -116,9 +116,10 @@ public class FlexDirectPathFactory {
     }
 
     // The street search continues along the egress path after the flex ride
-    var egressPath = accessNearbyStop
-      .path()
-      .continueSearchAfter(flexPath.duration(), egress.path());
+    var egressPath = AbstractFlexTemplate.streetSearchResult(accessNearbyStop).continueSearchAfter(
+      flexPath.duration(),
+      egress.result()
+    );
 
     if (egressPath.isEmpty()) {
       return Optional.empty();

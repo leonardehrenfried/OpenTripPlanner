@@ -5,29 +5,41 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import org.jspecify.annotations.Nullable;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.street.geometry.GeometryUtils;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
 
-/// A path made up of paths which follow each other in time, see [StreetPath#concat(StreetPath...)].
+/// A path made up of paths or search results which follow each other in time, see
+/// [StreetPath#concat(StreetSearchResult...)].
 ///
-/// The paths are not necessarily the result of the same street search. One of them may not be
+/// The parts are not necessarily the result of the same street search. One of them may not be
 /// part of the street network at all, like a ride on a flexible trip. Therefore, the search can't
 /// be continued or repeated.
+///
+/// The cost, duration, times and modes are read from the parts, which is cheap. The parts are only
+/// turned into paths, once, when the details of the path are needed, like for the legs.
 final class CompositeStreetPath implements StreetPath, Serializable {
 
   private static final String NOT_SUPPORTED_MESSAGE =
     "A composite path is not the result of a single street search.";
 
-  private final List<StreetPath> paths;
+  /// The parts may hold the states of a search, which are not serializable. They are transient
+  /// because a composite path is built for a request and never stored: a stored path is always
+  /// created with [#withoutStates()], which a composite path does not support.
+  private final transient List<StreetSearchResult> parts;
   private final Duration duration;
 
-  CompositeStreetPath(List<StreetPath> paths) {
-    if (paths.isEmpty()) {
-      throw new IllegalArgumentException("A composite path needs at least one path");
+  /// The parts as paths, built when they are first needed.
+  @Nullable
+  private transient List<StreetPath> paths;
+
+  CompositeStreetPath(List<StreetSearchResult> parts) {
+    if (parts.isEmpty()) {
+      throw new IllegalArgumentException("A composite path needs at least one part");
     }
-    this.paths = List.copyOf(paths);
+    this.parts = List.copyOf(parts);
     // Computed from the start and end time, rather than adding up the rounded durations of the
     // paths, the same way as for a single street search.
     long millis = Duration.between(startTime(), endTime()).toMillis();
@@ -36,7 +48,7 @@ final class CompositeStreetPath implements StreetPath, Serializable {
 
   @Override
   public double generalizedCost() {
-    return paths.stream().mapToDouble(StreetPath::generalizedCost).sum();
+    return parts.stream().mapToDouble(StreetSearchResult::generalizedCost).sum();
   }
 
   @Override
@@ -46,19 +58,19 @@ final class CompositeStreetPath implements StreetPath, Serializable {
 
   @Override
   public Instant startTime() {
-    return paths.getFirst().startTime();
+    return parts.getFirst().startTime();
   }
 
   @Override
   public Instant endTime() {
-    return paths.getLast().endTime();
+    return parts.getLast().endTime();
   }
 
   @Override
   public ElevationChange elevationChange() {
     double gained = 0;
     double lost = 0;
-    for (var path : paths) {
+    for (var path : paths()) {
       var change = path.elevationChange();
       gained += change.elevationGainedMeters();
       lost += change.elevationLostMeters();
@@ -68,12 +80,12 @@ final class CompositeStreetPath implements StreetPath, Serializable {
 
   @Override
   public boolean arrivesWithRentedVehicleFromStation() {
-    return paths.getLast().arrivesWithRentedVehicleFromStation();
+    return paths().getLast().arrivesWithRentedVehicleFromStation();
   }
 
   @Override
   public List<StreetLeg> computeLegs(double ellipsoidToGeoidDifference) {
-    return paths
+    return paths()
       .stream()
       .flatMap(path -> path.computeLegs(ellipsoidToGeoidDifference).stream())
       .toList();
@@ -81,7 +93,7 @@ final class CompositeStreetPath implements StreetPath, Serializable {
 
   @Override
   public double traversalDistance() {
-    return paths.stream().mapToDouble(StreetPath::traversalDistance).sum();
+    return parts.stream().mapToDouble(StreetSearchResult::traversalDistance).sum();
   }
 
   @Override
@@ -95,33 +107,23 @@ final class CompositeStreetPath implements StreetPath, Serializable {
   }
 
   @Override
-  public Optional<StreetPath> continueSearch(StreetPath path) {
-    throw new UnsupportedOperationException(NOT_SUPPORTED_MESSAGE);
-  }
-
-  @Override
-  public Optional<StreetPath> continueSearchAfter(Duration gap, StreetPath path) {
-    throw new UnsupportedOperationException(NOT_SUPPORTED_MESSAGE);
-  }
-
-  @Override
   public Vertex fromVertex() {
-    return paths.getFirst().fromVertex();
+    return paths().getFirst().fromVertex();
   }
 
   @Override
   public Vertex toVertex() {
-    return paths.getLast().toVertex();
+    return paths().getLast().toVertex();
   }
 
   @Override
   public boolean isEmpty() {
-    return paths.stream().allMatch(StreetPath::isEmpty);
+    return paths().stream().allMatch(StreetPath::isEmpty);
   }
 
   @Override
   public LineString geometry() {
-    var geometries = paths
+    var geometries = paths()
       .stream()
       .filter(path -> !path.isEmpty())
       .map(StreetPath::geometry);
@@ -130,26 +132,33 @@ final class CompositeStreetPath implements StreetPath, Serializable {
 
   @Override
   public boolean containsOnlyWalkMode() {
-    return paths.stream().allMatch(StreetPath::containsOnlyWalkMode);
+    return parts.stream().allMatch(StreetSearchResult::containsOnlyWalkMode);
   }
 
   @Override
   public boolean containsModeCar() {
-    return paths.stream().anyMatch(StreetPath::containsModeCar);
+    return parts.stream().anyMatch(StreetSearchResult::containsModeCar);
   }
 
   @Override
   public boolean equals(Object o) {
-    return o instanceof CompositeStreetPath other && paths.equals(other.paths);
+    return o instanceof CompositeStreetPath other && parts.equals(other.parts);
   }
 
   @Override
   public int hashCode() {
-    return paths.hashCode();
+    return parts.hashCode();
   }
 
   @Override
   public String toString() {
-    return "CompositeStreetPath" + paths;
+    return "CompositeStreetPath" + parts;
+  }
+
+  private List<StreetPath> paths() {
+    if (paths == null) {
+      paths = parts.stream().map(StreetSearchResult::toPath).toList();
+    }
+    return paths;
   }
 }

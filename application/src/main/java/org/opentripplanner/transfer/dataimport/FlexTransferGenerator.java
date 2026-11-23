@@ -280,7 +280,7 @@ public class FlexTransferGenerator implements GraphBuilderModule {
     Map<TransferKey, PathTransfer> distinctTransfers,
     StreetMode mode
   ) {
-    var path = sd.path().withoutStates();
+    var path = sd.result().withoutStates();
     TransferKey transferKey = new TransferKey(from, to, path);
     PathTransfer pathTransfer = distinctTransfers.get(transferKey);
     if (pathTransfer == null) {
