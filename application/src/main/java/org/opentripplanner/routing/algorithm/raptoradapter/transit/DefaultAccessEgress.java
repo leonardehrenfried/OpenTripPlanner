@@ -122,13 +122,9 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
     return result.toPath();
   }
 
-  /**
-   * Whether the access/egress ends while renting a vehicle picked up at a station. This needs the
-   * chronological path, see {@link #streetPath()}.
-   */
   @Override
   public boolean isRentingVehicleFromStation() {
-    return result.toPath().arrivesWithRentedVehicleFromStation();
+    return result.arrivesWithRentedVehicleFromStation();
   }
 
   /**

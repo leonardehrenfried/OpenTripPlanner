@@ -64,6 +64,26 @@ public final class DefaultStreetSearchResult implements StreetSearchResult {
     return finalState.containsOnlyWalkMode();
   }
 
+  @Override
+  public boolean arrivesWithRentedVehicleFromStation() {
+    return chronologicalLastState().isRentingVehicleFromStation();
+  }
+
+  /// The state at the end of the path in chronological order, found without reversing the state
+  /// chain. For depart-after searches this is the final state. For arriveBy searches it is the
+  /// origin of the search, at the destination: [State#reverse()] replays every rental pick-up and
+  /// drop-off along the chain, so the last reversed state has the same rental state as the origin.
+  private State chronologicalLastState() {
+    if (!isArriveBy()) {
+      return finalState;
+    }
+    var state = finalState;
+    while (state.getBackState() != null) {
+      state = state.getBackState();
+    }
+    return state;
+  }
+
   /// Build the chronological path. For arriveBy searches this reverses the state chain, which is
   /// expensive, so only call it for results which are actually used, like when mapping the legs
   /// of an itinerary. Every call builds a new path.
