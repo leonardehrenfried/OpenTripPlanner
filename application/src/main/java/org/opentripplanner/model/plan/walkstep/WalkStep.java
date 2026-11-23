@@ -1,6 +1,5 @@
 package org.opentripplanner.model.plan.walkstep;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import org.jspecify.annotations.Nullable;
@@ -9,7 +8,6 @@ import org.opentripplanner.model.plan.walkstep.verticaltransportation.VerticalTr
 import org.opentripplanner.street.api.path.step.AbsoluteDirection;
 import org.opentripplanner.street.api.path.step.RelativeDirection;
 import org.opentripplanner.street.geometry.WgsCoordinate;
-import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.elevation.ElevationProfile;
 import org.opentripplanner.transit.model.site.Entrance;
 import org.opentripplanner.utils.lang.DoubleUtils;
@@ -63,8 +61,6 @@ public final class WalkStep {
   private final ElevationProfile elevationProfile;
   private final boolean stayOn;
 
-  private final List<Edge> edges;
-
   WalkStep(
     WgsCoordinate startLocation,
     RelativeDirection relativeDirection,
@@ -79,8 +75,7 @@ public final class WalkStep {
     boolean area,
     boolean stayOn,
     double angle,
-    double distance,
-    List<Edge> edges
+    double distance
   ) {
     this.distance = distance;
     this.relativeDirection = Objects.requireNonNull(relativeDirection);
@@ -96,7 +91,6 @@ public final class WalkStep {
     this.verticalTransportationUse = verticalTransportationUse;
     this.elevationProfile = elevationProfile;
     this.stayOn = stayOn;
-    this.edges = List.copyOf(Objects.requireNonNull(edges));
   }
 
   public ElevationProfile getElevationProfile() {
@@ -198,14 +192,6 @@ public final class WalkStep {
    */
   public boolean isWalkingBike() {
     return walkingBike;
-  }
-
-  /**
-   * The street edges that make up this walkStep. Used only in generating the streetEdges array in
-   * StreetSegment; not serialized.
-   */
-  public List<Edge> getEdges() {
-    return edges;
   }
 
   public static WalkStepBuilder builder() {

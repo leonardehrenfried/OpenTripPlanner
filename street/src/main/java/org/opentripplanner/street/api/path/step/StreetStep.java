@@ -1,6 +1,5 @@
 package org.opentripplanner.street.api.path.step;
 
-import java.util.List;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 import org.opentripplanner.core.model.i18n.I18NString;
@@ -49,8 +48,6 @@ public final class StreetStep {
 
   private final boolean stayOn;
 
-  private final List<Edge> edges;
-
   StreetStep(StreetStepBuilder builder) {
     this.startLocation = Objects.requireNonNull(builder.startLocation());
     this.distance = builder.distance();
@@ -66,7 +63,6 @@ public final class StreetStep {
     this.verticalTransportation = builder.verticalTransportation();
     this.elevationProfile = builder.elevationProfile();
     this.stayOn = builder.stayOn();
-    this.edges = List.copyOf(builder.edges());
   }
 
   public static StreetStepBuilder builder() {
@@ -160,17 +156,6 @@ public final class StreetStep {
    */
   public boolean stayOn() {
     return stayOn;
-  }
-
-  /**
-   * The edges that make up this step.
-   *
-   * @deprecated This exposes the internal street model {@link Edge}. It is temporary and will be
-   * removed in a future refactoring.
-   */
-  @Deprecated
-  public List<Edge> edges() {
-    return edges;
   }
 
   @Override

@@ -206,8 +206,7 @@ public class StreetLegMapper {
       .withArea(step.area())
       .withStayOn(step.stayOn())
       .withAngle(step.angle())
-      .addDistance(step.distance())
-      .withEdges(step.edges());
+      .addDistance(step.distance());
     return builder.build();
   }
 

@@ -1,14 +1,11 @@
 package org.opentripplanner.model.plan.walkstep;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.jspecify.annotations.Nullable;
 import org.opentripplanner.core.model.i18n.I18NString;
 import org.opentripplanner.model.plan.walkstep.verticaltransportation.VerticalTransportationUse;
 import org.opentripplanner.street.api.path.step.AbsoluteDirection;
 import org.opentripplanner.street.api.path.step.RelativeDirection;
 import org.opentripplanner.street.geometry.WgsCoordinate;
-import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.elevation.ElevationProfile;
 import org.opentripplanner.transit.model.site.Entrance;
 import org.opentripplanner.utils.lang.DoubleUtils;
@@ -38,7 +35,6 @@ public class WalkStepBuilder {
    * Distance used for appending elevation profiles
    */
   private double distance = 0;
-  private final List<Edge> edges = new ArrayList<>();
 
   WalkStepBuilder() {}
 
@@ -130,12 +126,6 @@ public class WalkStepBuilder {
     return this;
   }
 
-  public WalkStepBuilder withEdges(List<Edge> edges) {
-    this.edges.clear();
-    this.edges.addAll(edges);
-    return this;
-  }
-
   public WalkStep build() {
     return new WalkStep(
       startLocation,
@@ -151,8 +141,7 @@ public class WalkStepBuilder {
       area,
       stayOn,
       angle,
-      distance,
-      edges
+      distance
     );
   }
 }
