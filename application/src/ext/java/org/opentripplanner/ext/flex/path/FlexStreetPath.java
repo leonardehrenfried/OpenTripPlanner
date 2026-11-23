@@ -12,7 +12,6 @@ import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.ext.flex.FlexParameters;
 import org.opentripplanner.ext.flex.flexpathcalculator.FlexPath;
 import org.opentripplanner.ext.flex.trip.FlexTrip;
-import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.path.ElevationChange;
 import org.opentripplanner.street.model.path.StreetLeg;
 import org.opentripplanner.street.model.path.StreetPath;
@@ -160,11 +159,6 @@ public final class FlexStreetPath implements StreetPath, Serializable {
 
   @Override
   public Optional<StreetPath> reTraverse(StreetSearchRequest request) {
-    throw new UnsupportedOperationException(NOT_SUPPORTED_MESSAGE);
-  }
-
-  @Override
-  public Optional<StreetPath> continueSearch(Edge edge) {
     throw new UnsupportedOperationException(NOT_SUPPORTED_MESSAGE);
   }
 

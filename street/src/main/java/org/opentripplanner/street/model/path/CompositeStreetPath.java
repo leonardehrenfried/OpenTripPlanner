@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.street.geometry.GeometryUtils;
-import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
 
@@ -92,11 +91,6 @@ final class CompositeStreetPath implements StreetPath, Serializable {
 
   @Override
   public Optional<StreetPath> reTraverse(StreetSearchRequest request) {
-    throw new UnsupportedOperationException(NOT_SUPPORTED_MESSAGE);
-  }
-
-  @Override
-  public Optional<StreetPath> continueSearch(Edge edge) {
     throw new UnsupportedOperationException(NOT_SUPPORTED_MESSAGE);
   }
 

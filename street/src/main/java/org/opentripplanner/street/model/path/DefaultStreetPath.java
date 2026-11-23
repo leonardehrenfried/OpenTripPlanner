@@ -191,11 +191,6 @@ public final class DefaultStreetPath implements StreetPath, Serializable {
   }
 
   @Override
-  public Optional<StreetPath> continueSearch(Edge edge) {
-    return continueSearchAlong(List.of(edge));
-  }
-
-  @Override
   public Optional<StreetPath> continueSearch(StreetPath path) {
     var pathEdges = ((DefaultStreetPath) path).edges();
     return continueSearchAlong(arriveBy ? pathEdges.reversed() : pathEdges);
