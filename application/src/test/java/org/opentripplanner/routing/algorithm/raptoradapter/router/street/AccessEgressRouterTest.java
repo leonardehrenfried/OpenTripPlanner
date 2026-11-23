@@ -228,7 +228,7 @@ class AccessEgressRouterTest extends GraphRoutingTest {
   }
 
   private String nearbyStopDescription(NearbyStop nearbyStop) {
-    if (nearbyStop.path().isEmpty()) {
+    if (nearbyStop.result().toPath().isEmpty()) {
       return (
         "direct[" +
         transitRepository.getSiteRepository().getStopLocation(nearbyStop.stopId()).getName() +
@@ -243,7 +243,7 @@ class AccessEgressRouterTest extends GraphRoutingTest {
    * Describe the path in search order: from the search origin to the stop.
    */
   private String pathDescription(NearbyStop nearbyStop) {
-    var path = nearbyStop.path();
+    var path = nearbyStop.result().toPath();
     var origin = nearbyStop.vertex() == path.toVertex() ? path.fromVertex() : path.toVertex();
     return origin.getName() + " -> " + nearbyStop.vertex().getName();
   }

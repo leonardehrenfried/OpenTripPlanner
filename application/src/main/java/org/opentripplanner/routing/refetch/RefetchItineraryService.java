@@ -365,12 +365,12 @@ public class RefetchItineraryService {
     StopLocation to,
     StreetSearchRequest transferRequest
   ) {
-    var nearbyStop = transfers.findPath(from.getIndex(), to.getIndex());
-    if (nearbyStop == null || nearbyStop.path().isEmpty()) {
+    var transfer = transfers.findPath(from.getIndex(), to.getIndex());
+    if (transfer == null || transfer.path().isEmpty()) {
       // We don't support straight line transfers currently.
       return Optional.empty();
     }
-    return nearbyStop.path().reTraverse(transferRequest).map(this::streetPathToLegs);
+    return transfer.path().reTraverse(transferRequest).map(this::streetPathToLegs);
   }
 
   private List<Leg> streetPathToLegs(StreetPath path) {

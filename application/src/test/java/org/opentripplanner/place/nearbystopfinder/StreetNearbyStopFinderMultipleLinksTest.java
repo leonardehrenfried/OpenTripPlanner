@@ -85,7 +85,7 @@ class StreetNearbyStopFinderMultipleLinksTest extends GraphRoutingTest {
   void assertZeroDistanceStop(TransitStopVertex expected, NearbyStop nearbyStop) {
     assertEquals(expected.getId(), nearbyStop.stopId());
     assertEquals(0, nearbyStop.distance());
-    assertTrue(nearbyStop.path().isEmpty());
+    assertTrue(nearbyStop.result().toPath().isEmpty());
     assertEquals(expected, nearbyStop.vertex());
   }
 
@@ -100,6 +100,6 @@ class StreetNearbyStopFinderMultipleLinksTest extends GraphRoutingTest {
     assertEquals(expected.getId(), nearbyStop.stopId());
     assertEquals(expectedDistance, nearbyStop.distance());
     assertEquals(expected, nearbyStop.vertex());
-    assertFalse(nearbyStop.path().isEmpty());
+    assertFalse(nearbyStop.result().toPath().isEmpty());
   }
 }
