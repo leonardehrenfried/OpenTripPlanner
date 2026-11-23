@@ -10,8 +10,7 @@ import org.opentripplanner.street.model.vertex.Vertex;
 
 /// A path within the street network, the result of a street search.
 ///
-/// The states of the search are deliberately not exposed. To get the details of the path, split
-/// it into [StreetLeg]s using [#computeLegs(double)].
+/// To get the details of the path, split it into [StreetLeg]s using [#computeLegs(double)].
 public interface StreetPath {
   /// A path which is not the result of a street search, used when there is no street path, like
   /// for a stop found by a straight-line search. It has no edges, no vertices and no cost.
