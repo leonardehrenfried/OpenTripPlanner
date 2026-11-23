@@ -8,10 +8,13 @@ import org.locationtech.jts.geom.LineString;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
 
-/// A path within the street network, the result of a street search.
+/// A chronological path within the street network.
 ///
 /// To get the details of the path, split it into [StreetLeg]s using [#computeLegs(double)].
-public interface StreetPath {
+///
+/// A path is also a [StreetSearchResult] whose [#toPath()] is free, so code which handles both
+/// search results and ready-made paths, like access and egress, can treat them alike.
+public interface StreetPath extends StreetSearchResult {
   /// A path which is not the result of a street search, used when there is no street path, like
   /// for a stop found by a straight-line search. It has no edges, no vertices and no cost.
   StreetPath EMPTY = EmptyStreetPath.INSTANCE;
@@ -22,12 +25,6 @@ public interface StreetPath {
   static StreetPath concat(StreetPath... paths) {
     return new CompositeStreetPath(List.of(paths));
   }
-
-  /// The generalized cost (A* weight) of traversing the path.
-  double generalizedCost();
-
-  /// The time it takes to traverse the path, rounded up to whole seconds.
-  Duration duration();
 
   /// The time the path starts, with millisecond precision.
   Instant startTime();
@@ -51,9 +48,6 @@ public interface StreetPath {
   ///                                   elevation of the graph, applied to the elevations of the
   ///                                   legs if requested.
   List<StreetLeg> computeLegs(double ellipsoidToGeoidDifference);
-
-  /// The distance traversed along the path in meters.
-  double traversalDistance();
 
   /// Traverse the edges of this path again, starting at the same vertex, using the given request.
   /// This is used for paths computed ahead of time, for example during graph build, to get the
@@ -100,9 +94,9 @@ public interface StreetPath {
   /// The geometry of the path.
   LineString geometry();
 
-  /// True if all edges are traversed on foot.
-  boolean containsOnlyWalkMode();
-
-  /// True if any part of the path is traversed by car.
-  boolean containsModeCar();
+  /// A path is already chronological, so this returns the path itself.
+  @Override
+  default StreetPath toPath() {
+    return this;
+  }
 }

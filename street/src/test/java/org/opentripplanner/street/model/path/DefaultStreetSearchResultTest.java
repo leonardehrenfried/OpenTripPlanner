@@ -16,7 +16,7 @@ import org.opentripplanner.street.model.edge.TestEdge;
 import org.opentripplanner.street.search.request.StreetSearchRequest;
 import org.opentripplanner.street.search.state.State;
 
-class StreetSearchResultTest {
+class DefaultStreetSearchResultTest {
 
   private static final Instant START_TIME = Instant.parse("2007-12-03T10:15:30.00Z");
 
@@ -24,7 +24,7 @@ class StreetSearchResultTest {
   @ValueSource(booleans = { false, true })
   void cheapAccessorsReadTheFinalState(boolean arriveBy) {
     var state = search(arriveBy);
-    var subject = StreetSearchResult.of(state);
+    var subject = DefaultStreetSearchResult.of(state);
 
     assertEquals(arriveBy, subject.isArriveBy());
     assertEquals(state.getWeight(), subject.generalizedCost());
@@ -38,7 +38,7 @@ class StreetSearchResultTest {
     var state = search(arriveBy);
     var expected = new DefaultStreetPath(state);
 
-    var path = (DefaultStreetPath) StreetSearchResult.of(state).toPath();
+    var path = (DefaultStreetPath) DefaultStreetSearchResult.of(state).toPath();
 
     assertEquals(expected.edges(), path.edges());
     assertEquals(expected.fromVertex(), path.fromVertex());
@@ -53,9 +53,9 @@ class StreetSearchResultTest {
   @ValueSource(booleans = { false, true })
   void storedPathHasTheChronologicalEdges(boolean arriveBy) {
     var state = search(arriveBy);
-    var path = (DefaultStreetPath) StreetSearchResult.of(state).toPath();
+    var path = (DefaultStreetPath) DefaultStreetSearchResult.of(state).toPath();
 
-    var stored = StreetSearchResult.of(state).toStoredPath();
+    var stored = DefaultStreetSearchResult.of(state).toStoredPath();
 
     assertEquals(path.edges(), stored.edges());
     assertEquals(path.distanceMeters(), stored.distanceMeters(), 0.001);
@@ -65,13 +65,19 @@ class StreetSearchResultTest {
   @Test
   void reTraverseAStoredPath() {
     var state = search(false);
-    var stored = StreetSearchResult.of(state).toStoredPath();
+    var stored = DefaultStreetSearchResult.of(state).toStoredPath();
 
     var path = (DefaultStreetPath) stored.reTraverse(request(false)).orElseThrow();
 
     assertEquals(stored.edges(), path.edges());
     assertEquals(Duration.ofSeconds(state.getElapsedTimeSeconds()), path.duration());
     assertEquals(state.getWeight(), path.generalizedCost(), 0.001);
+  }
+
+  @Test
+  void aPathIsItsOwnResult() {
+    var path = DefaultStreetSearchResult.of(search(false)).toPath();
+    assertSame(path, path.toPath());
   }
 
   @Test

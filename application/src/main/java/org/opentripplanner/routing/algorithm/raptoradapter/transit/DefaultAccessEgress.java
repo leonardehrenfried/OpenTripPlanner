@@ -4,8 +4,9 @@ import java.util.Objects;
 import org.opentripplanner.framework.model.TimeAndCost;
 import org.opentripplanner.raptor.spi.RaptorConstants;
 import org.opentripplanner.routing.cost.CostLimit;
-import org.opentripplanner.street.model.path.DefaultStreetPath;
+import org.opentripplanner.street.model.path.DefaultStreetSearchResult;
 import org.opentripplanner.street.model.path.StreetPath;
+import org.opentripplanner.street.model.path.StreetSearchResult;
 import org.opentripplanner.street.search.state.State;
 
 /**
@@ -26,7 +27,7 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
   /** Keep this to be able to map back to itinerary */
   private final TimeAndCost penalty;
 
-  private final StreetPath path;
+  private final StreetSearchResult result;
 
   /**
    * This is public to allow unit-tests full control over the field values.
@@ -36,23 +37,23 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
     int durationInSeconds,
     int generalizedCost,
     TimeAndCost penalty,
-    StreetPath path
+    StreetSearchResult result
   ) {
     this.stop = stop;
     this.durationInSeconds = durationInSeconds;
     this.generalizedCost = generalizedCost;
     this.timePenalty = penalty.isZero() ? RaptorConstants.TIME_NOT_SET : penalty.timeInSeconds();
     this.penalty = penalty;
-    this.path = Objects.requireNonNull(path);
+    this.result = Objects.requireNonNull(result);
   }
 
-  public DefaultAccessEgress(int stop, StreetPath path) {
+  public DefaultAccessEgress(int stop, StreetSearchResult result) {
     this(
       stop,
-      (int) path.duration().toSeconds(),
-      CostLimit.toRaptorCost(path.generalizedCost()),
+      (int) result.duration().toSeconds(),
+      CostLimit.toRaptorCost(result.generalizedCost()),
       TimeAndCost.ZERO,
-      path
+      result
     );
   }
 
@@ -60,7 +61,7 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
    * Create an access/egress from the final state of a street search.
    */
   public DefaultAccessEgress(int stop, State finalState) {
-    this(stop, new DefaultStreetPath(finalState));
+    this(stop, DefaultStreetSearchResult.of(finalState));
   }
 
   /**
@@ -68,7 +69,7 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
    * cost are derived from the street search again, so any penalty of {@code other} is dropped.
    */
   protected DefaultAccessEgress(DefaultAccessEgress other) {
-    this(other.stop, other.path);
+    this(other.stop, other.result);
   }
 
   protected DefaultAccessEgress(DefaultAccessEgress other, TimeAndCost penalty) {
@@ -80,7 +81,7 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
       other.durationInSeconds(),
       other.c1() + penalty.cost().toCentiSeconds(),
       penalty,
-      other.path
+      other.result
     );
     if (other.penalty() != TimeAndCost.ZERO) {
       throw new IllegalStateException("Can not add penalty twice...");
@@ -113,27 +114,33 @@ public class DefaultAccessEgress implements RoutingAccessEgress {
   }
 
   /**
-   * The street path of this access/egress in chronological order.
+   * The street path of this access/egress in chronological order. For egress found by a street
+   * search this reverses the state chain, which is expensive, so only call it for access/egress
+   * which is used, like when mapping a winning itinerary.
    */
   public StreetPath streetPath() {
-    return path;
+    return result.toPath();
   }
 
+  /**
+   * Whether the access/egress ends while renting a vehicle picked up at a station. This needs the
+   * chronological path, see {@link #streetPath()}.
+   */
   @Override
   public boolean isRentingVehicleFromStation() {
-    return path.arrivesWithRentedVehicleFromStation();
+    return result.toPath().arrivesWithRentedVehicleFromStation();
   }
 
   /**
    * Return true if any part of the access/egress is traversed by car.
    */
   public boolean containsModeCar() {
-    return path.containsModeCar();
+    return result.containsModeCar();
   }
 
   @Override
   public boolean isWalkOnly() {
-    return path.containsOnlyWalkMode();
+    return result.containsOnlyWalkMode();
   }
 
   @Override
