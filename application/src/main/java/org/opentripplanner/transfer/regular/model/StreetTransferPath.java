@@ -14,6 +14,18 @@ import org.opentripplanner.street.model.path.StreetSearchResult;
  * The path holds no states of the street search which found it, so it can be serialized and does
  * not keep a search in memory. Its times and costs depend on the preferences of a search, use
  * {@link StreetPath#reTraverse} to get them for a specific request.
+ * <p>
+ * This is the path type of the regular transfers used by Raptor, which are found and stored by the
+ * regular-transfer pipeline. That pipeline keys the transfers by profile, mode and from-stop, so
+ * this type only holds the stop the transfer leads to, its distance and its path.
+ * <p>
+ * The flex transfers are stored as {@link PathTransfer}s, which hold the same street path together
+ * with their stops and the modes they are valid for.
+ * <p>
+ * <pre>
+ * TODO: This type and {@link PathTransfer} will be unified by moving the flex transfers to the
+ *       regular-transfer pipeline, see {@link PathTransfer}.
+ * </pre>
  */
 public final class StreetTransferPath implements Serializable {
 

@@ -15,11 +15,21 @@ import org.opentripplanner.utils.tostring.ToStringBuilder;
  * it.
  * <p>
  * Do not confuse this with {@link ConstrainedTransfer}.
- *
+ * <p>
+ * This is the transfer of the flex transfers, which are created by the {@code
+ * FlexTransferGenerator} and stored in the {@code TransferRepository}. They are used by flex
+ * routing, also to and from area and group stops, and by the APIs and the debug layers. Since a
+ * transfer is found for several modes, it holds its stops and the set of modes it is valid for.
+ * <p>
+ * The regular transfers used by Raptor are stored as {@link StreetTransferPath}s, which hold the
+ * same street path. They are keyed by stop and mode in their repository, so they do not repeat the
+ * from-stop and the modes.
  * <p>
  * <pre>
- * TODO Should we just store the NearbyStop as a field here, or even switch to using it instead
- *      where this class is used
+ * TODO: This type and {@link StreetTransferPath} will be unified. The plan is to move the flex
+ *       transfers to the regular-transfer pipeline, so this type, the FlexTransferGenerator and
+ *       the TransferRepository can be removed. Before that, flex needs transfers to and from area
+ *       and group stops in that pipeline.
  * </pre>
  */
 public class PathTransfer implements Serializable {
