@@ -40,12 +40,7 @@ public class AccessEgressRouter {
     // Note: We calculate access/egresses in two parts. First we fetch the stops with zero distance.
     // Then we do street search. This is because some stations might use the centroid for street
     // routing, but should still give zero distance access/egresses to its child-stops.
-    var zeroDistanceAccessEgress = findAccessEgressWithZeroDistance(
-      request,
-      streetMode,
-      accessOrEgress,
-      linkingContext
-    );
+    var zeroDistanceAccessEgress = findAccessEgressWithZeroDistance(accessOrEgress, linkingContext);
 
     // When looking for street accesses/egresses we ignore the already found direct accesses/egresses
     var ignoreStops = zeroDistanceAccessEgress
@@ -79,8 +74,6 @@ public class AccessEgressRouter {
    * return an empty list if the source/destination is not a stopId.
    */
   private static List<NearbyStop> findAccessEgressWithZeroDistance(
-    RouteRequest routeRequest,
-    StreetMode streetMode,
     AccessEgressType accessOrEgress,
     LinkingContext linkingContext
   ) {
@@ -88,11 +81,6 @@ public class AccessEgressRouter {
       ? linkingContext.fromStopVertices()
       : linkingContext.toStopVertices();
 
-    return NearbyStopFactory.nearbyStopsForTransitStopVertices(
-      transitStopVertices,
-      accessOrEgress.isEgress(),
-      routeRequest,
-      streetMode
-    );
+    return NearbyStopFactory.nearbyStopsForTransitStopVertices(transitStopVertices);
   }
 }

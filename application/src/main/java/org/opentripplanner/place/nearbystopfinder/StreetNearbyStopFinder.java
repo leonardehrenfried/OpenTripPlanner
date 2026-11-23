@@ -156,10 +156,7 @@ public class StreetNearbyStopFinder implements NearbyStopFinder {
     OTPRequestTimeoutException.checkForTimeout();
 
     var stopsFound = NearbyStopFactory.nearbyStopsForTransitStopVertices(
-      getFilteredTransitStopVertices(originVertices),
-      reverseDirection,
-      request,
-      streetMode
+      getFilteredTransitStopVertices(originVertices)
     );
 
     // Return only the origin vertices if there are no valid street modes

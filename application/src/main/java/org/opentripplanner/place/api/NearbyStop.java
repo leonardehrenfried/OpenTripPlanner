@@ -77,13 +77,6 @@ public class NearbyStop implements Comparable<NearbyStop> {
   }
 
   /**
-   * Create a NearbyStop with zero distance and no edges.
-   */
-  public static NearbyStop ofZeroDistance(FeedScopedId stopId, State state) {
-    return new NearbyStop(stopId, 0d, state.getVertex(), DefaultStreetSearchResult.of(state));
-  }
-
-  /**
    * Return {@code true} if this instance has a lower weight/cost than the given {@code other}.
    * If the path is not set, the distance is used for comparison instead. If the
    * weight/cost/distance is equals (or worse) this method returns {@code false}.
@@ -94,12 +87,6 @@ public class NearbyStop implements Comparable<NearbyStop> {
 
   @Override
   public int compareTo(NearbyStop that) {
-    if (this.hasPath() != that.hasPath()) {
-      throw new IllegalStateException(
-        "Only NearbyStops which both contain or lack a path may be compared."
-      );
-    }
-
     if (this.hasPath()) {
       return (int) this.result.generalizedCost() - (int) that.result.generalizedCost();
     }

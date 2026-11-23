@@ -18,6 +18,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.locationtech.jts.geom.Coordinate;
 import org.opentripplanner.core.model.i18n.I18NString;
+import org.opentripplanner.core.model.id.FeedScopedId;
 import org.opentripplanner.ext.flex.FlexParameters;
 import org.opentripplanner.ext.flex.flexpathcalculator.FlexPathCalculator;
 import org.opentripplanner.ext.flex.flexpathcalculator.ScheduledFlexPathCalculator;
@@ -28,6 +29,7 @@ import org.opentripplanner.ext.flex.trip.UnscheduledTrip;
 import org.opentripplanner.model.PickDrop;
 import org.opentripplanner.model.StopTime;
 import org.opentripplanner.place.api.NearbyStop;
+import org.opentripplanner.street.api.path.DefaultStreetSearchResult;
 import org.opentripplanner.street.api.request.StreetSearchRequest;
 import org.opentripplanner.street.model.vertex.StreetLocation;
 import org.opentripplanner.street.search.state.State;
@@ -328,7 +330,8 @@ class FlexTemplateFactoryTest {
       new StreetLocation(id, new Coordinate(0, 0), I18NString.of(id)),
       StreetSearchRequest.of().build()
     );
-    return NearbyStop.ofZeroDistance(transferPoint.getId(), state);
+    FeedScopedId stopId = transferPoint.getId();
+    return new NearbyStop(stopId, 0d, state.getVertex(), DefaultStreetSearchResult.of(state));
   }
 
   private static ScheduledDeviatedTrip scheduledDeviatedFlexTrip(String id, StopTime... stopTimes) {

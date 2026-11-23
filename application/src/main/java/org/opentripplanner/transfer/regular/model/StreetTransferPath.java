@@ -71,11 +71,6 @@ public final class StreetTransferPath implements Serializable {
     return path;
   }
 
-  /** Convert to a {@link NearbyStop}, for the APIs which return transfers as nearby stops. */
-  public NearbyStop toNearbyStop() {
-    return new NearbyStop(stopId, distance, path);
-  }
-
   @Override
   public boolean equals(Object o) {
     return (
