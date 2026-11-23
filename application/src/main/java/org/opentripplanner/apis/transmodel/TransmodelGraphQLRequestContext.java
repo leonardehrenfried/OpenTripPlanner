@@ -4,7 +4,6 @@ import org.jspecify.annotations.Nullable;
 import org.opentripplanner.ext.empiricaldelay.EmpiricalDelayService;
 import org.opentripplanner.place.NearbyPlaceFinder;
 import org.opentripplanner.place.NearbyStopFinder;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.api.RoutingService;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.linking.LinkingContextFactory;
@@ -14,6 +13,7 @@ import org.opentripplanner.service.vehicleparking.VehicleParkingService;
 import org.opentripplanner.service.vehiclerental.VehicleRentalService;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.service.TransitService;
 import org.opentripplanner.transit.transfer.regular.RegularTransferRepositorySnapshot;
 import org.opentripplanner.utils.lang.Sandbox;
@@ -48,7 +48,7 @@ public interface TransmodelGraphQLRequestContext {
   Graph graph();
 
   /** The regular transfers of the snapshot of this request. */
-  RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> regularTransfers();
+  RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest> regularTransfers();
 
   StreetDetailsService streetDetailsService();
 

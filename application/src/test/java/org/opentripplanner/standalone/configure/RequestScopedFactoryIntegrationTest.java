@@ -21,7 +21,6 @@ import org.opentripplanner.ext.empiricaldelay.EmpiricalDelayService;
 import org.opentripplanner.ext.geocoder.LuceneIndex;
 import org.opentripplanner.ext.ojp.parameters.OjpApiParameters;
 import org.opentripplanner.ext.ojp.parameters.TriasApiParameters;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.api.RoutingService;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.fares.FareService;
@@ -39,6 +38,7 @@ import org.opentripplanner.standalone.configure.DaggerBindingKey.GenericType;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
 import org.opentripplanner.transfer.regular.FlexTransferService;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.service.TransitService;
 import org.opentripplanner.transit.transfer.regular.RegularTransferBuildRepository;
 import org.opentripplanner.transit.transfer.regular.RegularTransferRepositorySnapshot;
@@ -60,7 +60,10 @@ class RequestScopedFactoryIntegrationTest {
   private static final int AWAIT_COMMIT_POLL_INTERVAL_MS = 20;
   private static final int FROM_STOP = 0;
   private static final int TO_STOP = 1;
-  private static final NearbyStop PATH = new NearbyStop(FeedScopedId.of("F", "B"), 100.0);
+  private static final StreetTransferPath PATH = new StreetTransferPath(
+    FeedScopedId.of("F", "B"),
+    100.0
+  );
 
   /**
    * Application-wide singletons, just exposed through the request scope for convenience: the same
@@ -78,7 +81,7 @@ class RequestScopedFactoryIntegrationTest {
     of(GtfsApiParameters.class),
     of(FlexTransferService.class),
     // Without a commit in between, both requests read the same snapshot
-    of(new GenericType<RegularTransferRepositorySnapshot<NearbyStop, RouteRequest>>() {}),
+    of(new GenericType<RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest>>() {}),
     of(RouteRequest.class),
     of(TransitAlertService.class),
     of(TransmodelAPIParameters.class),
@@ -160,7 +163,7 @@ class RequestScopedFactoryIntegrationTest {
    */
   @Test
   void requestsReadTheTransfersOfTheBuildRepository() {
-    RegularTransferBuildRepository<NearbyStop> buildRepository =
+    RegularTransferBuildRepository<StreetTransferPath> buildRepository =
       RegularTransferFactory.createBuildRepository();
     buildRepository.setPaths(WALK, FROM_STOP, Map.of(TO_STOP, PATH));
     var factory = TestConstructApplicationFactoryBuilder.of()
@@ -182,7 +185,7 @@ class RequestScopedFactoryIntegrationTest {
   @Test
   void requestsReadTheRegularTransfersOfTheirSnapshot() throws Exception {
     // A path in the opposite direction, so the profile exists
-    RegularTransferBuildRepository<NearbyStop> buildRepository =
+    RegularTransferBuildRepository<StreetTransferPath> buildRepository =
       RegularTransferFactory.createBuildRepository();
     buildRepository.setPaths(WALK, TO_STOP, Map.of(FROM_STOP, PATH));
     var factory = TestConstructApplicationFactoryBuilder.of()
@@ -209,7 +212,7 @@ class RequestScopedFactoryIntegrationTest {
   }
 
   @Nullable
-  private static NearbyStop findPath(RequestScopedFactory requestFactory) {
+  private static StreetTransferPath findPath(RequestScopedFactory requestFactory) {
     return requestFactory
       .regularTransfers()
       .forRequest(RouteRequest.defaultValue())
@@ -219,7 +222,7 @@ class RequestScopedFactoryIntegrationTest {
   /** The transit domain commits periodically, so poll until a new request sees the update. */
   private static RequestScopedFactory awaitRequestSeeing(
     ConstructApplicationFactory factory,
-    NearbyStop expected
+    StreetTransferPath expected
   ) throws InterruptedException {
     long timeout = System.currentTimeMillis() + AWAIT_COMMIT_TIMEOUT_MS;
     while (true) {

@@ -18,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.opentripplanner.model.GenericLocation;
 import org.opentripplanner.model.plan.leg.ScheduledTransitLeg;
 import org.opentripplanner.model.plan.legreference.ScheduledTransitLegReference;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.impl.TransitAlertServiceImpl;
 import org.opentripplanner.routing.linking.LinkingContextFactory;
@@ -43,6 +42,7 @@ import org.opentripplanner.street.service.StreetLimitationParametersService;
 import org.opentripplanner.transfer.constrained.model.ConstrainedTransfer;
 import org.opentripplanner.transfer.constrained.model.TransferConstraint;
 import org.opentripplanner.transfer.constrained.model.TripTransferPoint;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.model.TransitTestEnvironment;
 import org.opentripplanner.transit.model.TransitTestEnvironmentBuilder;
 import org.opentripplanner.transit.model.TripInput;
@@ -111,7 +111,7 @@ public class RefetchItineraryServiceTest {
 
   // Setup transfers
   private static final RegularTransferRepositorySnapshot<
-    NearbyStop,
+    StreetTransferPath,
     RouteRequest
   > REGULAR_TRANSFERS = createRegularTransfers(STOP_B, STOP_C, GRAPH);
 
@@ -504,18 +504,17 @@ public class RefetchItineraryServiceTest {
     );
   }
 
-  public static RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> createRegularTransfers(
-    RegularStop from,
-    RegularStop to,
-    Graph graph
-  ) {
+  public static RegularTransferRepositorySnapshot<
+    StreetTransferPath,
+    RouteRequest
+  > createRegularTransfers(RegularStop from, RegularStop to, Graph graph) {
     var edges = findPath(from, to, graph);
     var length = edges.stream().mapToDouble(Edge::getDistanceMeters).sum();
     var streetPath = EdgeTraverser.createPath(
       edges,
       StreetSearchRequest.of().build()
     ).orElseThrow();
-    var path = new NearbyStop(to.getId(), length, streetPath);
+    var path = new StreetTransferPath(to.getId(), length, streetPath);
     return FixedRegularTransfers.of().add(from, to, path).snapshot();
   }
 

@@ -17,7 +17,6 @@ import org.opentripplanner.ext.stopconsolidation.configure.StopConsolidationRepo
 import org.opentripplanner.ext.taxi.TaxiRepository;
 import org.opentripplanner.ext.taxi.configure.TaxiRepositoryModule;
 import org.opentripplanner.graph_builder.GraphBuilderDataSources;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.fares.FareServiceFactory;
 import org.opentripplanner.service.osminfo.OsmInfoGraphBuildRepository;
 import org.opentripplanner.service.osminfo.configure.OsmInfoGraphBuildRepositoryModule;
@@ -37,6 +36,7 @@ import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.transfer.configure.RegularTransferBuildRepositoryModule;
 import org.opentripplanner.transfer.regular.TransferRepository;
 import org.opentripplanner.transfer.regular.configure.TransferRepositoryModule;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.configure.TimetableDataImportModule;
 import org.opentripplanner.transit.dataimport.TimetableDataImport;
 import org.opentripplanner.transit.service.TransitRepository;
@@ -92,7 +92,7 @@ public interface LoadApplicationFactory {
   TransferRepository emptyTransferRepository();
 
   @Singleton
-  RegularTransferBuildRepository<NearbyStop> emptyRegularTransferBuildRepository();
+  RegularTransferBuildRepository<StreetTransferPath> emptyRegularTransferBuildRepository();
 
   @Singleton
   WorldEnvelopeRepository emptyWorldEnvelopeRepository();

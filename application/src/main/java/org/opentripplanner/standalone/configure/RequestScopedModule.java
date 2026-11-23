@@ -25,7 +25,6 @@ import org.opentripplanner.ext.sorlandsbanen.SorlandsbanenNorwayService;
 import org.opentripplanner.ext.stopconsolidation.StopConsolidationService;
 import org.opentripplanner.ext.taxi.TaxiService;
 import org.opentripplanner.framework.application.OTPFeature;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.raptor.RaptorServiceFactory;
 import org.opentripplanner.routing.algorithm.filterchain.ext.EmissionDecorator;
 import org.opentripplanner.routing.algorithm.filterchain.framework.spi.ItineraryDecorator;
@@ -50,6 +49,7 @@ import org.opentripplanner.standalone.config.routerconfig.VectorTileConfig;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
 import org.opentripplanner.transfer.regular.FlexTransferService;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.repository.TimetableRepository;
 import org.opentripplanner.transit.repository.TimetableRepositorySnapshot;
 import org.opentripplanner.transit.service.DefaultTransitService;
@@ -108,10 +108,10 @@ public class RequestScopedModule {
    */
   @Provides
   @HttpRequestScoped
-  static RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> regularTransfers(
+  static RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest> regularTransfers(
     RepositoryHandle<
-      RegularTransferRepositorySnapshot<NearbyStop, RouteRequest>,
-      RegularTransferRepository<NearbyStop>
+      RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest>,
+      RegularTransferRepository<StreetTransferPath>
     > regularTransferRepositoryHandle,
     TransactionScope transactionScope
   ) {
@@ -122,7 +122,7 @@ public class RequestScopedModule {
   @Provides
   @HttpRequestScoped
   static RegularTransferCacheReport regularTransferCacheReport(
-    RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> regularTransfers
+    RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest> regularTransfers
   ) {
     return regularTransfers.cacheReport();
   }
@@ -146,7 +146,7 @@ public class RequestScopedModule {
     Graph graph,
     TransitService transitService,
     TransitAlertService transitAlertService,
-    RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> regularTransfers,
+    RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest> regularTransfers,
     StreetDetailsService streetDetailsService,
     LinkingContextFactory linkingContextFactory,
     StreetLimitationParametersService streetLimitationParametersService
@@ -224,7 +224,7 @@ public class RequestScopedModule {
     VehicleRentalService vehicleRentalService,
     StreetDetailsService streetDetailsService,
     FlexTransferService transferService,
-    RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> regularTransfers,
+    RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest> regularTransfers,
     FlexParameters flexParameters,
     List<RideHailingService> rideHailingServices,
     @Nullable DataOverlayParameterBindings dataOverlayParameterBindings,

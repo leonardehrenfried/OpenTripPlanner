@@ -18,7 +18,6 @@ import org.opentripplanner.framework.application.OTPFeature;
 import org.opentripplanner.graph_builder.GraphBuilder;
 import org.opentripplanner.graph_builder.GraphBuilderDataSources;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueSummary;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.raptor.RaptorServiceFactory;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RaptorTransitData;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.TripSchedule;
@@ -45,6 +44,7 @@ import org.opentripplanner.street.StreetRepository;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.linking.VertexLinker;
 import org.opentripplanner.transfer.regular.TransferRepository;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.dataimport.TimetableDataImport;
 import org.opentripplanner.transit.repository.ScheduledTimetableData;
 import org.opentripplanner.transit.service.TransitRepository;
@@ -100,7 +100,7 @@ public class ConstructApplication {
     TransitRepository transitRepository,
     TimetableDataImport timetableDataImport,
     TransferRepository transferRepository,
-    RegularTransferBuildRepository<NearbyStop> regularTransferBuildRepository,
+    RegularTransferBuildRepository<StreetTransferPath> regularTransferBuildRepository,
     WorldEnvelopeRepository worldEnvelopeRepository,
     ConfigModel config,
     GraphBuilderDataSources graphBuilderDataSources,
@@ -298,7 +298,7 @@ public class ConstructApplication {
     return factory.transferRepository();
   }
 
-  public RegularTransferBuildRepository<NearbyStop> regularTransferBuildRepository() {
+  public RegularTransferBuildRepository<StreetTransferPath> regularTransferBuildRepository() {
     return factory.regularTransferBuildRepository();
   }
 

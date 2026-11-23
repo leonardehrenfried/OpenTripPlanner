@@ -10,6 +10,7 @@ import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.transfer.dataimport.StopsVisitedByPatterns;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transfer.streetadapter.RaptorStopIndexAdaptor;
 import org.opentripplanner.transfer.streetadapter.RegularTransferPreferencesMapper;
 import org.opentripplanner.transfer.streetadapter.StreetTransferPathProvider;
@@ -67,7 +68,7 @@ public final class StreetTransferFactory {
     Graph graph,
     TransitRepository transitRepository,
     TransferParameters<RouteRequest> parameters,
-    RegularTransferBuildRepository<NearbyStop> buildRepository,
+    RegularTransferBuildRepository<StreetTransferPath> buildRepository,
     StopsVisitedByPatterns stopPatterns,
     AllowedModesLookup allowedModes,
     @Nullable FlexIndex flexIndex
@@ -106,11 +107,11 @@ public final class StreetTransferFactory {
    *                               the Raptor transfers, for the report of the cache
    */
   public static RepositoryHandle<
-    RegularTransferRepositorySnapshot<NearbyStop, RouteRequest>,
-    RegularTransferRepository<NearbyStop>
+    RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest>,
+    RegularTransferRepository<StreetTransferPath>
   > registerRepository(
     RepositoryRegistry repositoryRegistry,
-    RegularTransferBuildRepository<NearbyStop> buildRepository,
+    RegularTransferBuildRepository<StreetTransferPath> buildRepository,
     TransferParameters<RouteRequest> parameters,
     Graph graph,
     TransitRepository transitRepository,

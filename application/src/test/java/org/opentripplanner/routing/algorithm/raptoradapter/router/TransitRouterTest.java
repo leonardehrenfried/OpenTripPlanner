@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.opentripplanner.model.GenericLocation;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.api.request.RequestModes;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.routing.framework.DebugTimingAggregator;
 import org.opentripplanner.street.model.StreetMode;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.transfer.regular.RegularTransferRepositorySnapshot;
 import org.opentripplanner.transit.transfer.regular.api.RegularTransfersService;
 import org.opentripplanner.transit.transfer.regular.api.report.RegularTransferCacheMetrics;
@@ -61,11 +61,11 @@ class TransitRouterTest {
 
   /** Regular transfers that fail the test if they are used. */
   private static class FailingRegularTransfers
-    implements RegularTransferRepositorySnapshot<NearbyStop, RouteRequest>
+    implements RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest>
   {
 
     @Override
-    public RegularTransfersService<NearbyStop> forRequest(RouteRequest request) {
+    public RegularTransfersService<StreetTransferPath> forRequest(RouteRequest request) {
       return fail("The regular transfers of a request without transit are resolved");
     }
 

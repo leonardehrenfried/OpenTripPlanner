@@ -11,7 +11,6 @@ import org.opentripplanner.ext.emission.internal.DefaultEmissionRepository;
 import org.opentripplanner.ext.emission.internal.DefaultEmissionService;
 import org.opentripplanner.ext.emission.internal.itinerary.EmissionItineraryDecorator;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueStore;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.raptor.RaptorServiceFactory;
 import org.opentripplanner.routing.algorithm.filterchain.framework.spi.ItineraryDecorator;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RaptorTransitData;
@@ -53,6 +52,7 @@ import org.opentripplanner.transfer.dataimport.StopsAllowedForModes;
 import org.opentripplanner.transfer.dataimport.StopsVisitedByPatterns;
 import org.opentripplanner.transfer.regular.TransferRepository;
 import org.opentripplanner.transfer.regular.TransferServiceTestFactory;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.dataimport.TimetableDataImport;
 import org.opentripplanner.transit.repository.DefaultTimetableRepository;
 import org.opentripplanner.transit.repository.ScheduledTimetableData;
@@ -134,7 +134,10 @@ public class TestServerContext {
    * builds, register them on a new transaction registry, and return the current snapshot. The
    * transit repository must be indexed first, see {@link #createTransitService}.
    */
-  public static RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> createRegularTransfers(
+  public static RegularTransferRepositorySnapshot<
+    StreetTransferPath,
+    RouteRequest
+  > createRegularTransfers(
     Graph graph,
     TransitRepository transitRepository,
     TimetableDataImport timetableDataImport
@@ -157,12 +160,12 @@ public class TestServerContext {
    * pipeline, mirroring production graph builds. The transit repository must be indexed first, see
    * {@link #createTransitService}.
    */
-  public static RegularTransferBuildRepository<NearbyStop> createRegularTransferBuildRepository(
+  public static RegularTransferBuildRepository<StreetTransferPath> createRegularTransferBuildRepository(
     Graph graph,
     TransitRepository transitRepository,
     TimetableDataImport timetableDataImport
   ) {
-    RegularTransferBuildRepository<NearbyStop> regularTransferBuildRepository =
+    RegularTransferBuildRepository<StreetTransferPath> regularTransferBuildRepository =
       RegularTransferFactory.createBuildRepository();
     var stopsVisitedByPatterns = new StopsVisitedByPatterns(timetableDataImport);
     var transferGenerator = StreetTransferFactory.createGenerator(
@@ -192,7 +195,7 @@ public class TestServerContext {
     Graph graph,
     TransitService transitService,
     TransferRepository transferRepository,
-    RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> regularTransfers
+    RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest> regularTransfers
   ) {
     var routerConfig = RouterConfig.DEFAULT;
     var raptorServiceFactory = createRaptorServiceFactory();

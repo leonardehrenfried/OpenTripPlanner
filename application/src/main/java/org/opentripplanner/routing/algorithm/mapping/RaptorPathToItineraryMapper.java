@@ -24,7 +24,6 @@ import org.opentripplanner.model.plan.leg.FrequencyTransitLegBuilder;
 import org.opentripplanner.model.plan.leg.ScheduledTransitLegBuilder;
 import org.opentripplanner.model.plan.leg.StreetLeg;
 import org.opentripplanner.model.plan.leg.UnknownPathLeg;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.raptor.api.model.RaptorAccessEgress;
 import org.opentripplanner.raptor.api.model.RaptorStartOnBoardAccess;
 import org.opentripplanner.raptor.api.path.AccessPathLeg;
@@ -49,6 +48,7 @@ import org.opentripplanner.street.model.StreetMode;
 import org.opentripplanner.street.search.TraverseMode;
 import org.opentripplanner.streetadapter.StreetSearchRequestMapper;
 import org.opentripplanner.transfer.constrained.model.ConstrainedTransfer;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.model.timetable.TripIdAndServiceDate;
 import org.opentripplanner.transit.model.timetable.TripOnServiceDate;
 import org.opentripplanner.transit.service.TransitService;
@@ -66,7 +66,7 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
 
   private final RaptorTransitData raptorTransitData;
 
-  private final RegularTransfersService<NearbyStop> regularTransfers;
+  private final RegularTransfersService<StreetTransferPath> regularTransfers;
 
   private final RouteRequest request;
   private final StreetSearchRequest transferStreetRequest;
@@ -96,7 +96,7 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
     TransitService transitService,
     StreetDetailsService streetDetailsService,
     RaptorTransitData raptorTransitData,
-    RegularTransfersService<NearbyStop> regularTransfers,
+    RegularTransfersService<StreetTransferPath> regularTransfers,
     ZonedDateTime transitSearchTimeZero,
     RouteRequest request,
     @Nullable TaxiService taxiService
@@ -378,7 +378,7 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
    * request's.
    */
   @Nullable
-  private NearbyStop findRegularTransferPath(int fromStop, int toStop) {
+  private StreetTransferPath findRegularTransferPath(int fromStop, int toStop) {
     return regularTransfers.findPath(fromStop, toStop);
   }
 
@@ -410,7 +410,7 @@ public class RaptorPathToItineraryMapper<T extends TripSchedule> {
    */
   private List<Leg> mapTransferLeg(
     PathLeg<T> pathLeg,
-    NearbyStop transfer,
+    StreetTransferPath transfer,
     TraverseMode transferMode,
     Place from,
     Place to

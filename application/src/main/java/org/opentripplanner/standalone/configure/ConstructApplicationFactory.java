@@ -36,7 +36,6 @@ import org.opentripplanner.ext.taxi.TaxiRepository;
 import org.opentripplanner.ext.taxi.configure.TaxiServiceModule;
 import org.opentripplanner.framework.transaction.configure.TransactionModule;
 import org.opentripplanner.graph_builder.issue.api.DataImportIssueSummary;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.raptor.RaptorServiceFactory;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.RaptorTransitData;
 import org.opentripplanner.routing.algorithm.raptoradapter.transit.TripSchedule;
@@ -74,6 +73,7 @@ import org.opentripplanner.street.service.StreetLimitationParametersServiceModul
 import org.opentripplanner.transfer.configure.RegularTransferRepositoryModule;
 import org.opentripplanner.transfer.regular.TransferRepository;
 import org.opentripplanner.transfer.regular.configure.TransferServiceModule;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.configure.StaticTransitService;
 import org.opentripplanner.transit.configure.TransitModule;
 import org.opentripplanner.transit.repository.ScheduledTimetableData;
@@ -135,11 +135,11 @@ public interface ConstructApplicationFactory {
   TransitRepository transitRepository();
 
   TransferRepository transferRepository();
-  RegularTransferBuildRepository<NearbyStop> regularTransferBuildRepository();
+  RegularTransferBuildRepository<StreetTransferPath> regularTransferBuildRepository();
 
   RepositoryHandle<
-    RegularTransferRepositorySnapshot<NearbyStop, RouteRequest>,
-    RegularTransferRepository<NearbyStop>
+    RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest>,
+    RegularTransferRepository<StreetTransferPath>
   > regularTransferRepositoryHandle();
 
   WorldEnvelopeRepository worldEnvelopeRepository();
@@ -247,7 +247,7 @@ public interface ConstructApplicationFactory {
 
     @BindsInstance
     Builder regularTransferBuildRepository(
-      RegularTransferBuildRepository<NearbyStop> regularTransferBuildRepository
+      RegularTransferBuildRepository<StreetTransferPath> regularTransferBuildRepository
     );
 
     @BindsInstance

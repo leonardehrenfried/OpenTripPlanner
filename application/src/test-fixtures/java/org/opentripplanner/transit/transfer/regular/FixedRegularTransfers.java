@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import org.jspecify.annotations.Nullable;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.raptor.data.transfers.regular.RaptorRegularTransferService;
 import org.opentripplanner.routing.api.request.RouteRequest;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.model.site.StopLocation;
 import org.opentripplanner.transit.transfer.regular.api.RegularTransfersService;
 import org.opentripplanner.transit.transfer.regular.api.report.RegularTransferCacheMetrics;
@@ -19,7 +19,7 @@ import org.opentripplanner.transit.transfer.regular.api.report.RegularTransferCa
  */
 public final class FixedRegularTransfers {
 
-  private final Map<Key, NearbyStop> paths = new HashMap<>();
+  private final Map<Key, StreetTransferPath> paths = new HashMap<>();
 
   private FixedRegularTransfers() {}
 
@@ -28,14 +28,14 @@ public final class FixedRegularTransfers {
   }
 
   /** Add the path of the transfer from {@code from} to {@code to}. */
-  public FixedRegularTransfers add(StopLocation from, StopLocation to, NearbyStop path) {
+  public FixedRegularTransfers add(StopLocation from, StopLocation to, StreetTransferPath path) {
     paths.put(new Key(from.getIndex(), to.getIndex()), path);
     return this;
   }
 
-  public RegularTransferRepositorySnapshot<NearbyStop, RouteRequest> snapshot() {
+  public RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest> snapshot() {
     var paths = Map.copyOf(this.paths);
-    var transfers = new RegularTransfersService<NearbyStop>() {
+    var transfers = new RegularTransfersService<StreetTransferPath>() {
       @Override
       public RaptorRegularTransferService raptorTransfers() {
         return NoRegularTransfers.service();
@@ -43,12 +43,12 @@ public final class FixedRegularTransfers {
 
       @Nullable
       @Override
-      public NearbyStop findPath(int fromStop, int toStop) {
+      public StreetTransferPath findPath(int fromStop, int toStop) {
         return paths.get(new Key(fromStop, toStop));
       }
 
       @Override
-      public Collection<NearbyStop> findPathsFrom(int fromStop) {
+      public Collection<StreetTransferPath> findPathsFrom(int fromStop) {
         return paths
           .entrySet()
           .stream()
@@ -61,7 +61,7 @@ public final class FixedRegularTransfers {
 
     return new RegularTransferRepositorySnapshot<>() {
       @Override
-      public RegularTransfersService<NearbyStop> forRequest(RouteRequest request) {
+      public RegularTransfersService<StreetTransferPath> forRequest(RouteRequest request) {
         return transfers;
       }
 

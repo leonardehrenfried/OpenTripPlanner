@@ -30,6 +30,7 @@ import org.opentripplanner.street.model.StreetModelForTest;
 import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.state.EdgeTraverser;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.transfer.regular.api.maxduration.AllowedMode;
 import org.opentripplanner.transit.transfer.regular.api.maxduration.BicycleMaxDurations;
 import org.opentripplanner.transit.transfer.regular.api.maxduration.CarMaxDuration;
@@ -187,7 +188,7 @@ class DefaultTransferSearchTest {
         intersectionVertex(Coordinates.BERLIN),
         intersectionVertex(Coordinates.BOSTON)
       );
-      var path = new NearbyStop(PLAIN, edge.getDistanceMeters(), streetPath(edge));
+      var path = new StreetTransferPath(PLAIN, edge.getDistanceMeters(), streetPath(edge));
 
       assertThat(criteria(path).c1()).isEqualTo(MAX_RAPTOR_C1);
     }
@@ -198,7 +199,7 @@ class DefaultTransferSearchTest {
         intersectionVertex(Coordinates.BERLIN),
         intersectionVertex(Coordinates.BERLIN_BRANDENBURG_GATE)
       );
-      var path = new NearbyStop(PLAIN, edge.getDistanceMeters(), streetPath(edge));
+      var path = new StreetTransferPath(PLAIN, edge.getDistanceMeters(), streetPath(edge));
 
       assertThat(criteria(path).c1()).isLessThan(MAX_RAPTOR_C1);
     }
@@ -223,7 +224,7 @@ class DefaultTransferSearchTest {
       assertThat(criteria(withoutEdges(200)).c1()).isLessThan(MAX_RAPTOR_C1);
     }
 
-    private PathCriteria criteria(NearbyStop path) {
+    private PathCriteria criteria(StreetTransferPath path) {
       return subject.computePathCriteria(path).orElseThrow();
     }
 
@@ -234,8 +235,8 @@ class DefaultTransferSearchTest {
       ).orElseThrow();
     }
 
-    private static NearbyStop withoutEdges(double distanceMeters) {
-      return new NearbyStop(PLAIN, distanceMeters);
+    private static StreetTransferPath withoutEdges(double distanceMeters) {
+      return new StreetTransferPath(PLAIN, distanceMeters);
     }
   }
 
@@ -243,7 +244,10 @@ class DefaultTransferSearchTest {
   @Nested
   class DurationAndCostOfAPathWithoutEdges {
 
-    private static final NearbyStop FIVE_HUNDRED_METERS = new NearbyStop(PLAIN, 500.0);
+    private static final StreetTransferPath FIVE_HUNDRED_METERS = new StreetTransferPath(
+      PLAIN,
+      500.0
+    );
 
     @Test
     void aWalkPathUsesTheWalkSpeedDividedByTheDetourFactorAndTheWalkReluctance() {
@@ -313,7 +317,7 @@ class DefaultTransferSearchTest {
     return new DefaultTransferSearch(graph, finder, isSource, isTarget, lookup, request);
   }
 
-  private static List<FeedScopedId> stopIds(Collection<TransferPath<NearbyStop>> paths) {
+  private static List<FeedScopedId> stopIds(Collection<TransferPath<StreetTransferPath>> paths) {
     return paths.stream().map(TransferPath::toStop).toList();
   }
 

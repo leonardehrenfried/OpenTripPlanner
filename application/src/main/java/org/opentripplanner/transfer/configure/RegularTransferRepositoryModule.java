@@ -7,10 +7,10 @@ import org.opentripplanner.core.framework.transaction.configure.TransitDomain;
 import org.opentripplanner.core.model.transaction.RepositoryHandle;
 import org.opentripplanner.core.model.transaction.RepositoryRegistry;
 import org.opentripplanner.framework.application.OTPFeature;
-import org.opentripplanner.place.api.NearbyStop;
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.standalone.config.RouterConfig;
 import org.opentripplanner.street.graph.Graph;
+import org.opentripplanner.transfer.regular.model.StreetTransferPath;
 import org.opentripplanner.transit.service.TransitRepository;
 import org.opentripplanner.transit.transfer.regular.RegularTransferBuildRepository;
 import org.opentripplanner.transit.transfer.regular.RegularTransferRepository;
@@ -44,11 +44,11 @@ public class RegularTransferRepositoryModule {
   @Provides
   @Singleton
   public static RepositoryHandle<
-    RegularTransferRepositorySnapshot<NearbyStop, RouteRequest>,
-    RegularTransferRepository<NearbyStop>
+    RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest>,
+    RegularTransferRepository<StreetTransferPath>
   > regularTransferRepositoryHandle(
     @TransitDomain RepositoryRegistry repositoryRegistry,
-    RegularTransferBuildRepository<NearbyStop> buildRepository,
+    RegularTransferBuildRepository<StreetTransferPath> buildRepository,
     TransferParameters<RouteRequest> transferParameters,
     RouterConfig routerConfig,
     Graph graph,
@@ -80,8 +80,8 @@ public class RegularTransferRepositoryModule {
   public static RegularTransferCacheMetrics regularTransferCacheMetrics(
     @TransitDomain RepositoryRegistry repositoryRegistry,
     RepositoryHandle<
-      RegularTransferRepositorySnapshot<NearbyStop, RouteRequest>,
-      RegularTransferRepository<NearbyStop>
+      RegularTransferRepositorySnapshot<StreetTransferPath, RouteRequest>,
+      RegularTransferRepository<StreetTransferPath>
     > regularTransferRepositoryHandle
   ) {
     return regularTransferRepositoryHandle
