@@ -31,6 +31,7 @@ import org.opentripplanner.street.model.edge.Edge;
 import org.opentripplanner.street.model.vertex.Vertex;
 import org.opentripplanner.street.search.state.EdgeTraverser;
 import org.opentripplanner.transfer.regular.model.StreetTransferPath;
+import org.opentripplanner.transfer.regular.model.StreetTransferPathForTest;
 import org.opentripplanner.transit.transfer.regular.api.maxduration.AllowedMode;
 import org.opentripplanner.transit.transfer.regular.api.maxduration.BicycleMaxDurations;
 import org.opentripplanner.transit.transfer.regular.api.maxduration.CarMaxDuration;
@@ -236,7 +237,7 @@ class DefaultTransferSearchTest {
     }
 
     private static StreetTransferPath withoutEdges(double distanceMeters) {
-      return new StreetTransferPath(PLAIN, distanceMeters);
+      return StreetTransferPathForTest.straightLine(PLAIN, distanceMeters);
     }
   }
 
@@ -244,10 +245,8 @@ class DefaultTransferSearchTest {
   @Nested
   class DurationAndCostOfAPathWithoutEdges {
 
-    private static final StreetTransferPath FIVE_HUNDRED_METERS = new StreetTransferPath(
-      PLAIN,
-      500.0
-    );
+    private static final StreetTransferPath FIVE_HUNDRED_METERS =
+      StreetTransferPathForTest.straightLine(PLAIN, 500.0);
 
     @Test
     void aWalkPathUsesTheWalkSpeedDividedByTheDetourFactorAndTheWalkReluctance() {

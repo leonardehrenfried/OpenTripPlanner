@@ -57,6 +57,7 @@ import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.street.search.state.TestStateBuilder;
 import org.opentripplanner.transfer.regular.model.StreetTransferPath;
+import org.opentripplanner.transfer.regular.model.StreetTransferPathForTest;
 import org.opentripplanner.transit.dataimport.TimetableDataImport;
 import org.opentripplanner.transit.model._data.TransitRepositoryForTest;
 import org.opentripplanner.transit.model.framework.Deduplicator;
@@ -187,7 +188,7 @@ public class RaptorPathToItineraryMapperTest {
   void createItineraryWithOnBoardFlexAccess() {
     RaptorPathToItineraryMapper<TestTripSchedule> mapper = getRaptorPathToItineraryMapper(
       FixedRegularTransfers.of()
-        .add(S1, S2, new StreetTransferPath(S2.getId(), 0))
+        .add(S1, S2, StreetTransferPathForTest.straightLine(S2.getId(), 0))
         .snapshot()
         .forRequest(RouteRequest.defaultValue())
     );

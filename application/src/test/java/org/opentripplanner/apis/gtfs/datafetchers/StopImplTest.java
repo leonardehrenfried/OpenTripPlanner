@@ -22,6 +22,7 @@ import org.opentripplanner.transfer.regular.FlexTransferService;
 import org.opentripplanner.transfer.regular.TransferServiceTestFactory;
 import org.opentripplanner.transfer.regular.model.PathTransfer;
 import org.opentripplanner.transfer.regular.model.StreetTransferPath;
+import org.opentripplanner.transfer.regular.model.StreetTransferPathForTest;
 import org.opentripplanner.transit.model.TransitTestEnvironment;
 import org.opentripplanner.transit.model.TransitTestEnvironmentBuilder;
 import org.opentripplanner.transit.model.site.AreaStop;
@@ -146,7 +147,7 @@ class StopImplTest {
   }
 
   private static StreetTransferPath path(RegularStop to, double distance) {
-    return new StreetTransferPath(to.getId(), distance);
+    return StreetTransferPathForTest.straightLine(to.getId(), distance);
   }
 
   private static List<FeedScopedId> toStopIds(Iterable<NearbyStop> transfers) {

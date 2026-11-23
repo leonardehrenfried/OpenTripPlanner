@@ -39,6 +39,7 @@ import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.service.StreetLimitationParametersService;
 import org.opentripplanner.transfer.regular.FlexTransferService;
 import org.opentripplanner.transfer.regular.model.StreetTransferPath;
+import org.opentripplanner.transfer.regular.model.StreetTransferPathForTest;
 import org.opentripplanner.transit.service.TransitService;
 import org.opentripplanner.transit.transfer.regular.RegularTransferBuildRepository;
 import org.opentripplanner.transit.transfer.regular.RegularTransferRepositorySnapshot;
@@ -60,7 +61,7 @@ class RequestScopedFactoryIntegrationTest {
   private static final int AWAIT_COMMIT_POLL_INTERVAL_MS = 20;
   private static final int FROM_STOP = 0;
   private static final int TO_STOP = 1;
-  private static final StreetTransferPath PATH = new StreetTransferPath(
+  private static final StreetTransferPath PATH = StreetTransferPathForTest.straightLine(
     FeedScopedId.of("F", "B"),
     100.0
   );
