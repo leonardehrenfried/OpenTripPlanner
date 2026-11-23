@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.opentripplanner.core.model.id.FeedScopedIdForTestFactory;
 import org.opentripplanner.ext.flex.trip.UnscheduledTrip;
 import org.opentripplanner.model.StopTime;
-import org.opentripplanner.street.api.path.DefaultStreetPath;
+import org.opentripplanner.street.api.path.StreetPathForTest;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.street.search.state.TestStateBuilder;
 import org.opentripplanner.transit.model._data.TransitRepositoryForTest;
@@ -59,7 +59,7 @@ class FlexAccessEgressBookingTest {
       boardPos,
       alightPos,
       trip,
-      new DefaultStreetPath(state),
+      StreetPathForTest.path(state),
       true,
       requestedBookingTime
     );

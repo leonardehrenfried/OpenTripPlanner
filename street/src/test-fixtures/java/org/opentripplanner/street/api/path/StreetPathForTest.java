@@ -23,6 +23,14 @@ public class StreetPathForTest {
    * given state.
    */
   public static List<State> states(State finalState) {
-    return states(DefaultStreetPath.of(finalState));
+    return states(path(finalState));
+  }
+
+  /**
+   * The chronological path of the search ending in the given state, see
+   * {@link DefaultStreetSearchResult#toPath()}.
+   */
+  public static DefaultStreetPath path(State finalState) {
+    return (DefaultStreetPath) DefaultStreetSearchResult.of(finalState).toPath();
   }
 }

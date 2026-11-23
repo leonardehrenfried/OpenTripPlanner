@@ -20,7 +20,7 @@ class CompositeStreetPathTest {
   );
   private static final StreetSearchResult SECOND = FIRST.continueSearchAfter(
     Duration.ofSeconds(60),
-    new DefaultStreetPath(startState().streetEdge().build())
+    StreetPathForTest.path(startState().streetEdge().build())
   ).orElseThrow();
 
   private static final StreetPath SUBJECT = StreetPath.concat(FIRST, SECOND);

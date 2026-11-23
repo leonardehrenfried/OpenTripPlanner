@@ -41,8 +41,8 @@ import org.opentripplanner.service.streetdetails.internal.DefaultStreetDetailsRe
 import org.opentripplanner.service.streetdetails.internal.DefaultStreetDetailsService;
 import org.opentripplanner.service.vehiclerental.model.TestFreeFloatingRentalVehicleBuilder;
 import org.opentripplanner.service.vehiclerental.model.TestVehicleRentalStationBuilder;
-import org.opentripplanner.street.api.path.DefaultStreetPath;
 import org.opentripplanner.street.api.path.StreetPath;
+import org.opentripplanner.street.api.path.StreetPathForTest;
 import org.opentripplanner.street.api.path.step.RelativeDirection;
 import org.opentripplanner.street.geometry.GeometryUtils;
 import org.opentripplanner.street.geometry.WgsCoordinate;
@@ -83,7 +83,7 @@ class StreetLegMapperTest {
 
   @Test
   void pathWithoutEdges() {
-    var path = DefaultStreetPath.of(TestStateBuilder.ofWalking().build());
+    var path = StreetPathForTest.path(TestStateBuilder.ofWalking().build());
     assertThat(mapper.map(path, RouteRequest.defaultValue())).isEmpty();
   }
 
@@ -228,7 +228,7 @@ class StreetLegMapperTest {
       I18NString.of("destination")
     );
     var edge = TemporaryFreeEdge.createTemporaryFreeEdge(state.getVertex(), location);
-    var path = DefaultStreetPath.of(edge.traverse(state)[0]);
+    var path = StreetPathForTest.path(edge.traverse(state)[0]);
 
     var leg = mapper.map(path, viaLocations, null).getFirst();
 
@@ -274,7 +274,7 @@ class StreetLegMapperTest {
       (StreetVertex) state.getVertex(),
       entranceVertex
     );
-    var path = DefaultStreetPath.of(link.traverse(state)[0]);
+    var path = StreetPathForTest.path(link.traverse(state)[0]);
 
     var steps = mapper.map(path, RouteRequest.defaultValue()).getFirst().listWalkSteps();
 
@@ -334,7 +334,7 @@ class StreetLegMapperTest {
   }
 
   private static StreetPath path(TestStateBuilder builder) {
-    return DefaultStreetPath.of(builder.build());
+    return StreetPathForTest.path(builder.build());
   }
 
   private WalkStep findStep(StreetPath path, RelativeDirection direction) {

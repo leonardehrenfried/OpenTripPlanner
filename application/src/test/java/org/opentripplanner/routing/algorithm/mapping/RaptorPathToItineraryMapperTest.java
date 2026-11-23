@@ -52,7 +52,7 @@ import org.opentripplanner.routing.algorithm.raptoradapter.transit.cost.DefaultC
 import org.opentripplanner.routing.api.request.RouteRequest;
 import org.opentripplanner.service.streetdetails.internal.DefaultStreetDetailsRepository;
 import org.opentripplanner.service.streetdetails.internal.DefaultStreetDetailsService;
-import org.opentripplanner.street.api.path.DefaultStreetPath;
+import org.opentripplanner.street.api.path.StreetPathForTest;
 import org.opentripplanner.street.graph.Graph;
 import org.opentripplanner.street.search.state.State;
 import org.opentripplanner.street.search.state.TestStateBuilder;
@@ -205,7 +205,7 @@ public class RaptorPathToItineraryMapperTest {
       0,
       1,
       flexTrip,
-      new DefaultStreetPath(state),
+      StreetPathForTest.path(state),
       true,
       RoutingBookingInfo.NOT_SET
     );
